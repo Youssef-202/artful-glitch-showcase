@@ -15,7 +15,7 @@ function HeroOrb() {
     <Float speed={1.4} rotationIntensity={0.6} floatIntensity={1.2}>
       <mesh ref={ref}>
         <icosahedronGeometry args={[1.6, 4]} />
-        <MeshDistortMaterial color="#3565F5" emissive="#1a3aa8" emissiveIntensity={0.4} distort={0.45} speed={2} roughness={0.15} metalness={0.6} />
+        <MeshDistortMaterial color="#115e59" emissive="#0a3d3a" emissiveIntensity={0.4} distort={0.45} speed={2} roughness={0.15} metalness={0.6} />
       </mesh>
     </Float>
   );
@@ -28,9 +28,9 @@ export default function Hero() {
         <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
           <ambientLight intensity={0.4} />
           <directionalLight position={[5, 5, 5]} intensity={1.2} />
-          <pointLight position={[-5, -3, -5]} color="#3565F5" intensity={2} />
+          <pointLight position={[-5, -3, -5]} color="#115e59" intensity={2} />
           <HeroOrb />
-          <Sparkles count={80} scale={6} size={2.5} speed={0.4} color="#8aa6ff" />
+          <Sparkles count={80} scale={6} size={2.5} speed={0.4} color="#5fd9cf" />
         </Canvas>
       </div>
 

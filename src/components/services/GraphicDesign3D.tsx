@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
 
-const palette = ["#3565F5", "#8aa6ff", "#f55b8a", "#f5c63a", "#3af5b8"];
+const palette = ["#115e59", "#5fd9cf", "#f55b8a", "#f5c63a", "#3af5b8"];
 
 export default function GraphicDesign3D({ hovered }: { hovered: boolean }) {
   const group = useRef<THREE.Group>(null);
@@ -25,7 +25,7 @@ export default function GraphicDesign3D({ hovered }: { hovered: boolean }) {
     <>
       <ambientLight intensity={0.5} />
       <directionalLight position={[4, 4, 4]} intensity={1.3} />
-      <pointLight position={[-2, -2, 3]} color="#3565F5" intensity={2} />
+      <pointLight position={[-2, -2, 3]} color="#115e59" intensity={2} />
       <group ref={group}>
         {palette.map((c, i) => {
           const angle = (i / palette.length) * Math.PI * 2;
@@ -41,7 +41,7 @@ export default function GraphicDesign3D({ hovered }: { hovered: boolean }) {
         {/* pen tool */}
         <mesh ref={pen}>
           <coneGeometry args={[0.15, 0.6, 16]} />
-          <meshStandardMaterial color="#fff" metalness={0.9} roughness={0.1} emissive="#3565F5" emissiveIntensity={0.4} />
+          <meshStandardMaterial color="#fff" metalness={0.9} roughness={0.1} emissive="#115e59" emissiveIntensity={0.4} />
         </mesh>
       </group>
     </>

@@ -15,7 +15,7 @@ export default function Photography3D({ hovered }: { hovered: boolean }) {
     <>
       <ambientLight intensity={0.4} />
       <directionalLight position={[4, 4, 5]} intensity={1.2} />
-      <pointLight position={[0, 0, 3]} color="#3565F5" intensity={3} />
+      <pointLight position={[0, 0, 3]} color="#115e59" intensity={3} />
       <Float speed={1.4} rotationIntensity={0.5} floatIntensity={1}>
         <group ref={lens}>
           {/* outer ring */}
@@ -26,12 +26,12 @@ export default function Photography3D({ hovered }: { hovered: boolean }) {
           {/* mid ring */}
           <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0, 0.05]}>
             <torusGeometry args={[1.15, 0.12, 24, 64]} />
-            <meshStandardMaterial color="#3565F5" metalness={0.8} roughness={0.25} emissive="#3565F5" emissiveIntensity={0.4} />
+            <meshStandardMaterial color="#115e59" metalness={0.8} roughness={0.25} emissive="#115e59" emissiveIntensity={0.4} />
           </mesh>
           {/* glass */}
           <mesh>
             <cylinderGeometry args={[1, 1, 0.15, 64]} />
-            <meshPhysicalMaterial color="#0a1230" transmission={0.4} thickness={0.5} roughness={0.05} metalness={0.2} clearcoat={1} emissive="#3565F5" emissiveIntensity={0.2} />
+            <meshPhysicalMaterial color="#062926" transmission={0.4} thickness={0.5} roughness={0.05} metalness={0.2} clearcoat={1} emissive="#115e59" emissiveIntensity={0.2} />
           </mesh>
           {/* inner aperture */}
           <mesh position={[0, 0, 0.1]}>
@@ -40,7 +40,7 @@ export default function Photography3D({ hovered }: { hovered: boolean }) {
           </mesh>
         </group>
       </Float>
-      <Sparkles count={120} scale={5} size={3} speed={0.5} color="#8aa6ff" />
+      <Sparkles count={120} scale={5} size={3} speed={0.5} color="#5fd9cf" />
     </>
   );
 }

@@ -36,18 +36,18 @@ export default function AdsCampaign3D({ hovered }: { hovered: boolean }) {
     <>
       <ambientLight intensity={0.5} />
       <directionalLight position={[3, 4, 4]} intensity={1.2} />
-      <pointLight position={[-2, 1, 2]} color="#3565F5" intensity={2.5} />
+      <pointLight position={[-2, 1, 2]} color="#115e59" intensity={2.5} />
       <Float speed={1.3} rotationIntensity={0.4} floatIntensity={0.7}>
         <group ref={mega} position={[-1, 0, 0]} rotation={[0, 0, -0.3]}>
           {/* megaphone cone */}
           <mesh rotation={[0, 0, -Math.PI / 2]} position={[0.4, 0, 0]}>
             <coneGeometry args={[0.9, 1.6, 32, 1, true]} />
-            <meshStandardMaterial color="#3565F5" emissive="#3565F5" emissiveIntensity={0.4} metalness={0.7} roughness={0.25} side={THREE.DoubleSide} />
+            <meshStandardMaterial color="#115e59" emissive="#115e59" emissiveIntensity={0.4} metalness={0.7} roughness={0.25} side={THREE.DoubleSide} />
           </mesh>
           {/* handle */}
           <mesh position={[-0.7, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
             <cylinderGeometry args={[0.18, 0.18, 0.8, 24]} />
-            <meshStandardMaterial color="#1a2350" metalness={0.8} roughness={0.3} />
+            <meshStandardMaterial color="#0d3633" metalness={0.8} roughness={0.3} />
           </mesh>
         </group>
       </Float>
@@ -56,7 +56,7 @@ export default function AdsCampaign3D({ hovered }: { hovered: boolean }) {
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[positions, 3]} />
         </bufferGeometry>
-        <pointsMaterial size={0.06} color="#8aa6ff" transparent opacity={0.9} />
+        <pointsMaterial size={0.06} color="#5fd9cf" transparent opacity={0.9} />
       </points>
     </>
   );

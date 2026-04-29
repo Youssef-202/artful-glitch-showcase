@@ -12,7 +12,7 @@ function LoaderSphere() {
   return (
     <mesh ref={ref}>
       <icosahedronGeometry args={[1.1, 1]} />
-      <meshBasicMaterial color="#3565F5" wireframe />
+      <meshBasicMaterial color="#115e59" wireframe />
     </mesh>
   );
 }
