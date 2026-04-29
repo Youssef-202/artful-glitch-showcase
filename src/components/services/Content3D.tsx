@@ -9,7 +9,7 @@ export default function Content3D({ hovered }: { hovered: boolean }) {
     () => Array.from({ length: 9 }, (_, i) => ({
       pos: [Math.cos(i * 0.7) * 1.7, 0.4 + Math.sin(i * 1.1) * 0.7, Math.sin(i * 0.6) * 1.2] as [number, number, number],
       scale: 0.25 + (i % 3) * 0.08,
-      color: i % 3 === 0 ? "#3565F5" : i % 3 === 1 ? "#8aa6ff" : "#ffffff",
+      color: i % 3 === 0 ? "#115e59" : i % 3 === 1 ? "#5fd9cf" : "#ffffff",
     })),
     []
   );
@@ -23,12 +23,12 @@ export default function Content3D({ hovered }: { hovered: boolean }) {
     <>
       <ambientLight intensity={0.5} />
       <directionalLight position={[4, 5, 3]} intensity={1.3} />
-      <pointLight position={[-3, -2, 2]} color="#3565F5" intensity={2} />
+      <pointLight position={[-3, -2, 2]} color="#115e59" intensity={2} />
 
       {/* keyboard base */}
       <mesh position={[0, -1.4, 0]}>
         <boxGeometry args={[4.5, 0.2, 1.6]} />
-        <meshStandardMaterial color="#0d1530" metalness={0.7} roughness={0.3} />
+        <meshStandardMaterial color="#08302d" metalness={0.7} roughness={0.3} />
       </mesh>
       {Array.from({ length: 24 }).map((_, i) => {
         const x = (i % 8) * 0.5 - 1.75;
@@ -37,7 +37,7 @@ export default function Content3D({ hovered }: { hovered: boolean }) {
         return (
           <mesh key={i} position={[x, -1.25, z]}>
             <boxGeometry args={[0.42, 0.12, 0.42]} />
-            <meshStandardMaterial color={accent ? "#3565F5" : "#1a2350"} emissive={accent ? "#3565F5" : "#000"} emissiveIntensity={accent ? 0.6 : 0} />
+            <meshStandardMaterial color={accent ? "#115e59" : "#0d3633"} emissive={accent ? "#115e59" : "#000"} emissiveIntensity={accent ? 0.6 : 0} />
           </mesh>
         );
       })}

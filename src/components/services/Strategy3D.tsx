@@ -26,27 +26,27 @@ export default function Strategy3D({ hovered }: { hovered: boolean }) {
   return (
     <>
       <ambientLight intensity={0.5} />
-      <pointLight position={[3, 4, 4]} color="#8aa6ff" intensity={2} />
-      <pointLight position={[-3, -2, 3]} color="#3565F5" intensity={2} />
+      <pointLight position={[3, 4, 4]} color="#5fd9cf" intensity={2} />
+      <pointLight position={[-3, -2, 3]} color="#115e59" intensity={2} />
       <Float speed={1.2} rotationIntensity={0.2} floatIntensity={0.6}>
         <group ref={group}>
           {/* grid */}
           {Array.from({ length: 7 }).map((_, i) => (
-            <Line key={`h${i}`} points={[[-2.5, -1.2 + i * 0.7, 0], [2.5, -1.2 + i * 0.7, 0]]} color="#1a2350" lineWidth={1} />
+            <Line key={`h${i}`} points={[[-2.5, -1.2 + i * 0.7, 0], [2.5, -1.2 + i * 0.7, 0]]} color="#0d3633" lineWidth={1} />
           ))}
           {/* growth curve */}
-          <Line points={points} color="#3565F5" lineWidth={3} />
+          <Line points={points} color="#115e59" lineWidth={3} />
           {/* nodes */}
           {nodes.map((p, i) => (
             <mesh key={i} position={p}>
               <sphereGeometry args={[0.12, 16, 16]} />
-              <meshStandardMaterial color="#8aa6ff" emissive="#3565F5" emissiveIntensity={1} />
+              <meshStandardMaterial color="#5fd9cf" emissive="#115e59" emissiveIntensity={1} />
             </mesh>
           ))}
           {/* arrow head */}
           <mesh position={points[points.length - 1]} rotation={[0, 0, -Math.PI / 4]}>
             <coneGeometry args={[0.18, 0.4, 16]} />
-            <meshStandardMaterial color="#3565F5" emissive="#3565F5" emissiveIntensity={0.8} />
+            <meshStandardMaterial color="#115e59" emissive="#115e59" emissiveIntensity={0.8} />
           </mesh>
         </group>
       </Float>

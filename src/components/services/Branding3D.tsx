@@ -7,11 +7,11 @@ export default function Branding3D({ hovered }: { hovered: boolean }) {
   const group = useRef<THREE.Group>(null);
   const pieces = useMemo(
     () => [
-      { target: [-0.8, 0.5, 0], geom: "box" as const, color: "#3565F5" },
-      { target: [0.8, 0.5, 0], geom: "box" as const, color: "#8aa6ff" },
+      { target: [-0.8, 0.5, 0], geom: "box" as const, color: "#115e59" },
+      { target: [0.8, 0.5, 0], geom: "box" as const, color: "#5fd9cf" },
       { target: [-0.8, -0.5, 0], geom: "box" as const, color: "#fff" },
-      { target: [0.8, -0.5, 0], geom: "sphere" as const, color: "#3565F5" },
-      { target: [0, 0, 0.4], geom: "torus" as const, color: "#8aa6ff" },
+      { target: [0.8, -0.5, 0], geom: "sphere" as const, color: "#115e59" },
+      { target: [0, 0, 0.4], geom: "torus" as const, color: "#5fd9cf" },
     ],
     []
   );
@@ -39,7 +39,7 @@ export default function Branding3D({ hovered }: { hovered: boolean }) {
     <>
       <ambientLight intensity={0.5} />
       <directionalLight position={[3, 4, 4]} intensity={1.3} />
-      <pointLight position={[-3, -2, 3]} color="#3565F5" intensity={2.5} />
+      <pointLight position={[-3, -2, 3]} color="#115e59" intensity={2.5} />
       <Float speed={1.1} rotationIntensity={0.3} floatIntensity={0.6}>
         <group ref={group}>
           {pieces.map((p, i) => (
