@@ -1,5 +1,5 @@
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useMemo, useRef, useEffect, useState } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { useMemo, useRef, useEffect } from "react";
 import * as THREE from "three";
 import { useLocation } from "react-router-dom";
 import { useTheme } from "@/theme/ThemeProvider";
@@ -7,7 +7,7 @@ import { useTheme } from "@/theme/ThemeProvider";
 /**
  * Persistent 3D background that lives across the whole app.
  * - Animated particle field that morphs based on the current route.
- * - Custom 3D cursor follower (small glowing torus that tracks mouse).
+ * - Reacts to mouse position (subtle parallax + ripple) without a custom cursor.
  * - Reacts to light/dark theme.
  */
 
@@ -15,6 +15,16 @@ function ParticleField({ routeKey, isLight }: { routeKey: string; isLight: boole
   const ref = useRef<THREE.Points>(null);
   const matRef = useRef<THREE.PointsMaterial>(null);
   const count = useMemo(() => (window.innerWidth < 768 ? 700 : 1800), []);
+  const mouse = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, []);
 
   const { positions, originals } = useMemo(() => {
     const pos = new Float32Array(count * 3);
@@ -32,11 +42,9 @@ function ParticleField({ routeKey, isLight }: { routeKey: string; isLight: boole
     return { positions: pos, originals: orig };
   }, [count]);
 
-  // Morph factor that changes per-route to give a subtle "page transition" in 3D
   const morphTarget = useRef(0);
   const morphCurrent = useRef(0);
   useEffect(() => {
-    // hash route to a 0..1 number
     let h = 0;
     for (let i = 0; i < routeKey.length; i++) h = (h * 31 + routeKey.charCodeAt(i)) >>> 0;
     morphTarget.current = (h % 1000) / 1000;
@@ -46,6 +54,12 @@ function ParticleField({ routeKey, isLight }: { routeKey: string; isLight: boole
     if (!ref.current) return;
     ref.current.rotation.y += dt * 0.04;
     ref.current.rotation.x += dt * 0.012;
+
+    // subtle parallax from mouse
+    const targetRotY = mouse.current.x * 0.25;
+    const targetRotX = mouse.current.y * 0.15;
+    ref.current.rotation.y += (targetRotY - (ref.current.rotation.y % (Math.PI * 2))) * 0.0015;
+    ref.current.rotation.x += (targetRotX - ref.current.rotation.x) * 0.02;
 
     morphCurrent.current += (morphTarget.current - morphCurrent.current) * 0.04;
     const m = morphCurrent.current;
@@ -80,53 +94,10 @@ function ParticleField({ routeKey, isLight }: { routeKey: string; isLight: boole
   );
 }
 
-function Cursor3D() {
-  const ref = useRef<THREE.Group>(null);
-  const target = useRef({ x: 0, y: 0 });
-  const { viewport } = useThree();
-
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      target.current.x = (e.clientX / window.innerWidth) * 2 - 1;
-      target.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
-    };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
-  }, []);
-
-  useFrame((_, dt) => {
-    if (!ref.current) return;
-    const tx = target.current.x * (viewport.width / 2);
-    const ty = target.current.y * (viewport.height / 2);
-    ref.current.position.x += (tx - ref.current.position.x) * 0.18;
-    ref.current.position.y += (ty - ref.current.position.y) * 0.18;
-    ref.current.rotation.x += dt * 0.8;
-    ref.current.rotation.y += dt * 1.2;
-  });
-
-  return (
-    <group ref={ref} position={[0, 0, 4]}>
-      <mesh>
-        <torusGeometry args={[0.18, 0.04, 16, 48]} />
-        <meshStandardMaterial color="#5fd9cf" emissive="#115e59" emissiveIntensity={1.5} metalness={0.7} roughness={0.2} />
-      </mesh>
-      <mesh>
-        <icosahedronGeometry args={[0.06, 0]} />
-        <meshStandardMaterial color="#ffffff" emissive="#5fd9cf" emissiveIntensity={2} />
-      </mesh>
-      <pointLight color="#5fd9cf" intensity={1.4} distance={3} />
-    </group>
-  );
-}
-
 export default function PersistentCanvas() {
   const location = useLocation();
   const { theme } = useTheme();
   const isLight = theme === "light";
-  const [hasFinePointer, setHasFinePointer] = useState(false);
-  useEffect(() => {
-    setHasFinePointer(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
-  }, []);
 
   return (
     <div className="fixed inset-0 -z-10 pointer-events-none">
@@ -134,7 +105,6 @@ export default function PersistentCanvas() {
       <Canvas camera={{ position: [0, 0, 10], fov: 60 }} dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }}>
         <ambientLight intensity={isLight ? 0.6 : 0.3} />
         <ParticleField routeKey={location.pathname} isLight={isLight} />
-        {hasFinePointer && <Cursor3D />}
       </Canvas>
     </div>
   );
