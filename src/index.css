@@ -133,7 +133,4 @@
 .animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
 .animate-pulse-ring { animation: pulse-ring 2s cubic-bezier(0,0,0.2,1) infinite; }
 
-/* Hide native cursor on devices with hover for our custom 3D cursor */
-@media (hover: hover) and (pointer: fine) {
-  body, a, button { cursor: none; }
-}
+/* Native cursor restored — 3D interactions still happen in the background */
