@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mail, MessageCircle, Phone } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { useState } from "react";
 import { toast } from "sonner";
