@@ -10,9 +10,9 @@ export const translations = {
       contact: "تواصل معنا",
     },
     common: {
-      brand: "[اسم الشركة]",
+      brand: "وكالة إتقان",
       tagline: "وكالة إبداعية رقمية",
-      heroTitle: "[اسم الشركة]",
+      heroTitle: "وكـــــالـــــة إتـــــــقـــــــان",
       heroSubtitle: "نصنع التجارب الرقمية التي تُحوّل الأفكار إلى علامات لا تُنسى.",
       ctaExplore: "استكشف خدماتنا",
       ctaStart: "ابدأ مشروعك",
