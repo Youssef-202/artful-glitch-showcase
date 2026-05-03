@@ -38,7 +38,7 @@ export const translations = {
     about: {
       title: "إبداعٌ بمعايير عالمية",
       kicker: "من نحن",
-      body: "في [اسم الشركة]، نحن فريق من المصممين والمسوّقين والمطوّرين، نؤمن أن العلامات العظيمة تُبنى بالتفاصيل. نقدّم ٨ خدمات متكاملة تحت سقفٍ واحد لنوصلكم إلى جمهوركم بأسلوبٍ يخلِّد هويتكم.",
+      body: "في وكالة إتقان، نحن فريق من المصممين والمسوّقين والمطوّرين، نؤمن أن العلامات العظيمة تُبنى بالتفاصيل. نقدّم ٨ خدمات متكاملة تحت سقفٍ واحد لنوصلكم إلى جمهوركم بأسلوبٍ يخلِّد هويتكم.",
       missionTitle: "رسالتنا",
       missionBody: "نمنح كل علامة فرصةً عادلة للتألق، عبر دمج الإبداع بالاستراتيجية والتقنية.",
       visionTitle: "رؤيتنا",
@@ -118,7 +118,7 @@ export const translations = {
     about: {
       title: "World-class creativity",
       kicker: "About us",
-      body: "At [Company Name], we are designers, marketers and developers who believe great brands are built on details. We deliver 8 integrated services under one roof to connect you with your audience in a way that immortalizes your identity.",
+      body: "At Etqan Agency, we are designers, marketers and developers who believe great brands are built on details. We deliver 8 integrated services under one roof to connect you with your audience in a way that immortalizes your identity.",
       missionTitle: "Our Mission",
       missionBody: "Give every brand a fair chance to shine by blending creativity, strategy and technology.",
       visionTitle: "Our Vision",
