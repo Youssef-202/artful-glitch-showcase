@@ -1,6 +1,5 @@
-import { Suspense, lazy, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
-import { Canvas } from "@react-three/fiber";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import gsap from "gsap";
@@ -9,17 +8,6 @@ import { services } from "@/lib/services";
 import { useLang } from "@/i18n/LanguageProvider";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const sceneMap = {
-  account: lazy(() => import("@/components/services/AccountMgmt3D")),
-  photo: lazy(() => import("@/components/services/Photography3D")),
-  content: lazy(() => import("@/components/services/Content3D")),
-  strategy: lazy(() => import("@/components/services/Strategy3D")),
-  ads: lazy(() => import("@/components/services/AdsCampaign3D")),
-  web: lazy(() => import("@/components/services/WebDev3D")),
-  design: lazy(() => import("@/components/services/GraphicDesign3D")),
-  brand: lazy(() => import("@/components/services/Branding3D")),
-} as const;
 
 export default function ServiceDetail() {
   const { id } = useParams();
