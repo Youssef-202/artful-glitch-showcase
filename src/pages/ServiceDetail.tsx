@@ -1,6 +1,5 @@
-import { Suspense, lazy, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
-import { Canvas } from "@react-three/fiber";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import gsap from "gsap";
@@ -9,17 +8,6 @@ import { services } from "@/lib/services";
 import { useLang } from "@/i18n/LanguageProvider";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const sceneMap = {
-  account: lazy(() => import("@/components/services/AccountMgmt3D")),
-  photo: lazy(() => import("@/components/services/Photography3D")),
-  content: lazy(() => import("@/components/services/Content3D")),
-  strategy: lazy(() => import("@/components/services/Strategy3D")),
-  ads: lazy(() => import("@/components/services/AdsCampaign3D")),
-  web: lazy(() => import("@/components/services/WebDev3D")),
-  design: lazy(() => import("@/components/services/GraphicDesign3D")),
-  brand: lazy(() => import("@/components/services/Branding3D")),
-} as const;
 
 export default function ServiceDetail() {
   const { id } = useParams();
@@ -41,7 +29,6 @@ export default function ServiceDetail() {
 
   if (!service) return <Navigate to="/services" replace />;
 
-  const Scene = sceneMap[service.id as keyof typeof sceneMap];
   const tr = t.services[service.id as keyof typeof t.services];
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
 
@@ -86,19 +73,17 @@ export default function ServiceDetail() {
         <motion.div
           onHoverStart={() => setHovered(true)}
           onHoverEnd={() => setHovered(false)}
+          whileHover={{ scale: 1.02, rotateY: dir === "rtl" ? -4 : 4 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
           className="relative h-[55vh] lg:h-[70vh] rounded-3xl overflow-hidden glass shadow-elegant"
+          style={{ transformStyle: "preserve-3d", perspective: 1000 }}
         >
           <img
             src={service.image}
             alt={tr.title}
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-tr from-background/60 via-transparent to-background/30 pointer-events-none" />
-          <Suspense fallback={null}>
-            <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]} className="!absolute inset-0 mix-blend-screen opacity-60">
-              <Scene hovered={hovered} />
-            </Canvas>
-          </Suspense>
+          <div className="absolute inset-0 bg-gradient-to-tr from-background/40 via-transparent to-transparent pointer-events-none" />
         </motion.div>
       </div>
 
