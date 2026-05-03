@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useTheme } from "@/theme/ThemeProvider";
 import { useLang } from "@/i18n/LanguageProvider";
 import { cn } from "@/lib/utils";
+import logo from "@/assets/logo.png";
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
@@ -27,9 +28,8 @@ export default function Navbar() {
       className="fixed top-0 inset-x-0 z-50 px-4 sm:px-6 pt-4"
     >
       <nav className="glass-strong rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between max-w-7xl mx-auto">
-        <Link to="/" className="flex items-center gap-2 font-black text-lg sm:text-xl">
-          <span className="w-7 h-7 rounded-lg bg-gradient-to-tr from-primary to-accent shadow-glow" />
-          <span className="text-gradient">{t.common.brand}</span>
+        <Link to="/" className="flex items-center gap-2" aria-label={t.common.brand}>
+          <img src={logo} alt={t.common.brand} className="h-10 sm:h-12 w-auto object-contain" />
         </Link>
 
         <ul className="hidden lg:flex items-center gap-1">
