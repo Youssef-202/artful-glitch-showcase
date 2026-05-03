@@ -88,8 +88,14 @@ export default function ServiceDetail() {
           onHoverEnd={() => setHovered(false)}
           className="relative h-[55vh] lg:h-[70vh] rounded-3xl overflow-hidden glass shadow-elegant"
         >
-          <Suspense fallback={<div className="w-full h-full animate-pulse" />}>
-            <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
+          <img
+            src={service.image}
+            alt={tr.title}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-tr from-background/60 via-transparent to-background/30 pointer-events-none" />
+          <Suspense fallback={null}>
+            <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]} className="!absolute inset-0 mix-blend-screen opacity-60">
               <Scene hovered={hovered} />
             </Canvas>
           </Suspense>

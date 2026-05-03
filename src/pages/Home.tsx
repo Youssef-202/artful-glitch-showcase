@@ -52,14 +52,20 @@ export default function Home() {
               >
                 <Link
                   to={`/services/${s.id}`}
-                  className="group block glass rounded-2xl p-6 h-full hover:shadow-glow hover:-translate-y-1 transition-all"
+                  className="group block glass rounded-2xl overflow-hidden h-full hover:shadow-glow hover:-translate-y-1 transition-all"
                 >
-                  <div className="text-gradient font-black text-2xl mb-3">{s.number}</div>
-                  <h3 className="text-lg font-bold mb-2">{tr.title}</h3>
-                  <p className="text-sm text-muted-foreground line-clamp-2">{tr.tagline}</p>
-                  <span className="inline-flex items-center gap-1 mt-4 text-primary text-sm font-bold opacity-0 group-hover:opacity-100 transition">
-                    {t.common.learnMore} <Arrow className="w-3 h-3" />
-                  </span>
+                  <div className="relative aspect-square overflow-hidden bg-background/40">
+                    <img src={s.image} alt={tr.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent" />
+                    <span className="absolute top-3 left-3 text-gradient font-black text-xl">{s.number}</span>
+                  </div>
+                  <div className="p-5">
+                    <h3 className="text-lg font-bold mb-1">{tr.title}</h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">{tr.tagline}</p>
+                    <span className="inline-flex items-center gap-1 mt-3 text-primary text-sm font-bold opacity-0 group-hover:opacity-100 transition">
+                      {t.common.learnMore} <Arrow className="w-3 h-3" />
+                    </span>
+                  </div>
                 </Link>
               </motion.div>
             );
