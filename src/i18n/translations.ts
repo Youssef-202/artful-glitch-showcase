@@ -90,9 +90,9 @@ export const translations = {
       contact: "Contact",
     },
     common: {
-      brand: "[Company Name]",
+      brand: "Etqan Agency",
       tagline: "Digital Creative Agency",
-      heroTitle: "[Company Name]",
+      heroTitle: "Etqan Agency",
       heroSubtitle: "We craft digital experiences that turn ideas into unforgettable brands.",
       ctaExplore: "Explore Services",
       ctaStart: "Start a Project",
