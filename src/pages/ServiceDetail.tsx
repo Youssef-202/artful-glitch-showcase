@@ -29,7 +29,6 @@ export default function ServiceDetail() {
 
   if (!service) return <Navigate to="/services" replace />;
 
-  const Scene = sceneMap[service.id as keyof typeof sceneMap];
   const tr = t.services[service.id as keyof typeof t.services];
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
 
