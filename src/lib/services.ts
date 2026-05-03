@@ -1,3 +1,12 @@
+import accountImg from "@/assets/services/account.png";
+import photoImg from "@/assets/services/photo.png";
+import contentImg from "@/assets/services/content.png";
+import strategyImg from "@/assets/services/strategy.png";
+import adsImg from "@/assets/services/ads.png";
+import webImg from "@/assets/services/web.jpg";
+import designImg from "@/assets/services/design.jpg";
+import brandImg from "@/assets/services/brand.png";
+
 export type Service = {
   id: string;
   number: string;
@@ -5,6 +14,7 @@ export type Service = {
   tagline: string;
   description: string;
   bullets: string[];
+  image: string;
 };
 
 export const services: Service[] = [
