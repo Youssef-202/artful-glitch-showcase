@@ -29,15 +29,26 @@ export default function ServicesIndex() {
             >
               <Link
                 to={`/services/${s.id}`}
-                className="group block glass rounded-3xl p-8 h-full hover:shadow-glow hover:-translate-y-1 transition-all"
+                className="group block glass rounded-3xl overflow-hidden h-full hover:shadow-glow hover:-translate-y-1 transition-all"
               >
-                <div className="flex items-baseline justify-between mb-4">
-                  <span className="text-gradient font-black text-3xl">{s.number}</span>
-                  <Arrow className="w-5 h-5 text-primary opacity-0 group-hover:opacity-100 transition" />
+                <div className="relative aspect-[4/3] overflow-hidden bg-background/40">
+                  <img
+                    src={s.image}
+                    alt={tr.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent" />
+                  <span className="absolute top-4 left-4 text-gradient font-black text-2xl">{s.number}</span>
                 </div>
-                <h2 className="text-xl font-black mb-2">{tr.title}</h2>
-                <p className="text-sm text-primary mb-3">{tr.tagline}</p>
-                <p className="text-sm text-muted-foreground line-clamp-3">{tr.description}</p>
+                <div className="p-6">
+                  <div className="flex items-baseline justify-between mb-2">
+                    <h2 className="text-xl font-black">{tr.title}</h2>
+                    <Arrow className="w-5 h-5 text-primary opacity-0 group-hover:opacity-100 transition" />
+                  </div>
+                  <p className="text-sm text-primary mb-2">{tr.tagline}</p>
+                  <p className="text-sm text-muted-foreground line-clamp-2">{tr.description}</p>
+                </div>
               </Link>
             </motion.div>
           );

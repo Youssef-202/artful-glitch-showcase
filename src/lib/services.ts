@@ -1,3 +1,12 @@
+import accountImg from "@/assets/services/account.png";
+import photoImg from "@/assets/services/photo.png";
+import contentImg from "@/assets/services/content.png";
+import strategyImg from "@/assets/services/strategy.png";
+import adsImg from "@/assets/services/ads.png";
+import webImg from "@/assets/services/web.jpg";
+import designImg from "@/assets/services/design.jpg";
+import brandImg from "@/assets/services/brand.png";
+
 export type Service = {
   id: string;
   number: string;
@@ -5,11 +14,13 @@ export type Service = {
   tagline: string;
   description: string;
   bullets: string[];
+  image: string;
 };
 
 export const services: Service[] = [
   {
     id: "account",
+    image: accountImg,
     number: "01",
     title: "إدارة الحسابات",
     tagline: "حضور رقمي يصنع الأثر",
@@ -19,6 +30,7 @@ export const services: Service[] = [
   },
   {
     id: "photo",
+    image: photoImg,
     number: "02",
     title: "التصوير والإنتاج البصري",
     tagline: "كل صورة تحكي قصة",
@@ -28,6 +40,7 @@ export const services: Service[] = [
   },
   {
     id: "content",
+    image: contentImg,
     number: "03",
     title: "كتابة وصناعة المحتوى",
     tagline: "كلمات تُقنع وتبيع",
@@ -37,6 +50,7 @@ export const services: Service[] = [
   },
   {
     id: "strategy",
+    image: strategyImg,
     number: "04",
     title: "الخطط والاستراتيجيات التسويقية",
     tagline: "خارطة طريق نحو النمو",
@@ -46,6 +60,7 @@ export const services: Service[] = [
   },
   {
     id: "ads",
+    image: adsImg,
     number: "05",
     title: "إدارة الحملات الإعلانية",
     tagline: "إعلانات تحقق أهدافكم",
@@ -55,6 +70,7 @@ export const services: Service[] = [
   },
   {
     id: "web",
+    image: webImg,
     number: "06",
     title: "تطوير المواقع",
     tagline: "تجارب رقمية متكاملة",
@@ -64,6 +80,7 @@ export const services: Service[] = [
   },
   {
     id: "design",
+    image: designImg,
     number: "07",
     title: "التصميم الجرافيكي",
     tagline: "جمالٌ بمعنى",
@@ -73,6 +90,7 @@ export const services: Service[] = [
   },
   {
     id: "brand",
+    image: brandImg,
     number: "08",
     title: "بناء العلامة التجارية",
     tagline: "هوية تُذكر وتُحب",
