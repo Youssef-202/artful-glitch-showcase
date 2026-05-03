@@ -9,9 +9,7 @@ export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
 
   const channels = [
-    { icon: MessageCircle, label: t.contact.whatsapp, value: "+966 5X XXX XXXX", href: "https://wa.me/9665XXXXXXXX" },
-    { icon: Mail, label: t.contact.email, value: "hello@example.com", href: "mailto:hello@example.com" },
-    { icon: Phone, label: t.contact.phone, value: "+966 11 XXX XXXX", href: "tel:+96611XXXXXXX" },
+    { icon: MessageCircle, label: t.contact.whatsapp, value: "+966 55 325 6499", href: "https://wa.me/966553256499" },
   ];
 
   return (
