@@ -6,7 +6,7 @@ export default function FloatingCTA() {
   const { t, dir } = useLang();
   return (
     <motion.a
-      href="https://wa.me/9665XXXXXXXX"
+      href="https://wa.me/966553256499"
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t.common.ctaWhatsapp}
