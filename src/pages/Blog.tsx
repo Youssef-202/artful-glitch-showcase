@@ -1,0 +1,98 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { ArrowLeft, ArrowRight, Calendar, User } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useLang } from "@/i18n/LanguageProvider";
+
+type Post = {
+  id: string;
+  title: string;
+  excerpt: string | null;
+  cover_url: string | null;
+  author_name: string | null;
+  category: string | null;
+  created_at: string;
+};
+
+export default function Blog() {
+  const { t, dir } = useLang();
+  const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    supabase
+      .from("blog_posts")
+      .select("id,title,excerpt,cover_url,author_name,category,created_at")
+      .eq("published", true)
+      .order("created_at", { ascending: false })
+      .then(({ data }) => {
+        setPosts(data ?? []);
+        setLoading(false);
+      });
+  }, []);
+
+  return (
+    <div className="px-6 max-w-7xl mx-auto">
+      <header className="text-center mb-12">
+        <p className="text-sm text-primary tracking-widest mb-3">{t.blog.kicker}</p>
+        <h1 className="text-4xl sm:text-6xl font-black mb-4">
+          <span className="text-gradient">{t.blog.title}</span>
+        </h1>
+        <p className="text-muted-foreground max-w-xl mx-auto">{t.blog.subtitle}</p>
+      </header>
+
+      {loading ? (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="glass rounded-2xl h-80 animate-pulse" />
+          ))}
+        </div>
+      ) : posts.length === 0 ? (
+        <p className="text-center text-muted-foreground py-20">{t.blog.empty}</p>
+      ) : (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          {posts.map((p, i) => (
+            <motion.article
+              key={p.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.06 }}
+            >
+              <Link
+                to={`/blog/${p.id}`}
+                className="group block glass rounded-2xl overflow-hidden h-full hover:shadow-glow hover:-translate-y-1 transition-all"
+              >
+                {p.cover_url ? (
+                  <div className="aspect-video overflow-hidden bg-background/40">
+                    <img src={p.cover_url} alt={p.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+                  </div>
+                ) : (
+                  <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                    <span className="text-4xl font-black text-gradient">{p.category?.[0] ?? "✦"}</span>
+                  </div>
+                )}
+                <div className="p-6">
+                  {p.category && (
+                    <span className="inline-block text-xs text-primary tracking-widest mb-2">{p.category}</span>
+                  )}
+                  <h2 className="text-xl font-bold mb-2 line-clamp-2">{p.title}</h2>
+                  {p.excerpt && <p className="text-sm text-muted-foreground line-clamp-3 mb-4">{p.excerpt}</p>}
+                  <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                    {p.author_name && <span className="flex items-center gap-1"><User className="w-3 h-3" />{p.author_name}</span>}
+                    <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{new Date(p.created_at).toLocaleDateString()}</span>
+                  </div>
+                  <span className="inline-flex items-center gap-1 mt-4 text-primary text-sm font-bold opacity-0 group-hover:opacity-100 transition">
+                    {t.blog.readMore} <Arrow className="w-3 h-3" />
+                  </span>
+                </div>
+              </Link>
+            </motion.article>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}

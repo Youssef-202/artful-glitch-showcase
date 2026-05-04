@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Tajawal', 'system-ui', 'sans-serif'],
-        display: ['Tajawal', 'system-ui', 'sans-serif'],
+        sans: ['AlJazeera', 'Al-Jazeera-Arabic', 'system-ui', 'sans-serif'],
+        display: ['AlJazeera', 'Al-Jazeera-Arabic', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
