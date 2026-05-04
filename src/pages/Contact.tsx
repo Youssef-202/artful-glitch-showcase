@@ -9,7 +9,7 @@ export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
 
   const channels = [
-    { icon: MessageCircle, label: t.contact.whatsapp, value: "+966 55 325 6499", href: "https://wa.me/966553256499" },
+    { icon: MessageCircle, label: t.contact.whatsapp, value: "+966 57 351 1722", href: "https://wa.me/966573511722" },
   ];
 
   return (
