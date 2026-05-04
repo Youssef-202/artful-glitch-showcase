@@ -1,13 +1,25 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useLang } from "@/i18n/LanguageProvider";
 import Hero from "@/components/Hero";
 import { services } from "@/lib/services";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function Home() {
   const { t, lang, dir } = useLang();
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
+  const [posts, setPosts] = useState<any[]>([]);
+
+  useEffect(() => {
+    supabase.from("blog_posts")
+      .select("id,title,excerpt,cover_url,category,created_at")
+      .eq("published", true)
+      .order("created_at", { ascending: false })
+      .limit(3)
+      .then(({ data }) => setPosts(data ?? []));
+  }, []);
 
   return (
     <>
