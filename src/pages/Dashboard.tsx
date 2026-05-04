@@ -176,7 +176,9 @@ function PostForm({ post, onClose }: { post: Post | null; onClose: () => void })
     if (!parsed.success) { toast.error(parsed.error.issues[0].message); return; }
     setBusy(true);
     const payload = {
-      ...parsed.data,
+      title: parsed.data.title,
+      content: parsed.data.content,
+      published: parsed.data.published,
       excerpt: parsed.data.excerpt || null,
       cover_url: parsed.data.cover_url || null,
       author_name: parsed.data.author_name || null,
