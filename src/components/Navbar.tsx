@@ -1,15 +1,17 @@
 import { NavLink, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Moon, Sun, Languages, Menu, X } from "lucide-react";
+import { Moon, Sun, Languages, Menu, X, LogIn, LayoutDashboard } from "lucide-react";
 import { useState } from "react";
 import { useTheme } from "@/theme/ThemeProvider";
 import { useLang } from "@/i18n/LanguageProvider";
+import { useAuth } from "@/auth/AuthProvider";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.png";
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const { lang, t, toggleLang } = useLang();
+  const { user, isAdmin } = useAuth();
   const [open, setOpen] = useState(false);
 
   const links = [
