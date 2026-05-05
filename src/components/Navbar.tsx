@@ -1,15 +1,17 @@
 import { NavLink, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Moon, Sun, Languages, Menu, X } from "lucide-react";
+import { Moon, Sun, Languages, Menu, X, LogIn, LayoutDashboard } from "lucide-react";
 import { useState } from "react";
 import { useTheme } from "@/theme/ThemeProvider";
 import { useLang } from "@/i18n/LanguageProvider";
+import { useAuth } from "@/auth/AuthProvider";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.png";
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const { lang, t, toggleLang } = useLang();
+  const { user, isAdmin } = useAuth();
   const [open, setOpen] = useState(false);
 
   const links = [
@@ -53,6 +55,14 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
+          <Link
+            to={user ? "/dashboard" : "/auth"}
+            aria-label={user ? "Dashboard" : "Login"}
+            className="glass rounded-full px-3 py-2 text-xs font-bold flex items-center gap-1.5 hover:scale-105 transition"
+          >
+            {user ? <LayoutDashboard className="w-4 h-4" /> : <LogIn className="w-4 h-4" />}
+            <span className="hidden sm:inline">{user ? (isAdmin ? t.dashboard.title : t.auth.logout) : t.auth.signIn}</span>
+          </Link>
           <button
             onClick={toggleLang}
             aria-label="Toggle language"
