@@ -55,6 +55,14 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
+          <Link
+            to={user ? "/dashboard" : "/auth"}
+            aria-label={user ? "Dashboard" : "Login"}
+            className="glass rounded-full px-3 py-2 text-xs font-bold flex items-center gap-1.5 hover:scale-105 transition"
+          >
+            {user ? <LayoutDashboard className="w-4 h-4" /> : <LogIn className="w-4 h-4" />}
+            <span className="hidden sm:inline">{user ? (isAdmin ? t.dashboard.title : t.auth.logout) : t.auth.signIn}</span>
+          </Link>
           <button
             onClick={toggleLang}
             aria-label="Toggle language"
