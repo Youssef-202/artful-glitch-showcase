@@ -56,6 +56,57 @@ export type Database = {
         }
         Relationships: []
       }
+      portfolio_items: {
+        Row: {
+          accent: string
+          category: string
+          client_ar: string | null
+          client_en: string | null
+          color: string
+          cover_url: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          published: boolean
+          sort_order: number
+          title_ar: string
+          title_en: string
+          updated_at: string
+        }
+        Insert: {
+          accent?: string
+          category?: string
+          client_ar?: string | null
+          client_en?: string | null
+          color?: string
+          cover_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          published?: boolean
+          sort_order?: number
+          title_ar: string
+          title_en: string
+          updated_at?: string
+        }
+        Update: {
+          accent?: string
+          category?: string
+          client_ar?: string | null
+          client_en?: string | null
+          color?: string
+          cover_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          published?: boolean
+          sort_order?: number
+          title_ar?: string
+          title_en?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
