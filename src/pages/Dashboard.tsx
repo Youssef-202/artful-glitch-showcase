@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, NavLink, Route, Routes, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FileText, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { FileText, Image as ImageIcon, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -32,6 +32,7 @@ function Sidebar() {
   const items = [
     { to: "/dashboard", icon: LayoutDashboard, label: t.dashboard.title, end: true },
     { to: "/dashboard/posts", icon: FileText, label: t.dashboard.posts },
+    { to: "/dashboard/portfolio", icon: ImageIcon, label: t.dashboard.portfolio },
   ];
   return (
     <aside className="w-64 shrink-0 glass-strong rounded-3xl p-4 flex flex-col gap-2 h-fit sticky top-24">
