@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, NavLink, Route, Routes, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FileText, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { FileText, Image as ImageIcon, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -32,6 +32,7 @@ function Sidebar() {
   const items = [
     { to: "/dashboard", icon: LayoutDashboard, label: t.dashboard.title, end: true },
     { to: "/dashboard/posts", icon: FileText, label: t.dashboard.posts },
+    { to: "/dashboard/portfolio", icon: ImageIcon, label: t.dashboard.portfolio },
   ];
   return (
     <aside className="w-64 shrink-0 glass-strong rounded-3xl p-4 flex flex-col gap-2 h-fit sticky top-24">
@@ -226,16 +227,188 @@ function PostForm({ post, onClose }: { post: Post | null; onClose: () => void })
   );
 }
 
+type PItem = {
+  id: string;
+  category: string;
+  title_ar: string;
+  title_en: string;
+  client_ar: string | null;
+  client_en: string | null;
+  cover_url: string | null;
+  color: string;
+  accent: string;
+  sort_order: number;
+  published: boolean;
+};
+
+const itemSchema = z.object({
+  category: z.enum(["branding", "web", "design", "photo"]),
+  title_ar: z.string().trim().min(1).max(200),
+  title_en: z.string().trim().min(1).max(200),
+  client_ar: z.string().trim().max(200).optional().or(z.literal("")),
+  client_en: z.string().trim().max(200).optional().or(z.literal("")),
+  cover_url: z.string().trim().url().optional().or(z.literal("")),
+  color: z.string().trim().regex(/^#[0-9a-fA-F]{6}$/),
+  accent: z.string().trim().regex(/^#[0-9a-fA-F]{6}$/),
+  sort_order: z.number().int(),
+  published: z.boolean(),
+});
+
+function PortfolioManager({ items, onChange }: { items: PItem[]; onChange: () => void }) {
+  const { t } = useLang();
+  const [editing, setEditing] = useState<PItem | null>(null);
+  const [creating, setCreating] = useState(false);
+
+  const remove = async (id: string) => {
+    if (!confirm("Delete?")) return;
+    const { error } = await supabase.from("portfolio_items").delete().eq("id", id);
+    if (error) toast.error(error.message); else { toast.success("✓"); onChange(); }
+  };
+
+  if (creating || editing) {
+    return <PortfolioForm item={editing} onClose={() => { setEditing(null); setCreating(false); onChange(); }} />;
+  }
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-3xl font-black"><span className="text-gradient">{t.dashboard.portfolio}</span></h1>
+        <button onClick={() => setCreating(true)} className="inline-flex items-center gap-2 rounded-full px-5 py-3 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition">
+          <Plus className="w-4 h-4" /> {t.dashboard.newItem}
+        </button>
+      </div>
+      <div className="glass-strong rounded-3xl overflow-hidden">
+        {items.map((p) => (
+          <div key={p.id} className="flex items-center justify-between p-4 border-b border-border/40 last:border-0 hover:bg-foreground/5">
+            <div className="flex items-center gap-3 min-w-0 flex-1">
+              <div className="w-12 h-12 rounded-xl shrink-0 overflow-hidden" style={{ background: `linear-gradient(135deg, ${p.color}, ${p.accent})` }}>
+                {p.cover_url && <img src={p.cover_url} alt="" className="w-full h-full object-cover" />}
+              </div>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <p className="font-bold truncate">{p.title_ar} / {p.title_en}</p>
+                  {p.published ? <Eye className="w-3 h-3 text-primary" /> : <EyeOff className="w-3 h-3 text-muted-foreground" />}
+                </div>
+                <p className="text-xs text-muted-foreground">{p.category} · #{p.sort_order}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button onClick={() => setEditing(p)} className="p-2 rounded-lg hover:bg-primary/10 text-primary"><Pencil className="w-4 h-4" /></button>
+              <button onClick={() => remove(p.id)} className="p-2 rounded-lg hover:bg-destructive/10 text-destructive"><Trash2 className="w-4 h-4" /></button>
+            </div>
+          </div>
+        ))}
+        {items.length === 0 && <p className="text-center text-muted-foreground py-12">—</p>}
+      </div>
+    </div>
+  );
+}
+
+function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => void }) {
+  const { t } = useLang();
+  const { user } = useAuth();
+  const [form, setForm] = useState({
+    category: item?.category ?? "branding",
+    title_ar: item?.title_ar ?? "",
+    title_en: item?.title_en ?? "",
+    client_ar: item?.client_ar ?? "",
+    client_en: item?.client_en ?? "",
+    cover_url: item?.cover_url ?? "",
+    color: item?.color ?? "#115e59",
+    accent: item?.accent ?? "#5fd9cf",
+    sort_order: item?.sort_order ?? 0,
+    published: item?.published ?? true,
+  });
+  const [busy, setBusy] = useState(false);
+
+  const save = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const parsed = itemSchema.safeParse(form);
+    if (!parsed.success) { toast.error(parsed.error.issues[0].message); return; }
+    setBusy(true);
+    const payload = {
+      category: parsed.data.category,
+      title_ar: parsed.data.title_ar,
+      title_en: parsed.data.title_en,
+      client_ar: parsed.data.client_ar || null,
+      client_en: parsed.data.client_en || null,
+      cover_url: parsed.data.cover_url || null,
+      color: parsed.data.color,
+      accent: parsed.data.accent,
+      sort_order: parsed.data.sort_order,
+      published: parsed.data.published,
+    };
+    const res = item
+      ? await supabase.from("portfolio_items").update(payload).eq("id", item.id)
+      : await supabase.from("portfolio_items").insert({ ...payload, created_by: user?.id });
+    setBusy(false);
+    if (res.error) toast.error(res.error.message);
+    else { toast.success("✓"); onClose(); }
+  };
+
+  const cats = ["branding", "web", "design", "photo"];
+
+  return (
+    <form onSubmit={save} className="glass-strong rounded-3xl p-8 space-y-4">
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-black"><span className="text-gradient">{item ? t.dashboard.editItem : t.dashboard.newItem}</span></h1>
+        <button type="button" onClick={onClose} className="text-sm text-muted-foreground hover:text-primary inline-flex items-center gap-1">
+          <ArrowLeft className="w-4 h-4" /> {t.dashboard.cancel}
+        </button>
+      </div>
+      <div className="grid sm:grid-cols-2 gap-4">
+        <input required maxLength={200} placeholder={t.dashboard.itemTitleAr} value={form.title_ar} onChange={(e) => setForm({ ...form, title_ar: e.target.value })}
+          className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+        <input required maxLength={200} placeholder={t.dashboard.itemTitleEn} value={form.title_en} onChange={(e) => setForm({ ...form, title_en: e.target.value })}
+          className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+        <input maxLength={200} placeholder={t.dashboard.itemClientAr} value={form.client_ar} onChange={(e) => setForm({ ...form, client_ar: e.target.value })}
+          className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+        <input maxLength={200} placeholder={t.dashboard.itemClientEn} value={form.client_en} onChange={(e) => setForm({ ...form, client_en: e.target.value })}
+          className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+      </div>
+      <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}
+        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary">
+        {cats.map((c) => <option key={c} value={c}>{c}</option>)}
+      </select>
+      <input type="url" placeholder={t.dashboard.cover} value={form.cover_url} onChange={(e) => setForm({ ...form, cover_url: e.target.value })}
+        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+      <div className="grid sm:grid-cols-3 gap-4">
+        <label className="flex items-center gap-2 bg-background/50 border border-border rounded-xl px-3 py-2">
+          <span className="text-sm text-muted-foreground flex-1">{t.dashboard.itemColor}</span>
+          <input type="color" value={form.color} onChange={(e) => setForm({ ...form, color: e.target.value })} className="w-10 h-8 rounded" />
+        </label>
+        <label className="flex items-center gap-2 bg-background/50 border border-border rounded-xl px-3 py-2">
+          <span className="text-sm text-muted-foreground flex-1">{t.dashboard.itemAccent}</span>
+          <input type="color" value={form.accent} onChange={(e) => setForm({ ...form, accent: e.target.value })} className="w-10 h-8 rounded" />
+        </label>
+        <input type="number" placeholder={t.dashboard.itemSort} value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: Number(e.target.value) })}
+          className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+      </div>
+      <label className="flex items-center gap-2 text-sm">
+        <input type="checkbox" checked={form.published} onChange={(e) => setForm({ ...form, published: e.target.checked })} />
+        {t.dashboard.published}
+      </label>
+      <button type="submit" disabled={busy}
+        className="w-full rounded-full px-7 py-4 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-[1.02] transition disabled:opacity-50">
+        {t.dashboard.save}
+      </button>
+    </form>
+  );
+}
+
 export default function Dashboard() {
   const { user, isAdmin, loading } = useAuth();
   const { t } = useLang();
   const [posts, setPosts] = useState<Post[]>([]);
+  const [portfolio, setPortfolio] = useState<PItem[]>([]);
   const [tick, setTick] = useState(0);
 
   useEffect(() => {
     if (!isAdmin) return;
     supabase.from("blog_posts").select("*").order("created_at", { ascending: false })
       .then(({ data }) => setPosts((data as any) ?? []));
+    supabase.from("portfolio_items").select("*").order("sort_order", { ascending: true })
+      .then(({ data }) => setPortfolio((data as any) ?? []));
   }, [isAdmin, tick]);
 
   if (loading) return <div className="px-6 h-96 animate-pulse" />;
@@ -258,6 +431,7 @@ export default function Dashboard() {
         <Routes>
           <Route index element={<Overview posts={posts} />} />
           <Route path="posts" element={<PostsList posts={posts} onChange={() => setTick((t) => t + 1)} />} />
+          <Route path="portfolio" element={<PortfolioManager items={portfolio} onChange={() => setTick((t) => t + 1)} />} />
         </Routes>
       </div>
     </div>

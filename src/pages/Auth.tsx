@@ -18,7 +18,10 @@ export default function AuthPage() {
   const { user } = useAuth();
   const nav = useNavigate();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({
+    email: typeof window !== "undefined" ? localStorage.getItem("etqan_last_email") ?? "" : "",
+    password: "",
+  });
   const [busy, setBusy] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -45,6 +48,7 @@ export default function AuthPage() {
       } else {
         const { error } = await supabase.auth.signInWithPassword(form);
         if (error) throw error;
+        localStorage.setItem("etqan_last_email", form.email);
         nav("/dashboard");
       }
     } catch (err: any) {

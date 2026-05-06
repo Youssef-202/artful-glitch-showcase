@@ -4,7 +4,8 @@ import { useMemo, useRef, useState, Suspense } from "react";
 import * as THREE from "three";
 import { motion } from "framer-motion";
 import { useLang } from "@/i18n/LanguageProvider";
-import { portfolioItems, type PortfolioItem } from "@/lib/portfolio";
+import { type PortfolioItem } from "@/lib/portfolio";
+import { usePortfolio } from "@/lib/usePortfolio";
 
 /** Interactive 3D portfolio carousel: items arranged in a ring, drag to rotate */
 function PortfolioRing({
@@ -108,12 +109,13 @@ function PortfolioRing({
 
 export default function Portfolio() {
   const { t, lang } = useLang();
+  const { items: portfolioItems } = usePortfolio();
   const [filter, setFilter] = useState<string>("all");
   const [selected, setSelected] = useState<string | null>(null);
 
   const filtered = useMemo(
     () => (filter === "all" ? portfolioItems : portfolioItems.filter((p) => p.category === filter)),
-    [filter]
+    [filter, portfolioItems]
   );
   const selectedItem = portfolioItems.find((p) => p.id === selected);
 
