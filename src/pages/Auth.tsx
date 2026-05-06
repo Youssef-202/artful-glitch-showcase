@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Eye, EyeOff } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -19,6 +20,7 @@ export default function AuthPage() {
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [form, setForm] = useState({ email: "", password: "" });
   const [busy, setBusy] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   if (user) return <Navigate to="/dashboard" replace />;
 
@@ -67,15 +69,25 @@ export default function AuthPage() {
             onChange={(e) => setForm({ ...form, email: e.target.value })}
             className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary"
           />
-          <input
-            type="password"
-            required
-            minLength={6}
-            placeholder={t.auth.password}
-            value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
-            className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary"
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              required
+              minLength={6}
+              placeholder={t.auth.password}
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 pr-12 outline-none focus:border-primary"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((p) => !p)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
           <button
             type="submit"
             disabled={busy}
