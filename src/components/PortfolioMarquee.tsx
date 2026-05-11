@@ -89,8 +89,20 @@ export default function PortfolioMarquee() {
       </div>
 
       {/* Coverflow stage */}
-      <div className="relative h-[460px] sm:h-[540px] flex items-center justify-center" style={{ perspective: "1600px" }}>
-        <div className="relative w-full h-full flex items-center justify-center" style={{ transformStyle: "preserve-3d" }}>
+      <motion.div
+        ref={stageRef}
+        className="relative h-[460px] sm:h-[540px] flex items-center justify-center touch-pan-y select-none cursor-grab active:cursor-grabbing"
+        style={{ perspective: "1600px" }}
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.15}
+        onDragEnd={(_, info) => {
+          if (Math.abs(info.offset.x) < 60) return;
+          const forward = info.offset.x < 0;
+          (dir === "rtl" ? !forward : forward) ? next() : prev();
+        }}
+      >
+        <div className="relative w-full h-full flex items-center justify-center pointer-events-none" style={{ transformStyle: "preserve-3d" }}>
           {slots.map((offset) => {
             const item = getItem(offset);
             const abs = Math.abs(offset);
