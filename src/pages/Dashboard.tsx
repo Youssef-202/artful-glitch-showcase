@@ -372,8 +372,9 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
         className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary">
         {cats.map((c) => <option key={c} value={c}>{c}</option>)}
       </select>
-      <input type="url" placeholder={t.dashboard.cover} value={form.cover_url} onChange={(e) => setForm({ ...form, cover_url: e.target.value })}
-        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+      <FileUpload value={form.cover_url} onChange={(url) => setForm({ ...form, cover_url: url ?? "" })} folder="portfolio" accept="image/*,video/*" label="صورة/فيديو العمل" />
+      <input type="url" placeholder={t.dashboard.cover + " (أو رابط مباشر)"} value={form.cover_url} onChange={(e) => setForm({ ...form, cover_url: e.target.value })}
+        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-xs" />
       <div className="grid sm:grid-cols-3 gap-4">
         <label className="flex items-center gap-2 bg-background/50 border border-border rounded-xl px-3 py-2">
           <span className="text-sm text-muted-foreground flex-1">{t.dashboard.itemColor}</span>
