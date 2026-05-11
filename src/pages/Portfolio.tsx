@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowUpRight, Sparkles } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
