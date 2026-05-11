@@ -9,6 +9,7 @@ import { useAuth } from "@/auth/AuthProvider";
 import { useLang } from "@/i18n/LanguageProvider";
 import { cn } from "@/lib/utils";
 import { FileUpload } from "@/components/FileUpload";
+import { MultiFileUpload } from "@/components/MultiFileUpload";
 
 type Post = {
   id: string; title: string; excerpt: string | null; content: string;
