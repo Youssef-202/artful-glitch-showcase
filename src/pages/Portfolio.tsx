@@ -124,6 +124,7 @@ function TiltCard({
             </p>
           </motion.div>
         </div>
+        </Link>
       </motion.div>
     </motion.div>
   );
