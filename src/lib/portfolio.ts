@@ -10,6 +10,16 @@ export type PortfolioItem = {
   color: string;
   accent: string;
   coverUrl?: string | null;
+  descriptionAr?: string | null;
+  descriptionEn?: string | null;
+  contentAr?: string | null;
+  contentEn?: string | null;
+  galleryUrls?: string[];
+  processStepsAr?: string[];
+  processStepsEn?: string[];
+  projectUrl?: string | null;
+  duration?: string | null;
+  year?: string | null;
 };
 
 // Fallback used only if DB fetch fails / is empty
