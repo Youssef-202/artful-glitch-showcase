@@ -126,31 +126,16 @@ function PortfolioRing({
         const z = Math.sin(angle) * radius;
         const isSel = selectedId === it.id;
         return (
-          <Float key={it.id} speed={1.2} rotationIntensity={0.2} floatIntensity={0.6}>
-            <group position={[x, 0, z]} rotation={[0, -angle + Math.PI / 2, 0]}>
-              <mesh
-                onClick={(e) => { e.stopPropagation(); onSelect(it.id); }}
-                onPointerOver={(e) => { e.stopPropagation(); document.body.style.cursor = "pointer"; }}
-                onPointerOut={() => { document.body.style.cursor = ""; }}
-                scale={isSel ? 1.15 : 1}
-              >
-                <RoundedBox args={[1.8, 2.4, 0.18]} radius={0.12} smoothness={4}>
-                  <meshStandardMaterial
-                    color={it.color}
-                    emissive={it.accent}
-                    emissiveIntensity={isSel ? 0.7 : 0.3}
-                    metalness={0.6}
-                    roughness={0.25}
-                  />
-                </RoundedBox>
-              </mesh>
-              <Html position={[0, -1.5, 0.2]} center distanceFactor={8} transform occlude>
-                <div className="px-3 py-2 rounded-lg bg-black/60 backdrop-blur text-white text-xs font-bold whitespace-nowrap pointer-events-none">
-                  {lang === "ar" ? it.titleAr : it.titleEn}
-                </div>
-              </Html>
-            </group>
-          </Float>
+          <Suspense key={it.id} fallback={null}>
+            <CardItem
+              it={it}
+              isSel={isSel}
+              position={[x, 0, z]}
+              rotationY={-angle + Math.PI / 2}
+              onSelect={onSelect}
+              lang={lang}
+            />
+          </Suspense>
         );
       })}
     </group>
