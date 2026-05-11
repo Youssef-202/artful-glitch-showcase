@@ -1,0 +1,152 @@
+import { Link } from "react-router-dom";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
+import { useRef, MouseEvent } from "react";
+import { useLang } from "@/i18n/LanguageProvider";
+import { services } from "@/lib/services";
+
+function ServiceCard3D({ s, i, dir }: { s: typeof services[number]; i: number; dir: "rtl" | "ltr" }) {
+  const { t } = useLang();
+  const tr = t.services[s.id as keyof typeof t.services];
+  const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
+  const ref = useRef<HTMLAnchorElement>(null);
+
+  const mx = useMotionValue(0.5);
+  const my = useMotionValue(0.5);
+  const sx = useSpring(mx, { stiffness: 150, damping: 18, mass: 0.4 });
+  const sy = useSpring(my, { stiffness: 150, damping: 18, mass: 0.4 });
+
+  const rotateX = useTransform(sy, [0, 1], [12, -12]);
+  const rotateY = useTransform(sx, [0, 1], [-14, 14]);
+  const glareX = useTransform(sx, [0, 1], ["0%", "100%"]);
+  const glareY = useTransform(sy, [0, 1], ["0%", "100%"]);
+
+  const onMove = (e: MouseEvent<HTMLAnchorElement>) => {
+    const r = ref.current?.getBoundingClientRect();
+    if (!r) return;
+    mx.set((e.clientX - r.left) / r.width);
+    my.set((e.clientY - r.top) / r.height);
+  };
+  const onLeave = () => { mx.set(0.5); my.set(0.5); };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 60, rotateX: -20 }}
+      whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.7, delay: (i % 4) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      style={{ perspective: 1200 }}
+    >
+      <Link
+        ref={ref}
+        to={`/services/${s.id}`}
+        onMouseMove={onMove}
+        onMouseLeave={onLeave}
+        className="group relative block h-full rounded-3xl"
+        style={{ transformStyle: "preserve-3d" }}
+      >
+        <motion.div
+          style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
+          className="relative h-full rounded-3xl glass overflow-hidden border border-white/10 shadow-elegant transition-shadow duration-500 group-hover:shadow-glow"
+        >
+          {/* aurora gradient ring */}
+          <div className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+               style={{ background: "conic-gradient(from 180deg at 50% 50%, hsl(var(--primary)/0.0), hsl(var(--primary)/0.4), hsl(var(--accent)/0.5), hsl(var(--primary)/0.0))" }} />
+          <div className="relative h-full rounded-3xl bg-card/60 backdrop-blur-xl overflow-hidden">
+            {/* Image */}
+            <div className="relative aspect-square overflow-hidden" style={{ transform: "translateZ(30px)" }}>
+              <motion.img
+                src={s.image}
+                alt={tr.title}
+                loading="lazy"
+                className="w-full h-full object-cover"
+                whileHover={{ scale: 1.12 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+              {/* Number badge */}
+              <div
+                className="absolute top-4 left-4 flex items-center gap-2"
+                style={{ transform: "translateZ(60px)" }}
+              >
+                <span className="relative inline-flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-br from-primary to-accent text-primary-foreground font-black text-base shadow-glow">
+                  {s.number}
+                  <span className="absolute inset-0 rounded-2xl ring-2 ring-primary/40 animate-pulse-ring" />
+                </span>
+              </div>
+              {/* Sparkle */}
+              <Sparkles
+                className="absolute top-4 right-4 w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:rotate-180"
+                style={{ transform: "translateZ(50px)" }}
+              />
+            </div>
+
+            {/* Content */}
+            <div
+              className="relative p-5 pt-4"
+              style={{ transform: "translateZ(40px)" }}
+            >
+              <h3 className="text-lg font-black mb-1 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                {tr.title}
+              </h3>
+              <p className="text-sm text-muted-foreground line-clamp-2 mb-3">{tr.tagline}</p>
+              <span className="inline-flex items-center gap-1.5 text-primary text-sm font-bold transition-all duration-300 group-hover:gap-3">
+                {t.common.learnMore}
+                <Arrow className="w-3.5 h-3.5" />
+              </span>
+              {/* underline accent */}
+              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
+            </div>
+
+            {/* Glare */}
+            <motion.div
+              className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mix-blend-overlay"
+              style={{
+                background: useTransform(
+                  [glareX, glareY] as any,
+                  ([x, y]: any) => `radial-gradient(400px circle at ${x} ${y}, hsl(var(--primary-glow) / 0.35), transparent 50%)`
+                ),
+              }}
+            />
+          </div>
+        </motion.div>
+      </Link>
+    </motion.div>
+  );
+}
+
+export default function ServicesShowcase3D() {
+  const { t, dir } = useLang();
+  return (
+    <section className="relative px-6 py-24 max-w-7xl mx-auto">
+      {/* ambient backdrop */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute top-1/4 -left-20 w-96 h-96 rounded-full bg-primary/10 blur-3xl animate-float-slow" />
+        <div className="absolute bottom-1/4 -right-20 w-96 h-96 rounded-full bg-accent/10 blur-3xl animate-float-slow" style={{ animationDelay: "2s" }} />
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        className="text-center mb-16"
+      >
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass mb-4">
+          <Sparkles className="w-3.5 h-3.5 text-primary" />
+          <p className="text-xs text-primary tracking-[0.3em] font-bold">{t.common.ourServices}</p>
+        </div>
+        <h2 className="text-4xl sm:text-6xl font-black tracking-tight">
+          <span className="text-gradient">{t.nav.services}</span>
+        </h2>
+      </motion.div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {services.map((s, i) => (
+          <ServiceCard3D key={s.id} s={s} i={i} dir={dir} />
+        ))}
+      </div>
+    </section>
+  );
+}
