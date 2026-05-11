@@ -62,7 +62,7 @@ export const translations = {
     common: {
       brand: "وكالة إتقان",
       tagline: "وكالة إبداعية رقمية",
-      heroTitle: "وكالة إتقان",
+      heroTitle: "وكـــــالـــــة إتـــــــقـــــــان",
       heroSubtitle: "نصنع التجارب الرقمية التي تُحوّل الأفكار إلى علامات لا تُنسى.",
       ctaExplore: "استكشف خدماتنا",
       ctaStart: "ابدأ مشروعك",

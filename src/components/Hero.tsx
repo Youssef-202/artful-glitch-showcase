@@ -23,7 +23,7 @@ function LogoMesh() {
   }, [texture]);
 
   const aspect = (texture.image?.width ?? 1) / (texture.image?.height ?? 1);
-  const w = 5.5;
+  const w = 4.2;
   const h = w / aspect;
 
   useFrame((state) => {
