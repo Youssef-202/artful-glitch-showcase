@@ -1,10 +1,11 @@
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, MeshDistortMaterial, Sparkles, Stars, Trail } from "@react-three/drei";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { Float, Sparkles, Stars } from "@react-three/drei";
 import { motion } from "framer-motion";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { Link } from "react-router-dom";
 import { useLang } from "@/i18n/LanguageProvider";
+import logo3d from "@/assets/etqan-logo-3d.png";
 
 /* Custom shader: animated gradient sphere with fresnel rim */
 const vertexShader = `
@@ -111,12 +112,8 @@ export default function Hero() {
           <pointLight position={[-5, -3, -5]} color="#5fd9cf" intensity={3} />
           <pointLight position={[5, 3, 2]} color="#115e59" intensity={2} />
           <Stars radius={50} depth={30} count={1200} factor={4} fade speed={0.6} />
-          <ShaderOrb />
-          <DistortShell />
-          <OrbitingShard radius={2.6} speed={0.6} offset={0} size={0.18} />
-          <OrbitingShard radius={2.9} speed={0.4} offset={2.1} size={0.22} />
-          <OrbitingShard radius={3.2} speed={0.8} offset={4.2} size={0.14} />
-          <Sparkles count={140} scale={7} size={3} speed={0.4} color="#5fd9cf" />
+          <LogoMesh />
+          <Sparkles count={180} scale={8} size={3} speed={0.5} color="#5fd9cf" />
         </Canvas>
       </div>
 
