@@ -75,7 +75,7 @@ export default function PortfolioMarquee() {
       const dt = (now - last) / 1000;
       last = now;
       if (!paused) {
-        angleRef.current = (angleRef.current + dt * 6) % 360;
+        angleRef.current = (angleRef.current + dt * 18) % 360;
         force((n) => (n + 1) % 1000);
       }
       raf = requestAnimationFrame(tick);
