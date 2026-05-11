@@ -1,44 +1,11 @@
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Float, Sparkles, Stars } from "@react-three/drei";
 import { motion } from "framer-motion";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { Link } from "react-router-dom";
 import { useLang } from "@/i18n/LanguageProvider";
 import logo3d from "@/assets/etqan-logo-3d.png";
-
-/* Custom shader: animated gradient sphere with fresnel rim */
-const vertexShader = `
-  varying vec3 vNormal;
-  varying vec3 vPosition;
-  uniform float uTime;
-  void main() {
-    vNormal = normalize(normalMatrix * normal);
-    vec3 p = position;
-    float n = sin(p.x * 3.0 + uTime) * 0.08
-            + sin(p.y * 4.0 + uTime * 1.3) * 0.08
-            + sin(p.z * 5.0 + uTime * 0.7) * 0.06;
-    p += normal * n;
-    vPosition = p;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
-  }
-`;
-const fragmentShader = `
-  varying vec3 vNormal;
-  varying vec3 vPosition;
-  uniform float uTime;
-  uniform vec3 uColorA;
-  uniform vec3 uColorB;
-  uniform vec3 uColorC;
-  void main() {
-    vec3 viewDir = normalize(cameraPosition - vPosition);
-    float fres = pow(1.0 - max(dot(vNormal, viewDir), 0.0), 2.5);
-    float t = 0.5 + 0.5 * sin(uTime * 0.5 + vPosition.y * 1.5);
-    vec3 base = mix(uColorA, uColorB, t);
-    vec3 col = mix(base, uColorC, fres);
-    gl_FragColor = vec4(col, 0.95);
-  }
-`;
 
 function LogoMesh() {
   const texture = useLoader(THREE.TextureLoader, logo3d);
