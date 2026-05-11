@@ -1,6 +1,6 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Float, Html, RoundedBox } from "@react-three/drei";
-import { useEffect, useMemo, useRef, useState, Suspense } from "react";
+import { useMemo, useRef, useState, Suspense } from "react";
 import * as THREE from "three";
 import { motion } from "framer-motion";
 import { useLang } from "@/i18n/LanguageProvider";
@@ -13,25 +13,6 @@ function CardItem({
   it: PortfolioItem; isSel: boolean; position: [number, number, number]; rotationY: number;
   onSelect: (id: string) => void; lang: "ar" | "en";
 }) {
-  const [texture, setTexture] = useState<THREE.Texture | null>(null);
-  useEffect(() => {
-    if (!it.coverUrl) { setTexture(null); return; }
-    let cancelled = false;
-    const loader = new THREE.TextureLoader();
-    loader.setCrossOrigin("anonymous");
-    loader.load(
-      it.coverUrl,
-      (tex) => {
-        if (cancelled) { tex.dispose(); return; }
-        tex.colorSpace = THREE.SRGBColorSpace;
-        tex.anisotropy = 8;
-        setTexture(tex);
-      },
-      undefined,
-      () => { /* swallow error, fallback to color */ }
-    );
-    return () => { cancelled = true; };
-  }, [it.coverUrl]);
   return (
     <Float speed={1.2} rotationIntensity={0.2} floatIntensity={0.6}>
       <group position={position} rotation={[0, rotationY, 0]}>
@@ -42,25 +23,69 @@ function CardItem({
           scale={isSel ? 1.15 : 1}
         >
           <RoundedBox args={[1.8, 2.4, 0.18]} radius={0.12} smoothness={4}>
-            <meshStandardMaterial attach="material-0" color={it.color} metalness={0.4} roughness={0.5} />
-            <meshStandardMaterial attach="material-1" color={it.color} metalness={0.4} roughness={0.5} />
-            <meshStandardMaterial attach="material-2" color={it.color} metalness={0.4} roughness={0.5} />
-            <meshStandardMaterial attach="material-3" color={it.color} metalness={0.4} roughness={0.5} />
             <meshStandardMaterial
-              attach="material-4"
-              map={texture ?? undefined}
-              color={texture ? "#ffffff" : it.color}
+              color={it.color}
               emissive={it.accent}
-              emissiveIntensity={isSel ? 0.35 : 0.15}
-              metalness={0.3}
-              roughness={0.4}
+              emissiveIntensity={isSel ? 0.5 : 0.2}
+              metalness={0.5}
+              roughness={0.35}
             />
-            <meshStandardMaterial attach="material-5" color={it.color} metalness={0.4} roughness={0.5} />
           </RoundedBox>
         </mesh>
-        <Html position={[0, -1.5, 0.2]} center distanceFactor={8} transform occlude>
-          <div className="px-3 py-2 rounded-lg bg-black/60 backdrop-blur text-white text-xs font-bold whitespace-nowrap pointer-events-none">
-            {lang === "ar" ? it.titleAr : it.titleEn}
+        {/* Cover image as HTML on the front face — bypasses CORS texture issues */}
+        <Html
+          position={[0, 0, 0.1]}
+          transform
+          occlude
+          distanceFactor={1.6}
+          style={{ pointerEvents: "none" }}
+        >
+          <div
+            style={{
+              width: "180px",
+              height: "240px",
+              borderRadius: "14px",
+              overflow: "hidden",
+              background: `linear-gradient(135deg, ${it.color}, ${it.accent})`,
+              boxShadow: isSel
+                ? `0 0 40px ${it.accent}`
+                : `0 6px 20px rgba(0,0,0,0.4)`,
+              transform: `scale(${isSel ? 1.15 : 1})`,
+              transition: "transform 0.3s, box-shadow 0.3s",
+            }}
+          >
+            {it.coverUrl && (
+              <img
+                src={it.coverUrl}
+                alt={lang === "ar" ? it.titleAr : it.titleEn}
+                loading="lazy"
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+              />
+            )}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "linear-gradient(to top, rgba(0,0,0,0.65), rgba(0,0,0,0) 50%)",
+                pointerEvents: "none",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                bottom: 8,
+                left: 8,
+                right: 8,
+                color: "white",
+                fontWeight: 700,
+                fontSize: 12,
+                textAlign: "center",
+                textShadow: "0 1px 3px rgba(0,0,0,0.8)",
+              }}
+            >
+              {lang === "ar" ? it.titleAr : it.titleEn}
+            </div>
           </div>
         </Html>
       </group>
