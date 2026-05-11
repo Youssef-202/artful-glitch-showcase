@@ -9,6 +9,7 @@ import { useAuth } from "@/auth/AuthProvider";
 import { useLang } from "@/i18n/LanguageProvider";
 import { cn } from "@/lib/utils";
 import { FileUpload } from "@/components/FileUpload";
+import { MultiFileUpload } from "@/components/MultiFileUpload";
 
 type Post = {
   id: string; title: string; excerpt: string | null; content: string;
@@ -321,6 +322,7 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
     sort_order: item?.sort_order ?? 0,
     published: item?.published ?? true,
   });
+  const [gallery, setGallery] = useState<string[]>(((item as any)?.gallery_urls as string[]) ?? []);
   const [busy, setBusy] = useState(false);
 
   const save = async (e: React.FormEvent) => {
@@ -339,6 +341,7 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
       accent: parsed.data.accent,
       sort_order: parsed.data.sort_order,
       published: parsed.data.published,
+      gallery_urls: gallery,
     };
     const res = item
       ? await supabase.from("portfolio_items").update(payload).eq("id", item.id)
@@ -375,6 +378,16 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
       <FileUpload value={form.cover_url} onChange={(url) => setForm({ ...form, cover_url: url ?? "" })} folder="portfolio" accept="image/*,video/*" label="صورة/فيديو العمل" />
       <input type="url" placeholder={t.dashboard.cover + " (أو رابط مباشر)"} value={form.cover_url} onChange={(e) => setForm({ ...form, cover_url: e.target.value })}
         className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-xs" />
+      <div className="space-y-2">
+        <p className="text-sm font-bold">معرض صور المشروع (يمكنك رفع أكثر من 10 صور)</p>
+        <MultiFileUpload
+          value={gallery}
+          onChange={setGallery}
+          folder="portfolio/gallery"
+          accept="image/*,video/*"
+          label="ارفع صور المعرض"
+        />
+      </div>
       <div className="grid sm:grid-cols-3 gap-4">
         <label className="flex items-center gap-2 bg-background/50 border border-border rounded-xl px-3 py-2">
           <span className="text-sm text-muted-foreground flex-1">{t.dashboard.itemColor}</span>
