@@ -27,6 +27,16 @@ export function usePortfolio() {
               color: d.color,
               accent: d.accent,
               coverUrl: d.cover_url,
+              descriptionAr: d.description_ar,
+              descriptionEn: d.description_en,
+              contentAr: d.content_ar,
+              contentEn: d.content_en,
+              galleryUrls: d.gallery_urls ?? [],
+              processStepsAr: d.process_steps_ar ?? [],
+              processStepsEn: d.process_steps_en ?? [],
+              projectUrl: d.project_url,
+              duration: d.duration,
+              year: d.year,
             }))
           );
         } else {
