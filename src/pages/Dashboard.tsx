@@ -341,6 +341,7 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
       accent: parsed.data.accent,
       sort_order: parsed.data.sort_order,
       published: parsed.data.published,
+      gallery_urls: gallery,
     };
     const res = item
       ? await supabase.from("portfolio_items").update(payload).eq("id", item.id)
