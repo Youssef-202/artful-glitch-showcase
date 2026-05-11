@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useState, useCallback } from "react";
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { usePortfolio } from "@/lib/usePortfolio";
 
 /**
- * Coverflow-style 3D portfolio showcase.
- * Active card is centered & large; neighbors fan out on sides with depth & rotation.
- * Auto-advances; click sides or use arrows to navigate.
+ * Orbital 3D portfolio: cards revolve around a glowing central "planet".
+ * Auto-rotates continuously; arrows / dots snap to bring a card to the front.
  */
 export default function PortfolioMarquee() {
   const { t, lang, dir } = useLang();
@@ -17,18 +16,34 @@ export default function PortfolioMarquee() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
 
+  const angleRef = useRef(0);
+  const [, force] = useState(0);
   const count = items.length;
+
   const next = useCallback(() => setActive((i) => (i + 1) % Math.max(count, 1)), [count]);
   const prev = useCallback(() => setActive((i) => (i - 1 + count) % Math.max(count, 1)), [count]);
 
   useEffect(() => {
-    if (paused || count < 2) return;
-    const id = setInterval(next, 4200);
-    return () => clearInterval(id);
-  }, [paused, next, count]);
+    let raf = 0;
+    let last = performance.now();
+    const tick = (now: number) => {
+      const dt = (now - last) / 1000;
+      last = now;
+      if (!paused) {
+        angleRef.current = (angleRef.current + dt * 6) % 360;
+        force((n) => (n + 1) % 1000);
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [paused]);
 
   if (!count) return null;
   const current = items[active];
+
+  const radius = 360;
+  const step = 360 / count;
 
   return (
     <section
@@ -36,20 +51,33 @@ export default function PortfolioMarquee() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {/* ambient backdrop */}
       <div className="pointer-events-none absolute inset-0 bg-radial-primary opacity-60" />
       <motion.div
         key={`bg-${active}`}
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.35 }}
+        animate={{ opacity: 0.4 }}
         transition={{ duration: 1.2 }}
         className="pointer-events-none absolute inset-0"
         style={{
           background: `radial-gradient(900px 500px at 50% 50%, ${current.color}55, transparent 60%)`,
         }}
       />
+      {/* twinkling stars */}
+      <div className="pointer-events-none absolute inset-0 opacity-40">
+        {Array.from({ length: 40 }).map((_, i) => (
+          <span
+            key={i}
+            className="absolute w-1 h-1 rounded-full bg-foreground/60 animate-pulse"
+            style={{
+              left: `${(i * 137.5) % 100}%`,
+              top: `${(i * 53.7) % 100}%`,
+              animationDelay: `${(i % 10) * 0.3}s`,
+              animationDuration: `${2 + (i % 5)}s`,
+            }}
+          />
+        ))}
+      </div>
 
-      {/* heading */}
       <div className="relative px-6 sm:px-12 max-w-7xl mx-auto mb-12 flex items-end justify-between gap-6 flex-wrap">
         <div className={dir === "rtl" ? "text-right" : "text-left"}>
           <p className="text-xs sm:text-sm text-primary tracking-[0.3em] mb-3 font-bold">{t.common.ourWork}</p>
@@ -65,48 +93,92 @@ export default function PortfolioMarquee() {
         </Link>
       </div>
 
-      {/* coverflow stage */}
-      <div
-        className="relative h-[560px] sm:h-[620px] [perspective:1800px]"
-        style={{ transformStyle: "preserve-3d" }}
-      >
-        <div className="absolute inset-0 flex items-center justify-center">
-          {items.map((item, i) => {
-            // signed offset accounting for wrap-around shortest path
-            let off = i - active;
-            if (off > count / 2) off -= count;
-            if (off < -count / 2) off += count;
-            const abs = Math.abs(off);
-            if (abs > 3) return null; // only render nearby for perf
+      {/* orbital stage */}
+      <div className="relative h-[640px] sm:h-[720px]" style={{ perspective: "1800px" }}>
+        <div className="absolute inset-0 flex items-center justify-center" style={{ transformStyle: "preserve-3d" }}>
+          {/* orbit rings */}
+          <div
+            className="absolute rounded-full border border-primary/20"
+            style={{
+              width: radius * 2,
+              height: radius * 2,
+              transform: "rotateX(68deg)",
+              boxShadow: "0 0 80px hsl(var(--primary) / 0.15) inset",
+            }}
+          />
+          <div
+            className="absolute rounded-full border border-primary/10"
+            style={{
+              width: radius * 2.3,
+              height: radius * 2.3,
+              transform: "rotateX(68deg)",
+            }}
+          />
 
-            const sign = off === 0 ? 0 : off > 0 ? 1 : -1;
-            const rtlMul = dir === "rtl" ? -1 : 1;
-            const xPct = off * 22 * rtlMul; // % of stage width
-            const rotateY = -sign * Math.min(abs, 3) * 28 * rtlMul;
-            const z = -abs * 180;
-            const scale = abs === 0 ? 1 : abs === 1 ? 0.86 : 0.72;
-            const opacity = abs === 0 ? 1 : abs === 1 ? 0.85 : 0.45;
+          {/* central planet */}
+          <div className="absolute" style={{ transformStyle: "preserve-3d" }}>
+            <div className="absolute -inset-12 rounded-full bg-primary/20 blur-3xl animate-pulse" />
+            <div className="absolute -inset-6 rounded-full bg-accent/30 blur-2xl" />
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 24, ease: "linear" }}
+              className="relative w-44 h-44 sm:w-56 sm:h-56 rounded-full shadow-glow"
+              style={{
+                background: `radial-gradient(circle at 30% 30%, hsl(var(--primary-glow)), hsl(var(--primary)) 55%, hsl(var(--background)) 100%)`,
+                boxShadow:
+                  "inset -30px -30px 80px hsl(var(--background)/0.7), inset 20px 20px 60px hsl(var(--primary-glow)/0.4), 0 0 100px hsl(var(--primary)/0.6)",
+              }}
+            >
+              <div
+                className="absolute inset-0 rounded-full opacity-40 mix-blend-overlay"
+                style={{
+                  background:
+                    "radial-gradient(circle at 70% 60%, hsl(0 0% 100% / 0.3), transparent 40%), radial-gradient(circle at 20% 80%, hsl(0 0% 0% / 0.4), transparent 50%)",
+                }}
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Sparkles className="w-10 h-10 text-primary-foreground/80 drop-shadow-lg" />
+              </div>
+            </motion.div>
+            <div
+              className="absolute top-1/2 left-1/2 w-[160%] h-2 rounded-full border-t border-primary/40"
+              style={{ transform: "translate(-50%,-50%) rotateX(75deg)" }}
+            />
+          </div>
+
+          {/* orbiting cards */}
+          {items.map((item, i) => {
+            const baseAngle = i * step - active * step + angleRef.current;
+            const rad = (baseAngle * Math.PI) / 180;
+            const x = Math.sin(rad) * radius;
+            const z = Math.cos(rad) * radius;
+            const depth = (z + radius) / (radius * 2); // 0..1
+            const scale = 0.55 + depth * 0.55;
+            const opacity = 0.25 + depth * 0.75;
+            const isActive = i === active;
 
             return (
               <motion.button
                 key={item.id}
                 onClick={() => setActive(i)}
-                className="absolute top-1/2 left-1/2 origin-center"
-                style={{ transformStyle: "preserve-3d" }}
+                className="absolute top-1/2 left-1/2"
+                style={{
+                  transformStyle: "preserve-3d",
+                  zIndex: Math.round(depth * 1000),
+                }}
                 animate={{
-                  x: `calc(-50% + ${xPct}%)`,
-                  y: "-50%",
-                  rotateY,
-                  z,
+                  x: x - 110,
+                  y: -150,
                   scale,
                   opacity,
-                  zIndex: 100 - abs,
                 }}
-                transition={{ type: "spring", stiffness: 110, damping: 20, mass: 0.7 }}
+                transition={{ type: "spring", stiffness: 80, damping: 18, mass: 0.6 }}
                 aria-label={lang === "ar" ? item.titleAr : item.titleEn}
               >
                 <div
-                  className="relative w-[280px] sm:w-[360px] aspect-[3/4] rounded-3xl overflow-hidden glass border border-white/10 shadow-elegant"
+                  className={`relative w-[220px] aspect-[3/4] rounded-2xl overflow-hidden glass border shadow-elegant ${
+                    isActive ? "border-primary/60 ring-2 ring-primary/40 shadow-glow" : "border-white/10"
+                  }`}
                   style={{ background: `linear-gradient(135deg, ${item.color}, ${item.accent})` }}
                 >
                   {item.coverUrl && (
@@ -118,63 +190,43 @@ export default function PortfolioMarquee() {
                       className="w-full h-full object-cover"
                     />
                   )}
-                  {/* shine */}
-                  <div
-                    className="pointer-events-none absolute inset-0"
-                    style={{
-                      background:
-                        "linear-gradient(115deg, transparent 30%, hsl(0 0% 100% / 0.18) 50%, transparent 70%)",
-                    }}
-                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent" />
-                  <span className="absolute top-4 left-4 text-[10px] px-2.5 py-1 rounded-full bg-background/70 backdrop-blur-md text-primary font-bold tracking-wider">
+                  <span className="absolute top-3 left-3 text-[10px] px-2.5 py-1 rounded-full bg-background/70 backdrop-blur-md text-primary font-bold tracking-wider">
                     {t.portfolio.categories[item.category]}
                   </span>
-                  <span className="absolute top-4 right-4 text-xs font-black text-foreground/50 tabular-nums">
+                  <span className="absolute top-3 right-3 text-xs font-black text-foreground/50 tabular-nums">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-
-                  {/* reflection */}
-                  <div
-                    className="pointer-events-none absolute -bottom-1/2 left-0 right-0 h-1/2 opacity-30"
-                    style={{
-                      background: `linear-gradient(to bottom, ${item.color}, transparent)`,
-                      transform: "scaleY(-1)",
-                      filter: "blur(8px)",
-                    }}
-                  />
                 </div>
               </motion.button>
             );
           })}
         </div>
 
-        {/* nav arrows */}
         <button
           onClick={prev}
-          className="absolute left-4 sm:left-10 top-1/2 -translate-y-1/2 z-[200] glass rounded-full p-3 hover:scale-110 transition border border-white/10"
+          className="absolute left-4 sm:left-10 top-1/2 -translate-y-1/2 z-[2000] glass rounded-full p-3 hover:scale-110 transition border border-white/10"
           aria-label="prev"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
         <button
           onClick={next}
-          className="absolute right-4 sm:right-10 top-1/2 -translate-y-1/2 z-[200] glass rounded-full p-3 hover:scale-110 transition border border-white/10"
+          className="absolute right-4 sm:right-10 top-1/2 -translate-y-1/2 z-[2000] glass rounded-full p-3 hover:scale-110 transition border border-white/10"
           aria-label="next"
         >
           <ChevronRight className="w-5 h-5" />
         </button>
       </div>
 
-      {/* meta + progress */}
-      <div className="relative max-w-3xl mx-auto px-6 mt-10 text-center">
+      <div className="relative max-w-3xl mx-auto px-6 mt-6 text-center">
         <AnimatePresence mode="wait">
           <motion.div
             key={current.id}
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -14 }}
-            transition={{ duration: 0.45 }}
+            transition={{ duration: 0.4 }}
           >
             <h3 className="text-2xl sm:text-3xl font-black mb-2">
               {lang === "ar" ? current.titleAr : current.titleEn}
@@ -185,7 +237,6 @@ export default function PortfolioMarquee() {
           </motion.div>
         </AnimatePresence>
 
-        {/* dot indicators */}
         <div className="flex items-center justify-center gap-2 mt-6 flex-wrap">
           {items.map((it, i) => (
             <button
