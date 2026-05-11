@@ -1,101 +1,64 @@
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, MeshDistortMaterial, Sparkles, Stars, Trail } from "@react-three/drei";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { Float, Sparkles, Stars } from "@react-three/drei";
 import { motion } from "framer-motion";
-import { useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { Link } from "react-router-dom";
 import { useLang } from "@/i18n/LanguageProvider";
+import logo3d from "@/assets/etqan-logo-3d.png";
 
-/* Custom shader: animated gradient sphere with fresnel rim */
-const vertexShader = `
-  varying vec3 vNormal;
-  varying vec3 vPosition;
-  uniform float uTime;
-  void main() {
-    vNormal = normalize(normalMatrix * normal);
-    vec3 p = position;
-    float n = sin(p.x * 3.0 + uTime) * 0.08
-            + sin(p.y * 4.0 + uTime * 1.3) * 0.08
-            + sin(p.z * 5.0 + uTime * 0.7) * 0.06;
-    p += normal * n;
-    vPosition = p;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
-  }
-`;
-const fragmentShader = `
-  varying vec3 vNormal;
-  varying vec3 vPosition;
-  uniform float uTime;
-  uniform vec3 uColorA;
-  uniform vec3 uColorB;
-  uniform vec3 uColorC;
-  void main() {
-    vec3 viewDir = normalize(cameraPosition - vPosition);
-    float fres = pow(1.0 - max(dot(vNormal, viewDir), 0.0), 2.5);
-    float t = 0.5 + 0.5 * sin(uTime * 0.5 + vPosition.y * 1.5);
-    vec3 base = mix(uColorA, uColorB, t);
-    vec3 col = mix(base, uColorC, fres);
-    gl_FragColor = vec4(col, 0.95);
-  }
-`;
+function LogoMesh() {
+  const texture = useLoader(THREE.TextureLoader, logo3d);
+  const groupRef = useRef<THREE.Group>(null);
+  const mouse = useRef({ x: 0, y: 0 });
 
-function ShaderOrb() {
-  const matRef = useRef<THREE.ShaderMaterial>(null);
-  const meshRef = useRef<THREE.Mesh>(null);
-  const uniforms = useMemo(
-    () => ({
-      uTime: { value: 0 },
-      uColorA: { value: new THREE.Color("#0a3d3a") },
-      uColorB: { value: new THREE.Color("#115e59") },
-      uColorC: { value: new THREE.Color("#a7f0e8") },
-    }),
-    []
-  );
-  useFrame((state, dt) => {
-    if (matRef.current) matRef.current.uniforms.uTime.value = state.clock.elapsedTime;
-    if (meshRef.current) {
-      meshRef.current.rotation.y += dt * 0.25;
-      meshRef.current.rotation.x += dt * 0.1;
-    }
-  });
-  return (
-    <mesh ref={meshRef}>
-      <icosahedronGeometry args={[1.6, 64]} />
-      <shaderMaterial ref={matRef} uniforms={uniforms} vertexShader={vertexShader} fragmentShader={fragmentShader} />
-    </mesh>
-  );
-}
+  useEffect(() => {
+    texture.anisotropy = 16;
+    const onMove = (e: MouseEvent) => {
+      mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [texture]);
 
-function OrbitingShard({ radius, speed, offset, size }: { radius: number; speed: number; offset: number; size: number }) {
-  const ref = useRef<THREE.Mesh>(null);
+  const aspect = (texture.image?.width ?? 1) / (texture.image?.height ?? 1);
+  const w = 4.2;
+  const h = w / aspect;
+
   useFrame((state) => {
-    if (!ref.current) return;
-    const t = state.clock.elapsedTime * speed + offset;
-    ref.current.position.x = Math.cos(t) * radius;
-    ref.current.position.z = Math.sin(t) * radius;
-    ref.current.position.y = Math.sin(t * 1.3) * 0.6;
-    ref.current.rotation.x += 0.02;
-    ref.current.rotation.y += 0.03;
+    if (!groupRef.current) return;
+    const t = state.clock.elapsedTime;
+    const targetY = mouse.current.x * 0.8;
+    const targetX = -mouse.current.y * 0.5;
+    groupRef.current.rotation.y += (targetY - groupRef.current.rotation.y) * 0.06;
+    groupRef.current.rotation.x += (targetX - groupRef.current.rotation.x) * 0.06;
+    groupRef.current.position.y = Math.sin(t * 0.8) * 0.15;
+    groupRef.current.position.x += (mouse.current.x * 0.4 - groupRef.current.position.x) * 0.04;
   });
-  return (
-    <mesh ref={ref}>
-      <octahedronGeometry args={[size, 0]} />
-      <meshStandardMaterial color="#5fd9cf" emissive="#115e59" emissiveIntensity={0.8} metalness={0.7} roughness={0.2} />
-    </mesh>
-  );
-}
 
-function DistortShell() {
-  const ref = useRef<THREE.Mesh>(null);
-  useFrame((_, dt) => {
-    if (ref.current) ref.current.rotation.y -= dt * 0.08;
-  });
   return (
-    <Float speed={1.2} rotationIntensity={0.3} floatIntensity={0.5}>
-      <mesh ref={ref} scale={2.6}>
-        <icosahedronGeometry args={[1, 3]} />
-        <MeshDistortMaterial color="#0a3d3a" emissive="#115e59" emissiveIntensity={0.1} distort={0.35} speed={1.2} roughness={0.4} metalness={0.5} wireframe transparent opacity={0.25} />
-      </mesh>
+    <Float speed={1.4} rotationIntensity={0.25} floatIntensity={0.6}>
+      <group ref={groupRef}>
+        <mesh position={[0, 0, -0.05]} scale={1.18}>
+          <planeGeometry args={[w, h]} />
+          <meshBasicMaterial map={texture} transparent opacity={0.35} color="#5fd9cf" depthWrite={false} />
+        </mesh>
+        <mesh>
+          <planeGeometry args={[w, h]} />
+          <meshStandardMaterial
+            map={texture}
+            transparent
+            alphaTest={0.02}
+            side={THREE.DoubleSide}
+            metalness={0.6}
+            roughness={0.25}
+            emissive={new THREE.Color("#5fd9cf")}
+            emissiveMap={texture}
+            emissiveIntensity={0.4}
+          />
+        </mesh>
+      </group>
     </Float>
   );
 }
@@ -111,12 +74,8 @@ export default function Hero() {
           <pointLight position={[-5, -3, -5]} color="#5fd9cf" intensity={3} />
           <pointLight position={[5, 3, 2]} color="#115e59" intensity={2} />
           <Stars radius={50} depth={30} count={1200} factor={4} fade speed={0.6} />
-          <ShaderOrb />
-          <DistortShell />
-          <OrbitingShard radius={2.6} speed={0.6} offset={0} size={0.18} />
-          <OrbitingShard radius={2.9} speed={0.4} offset={2.1} size={0.22} />
-          <OrbitingShard radius={3.2} speed={0.8} offset={4.2} size={0.14} />
-          <Sparkles count={140} scale={7} size={3} speed={0.4} color="#5fd9cf" />
+          <LogoMesh />
+          <Sparkles count={180} scale={8} size={3} speed={0.5} color="#5fd9cf" />
         </Canvas>
       </div>
 
