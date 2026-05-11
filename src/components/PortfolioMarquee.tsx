@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { usePortfolio } from "@/lib/usePortfolio";
 
@@ -25,6 +25,26 @@ export default function PortfolioMarquee() {
     const id = setInterval(next, 5000);
     return () => clearInterval(id);
   }, [paused, next, count]);
+
+  // Horizontal wheel + drag swipe — does NOT hijack vertical page scroll
+  const stageRef = useRef<HTMLDivElement>(null);
+  const wheelLock = useRef(0);
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      // only react to horizontal intent (trackpad swipe / shift+wheel)
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      e.preventDefault();
+      const now = Date.now();
+      if (now - wheelLock.current < 350) return;
+      wheelLock.current = now;
+      const forward = e.deltaX > 0;
+      (dir === "rtl" ? !forward : forward) ? next() : prev();
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, [next, prev, dir]);
 
   if (!count) return null;
   const current = items[active];
@@ -69,8 +89,20 @@ export default function PortfolioMarquee() {
       </div>
 
       {/* Coverflow stage */}
-      <div className="relative h-[460px] sm:h-[540px] flex items-center justify-center" style={{ perspective: "1600px" }}>
-        <div className="relative w-full h-full flex items-center justify-center" style={{ transformStyle: "preserve-3d" }}>
+      <motion.div
+        ref={stageRef}
+        className="relative h-[460px] sm:h-[540px] flex items-center justify-center touch-pan-y select-none cursor-grab active:cursor-grabbing"
+        style={{ perspective: "1600px" }}
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.15}
+        onDragEnd={(_, info) => {
+          if (Math.abs(info.offset.x) < 60) return;
+          const forward = info.offset.x < 0;
+          (dir === "rtl" ? !forward : forward) ? next() : prev();
+        }}
+      >
+        <div className="relative w-full h-full flex items-center justify-center pointer-events-none" style={{ transformStyle: "preserve-3d" }}>
           {slots.map((offset) => {
             const item = getItem(offset);
             const abs = Math.abs(offset);
@@ -89,7 +121,7 @@ export default function PortfolioMarquee() {
                   if (offset === 0) return;
                   setActive((a) => (a + offset + count) % count);
                 }}
-                className="absolute"
+                className="absolute pointer-events-auto"
                 style={{ transformStyle: "preserve-3d", zIndex: 100 - abs }}
                 animate={{ x, z, rotateY, scale, opacity }}
                 transition={{ type: "spring", stiffness: 120, damping: 22, mass: 0.5 }}
@@ -165,22 +197,7 @@ export default function PortfolioMarquee() {
           })}
         </div>
 
-        {/* Controls */}
-        <button
-          onClick={prev}
-          className="absolute left-4 sm:left-10 top-1/2 -translate-y-1/2 z-[200] glass rounded-full p-3 hover:scale-110 transition border border-white/10"
-          aria-label="prev"
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-        <button
-          onClick={next}
-          className="absolute right-4 sm:right-10 top-1/2 -translate-y-1/2 z-[200] glass rounded-full p-3 hover:scale-110 transition border border-white/10"
-          aria-label="next"
-        >
-          <ChevronRight className="w-5 h-5" />
-        </button>
-      </div>
+      </motion.div>
 
       {/* Counter + progress */}
       <div className="relative max-w-3xl mx-auto px-6 mt-10">
