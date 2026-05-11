@@ -6,7 +6,8 @@ import { useTheme } from "@/theme/ThemeProvider";
 import { useLang } from "@/i18n/LanguageProvider";
 import { useAuth } from "@/auth/AuthProvider";
 import { cn } from "@/lib/utils";
-import logo from "@/assets/logo.png";
+import logoLight from "@/assets/logo.png";
+import logoDark from "@/assets/logo-white.png";
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
@@ -32,7 +33,7 @@ export default function Navbar() {
     >
       <nav className="glass-strong rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between max-w-7xl mx-auto">
         <Link to="/" className="flex items-center gap-2" aria-label={t.common.brand}>
-          <img src={logo} alt={t.common.brand} className="h-10 sm:h-12 w-auto object-contain" />
+          <img src={theme === "dark" ? logoDark : logoLight} alt={t.common.brand} className="h-10 sm:h-12 w-auto object-contain" />
         </Link>
 
         <ul className="hidden lg:flex items-center gap-1">
