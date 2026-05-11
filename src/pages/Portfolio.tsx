@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowUpRight, Sparkles } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
@@ -53,6 +54,7 @@ function TiltCard({
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
         className="group relative h-full rounded-3xl glass overflow-hidden cursor-pointer"
       >
+        <Link to={`/portfolio/${item.id}`} className="block h-full" aria-label={lang === "ar" ? item.titleAr : item.titleEn}>
         {/* glow ring */}
         <div
           className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
@@ -122,6 +124,7 @@ function TiltCard({
             </p>
           </motion.div>
         </div>
+        </Link>
       </motion.div>
     </motion.div>
   );
