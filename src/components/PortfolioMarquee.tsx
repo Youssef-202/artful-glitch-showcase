@@ -95,40 +95,71 @@ export default function PortfolioMarquee() {
                 transition={{ type: "spring", stiffness: 120, damping: 22, mass: 0.5 }}
                 aria-label={lang === "ar" ? item.titleAr : item.titleEn}
               >
-                <div
-                  className={`relative w-[300px] sm:w-[380px] aspect-[4/5] rounded-3xl overflow-hidden border transition-shadow ${
-                    isActive
-                      ? "border-primary/40 shadow-glow"
-                      : "border-white/10 shadow-elegant"
-                  }`}
-                  style={{ background: `linear-gradient(135deg, ${item.color}, ${item.accent})` }}
+                <motion.div
+                  className="relative w-[300px] sm:w-[380px] aspect-[4/5] rounded-3xl overflow-hidden border transition-shadow"
+                  style={{
+                    transformStyle: "preserve-3d",
+                    background: `linear-gradient(135deg, ${item.color}, ${item.accent})`,
+                  }}
+                  whileHover={{
+                    rotateX: -3,
+                    rotateY: dir === "rtl" ? -4 : 4,
+                    z: 60,
+                    scale: 1.03,
+                    transition: { duration: 0.35, ease: "easeOut" },
+                  }}
                 >
-                  {item.coverUrl && (
-                    <img
-                      src={item.coverUrl}
-                      alt={lang === "ar" ? item.titleAr : item.titleEn}
-                      loading="lazy"
-                      draggable={false}
-                      className="w-full h-full object-cover"
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-transparent" />
-                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-                    <span className="text-[10px] sm:text-xs px-3 py-1 rounded-full bg-background/70 backdrop-blur-md text-primary font-bold tracking-[0.2em] uppercase">
-                      {t.portfolio.categories[item.category]}
-                    </span>
-                  </div>
-                  {isActive && (
-                    <div className="absolute bottom-0 left-0 right-0 p-6 text-left rtl:text-right">
-                      <h3 className="text-xl sm:text-2xl font-black mb-1 leading-tight">
-                        {lang === "ar" ? item.titleAr : item.titleEn}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-muted-foreground">
-                        {lang === "ar" ? item.clientAr : item.clientEn}
-                      </p>
+                  {/* Hover glow ring */}
+                  <div
+                    className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{
+                      background: `linear-gradient(135deg, ${item.color}, ${item.accent})`,
+                      filter: "blur(20px)",
+                      opacity: 0,
+                      transition: "opacity 0.4s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLDivElement).style.opacity = "0.5";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLDivElement).style.opacity = "0";
+                    }}
+                  />
+
+                  <div
+                    className={`relative w-full h-full rounded-3xl overflow-hidden ${
+                      isActive
+                        ? "border border-primary/40 shadow-glow"
+                        : "border border-white/10 shadow-elegant"
+                    }`}
+                  >
+                    {item.coverUrl && (
+                      <img
+                        src={item.coverUrl}
+                        alt={lang === "ar" ? item.titleAr : item.titleEn}
+                        loading="lazy"
+                        draggable={false}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-transparent" />
+                    <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+                      <span className="text-[10px] sm:text-xs px-3 py-1 rounded-full bg-background/70 backdrop-blur-md text-primary font-bold tracking-[0.2em] uppercase">
+                        {t.portfolio.categories[item.category]}
+                      </span>
                     </div>
-                  )}
-                </div>
+                    {isActive && (
+                      <div className="absolute bottom-0 left-0 right-0 p-6 text-left rtl:text-right">
+                        <h3 className="text-xl sm:text-2xl font-black mb-1 leading-tight">
+                          {lang === "ar" ? item.titleAr : item.titleEn}
+                        </h3>
+                        <p className="text-xs sm:text-sm text-muted-foreground">
+                          {lang === "ar" ? item.clientAr : item.clientEn}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
               </motion.button>
             );
           })}
