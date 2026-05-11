@@ -1,9 +1,54 @@
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState, useCallback } from "react";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { Float, Sparkles as DreiSparkles } from "@react-three/drei";
+import * as THREE from "three";
 import { useLang } from "@/i18n/LanguageProvider";
 import { usePortfolio } from "@/lib/usePortfolio";
+import logo3d from "@/assets/etqan-logo-3d.png";
+
+function LogoCore() {
+  const texture = useLoader(THREE.TextureLoader, logo3d);
+  const groupRef = useRef<THREE.Group>(null);
+  useEffect(() => {
+    texture.anisotropy = 16;
+  }, [texture]);
+  const aspect = (texture.image?.width ?? 1) / (texture.image?.height ?? 1);
+  const w = 3.4;
+  const h = w / aspect;
+  useFrame((state) => {
+    if (!groupRef.current) return;
+    const t = state.clock.elapsedTime;
+    groupRef.current.rotation.y = Math.sin(t * 0.6) * 0.3;
+    groupRef.current.position.y = Math.sin(t * 0.9) * 0.1;
+  });
+  return (
+    <Float speed={1.6} rotationIntensity={0.3} floatIntensity={0.5}>
+      <group ref={groupRef}>
+        <mesh position={[0, 0, -0.05]} scale={1.2}>
+          <planeGeometry args={[w, h]} />
+          <meshBasicMaterial map={texture} transparent opacity={0.4} color="#5fd9cf" depthWrite={false} />
+        </mesh>
+        <mesh>
+          <planeGeometry args={[w, h]} />
+          <meshStandardMaterial
+            map={texture}
+            transparent
+            alphaTest={0.02}
+            side={THREE.DoubleSide}
+            metalness={0.6}
+            roughness={0.25}
+            emissive={new THREE.Color("#5fd9cf")}
+            emissiveMap={texture}
+            emissiveIntensity={0.5}
+          />
+        </mesh>
+      </group>
+    </Float>
+  );
+}
 
 /**
  * Orbital 3D portfolio: cards revolve around a glowing central "planet".
