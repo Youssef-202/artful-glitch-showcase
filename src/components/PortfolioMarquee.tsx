@@ -160,35 +160,20 @@ export default function PortfolioMarquee() {
             }}
           />
 
-          {/* central planet */}
+          {/* central logo "planet" */}
           <div className="absolute" style={{ transformStyle: "preserve-3d" }}>
-            <div className="absolute -inset-12 rounded-full bg-primary/20 blur-3xl animate-pulse" />
-            <div className="absolute -inset-6 rounded-full bg-accent/30 blur-2xl" />
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 24, ease: "linear" }}
-              className="relative w-44 h-44 sm:w-56 sm:h-56 rounded-full shadow-glow"
-              style={{
-                background: `radial-gradient(circle at 30% 30%, hsl(var(--primary-glow)), hsl(var(--primary)) 55%, hsl(var(--background)) 100%)`,
-                boxShadow:
-                  "inset -30px -30px 80px hsl(var(--background)/0.7), inset 20px 20px 60px hsl(var(--primary-glow)/0.4), 0 0 100px hsl(var(--primary)/0.6)",
-              }}
-            >
-              <div
-                className="absolute inset-0 rounded-full opacity-40 mix-blend-overlay"
-                style={{
-                  background:
-                    "radial-gradient(circle at 70% 60%, hsl(0 0% 100% / 0.3), transparent 40%), radial-gradient(circle at 20% 80%, hsl(0 0% 0% / 0.4), transparent 50%)",
-                }}
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Sparkles className="w-10 h-10 text-primary-foreground/80 drop-shadow-lg" />
-              </div>
-            </motion.div>
-            <div
-              className="absolute top-1/2 left-1/2 w-[160%] h-2 rounded-full border-t border-primary/40"
-              style={{ transform: "translate(-50%,-50%) rotateX(75deg)" }}
-            />
+            <div className="absolute -inset-16 rounded-full bg-primary/25 blur-3xl animate-pulse" />
+            <div className="absolute -inset-8 rounded-full bg-accent/30 blur-2xl" />
+            <div className="relative w-56 h-56 sm:w-72 sm:h-72">
+              <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={[1, 2]} gl={{ alpha: true }}>
+                <ambientLight intensity={0.5} />
+                <directionalLight position={[5, 5, 5]} intensity={1.4} />
+                <pointLight position={[-5, -3, -5]} color="#5fd9cf" intensity={3} />
+                <pointLight position={[5, 3, 2]} color="#115e59" intensity={2} />
+                <LogoCore />
+                <DreiSparkles count={60} scale={5} size={2} speed={0.5} color="#5fd9cf" />
+              </Canvas>
+            </div>
           </div>
 
           {/* orbiting cards */}
