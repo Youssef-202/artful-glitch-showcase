@@ -26,6 +26,26 @@ export default function PortfolioMarquee() {
     return () => clearInterval(id);
   }, [paused, next, count]);
 
+  // Horizontal wheel + drag swipe — does NOT hijack vertical page scroll
+  const stageRef = useRef<HTMLDivElement>(null);
+  const wheelLock = useRef(0);
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      // only react to horizontal intent (trackpad swipe / shift+wheel)
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      e.preventDefault();
+      const now = Date.now();
+      if (now - wheelLock.current < 350) return;
+      wheelLock.current = now;
+      const forward = e.deltaX > 0;
+      (dir === "rtl" ? !forward : forward) ? next() : prev();
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, [next, prev, dir]);
+
   if (!count) return null;
   const current = items[active];
 
