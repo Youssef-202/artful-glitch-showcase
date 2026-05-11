@@ -1,6 +1,6 @@
-import { Canvas, useFrame, useThree, useLoader } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Float, Html, RoundedBox } from "@react-three/drei";
-import { useMemo, useRef, useState, Suspense } from "react";
+import { useEffect, useMemo, useRef, useState, Suspense } from "react";
 import * as THREE from "three";
 import { motion } from "framer-motion";
 import { useLang } from "@/i18n/LanguageProvider";
@@ -13,13 +13,25 @@ function CardItem({
   it: PortfolioItem; isSel: boolean; position: [number, number, number]; rotationY: number;
   onSelect: (id: string) => void; lang: "ar" | "en";
 }) {
-  const texture = it.coverUrl
-    ? useLoader(THREE.TextureLoader, it.coverUrl)
-    : null;
-  if (texture) {
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.anisotropy = 8;
-  }
+  const [texture, setTexture] = useState<THREE.Texture | null>(null);
+  useEffect(() => {
+    if (!it.coverUrl) { setTexture(null); return; }
+    let cancelled = false;
+    const loader = new THREE.TextureLoader();
+    loader.setCrossOrigin("anonymous");
+    loader.load(
+      it.coverUrl,
+      (tex) => {
+        if (cancelled) { tex.dispose(); return; }
+        tex.colorSpace = THREE.SRGBColorSpace;
+        tex.anisotropy = 8;
+        setTexture(tex);
+      },
+      undefined,
+      () => { /* swallow error, fallback to color */ }
+    );
+    return () => { cancelled = true; };
+  }, [it.coverUrl]);
   return (
     <Float speed={1.2} rotationIntensity={0.2} floatIntensity={0.6}>
       <group position={position} rotation={[0, rotationY, 0]}>
