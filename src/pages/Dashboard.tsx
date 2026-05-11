@@ -378,6 +378,16 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
       <FileUpload value={form.cover_url} onChange={(url) => setForm({ ...form, cover_url: url ?? "" })} folder="portfolio" accept="image/*,video/*" label="صورة/فيديو العمل" />
       <input type="url" placeholder={t.dashboard.cover + " (أو رابط مباشر)"} value={form.cover_url} onChange={(e) => setForm({ ...form, cover_url: e.target.value })}
         className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-xs" />
+      <div className="space-y-2">
+        <p className="text-sm font-bold">معرض صور المشروع (يمكنك رفع أكثر من 10 صور)</p>
+        <MultiFileUpload
+          value={gallery}
+          onChange={setGallery}
+          folder="portfolio/gallery"
+          accept="image/*,video/*"
+          label="ارفع صور المعرض"
+        />
+      </div>
       <div className="grid sm:grid-cols-3 gap-4">
         <label className="flex items-center gap-2 bg-background/50 border border-border rounded-xl px-3 py-2">
           <span className="text-sm text-muted-foreground flex-1">{t.dashboard.itemColor}</span>
