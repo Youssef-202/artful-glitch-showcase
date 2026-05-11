@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 const ServicesIndex = lazy(() => import("./pages/ServicesIndex"));
 const ServiceDetail = lazy(() => import("./pages/ServiceDetail"));
 const Portfolio = lazy(() => import("./pages/Portfolio"));
+const PortfolioDetail = lazy(() => import("./pages/PortfolioDetail"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Blog = lazy(() => import("./pages/Blog"));
