@@ -28,22 +28,37 @@ export default function Home() {
       <Hero />
 
       {/* About teaser */}
-      <section className="px-6 py-24 flex items-center justify-center">
+      <section className="px-6 py-24 max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7 }}
-          className="max-w-3xl text-center glass-strong rounded-3xl p-10"
+          className="grid lg:grid-cols-2 gap-10 items-center glass-strong rounded-3xl p-8 lg:p-12"
         >
-          <p className="text-sm text-primary tracking-widest mb-4">{t.about.kicker}</p>
-          <h2 className="text-3xl sm:text-5xl font-black mb-6">
-            <span className="text-gradient">{t.about.title}</span>
-          </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">{t.about.body}</p>
-          <Link to="/about" className="inline-flex items-center gap-2 mt-6 text-primary font-bold hover:gap-3 transition-all">
-            {t.common.learnMore} <Arrow className="w-4 h-4" />
-          </Link>
+          <div className={dir === "rtl" ? "text-right" : "text-left"}>
+            <p className="text-sm text-primary tracking-widest mb-4">نبذة عن إتقان</p>
+            <h2 className="text-3xl sm:text-5xl font-black mb-4 leading-tight">
+              <span className="text-gradient">من الفكرة إلى واقع حقيقي</span>
+            </h2>
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+              في إتقان، ما ننفّذ مجرد طلب عادي. نحن نفهم أن كل مشروع له قصة، وكل فكرة لها إمكانيات لا محدودة.
+              لذا نجلس معك أولاً، نستمع، نسأل، ندرس السوق والمنافسة والفرص المتاحة. من هناك، ننسج خطة متقنة
+              تجمع بين الإبداع في التصميم والذكاء في التسويق. كل تصميم نصنعه، كل كلمة نكتبها، كل استراتيجية
+              نضعها - كلها تصب في هدف واحد واضح: إطلاق مشروعك بقوة حقيقية في السوق.
+            </p>
+            <Link to="/about" className="inline-flex items-center gap-2 mt-6 text-primary font-bold hover:gap-3 transition-all">
+              {t.common.learnMore} <Arrow className="w-4 h-4" />
+            </Link>
+          </div>
+          <div className="flex items-center justify-center">
+            <img
+              src="https://etqanagency.com/assets/Comp-CNuNSmaD.gif"
+              alt="إتقان - من الفكرة إلى واقع حقيقي"
+              loading="lazy"
+              className="w-full max-w-md rounded-2xl"
+            />
+          </div>
         </motion.div>
       </section>
 
