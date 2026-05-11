@@ -210,8 +210,9 @@ function PostForm({ post, onClose }: { post: Post | null; onClose: () => void })
         <input maxLength={50} placeholder={t.dashboard.category} value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}
           className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
       </div>
-      <input type="url" placeholder={t.dashboard.cover} value={form.cover_url} onChange={(e) => setForm({ ...form, cover_url: e.target.value })}
-        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+      <FileUpload value={form.cover_url} onChange={(url) => setForm({ ...form, cover_url: url ?? "" })} folder="blog" accept="image/*" label="صورة الغلاف" />
+      <input type="url" placeholder={t.dashboard.cover + " (أو رابط مباشر)"} value={form.cover_url} onChange={(e) => setForm({ ...form, cover_url: e.target.value })}
+        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-xs" />
       <textarea maxLength={500} rows={2} placeholder={t.dashboard.excerpt} value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
         className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none" />
       <textarea required maxLength={20000} rows={10} placeholder={t.dashboard.content} value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })}
