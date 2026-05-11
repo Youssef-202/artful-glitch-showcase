@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Calendar } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLang } from "@/i18n/LanguageProvider";
 import Hero from "@/components/Hero";
+import ServicesShowcase3D from "@/components/ServicesShowcase3D";
 import { services } from "@/lib/services";
 import { supabase } from "@/integrations/supabase/client";
 import { usePortfolio } from "@/lib/usePortfolio";
