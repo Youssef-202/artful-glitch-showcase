@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/auth/AuthProvider";
 import { useLang } from "@/i18n/LanguageProvider";
 import { cn } from "@/lib/utils";
+import { FileUpload } from "@/components/FileUpload";
 
 type Post = {
   id: string; title: string; excerpt: string | null; content: string;
@@ -209,8 +210,9 @@ function PostForm({ post, onClose }: { post: Post | null; onClose: () => void })
         <input maxLength={50} placeholder={t.dashboard.category} value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}
           className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
       </div>
-      <input type="url" placeholder={t.dashboard.cover} value={form.cover_url} onChange={(e) => setForm({ ...form, cover_url: e.target.value })}
-        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+      <FileUpload value={form.cover_url} onChange={(url) => setForm({ ...form, cover_url: url ?? "" })} folder="blog" accept="image/*" label="صورة الغلاف" />
+      <input type="url" placeholder={t.dashboard.cover + " (أو رابط مباشر)"} value={form.cover_url} onChange={(e) => setForm({ ...form, cover_url: e.target.value })}
+        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-xs" />
       <textarea maxLength={500} rows={2} placeholder={t.dashboard.excerpt} value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
         className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none" />
       <textarea required maxLength={20000} rows={10} placeholder={t.dashboard.content} value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })}
@@ -370,8 +372,9 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
         className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary">
         {cats.map((c) => <option key={c} value={c}>{c}</option>)}
       </select>
-      <input type="url" placeholder={t.dashboard.cover} value={form.cover_url} onChange={(e) => setForm({ ...form, cover_url: e.target.value })}
-        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+      <FileUpload value={form.cover_url} onChange={(url) => setForm({ ...form, cover_url: url ?? "" })} folder="portfolio" accept="image/*,video/*" label="صورة/فيديو العمل" />
+      <input type="url" placeholder={t.dashboard.cover + " (أو رابط مباشر)"} value={form.cover_url} onChange={(e) => setForm({ ...form, cover_url: e.target.value })}
+        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-xs" />
       <div className="grid sm:grid-cols-3 gap-4">
         <label className="flex items-center gap-2 bg-background/50 border border-border rounded-xl px-3 py-2">
           <span className="text-sm text-muted-foreground flex-1">{t.dashboard.itemColor}</span>
