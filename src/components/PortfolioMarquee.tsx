@@ -197,22 +197,7 @@ export default function PortfolioMarquee() {
           })}
         </div>
 
-        {/* Controls */}
-        <button
-          onClick={prev}
-          className="absolute left-4 sm:left-10 top-1/2 -translate-y-1/2 z-[200] glass rounded-full p-3 hover:scale-110 transition border border-white/10"
-          aria-label="prev"
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-        <button
-          onClick={next}
-          className="absolute right-4 sm:right-10 top-1/2 -translate-y-1/2 z-[200] glass rounded-full p-3 hover:scale-110 transition border border-white/10"
-          aria-label="next"
-        >
-          <ChevronRight className="w-5 h-5" />
-        </button>
-      </div>
+      </motion.div>
 
       {/* Counter + progress */}
       <div className="relative max-w-3xl mx-auto px-6 mt-10">
