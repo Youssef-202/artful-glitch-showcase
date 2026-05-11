@@ -121,7 +121,7 @@ export default function PortfolioMarquee() {
                   if (offset === 0) return;
                   setActive((a) => (a + offset + count) % count);
                 }}
-                className="absolute"
+                className="absolute pointer-events-auto"
                 style={{ transformStyle: "preserve-3d", zIndex: 100 - abs }}
                 animate={{ x, z, rotateY, scale, opacity }}
                 transition={{ type: "spring", stiffness: 120, damping: 22, mass: 0.5 }}
