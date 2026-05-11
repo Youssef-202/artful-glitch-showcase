@@ -1,7 +1,131 @@
-import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { useMemo, useRef, useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { ArrowUpRight, Sparkles } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { usePortfolio } from "@/lib/usePortfolio";
+import type { PortfolioItem } from "@/lib/portfolio";
+
+function TiltCard({
+  item,
+  index,
+  lang,
+  categoryLabel,
+}: {
+  item: PortfolioItem;
+  index: number;
+  lang: "ar" | "en";
+  categoryLabel: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const sx = useSpring(x, { stiffness: 200, damping: 18, mass: 0.4 });
+  const sy = useSpring(y, { stiffness: 200, damping: 18, mass: 0.4 });
+  const rotateX = useTransform(sy, [-0.5, 0.5], [12, -12]);
+  const rotateY = useTransform(sx, [-0.5, 0.5], [-12, 12]);
+  const glareX = useTransform(sx, [-0.5, 0.5], ["0%", "100%"]);
+  const glareY = useTransform(sy, [-0.5, 0.5], ["0%", "100%"]);
+
+  const handleMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    x.set((e.clientX - rect.left) / rect.width - 0.5);
+    y.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+  const handleLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.55, delay: (index % 4) * 0.07 }}
+      style={{ perspective: 1200 }}
+    >
+      <motion.div
+        ref={ref}
+        onPointerMove={handleMove}
+        onPointerLeave={handleLeave}
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        className="group relative h-full rounded-3xl glass overflow-hidden cursor-pointer"
+      >
+        {/* glow ring */}
+        <div
+          className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{
+            background: `linear-gradient(135deg, ${item.color}, ${item.accent})`,
+            filter: "blur(20px)",
+            zIndex: -1,
+          }}
+        />
+
+        {/* Cover */}
+        <div
+          className="relative aspect-[4/5] overflow-hidden"
+          style={{ background: `linear-gradient(135deg, ${item.color}, ${item.accent})` }}
+        >
+          {item.coverUrl && (
+            <motion.img
+              src={item.coverUrl}
+              alt={lang === "ar" ? item.titleAr : item.titleEn}
+              loading="lazy"
+              style={{ transform: "translateZ(40px)" }}
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+            />
+          )}
+
+          {/* Glare */}
+          <motion.div
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none mix-blend-overlay"
+            style={{
+              background: useTransform(
+                [glareX, glareY] as any,
+                ([gx, gy]: any) =>
+                  `radial-gradient(circle at ${gx} ${gy}, rgba(255,255,255,0.45), transparent 55%)`
+              ),
+            }}
+          />
+
+          {/* Bottom gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
+
+          {/* Floating chip */}
+          <motion.span
+            style={{ transform: "translateZ(60px)" }}
+            className="absolute top-4 left-4 inline-flex items-center gap-1 text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full bg-background/70 backdrop-blur text-primary font-bold border border-primary/20"
+          >
+            <Sparkles className="w-3 h-3" /> {categoryLabel}
+          </motion.span>
+
+          {/* Floating arrow on hover */}
+          <motion.div
+            style={{ transform: "translateZ(80px)" }}
+            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-accent flex items-center justify-center text-primary-foreground shadow-glow opacity-0 group-hover:opacity-100 group-hover:rotate-0 -rotate-45 transition-all duration-500"
+          >
+            <ArrowUpRight className="w-5 h-5" />
+          </motion.div>
+
+          {/* Title floats up on hover */}
+          <motion.div
+            style={{ transform: "translateZ(70px)" }}
+            className="absolute bottom-0 inset-x-0 p-5 translate-y-2 group-hover:translate-y-0 transition-transform duration-500"
+          >
+            <h3 className="text-lg font-black text-white drop-shadow-lg line-clamp-1">
+              {lang === "ar" ? item.titleAr : item.titleEn}
+            </h3>
+            <p className="text-xs text-white/80 line-clamp-1 mt-0.5">
+              {lang === "ar" ? item.clientAr : item.clientEn}
+            </p>
+          </motion.div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
 
 export default function Portfolio() {
   const { t, lang } = useLang();
@@ -23,7 +147,7 @@ export default function Portfolio() {
 
   return (
     <div className="px-4 sm:px-8 max-w-7xl mx-auto">
-      <header className="text-center mb-8">
+      <header className="text-center mb-10">
         <p className="text-sm text-primary tracking-widest mb-3">{t.portfolio.kicker}</p>
         <h1 className="text-4xl sm:text-6xl font-black mb-4">
           <span className="text-gradient">{t.portfolio.title}</span>
@@ -32,7 +156,7 @@ export default function Portfolio() {
       </header>
 
       {/* Filters */}
-      <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
+      <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
         {cats.map((c) => (
           <button
             key={c.id}
@@ -48,40 +172,16 @@ export default function Portfolio() {
         ))}
       </div>
 
-      {/* Grid (same design as Home) */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
+      {/* 3D tilt grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
         {filtered.map((item, i) => (
-          <motion.div
+          <TiltCard
             key={item.id}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: (i % 4) * 0.06 }}
-          >
-            <div className="group block glass rounded-2xl overflow-hidden h-full hover:shadow-glow hover:-translate-y-1 transition-all">
-              <div
-                className="relative aspect-square overflow-hidden"
-                style={{ background: `linear-gradient(135deg, ${item.color}, ${item.accent})` }}
-              >
-                {item.coverUrl && (
-                  <img
-                    src={item.coverUrl}
-                    alt={lang === "ar" ? item.titleAr : item.titleEn}
-                    loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent" />
-                <span className="absolute top-3 left-3 text-xs px-2 py-1 rounded-full bg-background/60 backdrop-blur text-primary font-bold">
-                  {t.portfolio.categories[item.category]}
-                </span>
-              </div>
-              <div className="p-4">
-                <h3 className="text-base font-bold line-clamp-1">{lang === "ar" ? item.titleAr : item.titleEn}</h3>
-                <p className="text-xs text-muted-foreground line-clamp-1">{lang === "ar" ? item.clientAr : item.clientEn}</p>
-              </div>
-            </div>
-          </motion.div>
+            item={item}
+            index={i}
+            lang={lang}
+            categoryLabel={t.portfolio.categories[item.category]}
+          />
         ))}
         {filtered.length === 0 && (
           <p className="col-span-full text-center text-muted-foreground py-16">—</p>
