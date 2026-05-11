@@ -202,7 +202,7 @@ export default function PortfolioMarquee() {
                   scale,
                   opacity,
                 }}
-                transition={{ type: "spring", stiffness: 80, damping: 18, mass: 0.6 }}
+                transition={{ type: "spring", stiffness: 140, damping: 22, mass: 0.4 }}
                 aria-label={lang === "ar" ? item.titleAr : item.titleEn}
               >
                 <div
