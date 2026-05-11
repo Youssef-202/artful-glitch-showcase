@@ -1,6 +1,6 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Float, Html, RoundedBox } from "@react-three/drei";
-import { useEffect, useMemo, useRef, useState, Suspense } from "react";
+import { useMemo, useRef, useState, Suspense } from "react";
 import * as THREE from "three";
 import { motion } from "framer-motion";
 import { useLang } from "@/i18n/LanguageProvider";
