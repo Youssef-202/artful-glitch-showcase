@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { motion, useMotionValue, animate } from "framer-motion";
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from "framer-motion";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useRef, useState } from "react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { usePortfolio } from "@/lib/usePortfolio";
 
@@ -9,150 +9,168 @@ export default function PortfolioMarquee() {
   const { t, lang, dir } = useLang();
   const { items } = usePortfolio();
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
+  const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const [paused, setPaused] = useState(false);
-  const [bounds, setBounds] = useState(0);
+  const [activeIdx, setActiveIdx] = useState(0);
 
-  // duplicate for seamless loop
-  const list = items.length ? [...items, ...items] : [];
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
 
-  useEffect(() => {
-    if (!trackRef.current || list.length === 0) return;
-    const update = () => {
-      const w = trackRef.current!.scrollWidth / 2;
-      setBounds(w);
-    };
-    update();
-    const ro = new ResizeObserver(update);
-    ro.observe(trackRef.current);
-    return () => ro.disconnect();
-  }, [list.length]);
+  // smooth the progress
+  const smooth = useSpring(scrollYProgress, { stiffness: 80, damping: 22, mass: 0.4 });
 
-  useEffect(() => {
-    if (!bounds || paused) return;
-    const current = x.get();
-    const direction = dir === "rtl" ? 1 : -1;
-    const distance = direction === -1 ? -bounds : bounds;
-    const remaining = Math.abs(distance - current);
-    const speed = 40; // px/sec
-    const duration = remaining / speed;
-    const controls = animate(x, distance, {
-      duration,
-      ease: "linear",
-      onComplete: () => x.set(0),
-    });
-    return () => controls.stop();
-  }, [bounds, paused, dir, x]);
+  // Compute travel distance dynamically based on number of cards
+  const cardCount = items.length;
+  const cardW = 380; // base card width incl gap
+  const totalWidth = cardCount * cardW;
+  const travel = Math.max(0, totalWidth - 800); // estimate viewport width
 
-  const nudge = (delta: number) => {
-    const next = x.get() + delta;
-    animate(x, next, { duration: 0.5, ease: [0.22, 1, 0.36, 1] });
-  };
+  const xRange = dir === "rtl" ? [0, travel] : [0, -travel];
+  const x = useTransform(smooth, [0.05, 0.95], xRange);
+
+  useMotionValueEvent(smooth, "change", (v) => {
+    const idx = Math.min(cardCount - 1, Math.max(0, Math.floor(v * cardCount)));
+    setActiveIdx(idx);
+  });
+
+  // Section tall enough to allow horizontal travel
+  const sectionHeight = `${100 + (cardCount * 40)}vh`;
 
   return (
     <section
-      className="relative py-24 overflow-hidden"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
+      ref={sectionRef}
+      className="relative"
+      style={{ height: sectionHeight }}
     >
-      {/* heading */}
-      <div className="px-6 max-w-7xl mx-auto mb-12 flex items-end justify-between gap-6 flex-wrap">
-        <div className={dir === "rtl" ? "text-right" : "text-left"}>
-          <p className="text-sm text-primary tracking-[0.3em] mb-3 font-bold">{t.common.ourWork}</p>
-          <h2 className="text-4xl sm:text-6xl font-black tracking-tight">
-            <span className="text-gradient">{t.portfolio.title}</span>
-          </h2>
-          <p className="text-muted-foreground mt-3 max-w-xl">{t.portfolio.subtitle}</p>
+      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+        {/* ambient backdrop */}
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute top-1/3 left-1/4 w-[40rem] h-[40rem] rounded-full bg-primary/10 blur-3xl" />
+          <div className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] rounded-full bg-accent/10 blur-3xl" />
         </div>
-        <div className="flex items-center gap-3">
-          <button
-            aria-label="prev"
-            onClick={() => nudge(320)}
-            className="w-12 h-12 rounded-full glass flex items-center justify-center hover:shadow-glow hover:scale-110 transition-all"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            aria-label="next"
-            onClick={() => nudge(-320)}
-            className="w-12 h-12 rounded-full glass flex items-center justify-center hover:shadow-glow hover:scale-110 transition-all"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-          <Link
-            to="/portfolio"
-            className="hidden sm:inline-flex items-center gap-2 rounded-full px-6 py-3 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition"
-          >
-            {t.common.viewAll} <Arrow className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
 
-      {/* edge fades */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-10" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-10" />
-
-      {/* track */}
-      <motion.div
-        ref={trackRef}
-        style={{ x }}
-        className="flex gap-6 px-6 cursor-grab active:cursor-grabbing"
-        drag="x"
-        dragConstraints={{ left: -bounds * 1.5, right: bounds * 0.5 }}
-        onDragStart={() => setPaused(true)}
-      >
-        {list.map((item, i) => (
-          <Link
-            key={`${item.id}-${i}`}
-            to="/portfolio"
-            className="group relative flex-shrink-0 w-[280px] sm:w-[340px] rounded-3xl overflow-hidden glass border border-white/10 hover:shadow-glow transition-all duration-500"
-            draggable={false}
-          >
-            <div
-              className="relative aspect-[4/5] overflow-hidden"
-              style={{ background: `linear-gradient(135deg, ${item.color}, ${item.accent})` }}
-            >
-              {item.coverUrl && (
-                <img
-                  src={item.coverUrl}
-                  alt={lang === "ar" ? item.titleAr : item.titleEn}
-                  loading="lazy"
-                  draggable={false}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-              )}
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-              <span className="absolute top-4 left-4 text-xs px-3 py-1 rounded-full bg-background/70 backdrop-blur-md text-primary font-bold tracking-wide">
-                {t.portfolio.categories[item.category]}
-              </span>
-              {/* bottom info */}
-              <div className="absolute inset-x-0 bottom-0 p-5">
-                <h3 className="text-lg font-black mb-1 line-clamp-1">
-                  {lang === "ar" ? item.titleAr : item.titleEn}
-                </h3>
-                <p className="text-sm text-muted-foreground line-clamp-1 mb-3">
-                  {lang === "ar" ? item.clientAr : item.clientEn}
-                </p>
-                <span className="inline-flex items-center gap-1.5 text-primary text-sm font-bold opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                  {t.common.learnMore} <Arrow className="w-3.5 h-3.5" />
-                </span>
-              </div>
-              {/* hover ring */}
-              <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-primary/0 group-hover:ring-primary/40 transition-all duration-500" />
+        {/* heading */}
+        <div className="px-6 sm:px-12 max-w-7xl mx-auto w-full mb-8 sm:mb-12 flex items-end justify-between gap-6 flex-wrap">
+          <div className={dir === "rtl" ? "text-right" : "text-left"}>
+            <p className="text-xs sm:text-sm text-primary tracking-[0.3em] mb-3 font-bold">{t.common.ourWork}</p>
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+              <span className="text-gradient">{t.portfolio.title}</span>
+            </h2>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="hidden sm:flex items-center gap-2 text-sm font-bold text-muted-foreground tabular-nums">
+              <span className="text-foreground text-2xl">{String(activeIdx + 1).padStart(2, "0")}</span>
+              <span>/</span>
+              <span>{String(cardCount).padStart(2, "0")}</span>
             </div>
-          </Link>
-        ))}
-      </motion.div>
+            <Link
+              to="/portfolio"
+              className="inline-flex items-center gap-2 rounded-full px-5 sm:px-6 py-3 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition text-sm"
+            >
+              {t.common.viewAll} <Arrow className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
 
-      <div className="text-center mt-12 sm:hidden px-6">
-        <Link
-          to="/portfolio"
-          className="inline-flex items-center gap-2 rounded-full px-7 py-4 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition"
+        {/* progress bar */}
+        <div className="px-6 sm:px-12 max-w-7xl mx-auto w-full mb-6">
+          <div className="h-[3px] w-full bg-foreground/10 rounded-full overflow-hidden">
+            <motion.div
+              className="h-full bg-gradient-to-r from-primary via-accent to-primary-glow rounded-full origin-left"
+              style={{ scaleX: smooth }}
+            />
+          </div>
+        </div>
+
+        {/* edge fades */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-background to-transparent z-20" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-40 bg-gradient-to-l from-background to-transparent z-20" />
+
+        {/* horizontal track */}
+        <motion.div
+          ref={trackRef}
+          style={{ x }}
+          className="flex gap-6 sm:gap-8 px-6 sm:px-20 will-change-transform"
         >
-          {t.common.viewAll} <Arrow className="w-4 h-4" />
-        </Link>
+          {items.map((item, i) => (
+            <Card
+              key={item.id}
+              item={item}
+              index={i}
+              total={cardCount}
+              progress={smooth}
+              lang={lang}
+              dir={dir}
+              tCategories={t.portfolio.categories}
+              learnMore={t.common.learnMore}
+              Arrow={Arrow}
+            />
+          ))}
+        </motion.div>
       </div>
     </section>
+  );
+}
+
+function Card({ item, index, total, progress, lang, dir, tCategories, learnMore, Arrow }: any) {
+  // Each card highlights when its slot is closest to active
+  const slot = (index + 0.5) / total;
+  const distance = useTransform(progress, (v: number) => Math.abs(v - slot));
+  const scale = useTransform(distance, [0, 0.15, 0.4], [1, 0.96, 0.88]);
+  const opacity = useTransform(distance, [0, 0.2, 0.5], [1, 0.85, 0.5]);
+  const y = useTransform(distance, [0, 0.4], [0, 30]);
+  const rotate = useTransform(distance, [0, 0.4], [0, dir === "rtl" ? -3 : 3]);
+
+  return (
+    <motion.div
+      style={{ scale, opacity, y, rotate }}
+      className="flex-shrink-0 w-[260px] sm:w-[320px] lg:w-[360px]"
+    >
+      <Link
+        to="/portfolio"
+        className="group relative block rounded-3xl overflow-hidden glass border border-white/10 hover:shadow-glow transition-shadow duration-500"
+      >
+        <div
+          className="relative aspect-[3/4] overflow-hidden"
+          style={{ background: `linear-gradient(135deg, ${item.color}, ${item.accent})` }}
+        >
+          {item.coverUrl && (
+            <img
+              src={item.coverUrl}
+              alt={lang === "ar" ? item.titleAr : item.titleEn}
+              loading="lazy"
+              draggable={false}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+
+          {/* index number watermark */}
+          <span className="absolute top-4 right-4 text-[80px] leading-none font-black text-foreground/10 select-none">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+
+          <span className="absolute top-4 left-4 text-xs px-3 py-1 rounded-full bg-background/70 backdrop-blur-md text-primary font-bold tracking-wide">
+            {tCategories[item.category]}
+          </span>
+
+          <div className="absolute inset-x-0 bottom-0 p-5">
+            <h3 className="text-lg font-black mb-1 line-clamp-1">
+              {lang === "ar" ? item.titleAr : item.titleEn}
+            </h3>
+            <p className="text-sm text-muted-foreground line-clamp-1 mb-3">
+              {lang === "ar" ? item.clientAr : item.clientEn}
+            </p>
+            <span className="inline-flex items-center gap-1.5 text-primary text-sm font-bold opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+              {learnMore} <Arrow className="w-3.5 h-3.5" />
+            </span>
+          </div>
+
+          <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-primary/0 group-hover:ring-primary/40 transition-all duration-500" />
+        </div>
+      </Link>
+    </motion.div>
   );
 }
