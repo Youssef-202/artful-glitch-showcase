@@ -1,9 +1,54 @@
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState, useCallback } from "react";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { Float, Sparkles as DreiSparkles } from "@react-three/drei";
+import * as THREE from "three";
 import { useLang } from "@/i18n/LanguageProvider";
 import { usePortfolio } from "@/lib/usePortfolio";
+import logo3d from "@/assets/etqan-logo-3d.png";
+
+function LogoCore() {
+  const texture = useLoader(THREE.TextureLoader, logo3d);
+  const groupRef = useRef<THREE.Group>(null);
+  useEffect(() => {
+    texture.anisotropy = 16;
+  }, [texture]);
+  const aspect = (texture.image?.width ?? 1) / (texture.image?.height ?? 1);
+  const w = 3.4;
+  const h = w / aspect;
+  useFrame((state) => {
+    if (!groupRef.current) return;
+    const t = state.clock.elapsedTime;
+    groupRef.current.rotation.y = Math.sin(t * 0.6) * 0.3;
+    groupRef.current.position.y = Math.sin(t * 0.9) * 0.1;
+  });
+  return (
+    <Float speed={1.6} rotationIntensity={0.3} floatIntensity={0.5}>
+      <group ref={groupRef}>
+        <mesh position={[0, 0, -0.05]} scale={1.2}>
+          <planeGeometry args={[w, h]} />
+          <meshBasicMaterial map={texture} transparent opacity={0.4} color="#5fd9cf" depthWrite={false} />
+        </mesh>
+        <mesh>
+          <planeGeometry args={[w, h]} />
+          <meshStandardMaterial
+            map={texture}
+            transparent
+            alphaTest={0.02}
+            side={THREE.DoubleSide}
+            metalness={0.6}
+            roughness={0.25}
+            emissive={new THREE.Color("#5fd9cf")}
+            emissiveMap={texture}
+            emissiveIntensity={0.5}
+          />
+        </mesh>
+      </group>
+    </Float>
+  );
+}
 
 /**
  * Orbital 3D portfolio: cards revolve around a glowing central "planet".
@@ -30,7 +75,7 @@ export default function PortfolioMarquee() {
       const dt = (now - last) / 1000;
       last = now;
       if (!paused) {
-        angleRef.current = (angleRef.current + dt * 6) % 360;
+        angleRef.current = (angleRef.current + dt * 18) % 360;
         force((n) => (n + 1) % 1000);
       }
       raf = requestAnimationFrame(tick);
@@ -115,35 +160,20 @@ export default function PortfolioMarquee() {
             }}
           />
 
-          {/* central planet */}
+          {/* central logo "planet" */}
           <div className="absolute" style={{ transformStyle: "preserve-3d" }}>
-            <div className="absolute -inset-12 rounded-full bg-primary/20 blur-3xl animate-pulse" />
-            <div className="absolute -inset-6 rounded-full bg-accent/30 blur-2xl" />
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 24, ease: "linear" }}
-              className="relative w-44 h-44 sm:w-56 sm:h-56 rounded-full shadow-glow"
-              style={{
-                background: `radial-gradient(circle at 30% 30%, hsl(var(--primary-glow)), hsl(var(--primary)) 55%, hsl(var(--background)) 100%)`,
-                boxShadow:
-                  "inset -30px -30px 80px hsl(var(--background)/0.7), inset 20px 20px 60px hsl(var(--primary-glow)/0.4), 0 0 100px hsl(var(--primary)/0.6)",
-              }}
-            >
-              <div
-                className="absolute inset-0 rounded-full opacity-40 mix-blend-overlay"
-                style={{
-                  background:
-                    "radial-gradient(circle at 70% 60%, hsl(0 0% 100% / 0.3), transparent 40%), radial-gradient(circle at 20% 80%, hsl(0 0% 0% / 0.4), transparent 50%)",
-                }}
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Sparkles className="w-10 h-10 text-primary-foreground/80 drop-shadow-lg" />
-              </div>
-            </motion.div>
-            <div
-              className="absolute top-1/2 left-1/2 w-[160%] h-2 rounded-full border-t border-primary/40"
-              style={{ transform: "translate(-50%,-50%) rotateX(75deg)" }}
-            />
+            <div className="absolute -inset-16 rounded-full bg-primary/25 blur-3xl animate-pulse" />
+            <div className="absolute -inset-8 rounded-full bg-accent/30 blur-2xl" />
+            <div className="relative w-56 h-56 sm:w-72 sm:h-72">
+              <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={[1, 2]} gl={{ alpha: true }}>
+                <ambientLight intensity={0.5} />
+                <directionalLight position={[5, 5, 5]} intensity={1.4} />
+                <pointLight position={[-5, -3, -5]} color="#5fd9cf" intensity={3} />
+                <pointLight position={[5, 3, 2]} color="#115e59" intensity={2} />
+                <LogoCore />
+                <DreiSparkles count={60} scale={5} size={2} speed={0.5} color="#5fd9cf" />
+              </Canvas>
+            </div>
           </div>
 
           {/* orbiting cards */}
@@ -172,7 +202,7 @@ export default function PortfolioMarquee() {
                   scale,
                   opacity,
                 }}
-                transition={{ type: "spring", stiffness: 80, damping: 18, mass: 0.6 }}
+                transition={{ type: "spring", stiffness: 140, damping: 22, mass: 0.4 }}
                 aria-label={lang === "ar" ? item.titleAr : item.titleEn}
               >
                 <div
