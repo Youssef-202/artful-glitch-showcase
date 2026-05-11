@@ -322,6 +322,7 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
     sort_order: item?.sort_order ?? 0,
     published: item?.published ?? true,
   });
+  const [gallery, setGallery] = useState<string[]>(((item as any)?.gallery_urls as string[]) ?? []);
   const [busy, setBusy] = useState(false);
 
   const save = async (e: React.FormEvent) => {
