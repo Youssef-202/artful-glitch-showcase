@@ -63,15 +63,25 @@ export type Database = {
           client_ar: string | null
           client_en: string | null
           color: string
+          content_ar: string | null
+          content_en: string | null
           cover_url: string | null
           created_at: string
           created_by: string | null
+          description_ar: string | null
+          description_en: string | null
+          duration: string | null
+          gallery_urls: string[] | null
           id: string
+          process_steps_ar: string[] | null
+          process_steps_en: string[] | null
+          project_url: string | null
           published: boolean
           sort_order: number
           title_ar: string
           title_en: string
           updated_at: string
+          year: string | null
         }
         Insert: {
           accent?: string
@@ -79,15 +89,25 @@ export type Database = {
           client_ar?: string | null
           client_en?: string | null
           color?: string
+          content_ar?: string | null
+          content_en?: string | null
           cover_url?: string | null
           created_at?: string
           created_by?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          duration?: string | null
+          gallery_urls?: string[] | null
           id?: string
+          process_steps_ar?: string[] | null
+          process_steps_en?: string[] | null
+          project_url?: string | null
           published?: boolean
           sort_order?: number
           title_ar: string
           title_en: string
           updated_at?: string
+          year?: string | null
         }
         Update: {
           accent?: string
@@ -95,15 +115,25 @@ export type Database = {
           client_ar?: string | null
           client_en?: string | null
           color?: string
+          content_ar?: string | null
+          content_en?: string | null
           cover_url?: string | null
           created_at?: string
           created_by?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          duration?: string | null
+          gallery_urls?: string[] | null
           id?: string
+          process_steps_ar?: string[] | null
+          process_steps_en?: string[] | null
+          project_url?: string | null
           published?: boolean
           sort_order?: number
           title_ar?: string
           title_en?: string
           updated_at?: string
+          year?: string | null
         }
         Relationships: []
       }
