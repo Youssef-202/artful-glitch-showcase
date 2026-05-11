@@ -2,6 +2,10 @@ import { Canvas, useFrame, useThree, useLoader } from "@react-three/fiber";
 import { Float, Html, RoundedBox } from "@react-three/drei";
 import { useMemo, useRef, useState, Suspense } from "react";
 import * as THREE from "three";
+import { motion } from "framer-motion";
+import { useLang } from "@/i18n/LanguageProvider";
+import { type PortfolioItem } from "@/lib/portfolio";
+import { usePortfolio } from "@/lib/usePortfolio";
 
 function CardItem({
   it, isSel, position, rotationY, onSelect, lang,
@@ -26,7 +30,6 @@ function CardItem({
           scale={isSel ? 1.15 : 1}
         >
           <RoundedBox args={[1.8, 2.4, 0.18]} radius={0.12} smoothness={4}>
-            {/* 6 materials: right, left, top, bottom, front, back */}
             <meshStandardMaterial attach="material-0" color={it.color} metalness={0.4} roughness={0.5} />
             <meshStandardMaterial attach="material-1" color={it.color} metalness={0.4} roughness={0.5} />
             <meshStandardMaterial attach="material-2" color={it.color} metalness={0.4} roughness={0.5} />
@@ -52,10 +55,7 @@ function CardItem({
     </Float>
   );
 }
-import { motion } from "framer-motion";
-import { useLang } from "@/i18n/LanguageProvider";
-import { type PortfolioItem } from "@/lib/portfolio";
-import { usePortfolio } from "@/lib/usePortfolio";
+
 
 /** Interactive 3D portfolio carousel: items arranged in a ring, drag to rotate */
 function PortfolioRing({
