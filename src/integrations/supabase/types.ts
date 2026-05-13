@@ -56,6 +56,42 @@ export type Database = {
         }
         Relationships: []
       }
+      partners: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          logo_url: string | null
+          name: string
+          published: boolean
+          sort_order: number
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          logo_url?: string | null
+          name: string
+          published?: boolean
+          sort_order?: number
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          published?: boolean
+          sort_order?: number
+          updated_at?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
       portfolio_items: {
         Row: {
           accent: string
