@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -11,6 +11,7 @@ import { usePortfolio } from "@/lib/usePortfolio";
  */
 export default function PortfolioMarquee() {
   const { t, lang, dir } = useLang();
+  const navigate = useNavigate();
   const { items } = usePortfolio();
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
   const [active, setActive] = useState(0);
@@ -118,7 +119,10 @@ export default function PortfolioMarquee() {
               <motion.button
                 key={`${item.id}-${offset}`}
                 onClick={() => {
-                  if (offset === 0) return;
+                  if (offset === 0) {
+                    navigate(`/portfolio/${item.id}`);
+                    return;
+                  }
                   setActive((a) => (a + offset + count) % count);
                 }}
                 className="absolute pointer-events-auto"

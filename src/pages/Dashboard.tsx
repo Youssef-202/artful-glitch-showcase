@@ -256,6 +256,13 @@ const itemSchema = z.object({
   accent: z.string().trim().regex(/^#[0-9a-fA-F]{6}$/),
   sort_order: z.number().int(),
   published: z.boolean(),
+  description_ar: z.string().trim().max(1000).optional().or(z.literal("")),
+  description_en: z.string().trim().max(1000).optional().or(z.literal("")),
+  content_ar: z.string().trim().max(20000).optional().or(z.literal("")),
+  content_en: z.string().trim().max(20000).optional().or(z.literal("")),
+  year: z.string().trim().max(20).optional().or(z.literal("")),
+  duration: z.string().trim().max(50).optional().or(z.literal("")),
+  project_url: z.string().trim().url().optional().or(z.literal("")),
 });
 
 function PortfolioManager({ items, onChange }: { items: PItem[]; onChange: () => void }) {
@@ -322,8 +329,17 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
     accent: item?.accent ?? "#5fd9cf",
     sort_order: item?.sort_order ?? 0,
     published: item?.published ?? true,
+    description_ar: ((item as any)?.description_ar as string) ?? "",
+    description_en: ((item as any)?.description_en as string) ?? "",
+    content_ar: ((item as any)?.content_ar as string) ?? "",
+    content_en: ((item as any)?.content_en as string) ?? "",
+    year: ((item as any)?.year as string) ?? "",
+    duration: ((item as any)?.duration as string) ?? "",
+    project_url: ((item as any)?.project_url as string) ?? "",
   });
   const [gallery, setGallery] = useState<string[]>(((item as any)?.gallery_urls as string[]) ?? []);
+  const [stepsAr, setStepsAr] = useState<string>((((item as any)?.process_steps_ar as string[]) ?? []).join("\n"));
+  const [stepsEn, setStepsEn] = useState<string>((((item as any)?.process_steps_en as string[]) ?? []).join("\n"));
   const [busy, setBusy] = useState(false);
 
   const save = async (e: React.FormEvent) => {
@@ -343,6 +359,15 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
       sort_order: parsed.data.sort_order,
       published: parsed.data.published,
       gallery_urls: gallery,
+      description_ar: parsed.data.description_ar || null,
+      description_en: parsed.data.description_en || null,
+      content_ar: parsed.data.content_ar || null,
+      content_en: parsed.data.content_en || null,
+      year: parsed.data.year || null,
+      duration: parsed.data.duration || null,
+      project_url: parsed.data.project_url || null,
+      process_steps_ar: stepsAr.split("\n").map((s) => s.trim()).filter(Boolean),
+      process_steps_en: stepsEn.split("\n").map((s) => s.trim()).filter(Boolean),
     };
     const res = item
       ? await supabase.from("portfolio_items").update(payload).eq("id", item.id)
@@ -388,6 +413,46 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
           accept="image/*,video/*"
           label="ارفع صور المعرض"
         />
+      </div>
+
+      {/* Description / story / process / meta */}
+      <div className="space-y-3 pt-4 border-t border-border/40">
+        <p className="text-sm font-bold text-primary">تفاصيل المشروع</p>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <textarea maxLength={1000} rows={3} placeholder="وصف قصير (عربي)" value={form.description_ar}
+            onChange={(e) => setForm({ ...form, description_ar: e.target.value })}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none" />
+          <textarea maxLength={1000} rows={3} placeholder="Short description (English)" value={form.description_en}
+            onChange={(e) => setForm({ ...form, description_en: e.target.value })}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none" />
+        </div>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <textarea maxLength={20000} rows={8} placeholder="قصة المشروع الكاملة (عربي)" value={form.content_ar}
+            onChange={(e) => setForm({ ...form, content_ar: e.target.value })}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none" />
+          <textarea maxLength={20000} rows={8} placeholder="Full project story (English)" value={form.content_en}
+            onChange={(e) => setForm({ ...form, content_en: e.target.value })}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none" />
+        </div>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <textarea rows={4} placeholder="خطوات التنفيذ بالعربي (سطر لكل خطوة)" value={stepsAr}
+            onChange={(e) => setStepsAr(e.target.value)}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none text-sm" />
+          <textarea rows={4} placeholder="Process steps in English (one per line)" value={stepsEn}
+            onChange={(e) => setStepsEn(e.target.value)}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none text-sm" />
+        </div>
+        <div className="grid sm:grid-cols-3 gap-4">
+          <input maxLength={20} placeholder="السنة (مثال: 2024)" value={form.year}
+            onChange={(e) => setForm({ ...form, year: e.target.value })}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+          <input maxLength={50} placeholder="المدة (مثال: شهرين)" value={form.duration}
+            onChange={(e) => setForm({ ...form, duration: e.target.value })}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+          <input type="url" placeholder="رابط المشروع (اختياري)" value={form.project_url}
+            onChange={(e) => setForm({ ...form, project_url: e.target.value })}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+        </div>
       </div>
       <div className="grid sm:grid-cols-3 gap-4">
         <label className="flex items-center gap-2 bg-background/50 border border-border rounded-xl px-3 py-2">
