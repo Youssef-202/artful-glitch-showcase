@@ -329,8 +329,17 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
     accent: item?.accent ?? "#5fd9cf",
     sort_order: item?.sort_order ?? 0,
     published: item?.published ?? true,
+    description_ar: ((item as any)?.description_ar as string) ?? "",
+    description_en: ((item as any)?.description_en as string) ?? "",
+    content_ar: ((item as any)?.content_ar as string) ?? "",
+    content_en: ((item as any)?.content_en as string) ?? "",
+    year: ((item as any)?.year as string) ?? "",
+    duration: ((item as any)?.duration as string) ?? "",
+    project_url: ((item as any)?.project_url as string) ?? "",
   });
   const [gallery, setGallery] = useState<string[]>(((item as any)?.gallery_urls as string[]) ?? []);
+  const [stepsAr, setStepsAr] = useState<string>((((item as any)?.process_steps_ar as string[]) ?? []).join("\n"));
+  const [stepsEn, setStepsEn] = useState<string>((((item as any)?.process_steps_en as string[]) ?? []).join("\n"));
   const [busy, setBusy] = useState(false);
 
   const save = async (e: React.FormEvent) => {
@@ -350,6 +359,15 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
       sort_order: parsed.data.sort_order,
       published: parsed.data.published,
       gallery_urls: gallery,
+      description_ar: parsed.data.description_ar || null,
+      description_en: parsed.data.description_en || null,
+      content_ar: parsed.data.content_ar || null,
+      content_en: parsed.data.content_en || null,
+      year: parsed.data.year || null,
+      duration: parsed.data.duration || null,
+      project_url: parsed.data.project_url || null,
+      process_steps_ar: stepsAr.split("\n").map((s) => s.trim()).filter(Boolean),
+      process_steps_en: stepsEn.split("\n").map((s) => s.trim()).filter(Boolean),
     };
     const res = item
       ? await supabase.from("portfolio_items").update(payload).eq("id", item.id)
