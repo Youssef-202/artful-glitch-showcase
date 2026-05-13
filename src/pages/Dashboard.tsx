@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, NavLink, Route, Routes, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FileText, Image as ImageIcon, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { FileText, Image as ImageIcon, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft, Building2 } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -35,6 +35,7 @@ function Sidebar() {
     { to: "/dashboard", icon: LayoutDashboard, label: t.dashboard.title, end: true },
     { to: "/dashboard/posts", icon: FileText, label: t.dashboard.posts },
     { to: "/dashboard/portfolio", icon: ImageIcon, label: t.dashboard.portfolio },
+    { to: "/dashboard/partners", icon: Building2, label: "الشركاء" },
   ];
   return (
     <aside className="w-64 shrink-0 glass-strong rounded-3xl p-4 flex flex-col gap-2 h-fit sticky top-24">
@@ -412,11 +413,134 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
   );
 }
 
+type Partner = {
+  id: string; name: string; logo_url: string | null; website_url: string | null;
+  sort_order: number; published: boolean;
+};
+
+const partnerSchema = z.object({
+  name: z.string().trim().min(1).max(200),
+  logo_url: z.string().trim().url().optional().or(z.literal("")),
+  website_url: z.string().trim().url().optional().or(z.literal("")),
+  sort_order: z.number().int(),
+  published: z.boolean(),
+});
+
+function PartnersManager({ items, onChange }: { items: Partner[]; onChange: () => void }) {
+  const [editing, setEditing] = useState<Partner | null>(null);
+  const [creating, setCreating] = useState(false);
+
+  const remove = async (id: string) => {
+    if (!confirm("Delete?")) return;
+    const { error } = await supabase.from("partners").delete().eq("id", id);
+    if (error) toast.error(error.message); else { toast.success("✓"); onChange(); }
+  };
+
+  if (creating || editing) {
+    return <PartnerForm item={editing} onClose={() => { setEditing(null); setCreating(false); onChange(); }} />;
+  }
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-3xl font-black"><span className="text-gradient">الشركاء</span></h1>
+        <button onClick={() => setCreating(true)} className="inline-flex items-center gap-2 rounded-full px-5 py-3 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition">
+          <Plus className="w-4 h-4" /> إضافة شريك
+        </button>
+      </div>
+      <div className="glass-strong rounded-3xl overflow-hidden">
+        {items.map((p) => (
+          <div key={p.id} className="flex items-center justify-between p-4 border-b border-border/40 last:border-0 hover:bg-foreground/5">
+            <div className="flex items-center gap-3 min-w-0 flex-1">
+              <div className="w-12 h-12 rounded-xl shrink-0 overflow-hidden bg-background/40 flex items-center justify-center">
+                {p.logo_url ? <img src={p.logo_url} alt="" className="w-full h-full object-contain" /> : <Building2 className="w-5 h-5 text-muted-foreground" />}
+              </div>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <p className="font-bold truncate">{p.name}</p>
+                  {p.published ? <Eye className="w-3 h-3 text-primary" /> : <EyeOff className="w-3 h-3 text-muted-foreground" />}
+                </div>
+                <p className="text-xs text-muted-foreground">#{p.sort_order} {p.website_url && `· ${p.website_url}`}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button onClick={() => setEditing(p)} className="p-2 rounded-lg hover:bg-primary/10 text-primary"><Pencil className="w-4 h-4" /></button>
+              <button onClick={() => remove(p.id)} className="p-2 rounded-lg hover:bg-destructive/10 text-destructive"><Trash2 className="w-4 h-4" /></button>
+            </div>
+          </div>
+        ))}
+        {items.length === 0 && <p className="text-center text-muted-foreground py-12">لا يوجد شركاء بعد</p>}
+      </div>
+    </div>
+  );
+}
+
+function PartnerForm({ item, onClose }: { item: Partner | null; onClose: () => void }) {
+  const { user } = useAuth();
+  const [form, setForm] = useState({
+    name: item?.name ?? "",
+    logo_url: item?.logo_url ?? "",
+    website_url: item?.website_url ?? "",
+    sort_order: item?.sort_order ?? 0,
+    published: item?.published ?? true,
+  });
+  const [busy, setBusy] = useState(false);
+
+  const save = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const parsed = partnerSchema.safeParse(form);
+    if (!parsed.success) { toast.error(parsed.error.issues[0].message); return; }
+    setBusy(true);
+    const payload = {
+      name: parsed.data.name,
+      logo_url: parsed.data.logo_url || null,
+      website_url: parsed.data.website_url || null,
+      sort_order: parsed.data.sort_order,
+      published: parsed.data.published,
+    };
+    const res = item
+      ? await supabase.from("partners").update(payload).eq("id", item.id)
+      : await supabase.from("partners").insert({ ...payload, created_by: user?.id });
+    setBusy(false);
+    if (res.error) toast.error(res.error.message);
+    else { toast.success("✓"); onClose(); }
+  };
+
+  return (
+    <form onSubmit={save} className="glass-strong rounded-3xl p-8 space-y-4">
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-black"><span className="text-gradient">{item ? "تعديل شريك" : "شريك جديد"}</span></h1>
+        <button type="button" onClick={onClose} className="text-sm text-muted-foreground hover:text-primary inline-flex items-center gap-1">
+          <ArrowLeft className="w-4 h-4" /> إلغاء
+        </button>
+      </div>
+      <input required maxLength={200} placeholder="اسم الشريك" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
+        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-lg font-bold" />
+      <FileUpload value={form.logo_url} onChange={(url) => setForm({ ...form, logo_url: url ?? "" })} folder="partners" accept="image/*" label="شعار الشريك" />
+      <input type="url" placeholder="رابط الشعار (أو رابط مباشر)" value={form.logo_url} onChange={(e) => setForm({ ...form, logo_url: e.target.value })}
+        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-xs" />
+      <input type="url" placeholder="رابط موقع الشركة (اختياري)" value={form.website_url} onChange={(e) => setForm({ ...form, website_url: e.target.value })}
+        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+      <input type="number" placeholder="الترتيب" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: Number(e.target.value) })}
+        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+      <label className="flex items-center gap-2 text-sm">
+        <input type="checkbox" checked={form.published} onChange={(e) => setForm({ ...form, published: e.target.checked })} />
+        منشور
+      </label>
+      <button type="submit" disabled={busy}
+        className="w-full rounded-full px-7 py-4 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-[1.02] transition disabled:opacity-50">
+        حفظ
+      </button>
+    </form>
+  );
+}
+
 export default function Dashboard() {
   const { user, isAdmin, loading } = useAuth();
   const { t } = useLang();
   const [posts, setPosts] = useState<Post[]>([]);
   const [portfolio, setPortfolio] = useState<PItem[]>([]);
+  const [partners, setPartners] = useState<Partner[]>([]);
   const [tick, setTick] = useState(0);
 
   useEffect(() => {
@@ -425,6 +549,8 @@ export default function Dashboard() {
       .then(({ data }) => setPosts((data as any) ?? []));
     supabase.from("portfolio_items").select("*").order("sort_order", { ascending: true })
       .then(({ data }) => setPortfolio((data as any) ?? []));
+    supabase.from("partners").select("*").order("sort_order", { ascending: true })
+      .then(({ data }) => setPartners((data as any) ?? []));
   }, [isAdmin, tick]);
 
   if (loading) return <div className="px-6 h-96 animate-pulse" />;
@@ -448,6 +574,7 @@ export default function Dashboard() {
           <Route index element={<Overview posts={posts} />} />
           <Route path="posts" element={<PostsList posts={posts} onChange={() => setTick((t) => t + 1)} />} />
           <Route path="portfolio" element={<PortfolioManager items={portfolio} onChange={() => setTick((t) => t + 1)} />} />
+          <Route path="partners" element={<PartnersManager items={partners} onChange={() => setTick((t) => t + 1)} />} />
         </Routes>
       </div>
     </div>
