@@ -87,19 +87,17 @@ export default function Hero() {
         </motion.div>
 
         {/* Big centered logo with words pinned to the screen edges */}
-        <div className="relative isolate w-screen flex items-center justify-center -mx-4 sm:-mx-8 [--hero-logo-size:320px] [--hero-side-gap:0.75rem] sm:[--hero-logo-size:460px] sm:[--hero-side-gap:2rem] lg:[--hero-logo-size:min(54vw,620px)] lg:[--hero-side-gap:4rem]">
-          <div className="pointer-events-none absolute right-3 sm:right-8 lg:right-16 top-1/2 -translate-y-1/2 z-40 origin-right scale-x-50">
-            <motion.span
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-              className="block text-gradient text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight whitespace-nowrap drop-shadow-[0_2px_12px_hsl(var(--background)/0.7)]"
-            >
-              وكـــــالـــــة
-            </motion.span>
-          </div>
+        <div className="relative w-screen flex items-center justify-center -mx-4 sm:-mx-8">
+          <motion.span
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+            className="pointer-events-none absolute right-3 sm:right-8 lg:right-16 top-1/2 -translate-y-1/2 text-gradient text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight whitespace-nowrap z-30 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]"
+          >
+            وكـــــالـــــة
+          </motion.span>
 
-          <div className="relative z-20 h-[var(--hero-logo-size)] w-[var(--hero-logo-size)] shrink-0">
+          <div className="relative h-[320px] w-[320px] sm:h-[460px] sm:w-[460px] lg:h-[620px] lg:w-[620px] shrink-0">
             <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
               <ambientLight intensity={0.4} />
               <directionalLight position={[5, 5, 5]} intensity={1.4} />
@@ -110,16 +108,14 @@ export default function Hero() {
             </Canvas>
           </div>
 
-          <div className="pointer-events-none absolute left-3 sm:left-8 lg:left-16 top-1/2 -translate-y-1/2 z-40 origin-left scale-x-50">
-            <motion.span
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-              className="block text-gradient text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight whitespace-nowrap drop-shadow-[0_2px_12px_hsl(var(--background)/0.7)]"
-            >
-              إتــــقــــــان
-            </motion.span>
-          </div>
+          <motion.span
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+            className="pointer-events-none absolute left-3 sm:left-8 lg:left-16 top-1/2 -translate-y-1/2 text-gradient text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight whitespace-nowrap z-30 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]"
+          >
+            إتــــقــــــان
+          </motion.span>
         </div>
 
         <motion.p
