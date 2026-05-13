@@ -414,6 +414,46 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
           label="ارفع صور المعرض"
         />
       </div>
+
+      {/* Description / story / process / meta */}
+      <div className="space-y-3 pt-4 border-t border-border/40">
+        <p className="text-sm font-bold text-primary">تفاصيل المشروع</p>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <textarea maxLength={1000} rows={3} placeholder="وصف قصير (عربي)" value={form.description_ar}
+            onChange={(e) => setForm({ ...form, description_ar: e.target.value })}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none" />
+          <textarea maxLength={1000} rows={3} placeholder="Short description (English)" value={form.description_en}
+            onChange={(e) => setForm({ ...form, description_en: e.target.value })}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none" />
+        </div>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <textarea maxLength={20000} rows={8} placeholder="قصة المشروع الكاملة (عربي)" value={form.content_ar}
+            onChange={(e) => setForm({ ...form, content_ar: e.target.value })}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none" />
+          <textarea maxLength={20000} rows={8} placeholder="Full project story (English)" value={form.content_en}
+            onChange={(e) => setForm({ ...form, content_en: e.target.value })}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none" />
+        </div>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <textarea rows={4} placeholder="خطوات التنفيذ بالعربي (سطر لكل خطوة)" value={stepsAr}
+            onChange={(e) => setStepsAr(e.target.value)}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none text-sm" />
+          <textarea rows={4} placeholder="Process steps in English (one per line)" value={stepsEn}
+            onChange={(e) => setStepsEn(e.target.value)}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none text-sm" />
+        </div>
+        <div className="grid sm:grid-cols-3 gap-4">
+          <input maxLength={20} placeholder="السنة (مثال: 2024)" value={form.year}
+            onChange={(e) => setForm({ ...form, year: e.target.value })}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+          <input maxLength={50} placeholder="المدة (مثال: شهرين)" value={form.duration}
+            onChange={(e) => setForm({ ...form, duration: e.target.value })}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+          <input type="url" placeholder="رابط المشروع (اختياري)" value={form.project_url}
+            onChange={(e) => setForm({ ...form, project_url: e.target.value })}
+            className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+        </div>
+      </div>
       <div className="grid sm:grid-cols-3 gap-4">
         <label className="flex items-center gap-2 bg-background/50 border border-border rounded-xl px-3 py-2">
           <span className="text-sm text-muted-foreground flex-1">{t.dashboard.itemColor}</span>
