@@ -66,7 +66,7 @@ function LogoMesh() {
 export default function Hero() {
   const { t } = useLang();
   return (
-    <section className="relative min-h-[calc(100vh-6rem)] w-full overflow-hidden px-4 sm:px-8">
+    <section className="relative min-h-[calc(100vh-6rem)] w-full flex items-center justify-center overflow-hidden px-4 sm:px-8">
       {/* Ambient stars background only */}
       <div className="absolute inset-0 pointer-events-none">
         <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
@@ -75,63 +75,72 @@ export default function Hero() {
         </Canvas>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto h-full min-h-[calc(100vh-6rem)] grid lg:grid-cols-2 gap-10 items-center py-12">
-        {/* Text column */}
-        <div className="text-center lg:text-right order-2 lg:order-1">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 text-xs sm:text-sm mb-8"
-          >
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            {t.common.tagline}
-          </motion.div>
+      <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center text-center py-12">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: "easeOut" }}
+          className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 text-xs sm:text-sm mb-10"
+        >
+          <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+          {t.common.tagline}
+        </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.15, ease: "easeOut" }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight"
+        {/* Logo with side words */}
+        <div className="flex items-center justify-center gap-4 sm:gap-8 w-full">
+          <motion.span
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+            className="text-gradient text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight whitespace-nowrap"
           >
-            <span className="text-gradient">{t.common.heroTitle}</span>
-          </motion.h1>
+            وكالة
+          </motion.span>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.35 }}
-            className="mt-6 text-base sm:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0"
-          >
-            {t.common.heroSubtitle}
-          </motion.p>
+          <div className="relative h-[220px] w-[220px] sm:h-[320px] sm:w-[320px] lg:h-[420px] lg:w-[420px] shrink-0">
+            <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
+              <ambientLight intensity={0.4} />
+              <directionalLight position={[5, 5, 5]} intensity={1.4} />
+              <pointLight position={[-5, -3, -5]} color="#5fd9cf" intensity={3} />
+              <pointLight position={[5, 3, 2]} color="#115e59" intensity={2} />
+              <LogoMesh />
+              <Sparkles count={80} scale={6} size={2.5} speed={0.5} color="#5fd9cf" />
+            </Canvas>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.55 }}
-            className="mt-10 flex flex-wrap items-center justify-center lg:justify-start gap-4"
+          <motion.span
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+            className="text-gradient text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight whitespace-nowrap"
           >
-            <Link to="/services" className="glass-strong hover:bg-foreground/5 transition rounded-full px-7 py-4 font-bold">
-              {t.common.ctaExplore}
-            </Link>
-            <Link to="/contact" className="rounded-full px-7 py-4 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition">
-              {t.common.ctaStart}
-            </Link>
-          </motion.div>
+            إتقان
+          </motion.span>
         </div>
 
-        {/* Logo column */}
-        <div className="relative order-1 lg:order-2 h-[320px] sm:h-[440px] lg:h-[560px]">
-          <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
-            <ambientLight intensity={0.4} />
-            <directionalLight position={[5, 5, 5]} intensity={1.4} />
-            <pointLight position={[-5, -3, -5]} color="#5fd9cf" intensity={3} />
-            <pointLight position={[5, 3, 2]} color="#115e59" intensity={2} />
-            <LogoMesh />
-            <Sparkles count={80} scale={6} size={2.5} speed={0.5} color="#5fd9cf" />
-          </Canvas>
-        </div>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.4 }}
+          className="mt-8 text-base sm:text-xl text-muted-foreground max-w-2xl"
+        >
+          {t.common.heroSubtitle}
+        </motion.p>
+
+        {/* Buttons: استكشف on right, ابدأ on left (RTL natural order) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.55 }}
+          className="mt-10 flex flex-wrap items-center justify-center gap-4"
+        >
+          <Link to="/services" className="glass-strong hover:bg-foreground/5 transition rounded-full px-7 py-4 font-bold">
+            {t.common.ctaExplore}
+          </Link>
+          <Link to="/contact" className="rounded-full px-7 py-4 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition">
+            {t.common.ctaStart}
+          </Link>
+        </motion.div>
       </div>
 
       <motion.div
