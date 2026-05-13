@@ -86,18 +86,18 @@ export default function Hero() {
           {t.common.tagline}
         </motion.div>
 
-        {/* Logo with side words */}
-        <div className="flex items-center justify-center gap-4 sm:gap-8 w-full">
+        {/* Big centered logo with words pinned to the screen edges */}
+        <div className="relative w-screen flex items-center justify-center -mx-4 sm:-mx-8">
           <motion.span
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-            className="text-gradient text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight whitespace-nowrap"
+            className="absolute right-3 sm:right-8 lg:right-16 top-1/2 -translate-y-1/2 text-gradient text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight whitespace-nowrap z-10"
           >
-            وكالة
+            وكـــــالـــــة
           </motion.span>
 
-          <div className="relative h-[220px] w-[220px] sm:h-[320px] sm:w-[320px] lg:h-[420px] lg:w-[420px] shrink-0">
+          <div className="relative h-[320px] w-[320px] sm:h-[460px] sm:w-[460px] lg:h-[620px] lg:w-[620px] shrink-0">
             <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
               <ambientLight intensity={0.4} />
               <directionalLight position={[5, 5, 5]} intensity={1.4} />
@@ -112,7 +112,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-            className="text-gradient text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight whitespace-nowrap"
+            className="absolute left-3 sm:left-8 lg:left-16 top-1/2 -translate-y-1/2 text-gradient text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight whitespace-nowrap z-10"
           >
             إتقان
           </motion.span>
