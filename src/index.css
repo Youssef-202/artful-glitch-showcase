@@ -123,6 +123,42 @@
     background-clip: text;
     color: transparent;
   }
+  .hero-word-rail {
+    position: absolute;
+    top: 50%;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    width: max(0px, calc((100vw - var(--hero-logo-size) - (var(--hero-side-gap) * 2)) / 2));
+    overflow: hidden;
+    pointer-events: none;
+    transform: translateY(-50%);
+  }
+  .hero-word-rail-right {
+    right: var(--hero-side-gap);
+    justify-content: flex-end;
+    text-align: right;
+  }
+  .hero-word-rail-left {
+    left: var(--hero-side-gap);
+    justify-content: flex-start;
+    text-align: left;
+  }
+  .hero-side-word {
+    display: inline-block;
+    font-size: clamp(1.8rem, 5vw, 4.5rem);
+    line-height: 0.95;
+    font-weight: 900;
+    white-space: nowrap;
+    filter: drop-shadow(0 2px 12px hsl(var(--background) / 0.7));
+  }
+  .hero-word-svg {
+    display: block;
+    width: 100%;
+    height: clamp(3rem, 8vw, 6rem);
+    overflow: visible;
+    filter: drop-shadow(0 2px 12px hsl(var(--background) / 0.7));
+  }
   .bg-radial-primary { background: var(--gradient-radial); }
   .shadow-glow { box-shadow: var(--shadow-glow); }
   .shadow-elegant { box-shadow: var(--shadow-elegant); }
