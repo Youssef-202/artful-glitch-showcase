@@ -11,6 +11,7 @@ import { usePortfolio } from "@/lib/usePortfolio";
  */
 export default function PortfolioMarquee() {
   const { t, lang, dir } = useLang();
+  const navigate = useNavigate();
   const { items } = usePortfolio();
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
   const [active, setActive] = useState(0);
