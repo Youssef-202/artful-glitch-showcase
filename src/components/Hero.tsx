@@ -66,68 +66,79 @@ function LogoMesh() {
 export default function Hero() {
   const { t } = useLang();
   return (
-    <section className="relative min-h-[calc(100vh-6rem)] w-full flex items-center justify-center overflow-hidden px-4">
-      <div className="absolute inset-0">
+    <section className="relative min-h-[calc(100vh-6rem)] w-full overflow-hidden px-4 sm:px-8">
+      {/* Ambient stars background only */}
+      <div className="absolute inset-0 pointer-events-none">
         <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
-          <ambientLight intensity={0.4} />
-          <directionalLight position={[5, 5, 5]} intensity={1.4} />
-          <pointLight position={[-5, -3, -5]} color="#5fd9cf" intensity={3} />
-          <pointLight position={[5, 3, 2]} color="#115e59" intensity={2} />
           <Stars radius={50} depth={30} count={1200} factor={4} fade speed={0.6} />
-          <LogoMesh />
-          <Sparkles count={180} scale={8} size={3} speed={0.5} color="#5fd9cf" />
+          <Sparkles count={120} scale={10} size={2.5} speed={0.4} color="#5fd9cf" />
         </Canvas>
       </div>
 
-      <div className="relative z-10 text-center max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 text-xs sm:text-sm mb-8"
-        >
-          <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          {t.common.tagline}
-        </motion.div>
+      <div className="relative z-10 max-w-7xl mx-auto h-full min-h-[calc(100vh-6rem)] grid lg:grid-cols-2 gap-10 items-center py-12">
+        {/* Text column */}
+        <div className="text-center lg:text-right order-2 lg:order-1">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: "easeOut" }}
+            className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 text-xs sm:text-sm mb-8"
+          >
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            {t.common.tagline}
+          </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.15, ease: "easeOut" }}
-          className="text-5xl sm:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight"
-        >
-          <span className="text-gradient">{t.common.heroTitle}</span>
-        </motion.h1>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.15, ease: "easeOut" }}
+            className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight"
+          >
+            <span className="text-gradient">{t.common.heroTitle}</span>
+          </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.35 }}
-          className="mt-6 text-lg sm:text-2xl text-muted-foreground max-w-2xl mx-auto"
-        >
-          {t.common.heroSubtitle}
-        </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.35 }}
+            className="mt-6 text-base sm:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0"
+          >
+            {t.common.heroSubtitle}
+          </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.55 }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-4"
-        >
-          <Link to="/services" className="glass-strong hover:bg-foreground/5 transition rounded-full px-7 py-4 font-bold">
-            {t.common.ctaExplore}
-          </Link>
-          <Link to="/contact" className="rounded-full px-7 py-4 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition">
-            {t.common.ctaStart}
-          </Link>
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.55 }}
+            className="mt-10 flex flex-wrap items-center justify-center lg:justify-start gap-4"
+          >
+            <Link to="/services" className="glass-strong hover:bg-foreground/5 transition rounded-full px-7 py-4 font-bold">
+              {t.common.ctaExplore}
+            </Link>
+            <Link to="/contact" className="rounded-full px-7 py-4 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition">
+              {t.common.ctaStart}
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* Logo column */}
+        <div className="relative order-1 lg:order-2 h-[320px] sm:h-[440px] lg:h-[560px]">
+          <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
+            <ambientLight intensity={0.4} />
+            <directionalLight position={[5, 5, 5]} intensity={1.4} />
+            <pointLight position={[-5, -3, -5]} color="#5fd9cf" intensity={3} />
+            <pointLight position={[5, 3, 2]} color="#115e59" intensity={2} />
+            <LogoMesh />
+            <Sparkles count={80} scale={6} size={2.5} speed={0.5} color="#5fd9cf" />
+          </Canvas>
+        </div>
       </div>
 
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-xs text-muted-foreground tracking-widest"
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs text-muted-foreground tracking-widest"
       >
         ↓ {t.common.scrollDown}
       </motion.div>
