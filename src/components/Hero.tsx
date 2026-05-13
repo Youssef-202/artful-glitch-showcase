@@ -92,7 +92,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-            className="absolute right-3 sm:right-8 lg:right-16 top-1/2 -translate-y-1/2 text-gradient text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight whitespace-nowrap z-10"
+            className="pointer-events-none absolute right-3 sm:right-8 lg:right-16 top-1/2 -translate-y-1/2 text-gradient text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight whitespace-nowrap z-30 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]"
           >
             وكـــــالـــــة
           </motion.span>
@@ -112,7 +112,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-            className="absolute left-3 sm:left-8 lg:left-16 top-1/2 -translate-y-1/2 text-gradient text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight whitespace-nowrap z-10"
+            className="pointer-events-none absolute left-3 sm:left-8 lg:left-16 top-1/2 -translate-y-1/2 text-gradient text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight whitespace-nowrap z-30 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]"
           >
             إتــــقــــــان
           </motion.span>
