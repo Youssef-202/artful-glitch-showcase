@@ -256,6 +256,13 @@ const itemSchema = z.object({
   accent: z.string().trim().regex(/^#[0-9a-fA-F]{6}$/),
   sort_order: z.number().int(),
   published: z.boolean(),
+  description_ar: z.string().trim().max(1000).optional().or(z.literal("")),
+  description_en: z.string().trim().max(1000).optional().or(z.literal("")),
+  content_ar: z.string().trim().max(20000).optional().or(z.literal("")),
+  content_en: z.string().trim().max(20000).optional().or(z.literal("")),
+  year: z.string().trim().max(20).optional().or(z.literal("")),
+  duration: z.string().trim().max(50).optional().or(z.literal("")),
+  project_url: z.string().trim().url().optional().or(z.literal("")),
 });
 
 function PortfolioManager({ items, onChange }: { items: PItem[]; onChange: () => void }) {
