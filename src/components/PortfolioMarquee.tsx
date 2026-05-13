@@ -119,7 +119,10 @@ export default function PortfolioMarquee() {
               <motion.button
                 key={`${item.id}-${offset}`}
                 onClick={() => {
-                  if (offset === 0) return;
+                  if (offset === 0) {
+                    navigate(`/portfolio/${item.id}`);
+                    return;
+                  }
                   setActive((a) => (a + offset + count) % count);
                 }}
                 className="absolute pointer-events-auto"
