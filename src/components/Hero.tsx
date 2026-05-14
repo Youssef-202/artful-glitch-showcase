@@ -83,10 +83,10 @@ export default function Hero() {
             transition={{ duration: 1, delay: 0.3 }}
             lang="ar"
             dir="rtl"
-            className="absolute z-30 right-[3%] sm:right-[6%] lg:right-[8%] top-1/2 -translate-y-1/2 font-arabic font-black tracking-[0.15em] leading-none whitespace-nowrap bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)] pointer-events-none select-none"
-            style={{ fontSize: "clamp(1.1rem, 3.2vw, 3rem)" }}
+            className="absolute z-30 right-[3%] sm:right-[6%] lg:right-[8%] top-1/2 -translate-y-1/2 font-arabic font-extrabold leading-none whitespace-nowrap text-primary-foreground drop-shadow-[0_0_18px_hsl(var(--primary)/0.9)] pointer-events-none select-none"
+            style={{ fontSize: "clamp(1.25rem, 3.4vw, 3rem)", textShadow: "0 0 24px hsl(var(--primary) / 0.7), 0 2px 8px hsl(var(--background) / 0.8)" }}
           >
-            وكـــالـــة
+            وكالة
           </motion.span>
           <motion.span
             initial={{ opacity: 0, x: 30 }}
@@ -94,10 +94,10 @@ export default function Hero() {
             transition={{ duration: 1, delay: 0.3 }}
             lang="ar"
             dir="rtl"
-            className="absolute z-30 left-[3%] sm:left-[6%] lg:left-[8%] top-1/2 -translate-y-1/2 font-arabic font-black tracking-[0.15em] leading-none whitespace-nowrap bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)] pointer-events-none select-none"
-            style={{ fontSize: "clamp(1.1rem, 3.2vw, 3rem)" }}
+            className="absolute z-30 left-[3%] sm:left-[6%] lg:left-[8%] top-1/2 -translate-y-1/2 font-arabic font-extrabold leading-none whitespace-nowrap text-primary-foreground drop-shadow-[0_0_18px_hsl(var(--accent)/0.9)] pointer-events-none select-none"
+            style={{ fontSize: "clamp(1.25rem, 3.4vw, 3rem)", textShadow: "0 0 24px hsl(var(--accent) / 0.7), 0 2px 8px hsl(var(--background) / 0.8)" }}
           >
-            إتـــقــــان
+            إتقان
           </motion.span>
           <div className="relative z-20 h-[240px] w-[280px] sm:h-[380px] sm:w-[440px] lg:h-[720px] lg:w-[830px] max-w-full shrink-0">
             <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
