@@ -77,6 +77,22 @@ export default function Hero() {
 
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center text-center py-6">
         <div className="relative w-full max-w-full flex items-center justify-center isolate overflow-hidden">
+          <motion.span
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="absolute z-30 right-[2%] sm:right-[4%] lg:right-[6%] top-1/2 -translate-y-1/2 text-2xl sm:text-4xl lg:text-6xl font-extrabold tracking-widest bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)] pointer-events-none select-none"
+          >
+            إتــقــان
+          </motion.span>
+          <motion.span
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="absolute z-30 left-[2%] sm:left-[4%] lg:left-[6%] top-1/2 -translate-y-1/2 text-2xl sm:text-4xl lg:text-6xl font-extrabold tracking-widest bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)] pointer-events-none select-none"
+          >
+            وكــالــة
+          </motion.span>
           <div className="relative z-20 h-[280px] w-[320px] sm:h-[420px] sm:w-[480px] lg:h-[800px] lg:w-[910px] shrink-0">
             <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
               <ambientLight intensity={0.4} />
