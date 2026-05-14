@@ -60,8 +60,8 @@ export const translations = {
       itemSort: "الترتيب",
     },
     common: {
-      brand: "وكالة إتقان",
-      tagline: "وكالة إبداعية رقمية",
+      brand: "إتقان",
+      tagline: "إبداع رقمي متقن",
       heroTitle: "وكالة إتقان",
       heroSubtitle: "نصنع التجارب الرقمية التي تُحوّل الأفكار إلى علامات لا تُنسى.",
       ctaExplore: "استكشف خدماتنا",
@@ -204,8 +204,8 @@ export const translations = {
       itemSort: "Sort order",
     },
     common: {
-      brand: "Etqan Agency",
-      tagline: "Digital Creative Agency",
+      brand: "Etqan",
+      tagline: "Digital Craft",
       heroTitle: "Etqan Agency",
       heroSubtitle: "We craft digital experiences that turn ideas into unforgettable brands.",
       ctaExplore: "Explore Services",
