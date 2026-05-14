@@ -81,7 +81,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
-            className="absolute z-30 right-[2%] sm:right-[4%] lg:right-[6%] top-[55%] -translate-y-1/2 text-3xl sm:text-5xl lg:text-7xl font-arabic font-black tracking-widest bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)] pointer-events-none select-none"
+            className="absolute z-30 right-[2%] sm:right-[4%] lg:right-[6%] top-[55%] -translate-y-1/2 text-2xl sm:text-4xl lg:text-6xl font-arabic font-black tracking-widest bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)] pointer-events-none select-none"
           >
             وكـــــــــالـــــة
           </motion.span>
@@ -89,7 +89,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
-            className="absolute z-30 left-[2%] sm:left-[4%] lg:left-[6%] top-[55%] -translate-y-1/2 text-3xl sm:text-5xl lg:text-7xl font-arabic font-black tracking-widest bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)] pointer-events-none select-none"
+            className="absolute z-30 left-[2%] sm:left-[4%] lg:left-[6%] top-[55%] -translate-y-1/2 text-2xl sm:text-4xl lg:text-6xl font-arabic font-black tracking-widest bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)] pointer-events-none select-none"
           >
             إتــــــــقــــــــان
           </motion.span>
