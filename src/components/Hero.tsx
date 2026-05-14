@@ -83,8 +83,8 @@ export default function Hero() {
             transition={{ duration: 1, delay: 0.3 }}
             lang="ar"
             dir="rtl"
-            className="absolute z-30 right-[3%] sm:right-[6%] lg:right-[8%] top-1/2 -translate-y-1/2 font-extrabold leading-none whitespace-nowrap text-[#159e94] pointer-events-none select-none"
-            style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.5rem, 4vw, 3.6rem)", textShadow: "0 0 6px rgba(21,158,148,0.45), 0 0 16px rgba(21,158,148,0.2)" }}
+            className="absolute z-30 right-[3%] sm:right-[6%] lg:right-[8%] top-1/2 -translate-y-1/2 font-black leading-none whitespace-nowrap text-[#159e94] pointer-events-none select-none"
+            style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.8rem, 4.8vw, 4.2rem)", fontWeight: 800, textShadow: "0 0 6px rgba(21,158,148,0.45), 0 0 16px rgba(21,158,148,0.2)" }}
           >
             وكـــــالـــــة
           </motion.span>
@@ -94,8 +94,8 @@ export default function Hero() {
             transition={{ duration: 1, delay: 0.3 }}
             lang="ar"
             dir="rtl"
-            className="absolute z-30 left-[3%] sm:left-[6%] lg:left-[8%] top-1/2 -translate-y-1/2 font-extrabold leading-none whitespace-nowrap text-[#159e94] pointer-events-none select-none"
-            style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.5rem, 4vw, 3.6rem)", textShadow: "0 0 6px rgba(21,158,148,0.45), 0 0 16px rgba(21,158,148,0.2)" }}
+            className="absolute z-30 left-[3%] sm:left-[6%] lg:left-[8%] top-1/2 -translate-y-1/2 font-black leading-none whitespace-nowrap text-[#159e94] pointer-events-none select-none"
+            style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.8rem, 4.8vw, 4.2rem)", fontWeight: 800, textShadow: "0 0 6px rgba(21,158,148,0.45), 0 0 16px rgba(21,158,148,0.2)" }}
           >
             إتـــــقـــــان
           </motion.span>
