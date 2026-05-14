@@ -75,20 +75,9 @@ export default function Hero() {
         </Canvas>
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center text-center py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 text-xs sm:text-sm mb-10"
-        >
-          <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          {t.common.tagline}
-        </motion.div>
-
-        {/* Big centered logo with words pinned to the screen edges */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center text-center py-6">
         <div className="relative w-full max-w-full flex items-center justify-center isolate overflow-hidden">
-          <div className="relative z-20 h-[260px] w-[260px] sm:h-[400px] sm:w-[400px] lg:h-[520px] lg:w-[520px] shrink-0">
+          <div className="relative z-20 h-[320px] w-[320px] sm:h-[480px] sm:w-[480px] lg:h-[600px] lg:w-[600px] shrink-0">
             <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
               <ambientLight intensity={0.4} />
               <directionalLight position={[5, 5, 5]} intensity={1.4} />
