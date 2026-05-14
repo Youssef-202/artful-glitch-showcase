@@ -83,7 +83,7 @@ export default function Hero() {
             transition={{ duration: 1, delay: 0.3 }}
             className="absolute z-30 right-[2%] sm:right-[4%] lg:right-[6%] top-1/2 -translate-y-1/2 text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-widest bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)] pointer-events-none select-none"
           >
-            إتــقــان
+            وكـــــــــالـــــة
           </motion.span>
           <motion.span
             initial={{ opacity: 0, x: -30 }}
@@ -91,7 +91,7 @@ export default function Hero() {
             transition={{ duration: 1, delay: 0.3 }}
             className="absolute z-30 left-[2%] sm:left-[4%] lg:left-[6%] top-1/2 -translate-y-1/2 text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-widest bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)] pointer-events-none select-none"
           >
-            وكــالــة
+            إتــــــــقــــــــان
           </motion.span>
           <div className="relative z-20 h-[260px] w-[300px] sm:h-[400px] sm:w-[460px] lg:h-[760px] lg:w-[870px] shrink-0">
             <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
