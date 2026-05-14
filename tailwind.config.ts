@@ -16,7 +16,7 @@ export default {
       fontFamily: {
         sans: ['AlJazeera', 'Al-Jazeera-Arabic', 'system-ui', 'sans-serif'],
         display: ['AlJazeera', 'Al-Jazeera-Arabic', 'system-ui', 'sans-serif'],
-        arabic: ['Cairo', 'AlJazeera', 'system-ui', 'sans-serif'],
+        arabic: ['Almarai', 'AlJazeera', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
