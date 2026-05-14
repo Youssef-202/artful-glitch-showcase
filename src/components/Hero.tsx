@@ -66,7 +66,7 @@ function LogoMesh() {
 export default function Hero() {
   const { t } = useLang();
   return (
-    <section className="relative w-full flex items-center justify-center overflow-hidden px-4 sm:px-8 py-8">
+    <section className="relative min-h-[calc(100vh-6rem)] w-full flex items-center justify-center overflow-hidden px-4 sm:px-8">
       {/* Ambient stars background only */}
       <div className="absolute inset-0 pointer-events-none">
         <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
@@ -86,9 +86,18 @@ export default function Hero() {
           {t.common.tagline}
         </motion.div>
 
-        {/* Big centered logo with "وكالة إتقان" tucked under its base */}
-        <div className="relative flex flex-col items-center justify-center">
-          <div className="relative h-[300px] w-[300px] sm:h-[440px] sm:w-[440px] lg:h-[600px] lg:w-[600px]">
+        {/* Big centered logo with words pinned to the screen edges */}
+        <div className="relative w-screen flex items-center justify-center -mx-4 sm:-mx-8">
+          <motion.span
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+            className="pointer-events-none absolute right-3 sm:right-8 lg:right-16 top-1/2 -translate-y-1/2 text-gradient text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight whitespace-nowrap z-30 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]"
+          >
+            وكـــــالـــــة
+          </motion.span>
+
+          <div className="relative h-[320px] w-[320px] sm:h-[460px] sm:w-[460px] lg:h-[620px] lg:w-[620px] shrink-0">
             <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
               <ambientLight intensity={0.4} />
               <directionalLight position={[5, 5, 5]} intensity={1.4} />
@@ -99,19 +108,14 @@ export default function Hero() {
             </Canvas>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-            className="-mt-6 sm:-mt-10 lg:-mt-14 flex items-center gap-3 sm:gap-5 z-30"
+          <motion.span
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+            className="pointer-events-none absolute left-3 sm:left-8 lg:left-16 top-1/2 -translate-y-1/2 text-gradient text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight whitespace-nowrap z-30 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]"
           >
-            <span className="text-gradient font-black tracking-tight whitespace-nowrap drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] text-3xl sm:text-5xl lg:text-6xl">
-              وكـــــالـــــة
-            </span>
-            <span className="text-gradient font-black tracking-tight whitespace-nowrap drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] text-3xl sm:text-5xl lg:text-6xl">
-              إتــــقــــــان
-            </span>
-          </motion.div>
+            إتــــقــــــان
+          </motion.span>
         </div>
 
         <motion.p
