@@ -66,7 +66,7 @@ function LogoMesh() {
 export default function Hero() {
   const { t } = useLang();
   return (
-    <section className="relative min-h-[calc(100vh-6rem)] w-full flex items-center justify-center overflow-hidden px-4 sm:px-8">
+    <section className="relative w-full flex items-center justify-center overflow-hidden px-4 sm:px-8 py-8">
       {/* Ambient stars background only */}
       <div className="absolute inset-0 pointer-events-none">
         <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
@@ -97,7 +97,7 @@ export default function Hero() {
             وكـــــالـــــة
           </motion.span>
 
-          <div className="relative h-[320px] w-[320px] sm:h-[460px] sm:w-[460px] lg:h-[620px] lg:w-[620px] shrink-0">
+          <div className="relative h-[240px] w-[240px] sm:h-[340px] sm:w-[340px] lg:h-[440px] lg:w-[440px] shrink-0">
             <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
               <ambientLight intensity={0.4} />
               <directionalLight position={[5, 5, 5]} intensity={1.4} />
