@@ -86,18 +86,18 @@ export default function Hero() {
           {t.common.tagline}
         </motion.div>
 
-        {/* Big centered logo with words pinned to the screen edges */}
-        <div className="relative w-screen flex items-center justify-center -mx-4 sm:-mx-8">
+        {/* Big centered logo with words on the sides, in-flow so nothing gets clipped */}
+        <div className="relative w-full flex items-center justify-center gap-3 sm:gap-6 lg:gap-10 px-2">
           <motion.span
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-            className="pointer-events-none absolute right-3 sm:right-8 lg:right-16 top-1/2 -translate-y-1/2 text-gradient text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight whitespace-nowrap z-30 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]"
+            className="text-gradient font-black tracking-tight whitespace-nowrap z-30 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] text-[clamp(1.5rem,6vw,4.5rem)] flex-shrink min-w-0"
           >
             وكـــــالـــــة
           </motion.span>
 
-          <div className="relative h-[240px] w-[180px] sm:h-[340px] sm:w-[260px] lg:h-[440px] lg:w-[340px] shrink-0">
+          <div className="relative shrink-0 aspect-square w-[clamp(140px,22vw,360px)]">
             <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
               <ambientLight intensity={0.4} />
               <directionalLight position={[5, 5, 5]} intensity={1.4} />
@@ -112,7 +112,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-            className="pointer-events-none absolute left-3 sm:left-8 lg:left-16 top-1/2 -translate-y-1/2 text-gradient text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight whitespace-nowrap z-30 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]"
+            className="text-gradient font-black tracking-tight whitespace-nowrap z-30 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] text-[clamp(1.5rem,6vw,4.5rem)] flex-shrink min-w-0"
           >
             إتــــقــــــان
           </motion.span>
