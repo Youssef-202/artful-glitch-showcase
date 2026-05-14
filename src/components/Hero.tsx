@@ -97,7 +97,7 @@ export default function Hero() {
             وكـــــالـــــة
           </motion.span>
 
-          <div className="relative h-[240px] w-[240px] sm:h-[340px] sm:w-[340px] lg:h-[440px] lg:w-[440px] shrink-0">
+          <div className="relative h-[240px] w-[180px] sm:h-[340px] sm:w-[260px] lg:h-[440px] lg:w-[340px] shrink-0">
             <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
               <ambientLight intensity={0.4} />
               <directionalLight position={[5, 5, 5]} intensity={1.4} />
