@@ -83,8 +83,8 @@ export default function Hero() {
             transition={{ duration: 1, delay: 0.3 }}
             lang="ar"
             dir="rtl"
-            className="absolute z-30 right-[3%] sm:right-[6%] lg:right-[8%] top-1/2 -translate-y-1/2 font-arabic font-extrabold leading-none whitespace-nowrap text-[#5fd9cf] pointer-events-none select-none"
-            style={{ fontSize: "clamp(1.35rem, 3.7vw, 3.3rem)", textShadow: "0 0 8px rgba(17,94,89,0.9), 0 0 24px rgba(17,94,89,0.6), 0 0 48px rgba(17,94,89,0.3)" }}
+            className="absolute z-30 right-[3%] sm:right-[6%] lg:right-[8%] top-1/2 -translate-y-1/2 font-arabic font-extrabold leading-none whitespace-nowrap text-[#28bdb3] pointer-events-none select-none"
+            style={{ fontSize: "clamp(1.5rem, 4vw, 3.6rem)", textShadow: "0 0 6px rgba(40,189,179,0.5), 0 0 18px rgba(40,189,179,0.25)" }}
           >
             وكـــــالـــــة
           </motion.span>
