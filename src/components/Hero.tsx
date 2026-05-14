@@ -87,17 +87,17 @@ export default function Hero() {
         </motion.div>
 
         {/* Big centered logo with words pinned to the screen edges */}
-        <div className="relative w-screen flex items-center justify-center -mx-4 sm:-mx-8">
+        <div className="relative w-full max-w-full flex items-center justify-center isolate overflow-hidden">
           <motion.span
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-            className="pointer-events-none absolute right-3 sm:right-8 lg:right-16 top-1/2 -translate-y-1/2 text-gradient text-2xl sm:text-4xl lg:text-6xl font-black tracking-tight whitespace-nowrap z-30 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]"
+            className="pointer-events-none absolute right-3 sm:right-6 lg:right-12 top-1/2 -translate-y-1/2 text-gradient text-2xl sm:text-4xl lg:text-6xl font-black tracking-tight whitespace-nowrap z-30 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]"
           >
             وكـــــالـــــة
           </motion.span>
 
-          <div className="relative h-[320px] w-[320px] sm:h-[460px] sm:w-[460px] lg:h-[620px] lg:w-[620px] shrink-0">
+          <div className="relative z-20 h-[260px] w-[260px] sm:h-[400px] sm:w-[400px] lg:h-[520px] lg:w-[520px] shrink-0">
             <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
               <ambientLight intensity={0.4} />
               <directionalLight position={[5, 5, 5]} intensity={1.4} />
@@ -112,7 +112,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-            className="pointer-events-none absolute left-3 sm:left-8 lg:left-16 top-1/2 -translate-y-1/2 text-gradient text-2xl sm:text-4xl lg:text-6xl font-black tracking-tight whitespace-nowrap z-30 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]"
+            className="pointer-events-none absolute left-3 sm:left-6 lg:left-12 top-1/2 -translate-y-1/2 text-gradient text-2xl sm:text-4xl lg:text-6xl font-black tracking-tight whitespace-nowrap z-30 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]"
           >
             إتــــقــــــان
           </motion.span>
