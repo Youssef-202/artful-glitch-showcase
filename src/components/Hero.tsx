@@ -76,24 +76,30 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center text-center py-6">
-        <div className="relative w-full max-w-full flex items-center justify-center isolate overflow-hidden">
-          <motion.span
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="absolute z-30 right-[2%] sm:right-[4%] lg:right-[6%] top-[55%] -translate-y-1/2 text-xl sm:text-3xl lg:text-5xl font-arabic font-black tracking-widest bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)] pointer-events-none select-none"
-          >
-            وكـــالـــة
-          </motion.span>
+        <div dir="rtl" className="relative w-full max-w-full flex items-center justify-center isolate">
           <motion.span
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
-            className="absolute z-30 left-[2%] sm:left-[4%] lg:left-[6%] top-[55%] -translate-y-1/2 text-xl sm:text-3xl lg:text-5xl font-arabic font-black tracking-widest bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)] pointer-events-none select-none"
+            lang="ar"
+            dir="rtl"
+            className="absolute z-30 right-[3%] sm:right-[6%] lg:right-[8%] top-1/2 -translate-y-1/2 font-arabic font-black tracking-[0.15em] leading-none whitespace-nowrap bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)] pointer-events-none select-none"
+            style={{ fontSize: "clamp(1.1rem, 3.2vw, 3rem)" }}
+          >
+            وكـــالـــة
+          </motion.span>
+          <motion.span
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            lang="ar"
+            dir="rtl"
+            className="absolute z-30 left-[3%] sm:left-[6%] lg:left-[8%] top-1/2 -translate-y-1/2 font-arabic font-black tracking-[0.15em] leading-none whitespace-nowrap bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)] pointer-events-none select-none"
+            style={{ fontSize: "clamp(1.1rem, 3.2vw, 3rem)" }}
           >
             إتـــقــــان
           </motion.span>
-          <div className="relative z-20 h-[240px] w-[280px] sm:h-[380px] sm:w-[440px] lg:h-[720px] lg:w-[830px] shrink-0">
+          <div className="relative z-20 h-[240px] w-[280px] sm:h-[380px] sm:w-[440px] lg:h-[720px] lg:w-[830px] max-w-full shrink-0">
             <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
               <ambientLight intensity={0.4} />
               <directionalLight position={[5, 5, 5]} intensity={1.4} />
