@@ -77,7 +77,7 @@ export default function Hero() {
 
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center text-center py-6">
         <div className="relative w-full max-w-full flex items-center justify-center isolate overflow-hidden">
-          <div className="relative z-20 h-[320px] w-[320px] sm:h-[480px] sm:w-[480px] lg:h-[600px] lg:w-[600px] shrink-0">
+          <div className="relative z-20 h-[320px] w-[320px] sm:h-[480px] sm:w-[480px] lg:h-[800px] lg:w-[800px] shrink-0">
             <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
               <ambientLight intensity={0.4} />
               <directionalLight position={[5, 5, 5]} intensity={1.4} />
