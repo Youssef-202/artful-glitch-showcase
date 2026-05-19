@@ -140,3 +140,8 @@
 .animate-pulse-ring { animation: pulse-ring 2s cubic-bezier(0,0,0.2,1) infinite; }
 
 /* Native cursor restored — 3D interactions still happen in the background */
+
+@keyframes logoPulse {
+  0%, 100% { filter: hue-rotate(60deg) saturate(1.5) brightness(1.15) drop-shadow(0 0 18px hsl(var(--primary) / 0.6)); }
+  50%      { filter: hue-rotate(-30deg) saturate(1.8) brightness(1.25) drop-shadow(0 0 28px hsl(var(--accent) / 0.7)); }
+}
