@@ -46,6 +46,7 @@ type Profile = {
   phone: string | null;
   company: string | null;
   country: string | null;
+  avatar_url: string | null;
 };
 
 const statusLabels: Record<string, string> = {
