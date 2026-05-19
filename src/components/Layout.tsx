@@ -3,7 +3,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import FloatingCTA from "./FloatingCTA";
-import PersistentCanvas from "./PersistentCanvas";
+import NeuralBackground from "./ui/flow-field-background";
+import { useTheme } from "@/theme/ThemeProvider";
 import { useEffect } from "react";
 
 export default function Layout() {
