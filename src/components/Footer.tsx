@@ -41,7 +41,7 @@ export default function Footer() {
       <div className="glass-strong w-full px-6 py-16 text-foreground">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
-          <div className="flex flex-col items-start gap-4 order-1 lg:order-4">
+          <div className="flex flex-col items-start gap-4">
             <img src={logo} alt="إتقان" className="w-28 h-auto" />
             <p className="text-sm text-muted-foreground leading-relaxed">
               مستقبل مشروعك يبدأ الآن مع إتقان
@@ -49,7 +49,7 @@ export default function Footer() {
           </div>
 
           {/* Quick links */}
-          <div className="order-2 lg:order-3">
+          <div className="">
             <h3 className="text-lg font-bold mb-5 relative inline-block">
               الروابط السريعة
               <span className="absolute -bottom-1 right-0 w-10 h-0.5 bg-accent rounded-full" />
@@ -69,7 +69,7 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div className="order-3 lg:order-2">
+          <div className="">
             <h3 className="text-lg font-bold mb-5 relative inline-block">
               تواصل معنا
               <span className="absolute -bottom-1 right-0 w-10 h-0.5 bg-accent rounded-full" />
@@ -94,7 +94,7 @@ export default function Footer() {
           </div>
 
           {/* Social */}
-          <div className="order-4 lg:order-1">
+          <div className="">
             <h3 className="text-lg font-bold mb-5 relative inline-block">
               تابعنا على
               <span className="absolute -bottom-1 right-0 w-10 h-0.5 bg-accent rounded-full" />
