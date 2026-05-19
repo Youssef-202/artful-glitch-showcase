@@ -2,6 +2,7 @@ import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Float, Sparkles, Stars } from "@react-three/drei";
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
+import { LampContainer } from "@/components/ui/lamp";
 import * as THREE from "three";
 import { Link } from "react-router-dom";
 import { useLang } from "@/i18n/LanguageProvider";
@@ -76,40 +77,42 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center text-center py-6">
-        <div dir="rtl" className="relative w-full max-w-full flex items-center justify-center isolate">
-          <motion.span
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            lang="ar"
-            dir="rtl"
-            className="absolute z-30 right-[3%] sm:right-[6%] lg:right-[8%] top-[56%] -translate-y-1/2 font-black leading-none whitespace-nowrap text-[#159e94] pointer-events-none select-none"
-            style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(2rem, 5.4vw, 5rem)", fontWeight: 800, textShadow: "0 0 8px rgba(21,158,148,0.55), 0 0 22px rgba(21,158,148,0.3)" }}
-          >
-            وكـــــالـــــة
-          </motion.span>
-          <motion.span
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            lang="ar"
-            dir="rtl"
-            className="absolute z-30 left-[3%] sm:left-[6%] lg:left-[8%] top-[56%] -translate-y-1/2 font-black leading-none whitespace-nowrap text-[#159e94] pointer-events-none select-none"
-            style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(2rem, 5.4vw, 5rem)", fontWeight: 800, textShadow: "0 0 8px rgba(21,158,148,0.55), 0 0 22px rgba(21,158,148,0.3)" }}
-          >
-            إتـــــقـــــان
-          </motion.span>
-          <div className="relative z-20 h-[160px] w-[280px] sm:h-[260px] sm:w-[440px] lg:h-[520px] lg:w-[830px] max-w-full shrink-0">
-            <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
-              <ambientLight intensity={0.4} />
-              <directionalLight position={[5, 5, 5]} intensity={1.4} />
-              <pointLight position={[-5, -3, -5]} color="#5fd9cf" intensity={3} />
-              <pointLight position={[5, 3, 2]} color="#115e59" intensity={2} />
-              <LogoMesh />
-              <Sparkles count={80} scale={6} size={2.5} speed={0.5} color="#5fd9cf" />
-            </Canvas>
+        <LampContainer className="min-h-[420px] sm:min-h-[520px] lg:min-h-[640px] -mt-10">
+          <div dir="rtl" className="relative w-full max-w-[900px] flex items-center justify-center isolate">
+            <motion.span
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0.3 }}
+              lang="ar"
+              dir="rtl"
+              className="absolute z-30 right-[2%] sm:right-[4%] lg:right-[6%] top-1/2 -translate-y-1/2 font-black leading-none whitespace-nowrap text-primary pointer-events-none select-none"
+              style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.5rem, 4.2vw, 3.6rem)", fontWeight: 800, textShadow: "0 0 8px hsl(var(--primary) / 0.55), 0 0 22px hsl(var(--primary) / 0.3)" }}
+            >
+              وكـــــالـــــة
+            </motion.span>
+            <motion.span
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0.3 }}
+              lang="ar"
+              dir="rtl"
+              className="absolute z-30 left-[2%] sm:left-[4%] lg:left-[6%] top-1/2 -translate-y-1/2 font-black leading-none whitespace-nowrap text-primary pointer-events-none select-none"
+              style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.5rem, 4.2vw, 3.6rem)", fontWeight: 800, textShadow: "0 0 8px hsl(var(--primary) / 0.55), 0 0 22px hsl(var(--primary) / 0.3)" }}
+            >
+              إتـــــقـــــان
+            </motion.span>
+            <div className="relative z-20 h-[140px] w-[240px] sm:h-[200px] sm:w-[360px] lg:h-[300px] lg:w-[520px] max-w-full shrink-0">
+              <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
+                <ambientLight intensity={0.4} />
+                <directionalLight position={[5, 5, 5]} intensity={1.4} />
+                <pointLight position={[-5, -3, -5]} color="#5fd9cf" intensity={3} />
+                <pointLight position={[5, 3, 2]} color="#115e59" intensity={2} />
+                <LogoMesh />
+                <Sparkles count={80} scale={6} size={2.5} speed={0.5} color="#5fd9cf" />
+              </Canvas>
+            </div>
           </div>
-        </div>
+        </LampContainer>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
