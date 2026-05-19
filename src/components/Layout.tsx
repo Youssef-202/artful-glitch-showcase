@@ -25,6 +25,7 @@ export default function Layout() {
           trailColor={theme === "light" ? "240, 250, 248" : "5, 18, 18"}
           trailOpacity={theme === "light" ? 0.08 : 0.12}
           particleCount={700}
+          speed={0.35}
         />
       </div>
       <Navbar />
