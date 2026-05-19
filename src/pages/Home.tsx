@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Calendar } from "lucide-react";
+import aboutWho from "@/assets/about-who.png";
+import aboutVision from "@/assets/about-vision.png";
 import { useEffect, useState } from "react";
 import { useLang } from "@/i18n/LanguageProvider";
 import Hero from "@/components/Hero";
@@ -30,8 +32,9 @@ export default function Home() {
     <>
       <Hero />
 
-      {/* About teaser */}
-      <section className="px-6 py-24 max-w-7xl mx-auto">
+      {/* About teaser - من نحن & رؤيتنا */}
+      <section className="px-6 py-24 max-w-7xl mx-auto space-y-12" dir="rtl">
+        {/* من نحن */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -39,28 +42,64 @@ export default function Home() {
           transition={{ duration: 0.7 }}
           className="grid lg:grid-cols-2 gap-10 items-center glass-strong rounded-3xl p-8 lg:p-12"
         >
-          <div className={dir === "rtl" ? "text-right" : "text-left"}>
-            <p className="text-sm text-primary tracking-widest mb-4">نبذة عن إتقان</p>
+          <div className="text-right order-2 lg:order-1">
+            <p className="text-sm text-primary tracking-widest mb-4">نبذة عنّا</p>
             <h2 className="text-3xl sm:text-5xl font-black mb-4 leading-tight">
-              <span className="text-gradient">من الفكرة إلى واقع حقيقي</span>
+              <span className="text-gradient">من نحن</span>
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              في إتقان، ما ننفّذ مجرد طلب عادي. نحن نفهم أن كل مشروع له قصة، وكل فكرة لها إمكانيات لا محدودة.
-              لذا نجلس معك أولاً، نستمع، نسأل، ندرس السوق والمنافسة والفرص المتاحة. من هناك، ننسج خطة متقنة
-              تجمع بين الإبداع في التصميم والذكاء في التسويق. كل تصميم نصنعه، كل كلمة نكتبها، كل استراتيجية
-              نضعها - كلها تصب في هدف واحد واضح: إطلاق مشروعك بقوة حقيقية في السوق.
+              وكالة إتقان هي وكالة دعاية وإعلان متخصصة في تقديم خدمات الإعلان والتصميم والتسويق الرقمي
+              بأعلى مستوى من الدقة والاحترافية. نرسم لعلامتك التجارية خطوطها العريضة بناءً على دراسة معمّقة
+              للسوق والمنافسين، ونبدأ معك من البداية بتحديد الجدوى من المشروع واختيار الوسائل الإعلانية
+              الأكثر تأثيراً، لنعمل جاهدين على تحقيق كافة الأهداف التي تطمح إليها علامتك.
             </p>
             <Link to="/about" className="inline-flex items-center gap-2 mt-6 text-primary font-bold hover:gap-3 transition-all">
               {t.common.learnMore} <Arrow className="w-4 h-4" />
             </Link>
           </div>
+          <div className="flex items-center justify-center order-1 lg:order-2">
+            <img
+              src={aboutWho}
+              alt="وكالة إتقان - من نحن"
+              loading="lazy"
+              width={1024}
+              height={832}
+              className="w-full max-w-md"
+            />
+          </div>
+        </motion.div>
+
+        {/* رؤيتنا */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7 }}
+          className="grid lg:grid-cols-2 gap-10 items-center glass-strong rounded-3xl p-8 lg:p-12"
+        >
           <div className="flex items-center justify-center">
             <img
-              src="https://etqanagency.com/assets/Comp-CNuNSmaD.gif"
-              alt="إتقان - من الفكرة إلى واقع حقيقي"
+              src={aboutVision}
+              alt="وكالة إتقان - رؤيتنا"
               loading="lazy"
-              className="w-full max-w-md rounded-2xl"
+              width={1024}
+              height={832}
+              className="w-full max-w-md"
             />
+          </div>
+          <div className="text-right">
+            <p className="text-sm text-primary tracking-widest mb-4">إلى أين نتجه</p>
+            <h2 className="text-3xl sm:text-5xl font-black mb-4 leading-tight">
+              <span className="text-gradient">رؤيتنا</span>
+            </h2>
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+              تسعى وكالة إتقان لأن تكون الشريك الأول للمؤسسات والشركات في رحلة نموّها، عبر تقديم حلول
+              إعلانية وتسويقية مبتكرة وقادرة على تحقيق أهداف علامتك بأذكى الطرق وأكثرها تأثيراً، لنصنع
+              معاً قصص نجاح حقيقية تستحق أن تُروى.
+            </p>
+            <Link to="/contact" className="inline-flex items-center gap-2 mt-6 text-primary font-bold hover:gap-3 transition-all">
+              تواصل معنا <Arrow className="w-4 h-4" />
+            </Link>
           </div>
         </motion.div>
       </section>
