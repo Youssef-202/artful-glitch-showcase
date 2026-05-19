@@ -56,6 +56,78 @@ export type Database = {
         }
         Relationships: []
       }
+      order_meetings: {
+        Row: {
+          channel: string
+          created_at: string
+          duration_minutes: number
+          id: string
+          location: string | null
+          notes: string | null
+          order_id: string
+          scheduled_at: string
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          channel?: string
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          location?: string | null
+          notes?: string | null
+          order_id: string
+          scheduled_at: string
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          channel?: string
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          location?: string | null
+          notes?: string | null
+          order_id?: string
+          scheduled_at?: string
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      order_messages: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          order_id: string
+          sender: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          order_id: string
+          sender: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          order_id?: string
+          sender?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       partners: {
         Row: {
           created_at: string
@@ -223,33 +295,54 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          bio: string | null
+          business_type: string | null
+          city: string | null
           company: string | null
           country: string | null
           created_at: string
+          date_of_birth: string | null
           display_name: string | null
+          gender: string | null
           id: string
+          interests: string[] | null
           phone: string | null
           updated_at: string
+          website: string | null
         }
         Insert: {
           avatar_url?: string | null
+          bio?: string | null
+          business_type?: string | null
+          city?: string | null
           company?: string | null
           country?: string | null
           created_at?: string
+          date_of_birth?: string | null
           display_name?: string | null
+          gender?: string | null
           id: string
+          interests?: string[] | null
           phone?: string | null
           updated_at?: string
+          website?: string | null
         }
         Update: {
           avatar_url?: string | null
+          bio?: string | null
+          business_type?: string | null
+          city?: string | null
           company?: string | null
           country?: string | null
           created_at?: string
+          date_of_birth?: string | null
           display_name?: string | null
+          gender?: string | null
           id?: string
+          interests?: string[] | null
           phone?: string | null
           updated_at?: string
+          website?: string | null
         }
         Relationships: []
       }
@@ -328,6 +421,72 @@ export type Database = {
           total_amount?: number
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      services: {
+        Row: {
+          bullets: string[]
+          created_at: string
+          currency: string
+          deliverables: string[]
+          description: string | null
+          duration: string | null
+          faqs: Json
+          features: string[]
+          id: string
+          image_url: string | null
+          long_description: string | null
+          number: string
+          price_from: number | null
+          process_steps: string[]
+          published: boolean
+          sort_order: number
+          tagline: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          bullets?: string[]
+          created_at?: string
+          currency?: string
+          deliverables?: string[]
+          description?: string | null
+          duration?: string | null
+          faqs?: Json
+          features?: string[]
+          id: string
+          image_url?: string | null
+          long_description?: string | null
+          number?: string
+          price_from?: number | null
+          process_steps?: string[]
+          published?: boolean
+          sort_order?: number
+          tagline?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          bullets?: string[]
+          created_at?: string
+          currency?: string
+          deliverables?: string[]
+          description?: string | null
+          duration?: string | null
+          faqs?: Json
+          features?: string[]
+          id?: string
+          image_url?: string | null
+          long_description?: string | null
+          number?: string
+          price_from?: number | null
+          process_steps?: string[]
+          published?: boolean
+          sort_order?: number
+          tagline?: string | null
+          title?: string
+          updated_at?: string
         }
         Relationships: []
       }
