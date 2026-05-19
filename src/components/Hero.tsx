@@ -80,35 +80,41 @@ export default function Hero() {
         <LampContainer className="min-h-[420px] sm:min-h-[520px] lg:min-h-[640px] -mt-10">
           <div dir="rtl" className="relative w-full max-w-[900px] flex items-center justify-center isolate">
             <motion.span
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.3 }}
+              initial={{ opacity: 0, x: -30, filter: "brightness(0.4)" }}
+              whileInView={{ opacity: 1, x: 0, filter: "brightness(1)" }}
+              transition={{ duration: 0.9, delay: 0.5, ease: "easeInOut" }}
               lang="ar"
               dir="rtl"
               className="absolute z-30 right-[2%] sm:right-[4%] lg:right-[6%] top-1/2 -translate-y-1/2 font-black leading-none whitespace-nowrap text-primary pointer-events-none select-none"
-              style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.5rem, 4.2vw, 3.6rem)", fontWeight: 800, textShadow: "0 0 8px hsl(var(--primary) / 0.55), 0 0 22px hsl(var(--primary) / 0.3)" }}
+              style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.5rem, 4.2vw, 3.6rem)", fontWeight: 800, textShadow: "0 0 10px hsl(var(--primary) / 0.7), 0 0 28px hsl(var(--primary) / 0.45), 0 0 60px hsl(var(--primary) / 0.25)" }}
             >
               وكـــــالـــــة
             </motion.span>
             <motion.span
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.3 }}
+              initial={{ opacity: 0, x: 30, filter: "brightness(0.4)" }}
+              whileInView={{ opacity: 1, x: 0, filter: "brightness(1)" }}
+              transition={{ duration: 0.9, delay: 0.5, ease: "easeInOut" }}
               lang="ar"
               dir="rtl"
               className="absolute z-30 left-[2%] sm:left-[4%] lg:left-[6%] top-1/2 -translate-y-1/2 font-black leading-none whitespace-nowrap text-primary pointer-events-none select-none"
-              style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.5rem, 4.2vw, 3.6rem)", fontWeight: 800, textShadow: "0 0 8px hsl(var(--primary) / 0.55), 0 0 22px hsl(var(--primary) / 0.3)" }}
+              style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.5rem, 4.2vw, 3.6rem)", fontWeight: 800, textShadow: "0 0 10px hsl(var(--primary) / 0.7), 0 0 28px hsl(var(--primary) / 0.45), 0 0 60px hsl(var(--primary) / 0.25)" }}
             >
               إتـــــقـــــان
             </motion.span>
-            <div className="relative z-20 h-[140px] w-[240px] sm:h-[200px] sm:w-[360px] lg:h-[300px] lg:w-[520px] max-w-full shrink-0 flex items-center justify-center">
+            <motion.div
+              initial={{ opacity: 0, y: -10, filter: "brightness(0.3)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "brightness(1)" }}
+              transition={{ duration: 0.9, delay: 0.5, ease: "easeInOut" }}
+              className="relative z-20 h-[140px] w-[240px] sm:h-[200px] sm:w-[360px] lg:h-[300px] lg:w-[520px] max-w-full shrink-0 flex items-center justify-center"
+              style={{ filter: "drop-shadow(0 0 22px hsl(var(--primary) / 0.55)) drop-shadow(0 0 60px hsl(var(--primary) / 0.3))" }}
+            >
               <img
                 src={logo3d}
                 alt={t.common.brand}
                 className="w-full h-full object-contain"
                 draggable={false}
               />
-            </div>
+            </motion.div>
           </div>
         </LampContainer>
 
