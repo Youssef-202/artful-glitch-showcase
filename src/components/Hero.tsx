@@ -85,8 +85,8 @@ export default function Hero() {
               transition={{ duration: 0.9, delay: 0.5, ease: "easeInOut" }}
               lang="ar"
               dir="rtl"
-              className="absolute z-30 right-[2%] sm:right-[4%] lg:right-[6%] top-1/2 -translate-y-1/2 font-black leading-none whitespace-nowrap text-primary pointer-events-none select-none"
-              style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.5rem, 4.2vw, 3.6rem)", fontWeight: 800, textShadow: "0 0 10px hsl(var(--primary) / 0.7), 0 0 28px hsl(var(--primary) / 0.45), 0 0 60px hsl(var(--primary) / 0.25)" }}
+              className="absolute z-30 right-[1%] sm:right-[3%] lg:right-[4%] top-1/2 -translate-y-1/2 font-black leading-none whitespace-nowrap text-primary pointer-events-none select-none tracking-[0.08em]"
+              style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.9rem, 5.2vw, 4.4rem)", fontWeight: 800, textShadow: "0 0 10px hsl(var(--primary) / 0.7), 0 0 28px hsl(var(--primary) / 0.45), 0 0 60px hsl(var(--primary) / 0.25)" }}
             >
               وكـــــالـــــة
             </motion.span>
@@ -96,8 +96,8 @@ export default function Hero() {
               transition={{ duration: 0.9, delay: 0.5, ease: "easeInOut" }}
               lang="ar"
               dir="rtl"
-              className="absolute z-30 left-[2%] sm:left-[4%] lg:left-[6%] top-1/2 -translate-y-1/2 font-black leading-none whitespace-nowrap text-primary pointer-events-none select-none"
-              style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.5rem, 4.2vw, 3.6rem)", fontWeight: 800, textShadow: "0 0 10px hsl(var(--primary) / 0.7), 0 0 28px hsl(var(--primary) / 0.45), 0 0 60px hsl(var(--primary) / 0.25)" }}
+              className="absolute z-30 left-[1%] sm:left-[3%] lg:left-[4%] top-1/2 -translate-y-1/2 font-black leading-none whitespace-nowrap text-primary pointer-events-none select-none tracking-[0.08em]"
+              style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.9rem, 5.2vw, 4.4rem)", fontWeight: 800, textShadow: "0 0 10px hsl(var(--primary) / 0.7), 0 0 28px hsl(var(--primary) / 0.45), 0 0 60px hsl(var(--primary) / 0.25)" }}
             >
               إتـــــقـــــان
             </motion.span>
@@ -105,42 +105,44 @@ export default function Hero() {
               initial={{ opacity: 0, y: -10, filter: "brightness(0.3)" }}
               whileInView={{ opacity: 1, y: 0, filter: "brightness(1)" }}
               transition={{ duration: 0.9, delay: 0.5, ease: "easeInOut" }}
-              className="relative z-20 h-[140px] w-[240px] sm:h-[200px] sm:w-[360px] lg:h-[300px] lg:w-[520px] max-w-full shrink-0 flex items-center justify-center"
+              whileHover={{ scale: 1.04, rotate: [0, -2, 2, 0] }}
+              className="logo-hover-glow group relative z-20 h-[140px] w-[240px] sm:h-[200px] sm:w-[360px] lg:h-[300px] lg:w-[520px] max-w-full shrink-0 flex items-center justify-center cursor-pointer"
               style={{ filter: "drop-shadow(0 0 22px hsl(var(--primary) / 0.55)) drop-shadow(0 0 60px hsl(var(--primary) / 0.3))" }}
             >
               <img
                 src={logo3d}
                 alt={t.common.brand}
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain transition-all duration-500 group-hover:[filter:hue-rotate(60deg)_saturate(1.5)_brightness(1.15)] group-hover:animate-[logoPulse_1.6s_ease-in-out_infinite]"
                 draggable={false}
               />
+              <div className="pointer-events-none absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[conic-gradient(from_0deg,hsl(var(--primary)/0.3),hsl(var(--accent)/0.3),hsl(var(--primary)/0.3))] blur-2xl" />
             </motion.div>
           </div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20, filter: "brightness(0.4)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "brightness(1)" }}
+            transition={{ duration: 0.9, delay: 0.7, ease: "easeInOut" }}
+            className="mt-6 text-base sm:text-xl text-muted-foreground max-w-2xl text-center"
+          >
+            {t.common.heroSubtitle}
+          </motion.p>
+
+          {/* Buttons: استكشف on right, ابدأ on left (RTL natural order) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20, filter: "brightness(0.4)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "brightness(1)" }}
+            transition={{ duration: 0.9, delay: 0.85, ease: "easeInOut" }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-4"
+          >
+            <Link to="/services" className="glass-strong hover:bg-foreground/5 transition rounded-full px-7 py-4 font-bold">
+              {t.common.ctaExplore}
+            </Link>
+            <Link to="/contact" className="rounded-full px-7 py-4 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition">
+              {t.common.ctaStart}
+            </Link>
+          </motion.div>
         </LampContainer>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.4 }}
-          className="mt-8 text-base sm:text-xl text-muted-foreground max-w-2xl"
-        >
-          {t.common.heroSubtitle}
-        </motion.p>
-
-        {/* Buttons: استكشف on right, ابدأ on left (RTL natural order) */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.55 }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-4"
-        >
-          <Link to="/services" className="glass-strong hover:bg-foreground/5 transition rounded-full px-7 py-4 font-bold">
-            {t.common.ctaExplore}
-          </Link>
-          <Link to="/contact" className="rounded-full px-7 py-4 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition">
-            {t.common.ctaStart}
-          </Link>
-        </motion.div>
       </div>
 
     </section>
