@@ -7,6 +7,7 @@ import * as THREE from "three";
 import { Link } from "react-router-dom";
 import { useLang } from "@/i18n/LanguageProvider";
 import logo3d from "@/assets/etqan-logo-3d.png";
+import logoDark from "@/assets/logo.png";
 
 function LogoMesh() {
   const texture = useLoader(THREE.TextureLoader, logo3d);
@@ -111,9 +112,15 @@ export default function Hero() {
               style={{ filter: "drop-shadow(0 0 22px hsl(var(--primary) / 0.55)) drop-shadow(0 0 60px hsl(var(--primary) / 0.3))" }}
             >
               <img
+                src={logoDark}
+                alt={t.common.brand}
+                className="relative z-10 w-full h-full object-contain transition-[filter] duration-500 ease-out group-hover:brightness-110 block dark:hidden"
+                draggable={false}
+              />
+              <img
                 src={logo3d}
                 alt={t.common.brand}
-                className="relative z-10 w-full h-full object-contain transition-[filter] duration-500 ease-out group-hover:brightness-110"
+                className="relative z-10 w-full h-full object-contain transition-[filter] duration-500 ease-out group-hover:brightness-110 hidden dark:block"
                 draggable={false}
               />
             </motion.div>
