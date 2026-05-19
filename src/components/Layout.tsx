@@ -9,6 +9,7 @@ import { useEffect } from "react";
 
 export default function Layout() {
   const location = useLocation();
+  const { theme } = useTheme();
 
   // Scroll to top on every route change
   useEffect(() => {
@@ -17,7 +18,15 @@ export default function Layout() {
 
   return (
     <>
-      <PersistentCanvas />
+      <div className="fixed inset-0 -z-10 pointer-events-none">
+        <div className="absolute inset-0 bg-radial-primary" />
+        <NeuralBackground
+          color={theme === "light" ? "#115e59" : "#5fd9cf"}
+          trailColor={theme === "light" ? "240, 250, 248" : "5, 18, 18"}
+          trailOpacity={theme === "light" ? 0.08 : 0.12}
+          particleCount={700}
+        />
+      </div>
       <Navbar />
       <FloatingCTA />
       <AnimatePresence mode="wait">
