@@ -400,6 +400,8 @@ function OrderRow({ order, profile, payments, meetings, messages, onChange }: { 
 export default function OrdersManager() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [payments, setPayments] = useState<Payment[]>([]);
+  const [meetings, setMeetings] = useState<Meeting[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [profiles, setProfiles] = useState<Record<string, Profile>>({});
   const [filter, setFilter] = useState<string>("all");
   const [tick, setTick] = useState(0);
@@ -409,6 +411,10 @@ export default function OrdersManager() {
       .then(({ data }) => setOrders((data as any) ?? []));
     supabase.from("payments").select("*").order("created_at", { ascending: false })
       .then(({ data }) => setPayments((data as any) ?? []));
+    supabase.from("order_meetings").select("*").order("scheduled_at", { ascending: true })
+      .then(({ data }) => setMeetings((data as any) ?? []));
+    supabase.from("order_messages").select("*").order("created_at", { ascending: true })
+      .then(({ data }) => setMessages((data as any) ?? []));
     supabase.from("profiles").select("id,display_name")
       .then(({ data }) => {
         const map: Record<string, Profile> = {};
@@ -431,7 +437,8 @@ export default function OrdersManager() {
       </div>
       <div className="space-y-3">
         {filtered.map((o) => (
-          <OrderRow key={o.id} order={o} profile={profiles[o.user_id]} payments={payments} onChange={() => setTick((t) => t + 1)} />
+          <OrderRow key={o.id} order={o} profile={profiles[o.user_id]} payments={payments}
+            meetings={meetings} messages={messages} onChange={() => setTick((t) => t + 1)} />
         ))}
         {filtered.length === 0 && (
           <div className="glass-strong rounded-3xl p-12 text-center text-muted-foreground">لا توجد طلبات</div>
