@@ -25,7 +25,7 @@ export default function Intro3D() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.9, ease: "easeInOut" }}
           className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden pointer-events-none"
-          style={{ background: "#020617" }}
+          style={{ background: "hsl(var(--background))" }}
         >
           {/* Ambient glow */}
           <div
