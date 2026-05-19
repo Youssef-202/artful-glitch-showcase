@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, NavLink, Route, Routes, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FileText, Image as ImageIcon, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft, Building2, Package } from "lucide-react";
+import { FileText, Image as ImageIcon, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft, Building2, Package, Wrench } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { FileUpload } from "@/components/FileUpload";
 import { MultiFileUpload } from "@/components/MultiFileUpload";
 import OrdersManager from "@/components/admin/OrdersManager";
+import ServicesManager from "@/components/admin/ServicesManager";
 
 type Post = {
   id: string; title: string; excerpt: string | null; content: string;
@@ -35,6 +36,7 @@ function Sidebar() {
   const items = [
     { to: "/dashboard", icon: LayoutDashboard, label: t.dashboard.title, end: true },
     { to: "/dashboard/orders", icon: Package, label: "الطلبات" },
+    { to: "/dashboard/services", icon: Wrench, label: "الخدمات" },
     { to: "/dashboard/posts", icon: FileText, label: t.dashboard.posts },
     { to: "/dashboard/portfolio", icon: ImageIcon, label: t.dashboard.portfolio },
     { to: "/dashboard/partners", icon: Building2, label: "الشركاء" },
@@ -622,16 +624,7 @@ export default function Dashboard() {
 
   if (loading) return <div className="px-6 h-96 animate-pulse" />;
   if (!user) return <Navigate to="/auth" replace />;
-  if (!isAdmin) {
-    return (
-      <div className="px-6 max-w-2xl mx-auto text-center py-20">
-        <div className="glass-strong rounded-3xl p-10">
-          <p className="text-lg mb-2">⚠️ {t.dashboard.noAccess}</p>
-          <p className="text-sm text-muted-foreground">User ID: <code className="text-xs">{user.id}</code></p>
-        </div>
-      </div>
-    );
-  }
+  if (!isAdmin) return <Navigate to="/account" replace />;
 
   return (
     <div className="px-4 sm:px-6 max-w-7xl mx-auto flex flex-col lg:flex-row gap-6">
@@ -640,6 +633,7 @@ export default function Dashboard() {
         <Routes>
           <Route index element={<Overview posts={posts} />} />
           <Route path="orders" element={<OrdersManager />} />
+          <Route path="services" element={<ServicesManager />} />
           <Route path="posts" element={<PostsList posts={posts} onChange={() => setTick((t) => t + 1)} />} />
           <Route path="portfolio" element={<PortfolioManager items={portfolio} onChange={() => setTick((t) => t + 1)} />} />
           <Route path="partners" element={<PartnersManager items={partners} onChange={() => setTick((t) => t + 1)} />} />

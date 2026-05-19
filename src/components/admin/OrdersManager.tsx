@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Plus, Trash2, Save } from "lucide-react";
+import { Plus, Trash2, Save, Calendar as CalendarIcon, MessageSquare, Send } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 type Order = {
@@ -28,6 +28,17 @@ type Payment = {
   status: string; reference: string | null; created_at: string;
 };
 
+type Meeting = {
+  id: string; order_id: string; user_id: string; title: string;
+  scheduled_at: string; duration_minutes: number; channel: string;
+  location: string | null; notes: string | null; status: string;
+};
+
+type Message = {
+  id: string; order_id: string; user_id: string; sender: string;
+  message: string; created_at: string;
+};
+
 type Profile = { id: string; display_name: string | null };
 
 const statusOptions = [
@@ -38,7 +49,172 @@ const statusOptions = [
   { v: "cancelled", l: "ملغي" },
 ];
 
-function OrderRow({ order, profile, payments, onChange }: { order: Order; profile?: Profile; payments: Payment[]; onChange: () => void }) {
+const meetingStatusOptions = [
+  { v: "scheduled", l: "مجدول" },
+  { v: "completed", l: "تم" },
+  { v: "cancelled", l: "ملغي" },
+  { v: "rescheduled", l: "تم تأجيله" },
+];
+
+function MeetingsBlock({ orderId, userId, meetings, refresh }: {
+  orderId: string; userId: string; meetings: Meeting[]; refresh: () => void;
+}) {
+  const list = meetings.filter((m) => m.order_id === orderId);
+  const [form, setForm] = useState({
+    title: "اجتماع تواصل",
+    scheduled_at: "",
+    duration_minutes: 30,
+    channel: "call",
+    location: "",
+    notes: "",
+    status: "scheduled",
+  });
+  const [busy, setBusy] = useState(false);
+
+  const add = async () => {
+    if (!form.scheduled_at) { toast.error("اختر التاريخ"); return; }
+    setBusy(true);
+    const { error } = await supabase.from("order_meetings").insert({
+      order_id: orderId, user_id: userId, ...form,
+      location: form.location || null, notes: form.notes || null,
+      duration_minutes: Number(form.duration_minutes),
+    });
+    setBusy(false);
+    if (error) toast.error(error.message);
+    else { toast.success("تمت الإضافة"); setForm({ ...form, scheduled_at: "", notes: "" }); refresh(); }
+  };
+
+  const updateStatus = async (id: string, status: string) => {
+    const { error } = await supabase.from("order_meetings").update({ status }).eq("id", id);
+    if (error) toast.error(error.message); else refresh();
+  };
+
+  const remove = async (id: string) => {
+    if (!confirm("حذف الموعد؟")) return;
+    const { error } = await supabase.from("order_meetings").delete().eq("id", id);
+    if (error) toast.error(error.message); else { toast.success("✓"); refresh(); }
+  };
+
+  return (
+    <div className="space-y-3">
+      {list.map((m) => (
+        <div key={m.id} className="flex items-start justify-between gap-3 bg-background/40 rounded-xl p-3 text-sm">
+          <div className="min-w-0">
+            <p className="font-bold">{m.title}</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              {new Date(m.scheduled_at).toLocaleString("ar-EG", { dateStyle: "medium", timeStyle: "short" })}
+              {" · "}{m.duration_minutes} د · {m.channel}
+              {m.location && ` · ${m.location}`}
+            </p>
+            {m.notes && <p className="text-xs mt-1 text-foreground/80">{m.notes}</p>}
+          </div>
+          <div className="flex items-center gap-1 shrink-0">
+            <select value={m.status} onChange={(e) => updateStatus(m.id, e.target.value)}
+              className="bg-background/50 border border-border rounded-lg px-2 py-1 text-[11px]">
+              {meetingStatusOptions.map((s) => <option key={s.v} value={s.v}>{s.l}</option>)}
+            </select>
+            <button onClick={() => remove(m.id)} className="p-1 text-destructive hover:bg-destructive/10 rounded">
+              <Trash2 className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      ))}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <input placeholder="عنوان الموعد" value={form.title}
+          onChange={(e) => setForm({ ...form, title: e.target.value })}
+          className="bg-background/50 border border-border rounded-xl px-3 py-2 outline-none focus:border-primary text-sm" />
+        <input type="datetime-local" value={form.scheduled_at}
+          onChange={(e) => setForm({ ...form, scheduled_at: e.target.value })}
+          className="bg-background/50 border border-border rounded-xl px-3 py-2 outline-none focus:border-primary text-sm" />
+        <input type="number" placeholder="مدة (دقيقة)" value={form.duration_minutes}
+          onChange={(e) => setForm({ ...form, duration_minutes: Number(e.target.value) })}
+          className="bg-background/50 border border-border rounded-xl px-3 py-2 outline-none focus:border-primary text-sm" />
+        <select value={form.channel} onChange={(e) => setForm({ ...form, channel: e.target.value })}
+          className="bg-background/50 border border-border rounded-xl px-3 py-2 outline-none focus:border-primary text-sm">
+          <option value="call">مكالمة</option>
+          <option value="whatsapp">واتساب</option>
+          <option value="zoom">Zoom</option>
+          <option value="meet">Google Meet</option>
+          <option value="onsite">حضوري</option>
+        </select>
+        <input placeholder="مكان/رابط (اختياري)" value={form.location}
+          onChange={(e) => setForm({ ...form, location: e.target.value })}
+          className="col-span-2 bg-background/50 border border-border rounded-xl px-3 py-2 outline-none focus:border-primary text-sm" />
+        <input placeholder="ملاحظات" value={form.notes}
+          onChange={(e) => setForm({ ...form, notes: e.target.value })}
+          className="col-span-1 bg-background/50 border border-border rounded-xl px-3 py-2 outline-none focus:border-primary text-sm" />
+        <button onClick={add} disabled={busy}
+          className="inline-flex items-center justify-center gap-1 rounded-xl px-3 py-2 font-bold text-sm bg-accent/20 text-accent hover:bg-accent/30 transition disabled:opacity-50">
+          <Plus className="w-4 h-4" /> أضف موعد
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function MessagesBlock({ orderId, userId, messages, refresh }: {
+  orderId: string; userId: string; messages: Message[]; refresh: () => void;
+}) {
+  const list = messages.filter((m) => m.order_id === orderId);
+  const [text, setText] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  const send = async () => {
+    if (!text.trim()) return;
+    setBusy(true);
+    const { error } = await supabase.from("order_messages").insert({
+      order_id: orderId, user_id: userId, sender: "admin", message: text.trim().slice(0, 2000),
+    });
+    setBusy(false);
+    if (error) toast.error(error.message);
+    else { setText(""); refresh(); }
+  };
+
+  const del = async (id: string) => {
+    const { error } = await supabase.from("order_messages").delete().eq("id", id);
+    if (error) toast.error(error.message); else refresh();
+  };
+
+  return (
+    <div className="space-y-3">
+      <div className="space-y-2 max-h-80 overflow-y-auto">
+        {list.length === 0 && <p className="text-sm text-muted-foreground">لا توجد مراسلات بعد.</p>}
+        {list.map((m) => {
+          const isAdminMsg = m.sender === "admin";
+          return (
+            <div key={m.id} className={`flex ${isAdminMsg ? "justify-end" : "justify-start"} group`}>
+              <div className={`max-w-[85%] rounded-2xl px-3 py-2 text-sm relative ${
+                isAdminMsg ? "bg-gradient-to-tr from-primary to-accent text-primary-foreground"
+                  : "bg-background/60 border border-border"
+              }`}>
+                <p className="whitespace-pre-wrap">{m.message}</p>
+                <p className={`text-[10px] mt-1 ${isAdminMsg ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
+                  {m.sender === "user" ? "العميل" : "الإدارة"} · {new Date(m.created_at).toLocaleString("ar-EG", { dateStyle: "short", timeStyle: "short" })}
+                </p>
+                <button onClick={() => del(m.id)}
+                  className="absolute -top-2 -left-2 opacity-0 group-hover:opacity-100 bg-destructive text-destructive-foreground rounded-full p-1">
+                  <Trash2 className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div className="flex items-center gap-2">
+        <input value={text} onChange={(e) => setText(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && send()}
+          maxLength={2000} placeholder="اكتب رسالة للعميل..."
+          className="flex-1 bg-background/50 border border-border rounded-xl px-3 py-2 outline-none focus:border-primary text-sm" />
+        <button onClick={send} disabled={busy || !text.trim()}
+          className="rounded-xl px-4 py-2 bg-gradient-to-tr from-primary to-accent text-primary-foreground font-bold text-sm hover:scale-105 transition disabled:opacity-50 inline-flex items-center gap-1">
+          <Send className="w-4 h-4" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function OrderRow({ order, profile, payments, meetings, messages, onChange }: { order: Order; profile?: Profile; payments: Payment[]; meetings: Meeting[]; messages: Message[]; onChange: () => void }) {
   const [expand, setExpand] = useState(false);
   const [form, setForm] = useState({
     current_stage: order.current_stage,
@@ -203,6 +379,18 @@ function OrderRow({ order, profile, payments, onChange }: { order: Order; profil
               </button>
             </div>
           </div>
+
+          {/* Meetings */}
+          <div className="pt-4 border-t border-border/40 space-y-3">
+            <p className="font-bold text-sm flex items-center gap-2"><CalendarIcon className="w-4 h-4 text-accent" /> مواعيد التواصل</p>
+            <MeetingsBlock orderId={order.id} userId={order.user_id} meetings={meetings} refresh={onChange} />
+          </div>
+
+          {/* Messages */}
+          <div className="pt-4 border-t border-border/40 space-y-3">
+            <p className="font-bold text-sm flex items-center gap-2"><MessageSquare className="w-4 h-4 text-accent" /> المراسلات</p>
+            <MessagesBlock orderId={order.id} userId={order.user_id} messages={messages} refresh={onChange} />
+          </div>
         </div>
       )}
     </div>
@@ -212,6 +400,8 @@ function OrderRow({ order, profile, payments, onChange }: { order: Order; profil
 export default function OrdersManager() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [payments, setPayments] = useState<Payment[]>([]);
+  const [meetings, setMeetings] = useState<Meeting[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [profiles, setProfiles] = useState<Record<string, Profile>>({});
   const [filter, setFilter] = useState<string>("all");
   const [tick, setTick] = useState(0);
@@ -221,6 +411,10 @@ export default function OrdersManager() {
       .then(({ data }) => setOrders((data as any) ?? []));
     supabase.from("payments").select("*").order("created_at", { ascending: false })
       .then(({ data }) => setPayments((data as any) ?? []));
+    supabase.from("order_meetings").select("*").order("scheduled_at", { ascending: true })
+      .then(({ data }) => setMeetings((data as any) ?? []));
+    supabase.from("order_messages").select("*").order("created_at", { ascending: true })
+      .then(({ data }) => setMessages((data as any) ?? []));
     supabase.from("profiles").select("id,display_name")
       .then(({ data }) => {
         const map: Record<string, Profile> = {};
@@ -243,7 +437,8 @@ export default function OrdersManager() {
       </div>
       <div className="space-y-3">
         {filtered.map((o) => (
-          <OrderRow key={o.id} order={o} profile={profiles[o.user_id]} payments={payments} onChange={() => setTick((t) => t + 1)} />
+          <OrderRow key={o.id} order={o} profile={profiles[o.user_id]} payments={payments}
+            meetings={meetings} messages={messages} onChange={() => setTick((t) => t + 1)} />
         ))}
         {filtered.length === 0 && (
           <div className="glass-strong rounded-3xl p-12 text-center text-muted-foreground">لا توجد طلبات</div>
