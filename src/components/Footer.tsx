@@ -38,28 +38,28 @@ export default function Footer() {
 
   return (
     <footer dir="rtl" className="relative mt-16">
-      <div className="glass-strong w-full px-6 py-16 text-foreground">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+      <div className="glass-strong w-full px-8 sm:px-12 lg:px-20 py-12 text-foreground">
+        <div className="grid gap-x-10 gap-y-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
-          <div className="flex flex-col items-start gap-4">
-            <img src={logo} alt="إتقان" className="w-28 h-auto" />
-            <p className="text-sm text-muted-foreground leading-relaxed">
+          <div className="flex flex-col items-start gap-3">
+            <img src={logo} alt="إتقان" className="w-24 h-auto" />
+            <p className="text-xs text-muted-foreground leading-relaxed">
               مستقبل مشروعك يبدأ الآن مع إتقان
             </p>
           </div>
 
           {/* Quick links */}
-          <div className="">
-            <h3 className="text-lg font-bold mb-5 relative inline-block">
+          <div>
+            <h3 className="text-sm font-bold mb-4 relative inline-block">
               الروابط السريعة
-              <span className="absolute -bottom-1 right-0 w-10 h-0.5 bg-accent rounded-full" />
+              <span className="absolute -bottom-1 right-0 w-8 h-0.5 bg-accent rounded-full" />
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2.5">
               {quickLinks.map((l) => (
                 <li key={l.to}>
                   <Link
                     to={l.to}
-                    className="text-sm text-muted-foreground hover:text-foreground hover:translate-x-1 inline-block transition-all"
+                    className="text-xs text-muted-foreground hover:text-foreground hover:translate-x-1 inline-block transition-all"
                   >
                     {l.label}
                   </Link>
@@ -69,18 +69,18 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div className="">
-            <h3 className="text-lg font-bold mb-5 relative inline-block">
+          <div>
+            <h3 className="text-sm font-bold mb-4 relative inline-block">
               تواصل معنا
-              <span className="absolute -bottom-1 right-0 w-10 h-0.5 bg-accent rounded-full" />
+              <span className="absolute -bottom-1 right-0 w-8 h-0.5 bg-accent rounded-full" />
             </h3>
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {contacts.map(({ Icon, value, href }, i) => {
                 const content = (
-                  <div className="flex items-center gap-3 text-sm text-foreground/85 hover:text-foreground transition-colors">
-                    <span className="text-sm flex-1 text-right" dir="ltr" style={{ textAlign: "right" }}>{value}</span>
-                    <span className="w-10 h-10 rounded-xl glass-strong flex items-center justify-center shrink-0">
-                      <Icon className="w-4 h-4" />
+                  <div className="flex items-center gap-2.5 text-xs text-foreground/85 hover:text-foreground transition-colors">
+                    <span className="flex-1 text-right" dir="ltr" style={{ textAlign: "right" }}>{value}</span>
+                    <span className="w-8 h-8 rounded-lg glass-strong flex items-center justify-center shrink-0">
+                      <Icon className="w-3.5 h-3.5" />
                     </span>
                   </div>
                 );
@@ -94,30 +94,29 @@ export default function Footer() {
           </div>
 
           {/* Social */}
-          <div className="">
-            <h3 className="text-lg font-bold mb-5 relative inline-block">
+          <div>
+            <h3 className="text-sm font-bold mb-4 relative inline-block">
               تابعنا على
-              <span className="absolute -bottom-1 right-0 w-10 h-0.5 bg-accent rounded-full" />
+              <span className="absolute -bottom-1 right-0 w-8 h-0.5 bg-accent rounded-full" />
             </h3>
-            <p className="text-sm text-muted-foreground mb-5">
+            <p className="text-xs text-muted-foreground mb-4">
               تابعنا على منصات التواصل الاجتماعي
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-2.5">
               {socials.map(({ Icon, href }, i) => (
                 <a
                   key={i}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-11 h-11 rounded-xl glass-strong flex items-center justify-center hover:bg-accent hover:scale-110 transition-all"
+                  className="w-9 h-9 rounded-lg glass-strong flex items-center justify-center hover:bg-accent hover:scale-110 transition-all"
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-3.5 h-3.5" />
                 </a>
               ))}
             </div>
           </div>
         </div>
-
       </div>
     </footer>
   );
