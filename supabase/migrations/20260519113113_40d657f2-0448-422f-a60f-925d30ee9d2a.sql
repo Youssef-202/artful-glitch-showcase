@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.recalc_order_paid() FROM PUBLIC, anon, authenticated;
