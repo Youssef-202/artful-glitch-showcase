@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, NavLink, Route, Routes, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FileText, Image as ImageIcon, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft, Building2 } from "lucide-react";
+import { FileText, Image as ImageIcon, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft, Building2, Package } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -10,6 +10,7 @@ import { useLang } from "@/i18n/LanguageProvider";
 import { cn } from "@/lib/utils";
 import { FileUpload } from "@/components/FileUpload";
 import { MultiFileUpload } from "@/components/MultiFileUpload";
+import OrdersManager from "@/components/admin/OrdersManager";
 
 type Post = {
   id: string; title: string; excerpt: string | null; content: string;
@@ -33,6 +34,7 @@ function Sidebar() {
   const nav = useNavigate();
   const items = [
     { to: "/dashboard", icon: LayoutDashboard, label: t.dashboard.title, end: true },
+    { to: "/dashboard/orders", icon: Package, label: "الطلبات" },
     { to: "/dashboard/posts", icon: FileText, label: t.dashboard.posts },
     { to: "/dashboard/portfolio", icon: ImageIcon, label: t.dashboard.portfolio },
     { to: "/dashboard/partners", icon: Building2, label: "الشركاء" },
@@ -637,6 +639,7 @@ export default function Dashboard() {
       <div className="flex-1 min-w-0">
         <Routes>
           <Route index element={<Overview posts={posts} />} />
+          <Route path="orders" element={<OrdersManager />} />
           <Route path="posts" element={<PostsList posts={posts} onChange={() => setTick((t) => t + 1)} />} />
           <Route path="portfolio" element={<PortfolioManager items={portfolio} onChange={() => setTick((t) => t + 1)} />} />
           <Route path="partners" element={<PartnersManager items={partners} onChange={() => setTick((t) => t + 1)} />} />
