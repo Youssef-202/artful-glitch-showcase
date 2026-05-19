@@ -31,6 +31,7 @@ export default function Layout() {
           <Outlet />
         </motion.main>
       </AnimatePresence>
+      <Footer />
     </>
   );
 }
