@@ -2,6 +2,7 @@ import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Float, Sparkles, Stars } from "@react-three/drei";
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
+import { LampContainer } from "@/components/ui/lamp";
 import * as THREE from "three";
 import { Link } from "react-router-dom";
 import { useLang } from "@/i18n/LanguageProvider";
