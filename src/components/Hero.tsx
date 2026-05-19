@@ -101,15 +101,13 @@ export default function Hero() {
             >
               إتـــــقـــــان
             </motion.span>
-            <div className="relative z-20 h-[140px] w-[240px] sm:h-[200px] sm:w-[360px] lg:h-[300px] lg:w-[520px] max-w-full shrink-0">
-              <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
-                <ambientLight intensity={0.4} />
-                <directionalLight position={[5, 5, 5]} intensity={1.4} />
-                <pointLight position={[-5, -3, -5]} color="#5fd9cf" intensity={3} />
-                <pointLight position={[5, 3, 2]} color="#115e59" intensity={2} />
-                <LogoMesh />
-                <Sparkles count={80} scale={6} size={2.5} speed={0.5} color="#5fd9cf" />
-              </Canvas>
+            <div className="relative z-20 h-[140px] w-[240px] sm:h-[200px] sm:w-[360px] lg:h-[300px] lg:w-[520px] max-w-full shrink-0 flex items-center justify-center">
+              <img
+                src={logo3d}
+                alt={t.common.brand}
+                className="w-full h-full object-contain"
+                draggable={false}
+              />
             </div>
           </div>
         </LampContainer>
