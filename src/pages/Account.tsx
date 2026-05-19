@@ -219,6 +219,8 @@ function ProfileSection({ profile, onSave }: { profile: Profile; onSave: () => v
     country: profile.country ?? "",
   });
   const [busy, setBusy] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(profile.avatar_url);
 
   const save = async () => {
     setBusy(true);
@@ -228,13 +230,45 @@ function ProfileSection({ profile, onSave }: { profile: Profile; onSave: () => v
     else { toast.success("تم حفظ البيانات"); onSave(); }
   };
 
+  const handleAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { toast.error("الحد الأقصى 5 ميجا"); return; }
+    setUploading(true);
+    const ext = file.name.split(".").pop() || "jpg";
+    const path = `${profile.id}/avatar-${Date.now()}.${ext}`;
+    const { error: upErr } = await supabase.storage.from("avatars").upload(path, file, { upsert: true, contentType: file.type });
+    if (upErr) { setUploading(false); toast.error(upErr.message); return; }
+    const { data } = supabase.storage.from("avatars").getPublicUrl(path);
+    const url = data.publicUrl;
+    const { error: updErr } = await supabase.from("profiles").update({ avatar_url: url }).eq("id", profile.id);
+    setUploading(false);
+    if (updErr) { toast.error(updErr.message); return; }
+    setAvatarUrl(url);
+    toast.success("تم تحديث صورة البروفايل");
+    onSave();
+  };
+
   return (
     <div className="glass-strong rounded-3xl p-6 space-y-4">
-      <div className="flex items-center gap-3 mb-2">
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-primary to-accent flex items-center justify-center">
-          <User className="w-6 h-6 text-primary-foreground" />
+      <div className="flex items-center gap-4 mb-2 flex-wrap">
+        <label className="relative cursor-pointer group">
+          <div className="w-20 h-20 rounded-2xl overflow-hidden border-2 border-border bg-gradient-to-tr from-primary to-accent flex items-center justify-center">
+            {avatarUrl ? (
+              <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover" />
+            ) : (
+              <User className="w-8 h-8 text-primary-foreground" />
+            )}
+          </div>
+          <div className="absolute inset-0 rounded-2xl bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-[10px] font-bold">
+            {uploading ? "جاري الرفع..." : "تغيير"}
+          </div>
+          <input type="file" accept="image/*" className="hidden" onChange={handleAvatar} disabled={uploading} />
+        </label>
+        <div>
+          <h2 className="text-xl font-black">بياناتي</h2>
+          <p className="text-xs text-muted-foreground mt-1">اضغط على الصورة لتغييرها</p>
         </div>
-        <h2 className="text-xl font-black">بياناتي</h2>
       </div>
       <div className="grid sm:grid-cols-2 gap-3">
         <label className="block">
