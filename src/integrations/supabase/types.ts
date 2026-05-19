@@ -92,6 +92,53 @@ export type Database = {
         }
         Relationships: []
       }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          id: string
+          method: string
+          notes: string | null
+          order_id: string
+          reference: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency?: string
+          id?: string
+          method?: string
+          notes?: string | null
+          order_id: string
+          reference?: string | null
+          status?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          method?: string
+          notes?: string | null
+          order_id?: string
+          reference?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "service_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       portfolio_items: {
         Row: {
           accent: string
@@ -175,19 +222,112 @@ export type Database = {
       }
       profiles: {
         Row: {
+          avatar_url: string | null
+          company: string | null
+          country: string | null
           created_at: string
           display_name: string | null
           id: string
+          phone: string | null
+          updated_at: string
         }
         Insert: {
+          avatar_url?: string | null
+          company?: string | null
+          country?: string | null
           created_at?: string
           display_name?: string | null
           id: string
+          phone?: string | null
+          updated_at?: string
         }
         Update: {
+          avatar_url?: string | null
+          company?: string | null
+          country?: string | null
           created_at?: string
           display_name?: string | null
           id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      service_orders: {
+        Row: {
+          admin_notes: string | null
+          created_at: string
+          currency: string
+          current_stage: number
+          description: string | null
+          estimated_delivery: string | null
+          id: string
+          paid_amount: number
+          service_key: string
+          service_name_ar: string
+          service_name_en: string | null
+          stage1_completed_at: string | null
+          stage1_name: string
+          stage2_completed_at: string | null
+          stage2_name: string
+          stage3_completed_at: string | null
+          stage3_name: string
+          stage4_completed_at: string | null
+          stage4_name: string
+          status: string
+          total_amount: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          created_at?: string
+          currency?: string
+          current_stage?: number
+          description?: string | null
+          estimated_delivery?: string | null
+          id?: string
+          paid_amount?: number
+          service_key: string
+          service_name_ar: string
+          service_name_en?: string | null
+          stage1_completed_at?: string | null
+          stage1_name?: string
+          stage2_completed_at?: string | null
+          stage2_name?: string
+          stage3_completed_at?: string | null
+          stage3_name?: string
+          stage4_completed_at?: string | null
+          stage4_name?: string
+          status?: string
+          total_amount?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          created_at?: string
+          currency?: string
+          current_stage?: number
+          description?: string | null
+          estimated_delivery?: string | null
+          id?: string
+          paid_amount?: number
+          service_key?: string
+          service_name_ar?: string
+          service_name_en?: string | null
+          stage1_completed_at?: string | null
+          stage1_name?: string
+          stage2_completed_at?: string | null
+          stage2_name?: string
+          stage3_completed_at?: string | null
+          stage3_name?: string
+          stage4_completed_at?: string | null
+          stage4_name?: string
+          status?: string
+          total_amount?: number
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }

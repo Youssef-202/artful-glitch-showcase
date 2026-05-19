@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, Sparkles, MessageCircle, Megaphone, Image as ImageIcon, FileEdit, Target, Code, Palette, Award } from "lucide-react";
 import { services } from "@/lib/services";
 import { useLang } from "@/i18n/LanguageProvider";
+import RequestServiceButton from "@/components/RequestServiceButton";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   account: MessageCircle,
@@ -184,17 +185,16 @@ export default function ServiceDetail() {
 
           {/* CTA */}
           <div className="flex flex-wrap gap-3">
+            <RequestServiceButton
+              serviceKey={service.id}
+              serviceNameAr={tr.title}
+              serviceNameEn={service.title}
+            />
             <Link
               to="/contact"
-              className="rounded-full px-6 py-3 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition"
-            >
-              {t.common.ctaStart}
-            </Link>
-            <Link
-              to="/portfolio"
               className="rounded-full px-6 py-3 font-bold border border-primary/40 hover:bg-primary/10 transition"
             >
-              {t.common.ourWork}
+              {t.common.ctaContact}
             </Link>
           </div>
         </div>
