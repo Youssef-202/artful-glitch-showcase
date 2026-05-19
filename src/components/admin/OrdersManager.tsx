@@ -379,6 +379,18 @@ function OrderRow({ order, profile, payments, meetings, messages, onChange }: { 
               </button>
             </div>
           </div>
+
+          {/* Meetings */}
+          <div className="pt-4 border-t border-border/40 space-y-3">
+            <p className="font-bold text-sm flex items-center gap-2"><CalendarIcon className="w-4 h-4 text-accent" /> مواعيد التواصل</p>
+            <MeetingsBlock orderId={order.id} userId={order.user_id} meetings={meetings} refresh={onChange} />
+          </div>
+
+          {/* Messages */}
+          <div className="pt-4 border-t border-border/40 space-y-3">
+            <p className="font-bold text-sm flex items-center gap-2"><MessageSquare className="w-4 h-4 text-accent" /> المراسلات</p>
+            <MessagesBlock orderId={order.id} userId={order.user_id} messages={messages} refresh={onChange} />
+          </div>
         </div>
       )}
     </div>
