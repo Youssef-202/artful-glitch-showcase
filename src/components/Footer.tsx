@@ -43,7 +43,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="flex flex-col items-start gap-4 order-1 lg:order-4">
             <img src={logo} alt="إتقان" className="w-28 h-auto" />
-            <p className="text-sm text-primary-foreground/80 leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed">
               مستقبل مشروعك يبدأ الآن مع إتقان
             </p>
           </div>
@@ -59,7 +59,7 @@ export default function Footer() {
                 <li key={l.to}>
                   <Link
                     to={l.to}
-                    className="text-sm text-primary-foreground/80 hover:text-primary-foreground hover:translate-x-1 inline-block transition-all"
+                    className="text-sm text-muted-foreground hover:text-foreground hover:translate-x-1 inline-block transition-all"
                   >
                     {l.label}
                   </Link>
@@ -77,7 +77,7 @@ export default function Footer() {
             <ul className="space-y-4">
               {contacts.map(({ Icon, value, href }, i) => {
                 const content = (
-                  <div className="flex items-center gap-3 text-sm text-primary-foreground/85 hover:text-primary-foreground transition-colors">
+                  <div className="flex items-center gap-3 text-sm text-foreground/85 hover:text-foreground transition-colors">
                     <span className="text-sm flex-1 text-right" dir="ltr" style={{ textAlign: "right" }}>{value}</span>
                     <span className="w-10 h-10 rounded-xl glass-strong flex items-center justify-center shrink-0">
                       <Icon className="w-4 h-4" />
@@ -99,7 +99,7 @@ export default function Footer() {
               تابعنا على
               <span className="absolute -bottom-1 right-0 w-10 h-0.5 bg-accent rounded-full" />
             </h3>
-            <p className="text-sm text-primary-foreground/80 mb-5">
+            <p className="text-sm text-muted-foreground mb-5">
               تابعنا على منصات التواصل الاجتماعي
             </p>
             <div className="flex gap-3">
@@ -118,8 +118,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-primary-foreground/15 text-center">
-          <p className="text-xs text-primary-foreground/70">
+        <div className="mt-12 pt-6 border-t border-border text-center">
+          <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} copyright
           </p>
         </div>
