@@ -117,7 +117,7 @@ export default function Intro3D() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
             className="absolute bottom-[18%] left-0 right-0 text-center pointer-events-none"
           >
             <p
