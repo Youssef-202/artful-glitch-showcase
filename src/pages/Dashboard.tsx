@@ -624,16 +624,7 @@ export default function Dashboard() {
 
   if (loading) return <div className="px-6 h-96 animate-pulse" />;
   if (!user) return <Navigate to="/auth" replace />;
-  if (!isAdmin) {
-    return (
-      <div className="px-6 max-w-2xl mx-auto text-center py-20">
-        <div className="glass-strong rounded-3xl p-10">
-          <p className="text-lg mb-2">⚠️ {t.dashboard.noAccess}</p>
-          <p className="text-sm text-muted-foreground">User ID: <code className="text-xs">{user.id}</code></p>
-        </div>
-      </div>
-    );
-  }
+  if (!isAdmin) return <Navigate to="/account" replace />;
 
   return (
     <div className="px-4 sm:px-6 max-w-7xl mx-auto flex flex-col lg:flex-row gap-6">
@@ -642,6 +633,7 @@ export default function Dashboard() {
         <Routes>
           <Route index element={<Overview posts={posts} />} />
           <Route path="orders" element={<OrdersManager />} />
+          <Route path="services" element={<ServicesManager />} />
           <Route path="posts" element={<PostsList posts={posts} onChange={() => setTick((t) => t + 1)} />} />
           <Route path="portfolio" element={<PortfolioManager items={portfolio} onChange={() => setTick((t) => t + 1)} />} />
           <Route path="partners" element={<PartnersManager items={partners} onChange={() => setTick((t) => t + 1)} />} />
