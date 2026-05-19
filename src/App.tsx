@@ -33,6 +33,7 @@ const App = () => (
           <TooltipProvider>
             <Toaster />
             <Sonner />
+            <Intro3D />
             <BrowserRouter>
               <Suspense fallback={<div className="min-h-screen" />}>
                 <Routes>
