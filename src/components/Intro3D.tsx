@@ -67,17 +67,11 @@ function MovingLight() {
 }
 
 export default function Intro3D() {
-  const [show, setShow] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return !sessionStorage.getItem("etqan_intro_shown");
-  });
+  const [show, setShow] = useState(true);
 
   useEffect(() => {
     if (!show) return;
-    const t = setTimeout(() => {
-      sessionStorage.setItem("etqan_intro_shown", "1");
-      setShow(false);
-    }, 3800);
+    const t = setTimeout(() => setShow(false), 2000);
     return () => clearTimeout(t);
   }, [show]);
 
