@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Plus, Trash2, Save } from "lucide-react";
+import { Plus, Trash2, Save, Calendar as CalendarIcon, MessageSquare, Send } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 type Order = {
