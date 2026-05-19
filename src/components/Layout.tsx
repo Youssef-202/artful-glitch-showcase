@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 import FloatingCTA from "./FloatingCTA";
 import PersistentCanvas from "./PersistentCanvas";
 import { useEffect } from "react";
@@ -30,6 +31,7 @@ export default function Layout() {
           <Outlet />
         </motion.main>
       </AnimatePresence>
+      <Footer />
     </>
   );
 }
