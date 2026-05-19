@@ -36,6 +36,7 @@ function Sidebar() {
   const items = [
     { to: "/dashboard", icon: LayoutDashboard, label: t.dashboard.title, end: true },
     { to: "/dashboard/orders", icon: Package, label: "الطلبات" },
+    { to: "/dashboard/services", icon: Wrench, label: "الخدمات" },
     { to: "/dashboard/posts", icon: FileText, label: t.dashboard.posts },
     { to: "/dashboard/portfolio", icon: ImageIcon, label: t.dashboard.portfolio },
     { to: "/dashboard/partners", icon: Building2, label: "الشركاء" },
