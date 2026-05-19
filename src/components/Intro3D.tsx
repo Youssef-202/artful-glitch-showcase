@@ -32,7 +32,7 @@ export default function Intro3D() {
             className="absolute inset-0"
             style={{
               background:
-                "radial-gradient(circle at 50% 45%, rgba(95,217,207,0.22), transparent 60%)",
+                "radial-gradient(circle at 50% 45%, rgba(21,158,148,0.22), transparent 60%)",
             }}
           />
 
