@@ -7,6 +7,7 @@ import * as THREE from "three";
 import { Link } from "react-router-dom";
 import { useLang } from "@/i18n/LanguageProvider";
 import logo3d from "@/assets/etqan-logo-3d.png";
+import logoDark from "@/assets/logo.png";
 
 function LogoMesh() {
   const texture = useLoader(THREE.TextureLoader, logo3d);
