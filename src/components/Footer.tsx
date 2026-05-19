@@ -118,11 +118,6 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-border text-center">
-          <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} copyright
-          </p>
-        </div>
       </div>
     </footer>
   );
