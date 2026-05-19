@@ -1,6 +1,6 @@
 import { NavLink, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Moon, Sun, Languages, Menu, X, LogIn, LayoutDashboard } from "lucide-react";
+import { Moon, Sun, Languages, Menu, X, LogIn, LayoutDashboard, User } from "lucide-react";
 import { useState } from "react";
 import { useTheme } from "@/theme/ThemeProvider";
 import { useLang } from "@/i18n/LanguageProvider";
@@ -57,13 +57,23 @@ export default function Navbar() {
 
         <div className="flex items-center gap-2">
           <Link
-            to={user ? "/dashboard" : "/auth"}
-            aria-label={user ? "Dashboard" : "Login"}
+            to={user ? "/account" : "/auth"}
+            aria-label={user ? "My account" : "Login"}
             className="glass rounded-full px-3 py-2 text-xs font-bold flex items-center gap-1.5 hover:scale-105 transition"
           >
-            {user ? <LayoutDashboard className="w-4 h-4" /> : <LogIn className="w-4 h-4" />}
-            <span className="hidden sm:inline">{user ? (isAdmin ? t.dashboard.title : t.auth.logout) : t.auth.signIn}</span>
+            {user ? <User className="w-4 h-4" /> : <LogIn className="w-4 h-4" />}
+            <span className="hidden sm:inline">{user ? "حسابي" : t.auth.signIn}</span>
           </Link>
+          {user && isAdmin && (
+            <Link
+              to="/dashboard"
+              aria-label="Admin Dashboard"
+              className="glass rounded-full px-3 py-2 text-xs font-bold flex items-center gap-1.5 hover:scale-105 transition"
+              title={t.dashboard.title}
+            >
+              <LayoutDashboard className="w-4 h-4" />
+            </Link>
+          )}
           <button
             onClick={toggleLang}
             aria-label="Toggle language"
