@@ -8,6 +8,7 @@ import { LanguageProvider } from "@/i18n/LanguageProvider";
 import { ThemeProvider } from "@/theme/ThemeProvider";
 import { AuthProvider } from "@/auth/AuthProvider";
 import Layout from "@/components/Layout";
+import Intro3D from "@/components/Intro3D";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 
