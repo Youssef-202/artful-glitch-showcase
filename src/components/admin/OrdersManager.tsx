@@ -214,7 +214,7 @@ function MessagesBlock({ orderId, userId, messages, refresh }: {
   );
 }
 
-function OrderRow({ order, profile, payments, onChange }: { order: Order; profile?: Profile; payments: Payment[]; onChange: () => void }) {
+function OrderRow({ order, profile, payments, meetings, messages, onChange }: { order: Order; profile?: Profile; payments: Payment[]; meetings: Meeting[]; messages: Message[]; onChange: () => void }) {
   const [expand, setExpand] = useState(false);
   const [form, setForm] = useState({
     current_stage: order.current_stage,
