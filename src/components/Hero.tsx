@@ -112,9 +112,15 @@ export default function Hero() {
               style={{ filter: "drop-shadow(0 0 22px hsl(var(--primary) / 0.55)) drop-shadow(0 0 60px hsl(var(--primary) / 0.3))" }}
             >
               <img
+                src={logoDark}
+                alt={t.common.brand}
+                className="relative z-10 w-full h-full object-contain transition-[filter] duration-500 ease-out group-hover:brightness-110 block dark:hidden"
+                draggable={false}
+              />
+              <img
                 src={logo3d}
                 alt={t.common.brand}
-                className="relative z-10 w-full h-full object-contain transition-[filter] duration-500 ease-out group-hover:brightness-110"
+                className="relative z-10 w-full h-full object-contain transition-[filter] duration-500 ease-out group-hover:brightness-110 hidden dark:block"
                 draggable={false}
               />
             </motion.div>
