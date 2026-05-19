@@ -67,17 +67,11 @@ function MovingLight() {
 }
 
 export default function Intro3D() {
-  const [show, setShow] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return !sessionStorage.getItem("etqan_intro_shown");
-  });
+  const [show, setShow] = useState(true);
 
   useEffect(() => {
     if (!show) return;
-    const t = setTimeout(() => {
-      sessionStorage.setItem("etqan_intro_shown", "1");
-      setShow(false);
-    }, 3800);
+    const t = setTimeout(() => setShow(false), 2000);
     return () => clearTimeout(t);
   }, [show]);
 
@@ -88,7 +82,7 @@ export default function Intro3D() {
           key="intro"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.1 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
           className="fixed inset-0 z-[100] bg-background flex items-center justify-center overflow-hidden"
         >
           <div className="absolute inset-0">
@@ -123,7 +117,7 @@ export default function Intro3D() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
             className="absolute bottom-[18%] left-0 right-0 text-center pointer-events-none"
           >
             <p
