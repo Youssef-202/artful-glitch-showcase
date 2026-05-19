@@ -37,11 +37,8 @@ export default function Footer() {
   ];
 
   return (
-    <footer dir="rtl" className="relative mt-16">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-primary/80 -z-10" />
-      <div className="absolute inset-0 bg-radial-primary opacity-60 -z-10" />
-
-      <div className="max-w-7xl mx-auto px-6 py-16 text-primary-foreground">
+    <footer dir="rtl" className="relative mt-16 px-4 sm:px-6 pb-4">
+      <div className="glass-strong rounded-2xl max-w-7xl mx-auto px-6 py-16 text-foreground">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="flex flex-col items-start gap-4 order-1 lg:order-4">
