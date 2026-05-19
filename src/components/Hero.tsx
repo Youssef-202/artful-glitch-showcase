@@ -105,17 +105,22 @@ export default function Hero() {
               initial={{ opacity: 0, y: -10, filter: "brightness(0.3)" }}
               whileInView={{ opacity: 1, y: 0, filter: "brightness(1)" }}
               transition={{ duration: 0.9, delay: 0.5, ease: "easeInOut" }}
-              whileHover={{ scale: 1.04, rotate: [0, -2, 2, 0] }}
-              className="logo-hover-glow group relative z-20 h-[140px] w-[240px] sm:h-[200px] sm:w-[360px] lg:h-[300px] lg:w-[520px] max-w-full shrink-0 flex items-center justify-center cursor-pointer"
+              whileHover={{ y: -6 }}
+              className="group relative z-20 h-[140px] w-[240px] sm:h-[200px] sm:w-[360px] lg:h-[300px] lg:w-[520px] max-w-full shrink-0 flex items-center justify-center cursor-pointer"
               style={{ filter: "drop-shadow(0 0 22px hsl(var(--primary) / 0.55)) drop-shadow(0 0 60px hsl(var(--primary) / 0.3))" }}
             >
               <img
                 src={logo3d}
                 alt={t.common.brand}
-                className="w-full h-full object-contain transition-all duration-500 group-hover:[filter:hue-rotate(60deg)_saturate(1.5)_brightness(1.15)] group-hover:animate-[logoPulse_1.6s_ease-in-out_infinite]"
+                className="relative z-10 w-full h-full object-contain transition-transform duration-700 ease-out group-hover:scale-110"
                 draggable={false}
               />
-              <div className="pointer-events-none absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[conic-gradient(from_0deg,hsl(var(--primary)/0.3),hsl(var(--accent)/0.3),hsl(var(--primary)/0.3))] blur-2xl" />
+              {/* shimmer sweep */}
+              <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 group-hover:animate-[shimmerSweep_1.4s_ease-in-out_infinite]" />
+              </div>
+              {/* expanding ring */}
+              <div className="pointer-events-none absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:animate-[ringPulse_1.8s_ease-out_infinite] border-2 border-primary/40" />
             </motion.div>
           </div>
 
