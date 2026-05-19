@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, NavLink, Route, Routes, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FileText, Image as ImageIcon, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft, Building2, Package } from "lucide-react";
+import { FileText, Image as ImageIcon, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft, Building2, Package, Wrench } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { FileUpload } from "@/components/FileUpload";
 import { MultiFileUpload } from "@/components/MultiFileUpload";
 import OrdersManager from "@/components/admin/OrdersManager";
+import ServicesManager from "@/components/admin/ServicesManager";
 
 type Post = {
   id: string; title: string; excerpt: string | null; content: string;
