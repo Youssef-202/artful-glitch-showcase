@@ -17,6 +17,14 @@ export default function Navbar() {
   const { user, isAdmin } = useAuth();
   const [open, setOpen] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 30);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (!user) { setAvatarUrl(null); return; }
@@ -38,11 +46,32 @@ export default function Navbar() {
       initial={{ y: -40, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="fixed top-0 inset-x-0 z-50 px-4 sm:px-6 pt-4"
+      className={cn(
+        "fixed top-0 inset-x-0 z-50 px-4 sm:px-6 transition-all duration-500 ease-out",
+        scrolled ? "pt-2" : "pt-4"
+      )}
     >
-      <nav className="glass-strong rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between max-w-7xl mx-auto">
+      <motion.nav
+        animate={{
+          maxWidth: scrolled ? 880 : 1280,
+          paddingTop: scrolled ? 6 : 12,
+          paddingBottom: scrolled ? 6 : 12,
+          borderRadius: scrolled ? 999 : 16,
+        }}
+        transition={{ type: "spring", stiffness: 220, damping: 28 }}
+        className={cn(
+          "glass-strong px-4 sm:px-6 flex items-center justify-between mx-auto",
+          scrolled && "shadow-elegant backdrop-blur-2xl"
+        )}
+      >
         <Link to="/" className="flex items-center gap-2" aria-label={t.common.brand}>
-          <img src={theme === "dark" ? logoDark : logoLight} alt={t.common.brand} className="h-10 sm:h-12 w-auto object-contain" />
+          <motion.img
+            animate={{ height: scrolled ? 32 : 48 }}
+            transition={{ type: "spring", stiffness: 220, damping: 28 }}
+            src={theme === "dark" ? logoDark : logoLight}
+            alt={t.common.brand}
+            className="w-auto object-contain"
+          />
         </Link>
 
         <ul className="hidden lg:flex items-center gap-1">
