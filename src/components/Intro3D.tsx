@@ -82,7 +82,7 @@ export default function Intro3D() {
           key="intro"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.1 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
           className="fixed inset-0 z-[100] bg-background flex items-center justify-center overflow-hidden"
         >
           <div className="absolute inset-0">
