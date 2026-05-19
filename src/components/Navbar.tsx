@@ -171,9 +171,37 @@ export default function Navbar() {
             {open ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Mobile menu */}
+      {open && (
+        <motion.ul
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="lg:hidden glass-strong rounded-2xl mt-2 p-2 max-w-7xl mx-auto flex flex-col gap-1"
+        >
+          {links.map((l) => (
+            <li key={l.to}>
+              <NavLink
+                to={l.to}
+                end={l.to === "/"}
+                onClick={() => setOpen(false)}
+                className={({ isActive }) =>
+                  cn(
+                    "block px-4 py-3 rounded-xl text-sm font-medium hover:bg-foreground/5",
+                    isActive && "bg-foreground/10"
+                  )
+                }
+              >
+                {l.label}
+              </NavLink>
+            </li>
+          ))}
+        </motion.ul>
+      )}
+    </motion.header>
+  );
+}
       {open && (
         <motion.ul
           initial={{ opacity: 0, y: -10 }}
