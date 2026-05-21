@@ -24,8 +24,10 @@ export default function PartnersMarquee() {
   // Show 8 placeholder cards if no partners yet
   const display: (Partner | null)[] =
     items.length > 0 ? items : Array.from({ length: 8 }, () => null);
-  // Duplicate for seamless loop
-  const loop = [...display, ...display];
+  // Duplicate enough times so marquee always feels seamless even with few items
+  const minCount = 16;
+  const repeats = Math.max(2, Math.ceil(minCount / Math.max(display.length, 1)));
+  const loop = Array.from({ length: repeats }, () => display).flat();
 
   return (
     <section className="relative py-20 overflow-hidden" dir={dir}>
