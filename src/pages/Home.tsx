@@ -42,6 +42,11 @@ export default function Home() {
       {/* Portfolio showcase */}
       <PortfolioMarquee />
 
+      {/* Partners marquee */}
+      <PartnersMarquee />
+
+
+
       {/* Blog teaser */}
       <section className="px-6 py-24 max-w-7xl mx-auto">
         <div className="text-center mb-12">
