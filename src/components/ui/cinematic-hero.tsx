@@ -156,12 +156,14 @@ export function CinematicHero({
           start: "top top",
           end: "+=6000",
           pin: pinRef.current,
+          pinType: "transform",
+          pinSpacing: true,
           scrub: 1,
           anticipatePin: 1,
           invalidateOnRefresh: true,
-
         },
       });
+
 
       scrollTl
         .to([".hero-text-wrapper", ".bg-grid-theme"], { scale: 1.15, filter: "blur(20px)", opacity: 0.15, ease: "power2.inOut", duration: 2 }, 0)
