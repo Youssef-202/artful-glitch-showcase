@@ -74,24 +74,48 @@ export default function Navbar() {
           />
         </Link>
 
-        <ul className="hidden lg:flex items-center gap-1">
+        <ul className="hidden lg:flex items-center gap-1 relative">
           {links.map((l) => (
-            <li key={l.to}>
+            <li key={l.to} className="relative">
               <NavLink
                 to={l.to}
                 end={l.to === "/"}
                 className={({ isActive }) =>
                   cn(
-                    "px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-foreground/5",
-                    isActive && "bg-foreground/10 text-foreground"
+                    "relative px-4 py-2 rounded-full text-sm font-medium transition-colors hover:text-primary block",
+                    isActive ? "text-primary" : "text-foreground/80"
                   )
                 }
               >
-                {l.label}
+                {({ isActive }) => (
+                  <>
+                    <span className="relative z-10">{l.label}</span>
+                    {isActive && (
+                      <>
+                        <motion.span
+                          layoutId="nav-limelight-pill"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          className="absolute inset-0 rounded-full bg-primary/10 border border-primary/20"
+                        />
+                        <motion.span
+                          layoutId="nav-limelight-bar"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          className="absolute left-1/2 -translate-x-1/2 -bottom-2 h-[3px] w-8 rounded-full bg-primary shadow-[0_0_18px_hsl(var(--primary)),0_0_36px_hsl(var(--primary)/0.6)]"
+                        />
+                        <motion.span
+                          layoutId="nav-limelight-glow"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          className="pointer-events-none absolute left-1/2 -translate-x-1/2 -bottom-4 h-6 w-16 rounded-full bg-primary/40 blur-xl"
+                        />
+                      </>
+                    )}
+                  </>
+                )}
               </NavLink>
             </li>
           ))}
         </ul>
+
 
         <div className="flex items-center gap-2">
           {user ? (
