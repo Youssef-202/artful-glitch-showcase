@@ -24,8 +24,10 @@ export default function PartnersMarquee() {
   // Show 8 placeholder cards if no partners yet
   const display: (Partner | null)[] =
     items.length > 0 ? items : Array.from({ length: 8 }, () => null);
-  // Duplicate for seamless loop
-  const loop = [...display, ...display];
+  // Duplicate enough times so marquee always feels seamless even with few items
+  const minCount = 16;
+  const repeats = Math.max(2, Math.ceil(minCount / Math.max(display.length, 1)));
+  const loop = Array.from({ length: repeats }, () => display).flat();
 
   return (
     <section className="relative py-20 overflow-hidden" dir={dir}>
@@ -53,16 +55,18 @@ export default function PartnersMarquee() {
         >
           {loop.map((p, i) => {
             const card = (
-              <div className="swiper-slide w-48 sm:w-56 h-32 sm:h-36 shrink-0 glass rounded-2xl border border-border/40 flex items-center justify-center p-6 hover:shadow-glow hover:-translate-y-1 transition-all">
+              <div className="shrink-0 h-14 sm:h-16 px-8 sm:px-10 rounded-full glass border border-border/50 flex items-center justify-center gap-3 hover:border-primary/60 hover:shadow-glow transition-all">
                 {p?.logo_url ? (
                   <img
                     src={p.logo_url}
                     alt={p.name}
                     loading="lazy"
-                    className="max-h-full max-w-full object-contain opacity-80 hover:opacity-100 transition"
+                    className="max-h-8 max-w-[120px] object-contain opacity-90"
                   />
                 ) : p ? (
-                  <span className="font-bold text-lg text-foreground/80">{p.name}</span>
+                  <span className="font-bold text-base sm:text-lg text-foreground whitespace-nowrap">
+                    {p.name}
+                  </span>
                 ) : (
                   <span className="text-xs text-muted-foreground/60 tracking-widest">
                     LOGO
