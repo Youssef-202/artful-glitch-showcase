@@ -33,6 +33,8 @@ export default function Home() {
     <>
       <Hero />
 
+      <CinematicHero />
+
       {/* About teaser - من نحن & رؤيتنا */}
       <section className="px-6 py-24 max-w-7xl mx-auto space-y-12" dir="rtl">
         {/* من نحن */}
