@@ -194,19 +194,23 @@ export function CinematicHero({
     return () => ctx.revert();
   }, [metricValue]);
 
+  const pinRef = useRef<HTMLDivElement>(null);
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: INJECTED_STYLES }} />
-      <div
-        ref={containerRef}
-        dir="rtl"
-        className={cn(
-          "cinematic-section relative w-full h-screen overflow-hidden bg-background",
-          className
-        )}
-        {...props}
-      >
-        <div className="bg-grid-theme absolute inset-0 z-0" />
+      <div ref={containerRef} className="cinematic-outer relative w-full">
+        <div
+          ref={pinRef}
+          dir="rtl"
+          className={cn(
+            "cinematic-section relative w-full h-screen overflow-hidden bg-background",
+            className
+          )}
+          {...props}
+        >
+          <div className="bg-grid-theme absolute inset-0 z-0" />
+
 
         {/* Hero text */}
         <div className="hero-text-wrapper absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6">
