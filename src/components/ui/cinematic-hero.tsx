@@ -197,8 +197,13 @@ export function CinematicHero({
         .to(".cta-wrapper", { autoAlpha: 0, scale: 0.9, duration: 1 }, "<");
     }, containerRef);
 
-    return () => ctx.revert();
+    const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 600);
+    return () => {
+      clearTimeout(refreshTimer);
+      ctx.revert();
+    };
   }, [metricValue]);
+
 
 
   return (
