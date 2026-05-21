@@ -86,8 +86,8 @@ export default function Hero() {
               transition={{ duration: 0.9, delay: 0.5, ease: "easeInOut" }}
               lang="ar"
               dir="rtl"
-              className="absolute z-30 right-[1%] sm:right-[3%] lg:right-[4%] top-1/2 -translate-y-1/2 font-black leading-none whitespace-nowrap text-primary pointer-events-none select-none tracking-[0.08em]"
-              style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.9rem, 5.2vw, 4.4rem)", fontWeight: 800, textShadow: "0 0 10px hsl(var(--primary) / 0.7), 0 0 28px hsl(var(--primary) / 0.45), 0 0 60px hsl(var(--primary) / 0.25)" }}
+              className="absolute z-30 right-[-2%] sm:right-[3%] lg:right-[4%] top-1/2 -translate-y-1/2 font-black leading-none whitespace-nowrap text-primary pointer-events-none select-none tracking-[0.04em] sm:tracking-[0.08em]"
+              style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.1rem, 5.2vw, 4.4rem)", fontWeight: 800, textShadow: "0 0 10px hsl(var(--primary) / 0.7), 0 0 28px hsl(var(--primary) / 0.45), 0 0 60px hsl(var(--primary) / 0.25)" }}
             >
               وكـــــالـــــة
             </motion.span>
@@ -97,8 +97,8 @@ export default function Hero() {
               transition={{ duration: 0.9, delay: 0.5, ease: "easeInOut" }}
               lang="ar"
               dir="rtl"
-              className="absolute z-30 left-[1%] sm:left-[3%] lg:left-[4%] top-1/2 -translate-y-1/2 font-black leading-none whitespace-nowrap text-primary pointer-events-none select-none tracking-[0.08em]"
-              style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.9rem, 5.2vw, 4.4rem)", fontWeight: 800, textShadow: "0 0 10px hsl(var(--primary) / 0.7), 0 0 28px hsl(var(--primary) / 0.45), 0 0 60px hsl(var(--primary) / 0.25)" }}
+              className="absolute z-30 left-[-2%] sm:left-[3%] lg:left-[4%] top-1/2 -translate-y-1/2 font-black leading-none whitespace-nowrap text-primary pointer-events-none select-none tracking-[0.04em] sm:tracking-[0.08em]"
+              style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: "clamp(1.1rem, 5.2vw, 4.4rem)", fontWeight: 800, textShadow: "0 0 10px hsl(var(--primary) / 0.7), 0 0 28px hsl(var(--primary) / 0.45), 0 0 60px hsl(var(--primary) / 0.25)" }}
             >
               إتـــــقـــــان
             </motion.span>
