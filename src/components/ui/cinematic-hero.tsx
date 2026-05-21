@@ -117,8 +117,10 @@ export function CinematicHero({
   ...props
 }: CinematicHeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const pinRef = useRef<HTMLDivElement>(null);
   const mainCardRef = useRef<HTMLDivElement>(null);
   const requestRef = useRef<number>(0);
+
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
