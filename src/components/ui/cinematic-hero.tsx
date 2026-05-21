@@ -290,9 +290,11 @@ export function CinematicHero({
             {ctaDescription}
           </p>
         </div>
+        </div>
       </div>
     </>
   );
+
 }
 
 export default CinematicHero;
