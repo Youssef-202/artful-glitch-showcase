@@ -85,20 +85,20 @@ export default function Navbar() {
                 onMouseLeave={() => setHoveredLink(null)}
                 className={({ isActive }) =>
                   cn(
-                    "relative px-4 py-2 text-sm font-semibold transition-colors block overflow-visible",
+                    "relative px-4 py-2 text-sm font-semibold transition-colors block overflow-visible tracking-normal",
                     isActive ? "text-primary" : "text-foreground/85 hover:text-primary"
                   )
                 }
               >
                 {({ isActive }) => (
-                  <span className="relative inline-flex items-center justify-center leading-none">
+                  <span className="relative inline-flex w-fit items-center justify-center whitespace-nowrap leading-none tracking-normal">
                     <span className="relative z-20 drop-shadow-sm">{l.label}</span>
                     {(hoveredLink === l.to || (!hoveredLink && isActive)) && (
                       <>
                         <motion.span
                           layoutId="nav-limelight-emitter"
                           transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                          className="pointer-events-none absolute left-0 right-0 -top-[13px] z-10 mx-auto h-[3px] rounded-full bg-primary shadow-[0_0_10px_hsl(var(--primary)),0_0_22px_hsl(var(--primary)/0.7)]"
+                          className="pointer-events-none absolute inset-x-0 -top-[13px] z-10 h-[3px] rounded-full bg-primary shadow-[0_0_10px_hsl(var(--primary)),0_0_22px_hsl(var(--primary)/0.7)]"
                         />
                         <motion.span
                           layoutId="nav-limelight-beam"
@@ -106,14 +106,14 @@ export default function Navbar() {
                           style={{
                             background:
                               "radial-gradient(ellipse at top, hsl(var(--primary) / 0.45) 0%, hsl(var(--primary) / 0.18) 48%, transparent 78%)",
-                            clipPath: "polygon(16% 0%, 84% 0%, 100% 100%, 0% 100%)",
+                            clipPath: "polygon(0% 0%, 100% 0%, calc(100% + 11px) 100%, -11px 100%)",
                           }}
-                          className="pointer-events-none absolute left-1/2 top-[-12px] z-0 h-[calc(100%+24px)] w-[calc(100%+20px)] -translate-x-1/2"
+                          className="pointer-events-none absolute left-1/2 top-[-12px] z-0 h-[calc(100%+24px)] w-[calc(100%+22px)] -translate-x-1/2"
                         />
                         <motion.span
                           layoutId="nav-limelight-floor"
                           transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                          className="pointer-events-none absolute left-0 right-0 -bottom-[9px] z-0 mx-auto h-3 rounded-full bg-primary/30 blur-md"
+                          className="pointer-events-none absolute inset-x-0 -bottom-[9px] z-0 h-3 rounded-full bg-primary/30 blur-md"
                         />
                       </>
                     )}
