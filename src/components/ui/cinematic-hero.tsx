@@ -153,9 +153,11 @@ export function CinematicHero({
           trigger: containerRef.current,
           start: "top top",
           end: "+=6000",
-          pin: true,
+          pin: pinRef.current,
           scrub: 1,
           anticipatePin: 1,
+          invalidateOnRefresh: true,
+
         },
       });
 
