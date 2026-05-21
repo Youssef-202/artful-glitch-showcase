@@ -144,7 +144,9 @@ export function CinematicHero({
     const ctx = gsap.context(() => {
       gsap.set(".text-track", { autoAlpha: 0, y: 60, scale: 0.85, filter: "blur(20px)" });
       gsap.set(".main-card", { y: window.innerHeight + 200, autoAlpha: 1 });
-      gsap.set([".card-content", ".testimonial-card", ".partners-grid", ".metric-block"], { autoAlpha: 0 });
+      gsap.set([".card-content", ".metric-block", ".card-head-block"], { autoAlpha: 0 });
+      gsap.set(".stage-testimonials", { autoAlpha: 0, y: 30 });
+      gsap.set(".stage-partners", { autoAlpha: 0, y: 30 });
       gsap.set(".cta-wrapper", { autoAlpha: 0, scale: 0.8, filter: "blur(30px)" });
 
       gsap.timeline({ delay: 0.2 })
@@ -164,26 +166,20 @@ export function CinematicHero({
         },
       });
 
-
       scrollTl
         .to([".hero-text-wrapper", ".bg-grid-theme"], { scale: 1.15, filter: "blur(20px)", opacity: 0.15, ease: "power2.inOut", duration: 2 }, 0)
         .to(".main-card", { y: 0, ease: "power3.inOut", duration: 2 }, 0)
         .to(".main-card", { width: "100%", height: "100%", borderRadius: "0px", ease: "power3.inOut", duration: 1.5 })
-        .to(".card-content", { autoAlpha: 1, duration: 1 }, "-=0.5")
-        .fromTo(".card-heading", { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1.2, ease: "expo.out" }, "-=0.5")
-        .fromTo(".card-desc", { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1, ease: "power3.out" }, "-=0.8")
-        .fromTo(".metric-block", { scale: 0.7, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 1.2, ease: "back.out(1.4)" }, "-=0.6")
-        .to(".counter-val", { innerHTML: metricValue, snap: { innerHTML: 1 }, duration: 1.5, ease: "expo.out" }, "<")
-        .fromTo(".testimonial-card",
-          { y: 80, autoAlpha: 0, scale: 0.9 },
-          { y: 0, autoAlpha: 1, scale: 1, duration: 1.2, stagger: 0.2, ease: "back.out(1.2)" }, "-=0.5")
-        .to({}, { duration: 1.5 })
-        .fromTo(".partners-grid", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 1, ease: "power3.out" })
-        .fromTo(".partner-chip",
-          { y: 30, autoAlpha: 0, scale: 0.8 },
-          { y: 0, autoAlpha: 1, scale: 1, duration: 0.6, stagger: 0.06, ease: "back.out(1.5)" }, "-=0.5")
-        .to({}, { duration: 2 })
-        .to([".card-content"], { autoAlpha: 0, y: -40, duration: 1, ease: "power2.in" })
+        .to(".card-content", { autoAlpha: 1, duration: 0.5 }, "-=0.5")
+        .to(".card-head-block", { autoAlpha: 1, duration: 1 }, "-=0.3")
+        .to(".metric-block", { autoAlpha: 1, duration: 0.8 }, "-=0.6")
+        .to(".counter-val", { innerHTML: metricValue, snap: { innerHTML: 1 }, duration: 1.2, ease: "expo.out" }, "<")
+        .to(".stage-testimonials", { autoAlpha: 1, y: 0, duration: 1, ease: "power3.out" })
+        .to({}, { duration: 2.5 })
+        .to(".stage-testimonials", { autoAlpha: 0, y: -30, duration: 0.8, ease: "power2.in" })
+        .to(".stage-partners", { autoAlpha: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.3")
+        .to({}, { duration: 2.5 })
+        .to(".card-content", { autoAlpha: 0, y: -40, duration: 1, ease: "power2.in" })
         .to(".main-card", {
           width: isMobile ? "92vw" : "85vw",
           height: isMobile ? "92vh" : "85vh",
@@ -195,6 +191,7 @@ export function CinematicHero({
         .to({}, { duration: 1 })
         .to(".main-card", { y: -window.innerHeight - 300, ease: "power3.in", duration: 1.3 })
         .to(".cta-wrapper", { autoAlpha: 0, scale: 0.9, duration: 1 }, "<");
+
     }, containerRef);
 
     const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 600);
@@ -243,53 +240,63 @@ export function CinematicHero({
           <div className="card-sheen" />
 
           {/* Inner content */}
-          <div className="card-content relative z-10 w-full h-full flex flex-col items-center justify-center px-6 sm:px-12 py-10 text-white overflow-y-auto">
-            <p className="text-xs sm:text-sm tracking-[0.4em] text-white/60 font-bold mb-4">آراء عملائنا</p>
-            <h2 className="card-heading text-3xl sm:text-5xl lg:text-6xl font-black text-center mb-4 max-w-4xl leading-tight">
-              {cardHeading}
-            </h2>
-            <p className="card-desc text-sm sm:text-lg text-white/70 text-center max-w-2xl mb-8 leading-relaxed">
-              {cardDescription}
-            </p>
-
-            <div className="metric-block flex items-baseline gap-3 mb-10">
-              <span className="counter-val text-5xl sm:text-7xl font-black text-primary-gradient">0</span>
-              <span className="text-sm sm:text-base text-white/60 font-bold">+ {metricLabel}</span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 w-full max-w-6xl mb-10">
-              {testimonials.slice(0, 3).map((t, i) => (
-                <div key={i} className="testimonial-card rounded-2xl p-5 sm:p-6 text-right">
-                  <p className="text-sm sm:text-base text-white/90 leading-relaxed mb-4">"{t.quote}"</p>
-                  <div className="border-t border-white/10 pt-3">
-                    <p className="text-sm font-bold text-white">{t.name}</p>
-                    <p className="text-xs text-white/50">{t.role}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="partners-grid w-full max-w-6xl">
-              <p className="text-xs sm:text-sm tracking-[0.4em] text-white/60 font-bold mb-5 text-center">
-                شركاء النجاح
+          <div className="card-content relative z-10 w-full h-full flex flex-col items-center justify-center px-6 sm:px-12 py-8 text-white">
+            {/* Heading block — always visible, top */}
+            <div className="card-head-block flex flex-col items-center text-center mb-6">
+              <p className="text-xs sm:text-sm tracking-[0.4em] text-white/60 font-bold mb-3">آراء عملائنا</p>
+              <h2 className="card-heading text-3xl sm:text-5xl font-black mb-3 max-w-3xl leading-tight">
+                {cardHeading}
+              </h2>
+              <p className="card-desc text-sm sm:text-base text-white/70 max-w-xl leading-relaxed mb-4">
+                {cardDescription}
               </p>
-              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-                {partners.map((p, i) => (
-                  <div
-                    key={i}
-                    className="partner-chip rounded-xl px-5 py-3 sm:px-6 sm:py-4 min-w-[110px] text-center"
-                  >
-                    {p.logo ? (
-                      <img src={p.logo} alt={p.name} className="h-7 object-contain mx-auto" />
-                    ) : (
-                      <span className="font-bold text-sm sm:text-base">{p.name}</span>
-                    )}
-                  </div>
-                ))}
+              <div className="metric-block flex items-baseline gap-2">
+                <span className="counter-val text-4xl sm:text-5xl font-black text-primary-gradient">0</span>
+                <span className="text-xs sm:text-sm text-white/60 font-bold">+ {metricLabel}</span>
+              </div>
+            </div>
+
+            {/* Stage wrapper — testimonials & partners overlay each other */}
+            <div className="stage-wrapper relative w-full max-w-5xl h-[280px] sm:h-[260px]">
+              {/* Testimonials */}
+              <div className="stage-testimonials absolute inset-0 flex items-center justify-center">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 w-full">
+                  {testimonials.slice(0, 3).map((t, i) => (
+                    <div key={i} className="testimonial-card rounded-2xl p-5 text-center flex flex-col justify-between h-full min-h-[200px]">
+                      <p className="text-sm text-white/90 leading-relaxed mb-4 flex-1 flex items-center justify-center">"{t.quote}"</p>
+                      <div className="border-t border-white/10 pt-3">
+                        <p className="text-sm font-bold text-white">{t.name}</p>
+                        <p className="text-xs text-white/50 mt-1">{t.role}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Partners */}
+              <div className="stage-partners absolute inset-0 flex flex-col items-center justify-center">
+                <p className="text-xs sm:text-sm tracking-[0.4em] text-white/60 font-bold mb-5 text-center">
+                  شركاء النجاح
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 max-w-4xl">
+                  {partners.map((p, i) => (
+                    <div
+                      key={i}
+                      className="partner-chip rounded-xl px-5 py-3 sm:px-6 sm:py-4 min-w-[110px] text-center"
+                    >
+                      {p.logo ? (
+                        <img src={p.logo} alt={p.name} className="h-7 object-contain mx-auto" />
+                      ) : (
+                        <span className="font-bold text-sm sm:text-base">{p.name}</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
+
 
         {/* Final CTA */}
         <div className="cta-wrapper absolute inset-0 z-30 flex flex-col items-center justify-center text-center px-6 pointer-events-none">
