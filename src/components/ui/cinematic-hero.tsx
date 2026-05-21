@@ -144,7 +144,9 @@ export function CinematicHero({
     const ctx = gsap.context(() => {
       gsap.set(".text-track", { autoAlpha: 0, y: 60, scale: 0.85, filter: "blur(20px)" });
       gsap.set(".main-card", { y: window.innerHeight + 200, autoAlpha: 1 });
-      gsap.set([".card-content", ".testimonial-card", ".partners-grid", ".metric-block"], { autoAlpha: 0 });
+      gsap.set([".card-content", ".metric-block", ".card-head-block"], { autoAlpha: 0 });
+      gsap.set(".stage-testimonials", { autoAlpha: 0, y: 30 });
+      gsap.set(".stage-partners", { autoAlpha: 0, y: 30 });
       gsap.set(".cta-wrapper", { autoAlpha: 0, scale: 0.8, filter: "blur(30px)" });
 
       gsap.timeline({ delay: 0.2 })
@@ -164,26 +166,20 @@ export function CinematicHero({
         },
       });
 
-
       scrollTl
         .to([".hero-text-wrapper", ".bg-grid-theme"], { scale: 1.15, filter: "blur(20px)", opacity: 0.15, ease: "power2.inOut", duration: 2 }, 0)
         .to(".main-card", { y: 0, ease: "power3.inOut", duration: 2 }, 0)
         .to(".main-card", { width: "100%", height: "100%", borderRadius: "0px", ease: "power3.inOut", duration: 1.5 })
-        .to(".card-content", { autoAlpha: 1, duration: 1 }, "-=0.5")
-        .fromTo(".card-heading", { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1.2, ease: "expo.out" }, "-=0.5")
-        .fromTo(".card-desc", { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1, ease: "power3.out" }, "-=0.8")
-        .fromTo(".metric-block", { scale: 0.7, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 1.2, ease: "back.out(1.4)" }, "-=0.6")
-        .to(".counter-val", { innerHTML: metricValue, snap: { innerHTML: 1 }, duration: 1.5, ease: "expo.out" }, "<")
-        .fromTo(".testimonial-card",
-          { y: 80, autoAlpha: 0, scale: 0.9 },
-          { y: 0, autoAlpha: 1, scale: 1, duration: 1.2, stagger: 0.2, ease: "back.out(1.2)" }, "-=0.5")
-        .to({}, { duration: 1.5 })
-        .fromTo(".partners-grid", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 1, ease: "power3.out" })
-        .fromTo(".partner-chip",
-          { y: 30, autoAlpha: 0, scale: 0.8 },
-          { y: 0, autoAlpha: 1, scale: 1, duration: 0.6, stagger: 0.06, ease: "back.out(1.5)" }, "-=0.5")
-        .to({}, { duration: 2 })
-        .to([".card-content"], { autoAlpha: 0, y: -40, duration: 1, ease: "power2.in" })
+        .to(".card-content", { autoAlpha: 1, duration: 0.5 }, "-=0.5")
+        .to(".card-head-block", { autoAlpha: 1, duration: 1 }, "-=0.3")
+        .to(".metric-block", { autoAlpha: 1, duration: 0.8 }, "-=0.6")
+        .to(".counter-val", { innerHTML: metricValue, snap: { innerHTML: 1 }, duration: 1.2, ease: "expo.out" }, "<")
+        .to(".stage-testimonials", { autoAlpha: 1, y: 0, duration: 1, ease: "power3.out" })
+        .to({}, { duration: 2.5 })
+        .to(".stage-testimonials", { autoAlpha: 0, y: -30, duration: 0.8, ease: "power2.in" })
+        .to(".stage-partners", { autoAlpha: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.3")
+        .to({}, { duration: 2.5 })
+        .to(".card-content", { autoAlpha: 0, y: -40, duration: 1, ease: "power2.in" })
         .to(".main-card", {
           width: isMobile ? "92vw" : "85vw",
           height: isMobile ? "92vh" : "85vh",
@@ -195,6 +191,7 @@ export function CinematicHero({
         .to({}, { duration: 1 })
         .to(".main-card", { y: -window.innerHeight - 300, ease: "power3.in", duration: 1.3 })
         .to(".cta-wrapper", { autoAlpha: 0, scale: 0.9, duration: 1 }, "<");
+
     }, containerRef);
 
     const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 600);
