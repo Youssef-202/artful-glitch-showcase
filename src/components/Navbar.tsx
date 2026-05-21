@@ -82,8 +82,8 @@ export default function Navbar() {
                 end={l.to === "/"}
                 className={({ isActive }) =>
                   cn(
-                    "relative px-4 py-2 rounded-full text-sm font-medium transition-colors hover:text-primary block",
-                    isActive ? "text-primary" : "text-foreground/80"
+                    "relative px-4 py-2 rounded-full text-sm font-semibold transition-colors block",
+                    isActive ? "text-primary" : "text-foreground/85 hover:text-primary"
                   )
                 }
               >
@@ -92,20 +92,28 @@ export default function Navbar() {
                     <span className="relative z-10">{l.label}</span>
                     {isActive && (
                       <>
+                        {/* Top emitter bar — sits on top edge of the link, sized to text */}
                         <motion.span
-                          layoutId="nav-limelight-pill"
+                          layoutId="nav-limelight-emitter"
                           transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                          className="absolute inset-0 rounded-full bg-primary/10 border border-primary/20"
+                          className="pointer-events-none absolute left-1/2 -translate-x-1/2 -top-[7px] h-[3px] w-[70%] rounded-full bg-primary shadow-[0_0_10px_hsl(var(--primary)),0_0_22px_hsl(var(--primary)/0.7)]"
                         />
+                        {/* Light cone beam */}
                         <motion.span
-                          layoutId="nav-limelight-bar"
+                          layoutId="nav-limelight-beam"
                           transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                          className="absolute left-1/2 -translate-x-1/2 -bottom-2 h-[3px] w-8 rounded-full bg-primary shadow-[0_0_18px_hsl(var(--primary)),0_0_36px_hsl(var(--primary)/0.6)]"
+                          style={{
+                            background:
+                              "radial-gradient(ellipse at top, hsl(var(--primary) / 0.55) 0%, hsl(var(--primary) / 0.18) 45%, transparent 75%)",
+                            clipPath: "polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%)",
+                          }}
+                          className="pointer-events-none absolute left-1/2 -translate-x-1/2 -top-[6px] h-[calc(100%+6px)] w-[180%]"
                         />
+                        {/* Soft floor glow under text */}
                         <motion.span
-                          layoutId="nav-limelight-glow"
+                          layoutId="nav-limelight-floor"
                           transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                          className="pointer-events-none absolute left-1/2 -translate-x-1/2 -bottom-4 h-6 w-16 rounded-full bg-primary/40 blur-xl"
+                          className="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-0 h-3 w-[80%] rounded-full bg-primary/35 blur-md"
                         />
                       </>
                     )}
