@@ -198,7 +198,6 @@ export function CinematicHero({
     return () => ctx.revert();
   }, [metricValue]);
 
-  const pinRef = useRef<HTMLDivElement>(null);
 
   return (
     <>
