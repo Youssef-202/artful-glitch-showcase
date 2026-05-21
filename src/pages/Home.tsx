@@ -42,8 +42,8 @@ export default function Home() {
       {/* Portfolio showcase */}
       <PortfolioMarquee />
 
-      {/* Partners marquee */}
-      <PartnersMarquee />
+      {/* Testimonials */}
+      <Testimonials />
 
 
 
