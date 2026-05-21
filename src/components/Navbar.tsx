@@ -18,6 +18,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -80,44 +81,43 @@ export default function Navbar() {
               <NavLink
                 to={l.to}
                 end={l.to === "/"}
+                onMouseEnter={() => setHoveredLink(l.to)}
+                onMouseLeave={() => setHoveredLink(null)}
                 className={({ isActive }) =>
                   cn(
-                    "relative px-4 py-2 rounded-full text-sm font-semibold transition-colors block",
+                    "relative px-4 py-2 text-sm font-semibold transition-colors block overflow-visible",
                     isActive ? "text-primary" : "text-foreground/85 hover:text-primary"
                   )
                 }
               >
                 {({ isActive }) => (
-                  <>
-                    <span className="relative z-10">{l.label}</span>
-                    {isActive && (
+                  <span className="relative inline-flex items-center justify-center leading-none">
+                    <span className="relative z-20 drop-shadow-sm">{l.label}</span>
+                    {(hoveredLink === l.to || (!hoveredLink && isActive)) && (
                       <>
-                        {/* Top emitter bar — sits on top edge of the link, sized to text */}
                         <motion.span
                           layoutId="nav-limelight-emitter"
                           transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                          className="pointer-events-none absolute left-1/2 -translate-x-1/2 -top-[7px] h-[3px] w-[70%] rounded-full bg-primary shadow-[0_0_10px_hsl(var(--primary)),0_0_22px_hsl(var(--primary)/0.7)]"
+                          className="pointer-events-none absolute left-0 right-0 -top-[13px] z-10 mx-auto h-[3px] rounded-full bg-primary shadow-[0_0_10px_hsl(var(--primary)),0_0_22px_hsl(var(--primary)/0.7)]"
                         />
-                        {/* Light cone beam */}
                         <motion.span
                           layoutId="nav-limelight-beam"
                           transition={{ type: "spring", stiffness: 380, damping: 30 }}
                           style={{
                             background:
-                              "radial-gradient(ellipse at top, hsl(var(--primary) / 0.55) 0%, hsl(var(--primary) / 0.18) 45%, transparent 75%)",
-                            clipPath: "polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%)",
+                              "radial-gradient(ellipse at top, hsl(var(--primary) / 0.45) 0%, hsl(var(--primary) / 0.18) 48%, transparent 78%)",
+                            clipPath: "polygon(16% 0%, 84% 0%, 100% 100%, 0% 100%)",
                           }}
-                          className="pointer-events-none absolute left-1/2 -translate-x-1/2 -top-[6px] h-[calc(100%+6px)] w-[180%]"
+                          className="pointer-events-none absolute left-1/2 top-[-12px] z-0 h-[calc(100%+24px)] w-[calc(100%+20px)] -translate-x-1/2"
                         />
-                        {/* Soft floor glow under text */}
                         <motion.span
                           layoutId="nav-limelight-floor"
                           transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                          className="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-0 h-3 w-[80%] rounded-full bg-primary/35 blur-md"
+                          className="pointer-events-none absolute left-0 right-0 -bottom-[9px] z-0 mx-auto h-3 rounded-full bg-primary/30 blur-md"
                         />
                       </>
                     )}
-                  </>
+                  </span>
                 )}
               </NavLink>
             </li>
