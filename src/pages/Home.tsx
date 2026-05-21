@@ -9,7 +9,7 @@ import Hero from "@/components/Hero";
 import ServicesShowcase3D from "@/components/ServicesShowcase3D";
 import PortfolioMarquee from "@/components/PortfolioMarquee";
 import PartnersMarquee from "@/components/PartnersMarquee";
-import { CinematicHero } from "@/components/ui/cinematic-hero";
+import { CinematicFooter } from "@/components/ui/motion-footer";
 import { services } from "@/lib/services";
 import { supabase } from "@/integrations/supabase/client";
 import { usePortfolio } from "@/lib/usePortfolio";
@@ -33,7 +33,7 @@ export default function Home() {
     <>
       <Hero />
 
-      <CinematicHero />
+      <CinematicFooter />
 
       {/* About teaser - من نحن & رؤيتنا */}
       <section className="px-6 py-24 max-w-7xl mx-auto space-y-12" dir="rtl">
