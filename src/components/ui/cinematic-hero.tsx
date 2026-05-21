@@ -117,8 +117,10 @@ export function CinematicHero({
   ...props
 }: CinematicHeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const pinRef = useRef<HTMLDivElement>(null);
   const mainCardRef = useRef<HTMLDivElement>(null);
   const requestRef = useRef<number>(0);
+
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -153,9 +155,11 @@ export function CinematicHero({
           trigger: containerRef.current,
           start: "top top",
           end: "+=6000",
-          pin: true,
+          pin: pinRef.current,
           scrub: 1,
           anticipatePin: 1,
+          invalidateOnRefresh: true,
+
         },
       });
 
@@ -194,19 +198,22 @@ export function CinematicHero({
     return () => ctx.revert();
   }, [metricValue]);
 
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: INJECTED_STYLES }} />
-      <div
-        ref={containerRef}
-        dir="rtl"
-        className={cn(
-          "cinematic-section relative w-full h-screen overflow-hidden bg-background",
-          className
-        )}
-        {...props}
-      >
-        <div className="bg-grid-theme absolute inset-0 z-0" />
+      <div ref={containerRef} className="cinematic-outer relative w-full">
+        <div
+          ref={pinRef}
+          dir="rtl"
+          className={cn(
+            "cinematic-section relative w-full h-screen overflow-hidden bg-background",
+            className
+          )}
+          {...props}
+        >
+          <div className="bg-grid-theme absolute inset-0 z-0" />
+
 
         {/* Hero text */}
         <div className="hero-text-wrapper absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6">
@@ -286,9 +293,11 @@ export function CinematicHero({
             {ctaDescription}
           </p>
         </div>
+        </div>
       </div>
     </>
   );
+
 }
 
 export default CinematicHero;
