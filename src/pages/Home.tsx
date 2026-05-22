@@ -5,7 +5,7 @@ import aboutWho from "@/assets/about-who.png";
 import aboutVision from "@/assets/about-vision.png";
 import { useEffect, useState } from "react";
 import { useLang } from "@/i18n/LanguageProvider";
-import HeroBento from "@/components/HeroBento";
+import HorizonHero from "@/components/ui/horizon-hero-section";
 import ServicesShowcase3D from "@/components/ServicesShowcase3D";
 import PortfolioMarquee from "@/components/PortfolioMarquee";
 import Testimonials from "@/components/Testimonials";
@@ -31,7 +31,7 @@ export default function Home() {
 
   return (
     <>
-      <HeroBento />
+      <HorizonHero />
 
       <CinematicFooter />
 
