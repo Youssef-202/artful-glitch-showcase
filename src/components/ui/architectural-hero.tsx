@@ -1,0 +1,137 @@
+import { ArrowLeft } from "lucide-react";
+
+export default function ArchitecturalHero() {
+  return (
+    <section
+      dir="rtl"
+      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden selection:bg-[#2dd4bf] selection:text-[#0a2e2b]"
+    >
+      {/* Ambient glow layers (over the persistent canvas) */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#2dd4bf] rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-[#115e59] rounded-full blur-[100px]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 2px 2px, #2dd4bf1a 1px, transparent 0)",
+            backgroundSize: "40px 40px",
+          }}
+        />
+      </div>
+
+      <div className="relative z-10 max-w-7xl w-full px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-10 gap-12 lg:gap-16 items-center">
+        {/* Content — 60% */}
+        <div className="lg:col-span-6 flex flex-col items-start text-right">
+          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-[#2dd4bf]/30 bg-[#115e59]/20 mb-8">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2dd4bf] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2dd4bf]" />
+            </span>
+            <span
+              className="text-[#2dd4bf] text-xs sm:text-sm font-medium tracking-widest uppercase"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              Agency of Mastery
+            </span>
+          </div>
+
+          <h1 className="text-[#f5f3ee] text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-8">
+            نصنع الـ{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#2dd4bf] to-[#115e59]">
+              إتقان
+            </span>
+            <br />
+            <span className="text-3xl sm:text-4xl md:text-5xl font-light opacity-90">
+              في كل تفصيل رقمي
+            </span>
+          </h1>
+
+          <p
+            className="text-[#f5f3ee] opacity-70 text-base md:text-xl max-w-2xl leading-relaxed mb-12 font-light"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
+          >
+            حيث تلتقي الرؤية بالإبداع. نحن وكالة تصميم تركز على بناء تجارب
+            رقمية تترك أثراً، مدمجين الفن بالتكنولوجيا لتحقيق الكمال.
+          </p>
+
+          <div className="flex flex-wrap gap-4 sm:gap-6">
+            <a
+              href="/contact"
+              className="px-8 sm:px-10 py-4 sm:py-5 bg-[#2dd4bf] text-[#0a2e2b] font-bold text-base sm:text-lg hover:bg-[#f5f3ee] transition-all duration-300 shadow-[8px_8px_0px_0px_#115e59] hover:shadow-[4px_4px_0px_0px_#115e59] hover:translate-x-1 hover:-translate-y-0 cursor-pointer"
+            >
+              ابدأ مشروعك
+            </a>
+            <a
+              href="/portfolio"
+              className="px-8 sm:px-10 py-4 sm:py-5 border border-[#f5f3ee]/30 text-[#f5f3ee] font-medium text-base sm:text-lg hover:bg-[#f5f3ee]/10 transition-all duration-300 flex items-center gap-3 cursor-pointer"
+            >
+              أعمالنا
+              <ArrowLeft className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
+
+        {/* Visual — 40% */}
+        <div className="lg:col-span-4 relative flex justify-center lg:justify-end">
+          <div className="relative w-full aspect-square max-w-md flex items-center justify-center">
+            <div
+              className="absolute w-full h-full border-[16px] sm:border-[20px] border-[#2dd4bf] opacity-10 rotate-45"
+              style={{ animation: "spin 60s linear infinite" }}
+            />
+            <div className="absolute w-[85%] h-[85%] border-2 border-[#2dd4bf]/20 rotate-45" />
+            <div className="absolute w-[65%] h-[65%] border-4 border-[#115e59] rotate-12" />
+
+            {/* Central mark */}
+            <div className="relative z-20 p-6 sm:p-8 bg-[#0a2e2b]/80 backdrop-blur-md shadow-[0_0_60px_-15px_rgba(45,212,191,0.4)] border border-[#2dd4bf]/20">
+              <div className="w-32 h-32 sm:w-40 sm:h-40 flex items-center justify-center">
+                <svg
+                  viewBox="0 0 100 100"
+                  fill="none"
+                  className="w-full h-full"
+                >
+                  <path
+                    d="M50 8L92 50L50 92L8 50L50 8Z"
+                    stroke="#f5f3ee"
+                    strokeWidth="3"
+                  />
+                  <path
+                    d="M50 24L76 50L50 76L24 50L50 24Z"
+                    stroke="#2dd4bf"
+                    strokeWidth="2"
+                  />
+                  <rect x="44" y="44" width="12" height="12" fill="#2dd4bf" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Floating labels */}
+            <div className="absolute top-0 right-0 bg-[#115e59] p-3 sm:p-4 backdrop-blur-md border border-[#2dd4bf]/30 translate-x-2 -translate-y-2 sm:translate-x-4 sm:-translate-y-4 shadow-2xl">
+              <p
+                className="text-[#2dd4bf] text-xs sm:text-sm font-bold"
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              >
+                Est. 2024
+              </p>
+            </div>
+            <div className="absolute bottom-12 left-0 bg-[#f5f3ee] text-[#0a2e2b] px-4 sm:px-6 py-2 sm:py-3 font-bold shadow-2xl -translate-x-4 translate-y-2 sm:-translate-x-8 sm:translate-y-4 text-sm sm:text-base">
+              ١٠٠٪ دقة
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom scroll indicator */}
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-40">
+        <div className="w-[1px] h-16 bg-gradient-to-b from-[#2dd4bf] to-transparent" />
+      </div>
+
+      <style>{`
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
+    </section>
+  );
+}
