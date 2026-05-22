@@ -1,4 +1,5 @@
 import { ArrowLeft } from "lucide-react";
+import logoWhite from "@/assets/logo-white.png";
 
 export default function ArchitecturalHero() {
   return (
@@ -85,23 +86,11 @@ export default function ArchitecturalHero() {
             {/* Central mark */}
             <div className="relative z-20 p-6 sm:p-8 bg-[#0a2e2b]/80 backdrop-blur-md shadow-[0_0_60px_-15px_rgba(45,212,191,0.4)] border border-[#2dd4bf]/20">
               <div className="w-32 h-32 sm:w-40 sm:h-40 flex items-center justify-center">
-                <svg
-                  viewBox="0 0 100 100"
-                  fill="none"
-                  className="w-full h-full"
-                >
-                  <path
-                    d="M50 8L92 50L50 92L8 50L50 8Z"
-                    stroke="#f5f3ee"
-                    strokeWidth="3"
-                  />
-                  <path
-                    d="M50 24L76 50L50 76L24 50L50 24Z"
-                    stroke="#2dd4bf"
-                    strokeWidth="2"
-                  />
-                  <rect x="44" y="44" width="12" height="12" fill="#2dd4bf" />
-                </svg>
+                <img
+                  src={logoWhite}
+                  alt="إتقان"
+                  className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(45,212,191,0.5)]"
+                />
               </div>
             </div>
 
