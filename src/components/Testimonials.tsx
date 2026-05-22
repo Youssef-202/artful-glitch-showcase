@@ -1,31 +1,31 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Quote } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import { useLang } from "@/i18n/LanguageProvider";
 
-type Item = { quote: string; name: string; role: string };
-
-const items: Item[] = [
-  {
-    quote:
-      "فريق إتقان غيّر شكل علامتنا التجارية بالكامل، نتائج فاقت توقعاتنا.",
-    name: "أحمد المنصوري",
-    role: "الرئيس التنفيذي",
-  },
-  {
-    quote:
-      "احترافية وسرعة في التنفيذ وإبداع لا يتوقف. شركاء نجاح حقيقيون.",
-    name: "سارة الخالدي",
-    role: "مديرة التسويق",
-  },
-  {
-    quote:
-      "تجربة مميزة من أول لقاء، فهموا فكرتنا ونفذوها بشكل أفضل مما تخيلنا.",
-    name: "محمد عبدالله",
-    role: "مؤسس",
-  },
-];
+type Item = {
+  id: string;
+  name: string;
+  role: string | null;
+  quote: string;
+  avatar_url: string | null;
+};
 
 export default function Testimonials() {
   const { dir } = useLang();
+  const [items, setItems] = useState<Item[]>([]);
+
+  useEffect(() => {
+    supabase
+      .from("testimonials")
+      .select("id,name,role,quote,avatar_url")
+      .order("sort_order", { ascending: true })
+      .then(({ data }) => setItems((data as any) ?? []));
+  }, []);
+
+  if (items.length === 0) return null;
+
   return (
     <section className="relative py-20" dir={dir}>
       <div className="px-6 max-w-7xl mx-auto text-center mb-12">
@@ -43,19 +43,29 @@ export default function Testimonials() {
       <div className="px-6 max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {items.map((t, i) => (
           <motion.figure
-            key={i}
+            key={t.id}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.08 }}
-            className="glass rounded-3xl border border-border/50 p-8 text-center hover:border-primary/60 hover:shadow-glow transition-all"
+            className="relative glass rounded-3xl border border-border/50 p-8 text-center hover:border-primary/60 hover:shadow-glow transition-all"
           >
+            <Quote className="absolute top-5 right-5 w-6 h-6 text-primary/40" />
             <blockquote className="text-base sm:text-lg text-foreground/90 leading-relaxed mb-6">
               “{t.quote}”
             </blockquote>
-            <figcaption>
-              <p className="font-bold text-lg">{t.name}</p>
-              <p className="text-sm text-muted-foreground mt-1">{t.role}</p>
+            <figcaption className="flex flex-col items-center gap-2">
+              {t.avatar_url && (
+                <img
+                  src={t.avatar_url}
+                  alt={t.name}
+                  className="w-14 h-14 rounded-full object-cover border-2 border-primary/40"
+                />
+              )}
+              <div>
+                <p className="font-bold text-lg">{t.name}</p>
+                {t.role && <p className="text-sm text-muted-foreground mt-1">{t.role}</p>}
+              </div>
             </figcaption>
           </motion.figure>
         ))}
