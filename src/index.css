@@ -139,6 +139,33 @@
 .animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
 .animate-pulse-ring { animation: pulse-ring 2s cubic-bezier(0,0,0.2,1) infinite; }
 
+:root { --animation-iteration: infinite; }
+@keyframes animStar {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-2000px); }
+}
+@keyframes animGravity {
+  0% { transform: translateY(-26px); opacity: 0; }
+  30%, 80% { letter-spacing: 0.4em; transform: translateY(0); opacity: 1; }
+  92%, 100% { letter-spacing: 0.35em; transform: translateY(-4px); opacity: 0; }
+}
+@keyframes animDont {
+  0%, 15% { transform: translateY(-26px); opacity: 0; }
+  35%, 80% { transform: translateY(0); opacity: 1; }
+  92%, 100% { transform: translateY(-4px); opacity: 0; }
+}
+@keyframes animLet {
+  0%, 25% { transform: translateY(-26px); opacity: 0; }
+  45%, 80% { transform: translateY(0); opacity: 1; }
+  92%, 100% { transform: translateY(-4px); opacity: 0; }
+}
+@keyframes animGo {
+  0%, 35% { transform: translateY(-26px); opacity: 0; }
+  55%, 80% { transform: translateY(0); opacity: 1; }
+  92%, 100% { transform: translateY(-4px); opacity: 0; }
+}
+
+
 /* Native cursor restored — 3D interactions still happen in the background */
 
 @keyframes logoPulse {
