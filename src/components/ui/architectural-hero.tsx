@@ -129,7 +129,7 @@ export default function ArchitecturalHero() {
                 Est. 2024
               </p>
             </div>
-            <div className="absolute bottom-8 left-4 bg-[#f5f3ee] text-[#0a2e2b] px-4 sm:px-6 py-2 sm:py-3 font-bold shadow-2xl text-sm sm:text-base">
+            <div className="absolute z-30 -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 bg-[#f5f3ee] text-[#0a2e2b] px-4 sm:px-6 py-2 sm:py-3 font-bold shadow-2xl text-sm sm:text-base">
               ١٠٠٪ دقة
             </div>
           </div>
