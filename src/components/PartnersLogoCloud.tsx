@@ -31,8 +31,10 @@ export default function PartnersLogoCloud() {
         <p className="text-xs sm:text-sm text-primary tracking-[0.3em] mb-3 font-bold">
           PARTNERS
         </p>
-        <h2 className="text-3xl sm:text-5xl font-black">
-          <span className="text-gradient">موثوق به من قِبل الخبراء</span>
+        <h2 className="text-3xl sm:text-5xl font-black leading-tight">
+          <span className="text-gradient">موثوق به من قِبل الخبراء.</span>
+          <br />
+          <span className="text-foreground/80">يستخدمه الرواد.</span>
         </h2>
         <p className="mt-3 text-muted-foreground text-sm sm:text-base">
           نفخر بشراكتنا مع نخبة من العلامات التجارية الرائدة
