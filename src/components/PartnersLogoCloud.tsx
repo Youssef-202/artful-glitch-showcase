@@ -23,7 +23,7 @@ export default function PartnersLogoCloud() {
       .then(({ data }) => setItems((data as any) ?? []));
   }, []);
 
-  const withLogos = items.filter((p) => !!p.logo_url);
+ 
 
   return (
     <section className="relative px-6 py-20 max-w-7xl mx-auto" dir={dir}>
@@ -39,10 +39,10 @@ export default function PartnersLogoCloud() {
         </p>
       </div>
 
-      {withLogos.length > 0 ? (
+      {items.length > 0 ? (
         <LogoCloud
-          logos={withLogos.map((p) => ({
-            src: p.logo_url as string,
+          logos={items.map((p) => ({
+            src: p.logo_url ?? "",
             alt: p.name,
             href: p.website_url ?? undefined,
           }))}

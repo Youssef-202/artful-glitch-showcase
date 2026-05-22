@@ -26,7 +26,7 @@ export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background to-transparent" />
       <InfiniteSlider gap={56} duration={30} durationOnHover={90}>
         {logos.map((logo, i) => {
-          const img = (
+          const content = logo.src ? (
             <img
               src={logo.src}
               alt={logo.alt}
@@ -35,18 +35,22 @@ export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
               loading="lazy"
               className="h-10 w-auto object-contain opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0"
             />
+          ) : (
+            <span className="whitespace-nowrap text-xl sm:text-2xl font-black text-foreground/70 hover:text-foreground transition">
+              {logo.alt}
+            </span>
           );
           return (
             <div
               key={`${logo.alt}-${i}`}
-              className="flex h-16 items-center justify-center"
+              className="flex h-16 items-center justify-center px-4"
             >
               {logo.href ? (
                 <a href={logo.href} target="_blank" rel="noopener noreferrer">
-                  {img}
+                  {content}
                 </a>
               ) : (
-                img
+                content
               )}
             </div>
           );
