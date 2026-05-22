@@ -243,7 +243,7 @@ export function CinematicFooter({
       <section
         ref={wrapperRef}
         dir="rtl"
-        className="cinematic-footer-wrapper relative w-full overflow-hidden bg-background text-foreground"
+        className="cinematic-footer-wrapper relative w-full overflow-hidden text-foreground"
       >
         {/* Grid background */}
         <div className="footer-bg-grid pointer-events-none absolute inset-0 z-0" />
