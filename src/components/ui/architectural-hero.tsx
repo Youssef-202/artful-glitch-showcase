@@ -72,13 +72,13 @@ export default function ArchitecturalHero() {
           <div className="flex flex-wrap gap-4 sm:gap-6">
             <a
               href="/contact"
-              className="px-8 sm:px-10 py-4 sm:py-5 bg-[#2dd4bf] text-[#0a2e2b] font-bold text-base sm:text-lg hover:bg-[#f5f3ee] transition-all duration-300 shadow-[8px_8px_0px_0px_#115e59] hover:shadow-[4px_4px_0px_0px_#115e59] hover:translate-x-1 hover:-translate-y-0 cursor-pointer"
+              className="rounded-full px-8 sm:px-10 py-4 sm:py-5 bg-[#2dd4bf] text-[#0a2e2b] font-bold text-base sm:text-lg hover:bg-[#f5f3ee] transition-all duration-300 shadow-[8px_8px_0px_0px_#115e59] hover:shadow-[4px_4px_0px_0px_#115e59] hover:translate-x-1 hover:-translate-y-0 cursor-pointer"
             >
               ابدأ مشروعك
             </a>
             <a
               href="/portfolio"
-              className="px-8 sm:px-10 py-4 sm:py-5 border border-[#f5f3ee]/30 text-[#f5f3ee] font-medium text-base sm:text-lg hover:bg-[#f5f3ee]/10 transition-all duration-300 flex items-center gap-3 cursor-pointer"
+              className="rounded-full px-8 sm:px-10 py-4 sm:py-5 border border-[#f5f3ee]/30 text-[#f5f3ee] font-medium text-base sm:text-lg hover:bg-[#f5f3ee]/10 transition-all duration-300 flex items-center gap-3 cursor-pointer"
             >
               أعمالنا
               <ArrowLeft className="w-5 h-5" />
