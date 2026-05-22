@@ -1,152 +1,152 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Sparkles, Zap, Target, Award, Play } from "lucide-react";
+import { ArrowLeft, Play, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLang } from "@/i18n/LanguageProvider";
 import logoDark from "@/assets/logo.png";
 import logo3d from "@/assets/etqan-logo-3d.png";
 
 /**
- * Modern bento-grid hero — replaces the old 3D-canvas intro.
- * Asymmetric tiles, soft glow, AR/RTL aware.
+ * Editorial hero for a design agency — big cinematic typography,
+ * centered monogram, soft ambient light, refined motion.
  */
 export default function HeroBento() {
   const { t, dir } = useLang();
 
-  const tile =
-    "relative glass rounded-3xl border border-border/40 overflow-hidden group hover:border-primary/50 hover:shadow-glow transition-all";
-
   return (
-    <section dir={dir} className="relative px-4 sm:px-6 pt-10 pb-16">
-      {/* ambient gradient blobs */}
-      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div className="absolute -top-32 -right-20 w-[520px] h-[520px] rounded-full bg-primary/20 blur-[120px]" />
-        <div className="absolute top-40 -left-20 w-[420px] h-[420px] rounded-full bg-accent/20 blur-[120px]" />
+    <section
+      dir={dir}
+      className="relative w-full overflow-hidden min-h-[88vh] flex items-center justify-center px-4 sm:px-8 pt-16 pb-24"
+    >
+      {/* Ambient gradient stage */}
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] rounded-full bg-primary/15 blur-[160px]" />
+        <div className="absolute top-[20%] right-[10%] w-[400px] h-[400px] rounded-full bg-accent/20 blur-[120px]" />
+        <div className="absolute bottom-[10%] left-[10%] w-[380px] h-[380px] rounded-full bg-primary-glow/15 blur-[120px]" />
+        {/* grid texture */}
+        <div
+          className="absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage:
+              "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
+            backgroundSize: "64px 64px",
+            maskImage:
+              "radial-gradient(ellipse at center, black 30%, transparent 70%)",
+          }}
+        />
       </div>
 
-      <div className="max-w-7xl mx-auto">
+      <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center text-center">
         {/* Eyebrow */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex justify-center mb-6"
+          className="inline-flex items-center gap-2 rounded-full glass border border-border/40 px-4 py-1.5 mb-10"
         >
-          <span className="inline-flex items-center gap-2 rounded-full glass border border-border/50 px-4 py-1.5 text-xs sm:text-sm tracking-widest text-primary font-bold">
-            <Sparkles className="w-3.5 h-3.5" />
-            وكالة إتقان · ETQAN STUDIO
+          <Sparkles className="w-3.5 h-3.5 text-primary" />
+          <span className="text-[11px] sm:text-xs tracking-[0.3em] font-bold text-primary">
+            CREATIVE STUDIO · 2026
           </span>
         </motion.div>
 
-        {/* Bento grid */}
-        <div className="grid grid-cols-6 auto-rows-[110px] sm:auto-rows-[140px] gap-3 sm:gap-4">
-          {/* Big headline tile */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.05 }}
-            className={`${tile} col-span-6 md:col-span-4 row-span-3 md:row-span-3 p-6 sm:p-10 flex flex-col justify-between`}
+        {/* Monogram */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85, filter: "blur(8px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+          className="relative mb-8"
+          style={{
+            filter:
+              "drop-shadow(0 0 30px hsl(var(--primary) / 0.55)) drop-shadow(0 0 80px hsl(var(--primary) / 0.25))",
+          }}
+        >
+          <img
+            src={logoDark}
+            alt={t.common.brand}
+            className="block dark:hidden h-28 sm:h-36 lg:h-44 w-auto object-contain"
+            draggable={false}
+          />
+          <img
+            src={logo3d}
+            alt={t.common.brand}
+            className="hidden dark:block h-28 sm:h-36 lg:h-44 w-auto object-contain"
+            draggable={false}
+          />
+        </motion.div>
+
+        {/* Headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="font-black leading-[1.02] tracking-tight text-5xl sm:text-7xl lg:text-[7.5rem]"
+        >
+          <span className="block">نصمم</span>
+          <span className="block">
+            <span className="text-gradient italic font-black">حضوراً</span>{" "}
+            يُروى.
+          </span>
+        </motion.h1>
+
+        {/* Sub */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.45 }}
+          className="mt-8 max-w-2xl text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed"
+        >
+          {t.common.heroSubtitle}
+        </motion.p>
+
+        {/* Actions */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="mt-10 flex flex-wrap items-center justify-center gap-4"
+        >
+          <Link
+            to="/contact"
+            className="group inline-flex items-center gap-2 rounded-full px-7 py-4 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 opacity-70" />
-            <div className="relative">
-              <p className="text-xs sm:text-sm text-primary tracking-[0.3em] font-bold mb-4">
-                STUDIO · 2026
+            {t.common.ctaStart}
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+          </Link>
+          <Link
+            to="/services"
+            className="inline-flex items-center gap-2 rounded-full px-7 py-4 font-bold glass-strong border border-border/40 hover:bg-foreground/5 transition"
+          >
+            <Play className="w-3.5 h-3.5 text-primary" />
+            {t.common.ctaExplore}
+          </Link>
+        </motion.div>
+
+        {/* Bottom marquee strip */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.9 }}
+          className="mt-16 w-full max-w-4xl grid grid-cols-2 sm:grid-cols-4 gap-px overflow-hidden rounded-2xl glass border border-border/40"
+        >
+          {[
+            { k: "+120", v: "مشروع منجز" },
+            { k: "+45", v: "علامة تجارية" },
+            { k: "8", v: "سنوات خبرة" },
+            { k: "100%", v: "التزام بالتميّز" },
+          ].map((s) => (
+            <div
+              key={s.v}
+              className="bg-background/30 px-4 py-5 text-center"
+            >
+              <p className="text-2xl sm:text-3xl font-black text-gradient">
+                {s.k}
               </p>
-              <h1 className="font-black leading-[1.05] text-4xl sm:text-6xl lg:text-7xl">
-                نصمم{" "}
-                <span className="text-gradient">حضوراً</span>
-                <br />
-                يستحقّ أن يُروى.
-              </h1>
-              <p className="mt-5 text-sm sm:text-lg text-muted-foreground max-w-xl leading-relaxed">
-                {t.common.heroSubtitle}
+              <p className="mt-1 text-[11px] sm:text-xs text-muted-foreground tracking-wider">
+                {s.v}
               </p>
             </div>
-            <div className="relative flex flex-wrap items-center gap-3 mt-6">
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition"
-              >
-                {t.common.ctaStart}
-                <ArrowLeft className="w-4 h-4 rtl:rotate-0 ltr:rotate-180" />
-              </Link>
-              <Link
-                to="/services"
-                className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-bold glass-strong hover:bg-foreground/5 transition"
-              >
-                <Play className="w-3.5 h-3.5" /> {t.common.ctaExplore}
-              </Link>
-            </div>
-          </motion.div>
-
-          {/* Logo tile */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className={`${tile} col-span-3 md:col-span-2 row-span-2 flex items-center justify-center p-4 bg-gradient-to-br from-primary/15 to-accent/10`}
-          >
-            <img src={logoDark} alt={t.common.brand} className="block dark:hidden max-h-[140px] sm:max-h-[180px] w-auto object-contain drop-shadow-[0_0_20px_hsl(var(--primary)/0.4)]" />
-            <img src={logo3d} alt={t.common.brand} className="hidden dark:block max-h-[140px] sm:max-h-[180px] w-auto object-contain drop-shadow-[0_0_30px_hsl(var(--primary)/0.6)]" />
-          </motion.div>
-
-          {/* Stat 1 */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className={`${tile} col-span-3 md:col-span-2 row-span-1 p-4 sm:p-5 flex items-center justify-between`}
-          >
-            <div>
-              <p className="text-2xl sm:text-3xl font-black text-gradient">+120</p>
-              <p className="text-xs text-muted-foreground">مشروع منجز</p>
-            </div>
-            <Award className="w-7 h-7 text-primary/70" />
-          </motion.div>
-
-          {/* Feature tile */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.25 }}
-            className={`${tile} col-span-3 md:col-span-2 row-span-1 p-4 sm:p-5 flex items-center gap-3`}
-          >
-            <div className="w-10 h-10 rounded-2xl bg-primary/20 flex items-center justify-center shrink-0">
-              <Zap className="w-5 h-5 text-primary" />
-            </div>
-            <div>
-              <p className="font-bold text-sm sm:text-base">سرعة في التنفيذ</p>
-              <p className="text-xs text-muted-foreground">دون تنازل عن الجودة</p>
-            </div>
-          </motion.div>
-
-          {/* Feature tile */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className={`${tile} col-span-3 md:col-span-2 row-span-1 p-4 sm:p-5 flex items-center gap-3`}
-          >
-            <div className="w-10 h-10 rounded-2xl bg-accent/20 flex items-center justify-center shrink-0">
-              <Target className="w-5 h-5 text-accent" />
-            </div>
-            <div>
-              <p className="font-bold text-sm sm:text-base">استراتيجية بنتائج</p>
-              <p className="text-xs text-muted-foreground">تركيز على ROI</p>
-            </div>
-          </motion.div>
-
-          {/* Tagline tile */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.35 }}
-            className={`${tile} col-span-3 md:col-span-2 row-span-1 p-4 sm:p-5 flex items-center justify-center text-center bg-gradient-to-tr from-primary/10 to-transparent`}
-          >
-            <p className="font-bold text-sm sm:text-base">
-              <span className="text-gradient">إتقان</span> · حيث الفكرة تلتقي بالأثر
-            </p>
-          </motion.div>
-        </div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
