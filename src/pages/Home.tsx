@@ -6,6 +6,7 @@ import aboutVision from "@/assets/about-vision.png";
 import { useEffect, useState } from "react";
 import { useLang } from "@/i18n/LanguageProvider";
 import ArchitecturalHero from "@/components/ui/architectural-hero";
+import PartnersLogoCloud from "@/components/PartnersLogoCloud";
 import ServicesShowcase3D from "@/components/ServicesShowcase3D";
 import PortfolioMarquee from "@/components/PortfolioMarquee";
 import Testimonials from "@/components/Testimonials";
@@ -33,8 +34,8 @@ export default function Home() {
     <>
       <ArchitecturalHero />
 
-      
-
+      {/* Partners logo cloud */}
+      <PartnersLogoCloud />
 
       {/* Services grid */}
       <ServicesShowcase3D />

@@ -1,0 +1,57 @@
+import { InfiniteSlider } from "@/components/ui/infinite-slider";
+import { cn } from "@/lib/utils";
+
+type Logo = {
+  src: string;
+  alt: string;
+  href?: string;
+  width?: number;
+  height?: number;
+};
+
+type LogoCloudProps = React.ComponentProps<"div"> & {
+  logos: Logo[];
+};
+
+export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
+  return (
+    <div
+      className={cn(
+        "relative w-full overflow-hidden py-6",
+        className
+      )}
+      {...props}
+    >
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-background to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background to-transparent" />
+      <InfiniteSlider gap={56} duration={30} durationOnHover={90}>
+        {logos.map((logo, i) => {
+          const img = (
+            <img
+              src={logo.src}
+              alt={logo.alt}
+              width={logo.width ?? 120}
+              height={logo.height ?? 40}
+              loading="lazy"
+              className="h-10 w-auto object-contain opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0"
+            />
+          );
+          return (
+            <div
+              key={`${logo.alt}-${i}`}
+              className="flex h-16 items-center justify-center"
+            >
+              {logo.href ? (
+                <a href={logo.href} target="_blank" rel="noopener noreferrer">
+                  {img}
+                </a>
+              ) : (
+                img
+              )}
+            </div>
+          );
+        })}
+      </InfiniteSlider>
+    </div>
+  );
+}
