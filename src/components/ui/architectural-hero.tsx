@@ -90,18 +90,18 @@ export default function ArchitecturalHero() {
         <div className="lg:col-span-4 relative flex justify-center lg:justify-end">
           <div className="relative w-full aspect-square max-w-md flex items-center justify-center">
             <div
-              className="absolute w-full h-full border-[16px] sm:border-[20px] border-[#2dd4bf] opacity-10 rotate-45"
+              className="absolute w-full h-full border-[16px] sm:border-[20px] border-[#2dd4bf] opacity-10 rotate-45 rounded-3xl"
               style={{ animation: "spin 60s linear infinite" }}
             />
-            <div className="absolute w-[85%] h-[85%] border-2 border-[#2dd4bf]/20 rotate-45" />
-            <div className="absolute w-[65%] h-[65%] border-4 border-[#115e59] rotate-12" />
+            <div className="absolute w-[85%] h-[85%] border-2 border-[#2dd4bf]/20 rotate-45 rounded-3xl" />
+            <div className="absolute w-[65%] h-[65%] border-4 border-[#115e59] rotate-12 rounded-3xl" />
 
             {/* Central mark */}
             <div
               ref={logoRef}
               onMouseMove={handleMove}
               onMouseLeave={reset}
-              className="relative z-20 p-6 sm:p-8 bg-[#0a2e2b]/80 backdrop-blur-md shadow-[0_0_60px_-15px_rgba(45,212,191,0.4)] border border-[#2dd4bf]/20 transition-transform duration-200 ease-out cursor-pointer"
+              className="relative z-20 p-6 sm:p-8 bg-[#0a2e2b]/80 backdrop-blur-md shadow-[0_0_60px_-15px_rgba(45,212,191,0.4)] border border-[#2dd4bf]/20 rounded-3xl transition-transform duration-200 ease-out cursor-pointer"
               style={{
                 transform: `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
                 transformStyle: "preserve-3d",
