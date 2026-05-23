@@ -101,7 +101,7 @@ export default function ArchitecturalHero() {
               ref={logoRef}
               onMouseMove={handleMove}
               onMouseLeave={reset}
-              className="relative z-20 p-6 sm:p-8 bg-[#0a2e2b]/80 backdrop-blur-md shadow-[0_0_60px_-15px_rgba(45,212,191,0.4)] border border-[#2dd4bf]/20 transition-transform duration-200 ease-out cursor-pointer"
+              className="relative z-20 p-6 sm:p-8 bg-[#0a2e2b]/80 backdrop-blur-md shadow-[0_0_60px_-15px_rgba(45,212,191,0.4)] border border-[#2dd4bf]/20 rounded-3xl transition-transform duration-200 ease-out cursor-pointer"
               style={{
                 transform: `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
                 transformStyle: "preserve-3d",
