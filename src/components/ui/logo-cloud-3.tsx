@@ -26,7 +26,7 @@ export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
       {...props}
     >
       <InfiniteSlider gap={56} duration={30} durationOnHover={90}>
-        {logos.map((logo, i) => {
+        {logosLoop.map((logo, i) => {
           const content = logo.src ? (
             <img
               src={logo.src}
