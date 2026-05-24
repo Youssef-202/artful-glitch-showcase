@@ -103,7 +103,7 @@ export default function EtqanHero3D() {
       className="relative w-full"
       style={{ height: "500vh" }}
     >
-      <div className="sticky top-0 w-full h-screen overflow-hidden bg-background">
+      <div className="sticky top-0 w-full h-screen overflow-hidden">
         {/* 3D logo layer — compact box matching logo footprint, moves with scroll */}
         <motion.div
           className="absolute top-1/2 left-1/2 pointer-events-none"
