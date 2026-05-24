@@ -148,7 +148,7 @@ export default function EtqanHero3D() {
       ref={containerRef}
       dir="rtl"
       className="relative w-full border-0"
-      style={{ height: "560vh" }}
+      style={{ height: "720vh" }}
     >
       <div className="sticky top-0 w-full h-screen overflow-hidden">
         {/* 3D logo layer */}
