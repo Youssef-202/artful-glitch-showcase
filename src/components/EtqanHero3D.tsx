@@ -233,7 +233,7 @@ export default function EtqanHero3D() {
             style={{
               fontFamily: "'El Messiri', 'Reem Kufi', serif",
               fontWeight: 700,
-              fontSize: "clamp(56px, 8vw, 120px)",
+              fontSize: "clamp(40px, 5.4vw, 80px)",
               lineHeight: 1,
               letterSpacing: "-0.02em",
             }}
@@ -248,7 +248,7 @@ export default function EtqanHero3D() {
             style={{
               fontFamily: "'El Messiri', 'Tajawal', sans-serif",
               fontWeight: 500,
-              fontSize: "clamp(22px, 2.6vw, 40px)",
+              fontSize: "clamp(16px, 1.7vw, 24px)",
               color: "hsl(var(--foreground) / 0.9)",
               lineHeight: 1.4,
             }}
@@ -260,7 +260,7 @@ export default function EtqanHero3D() {
             style={{
               fontFamily: "'Tajawal', sans-serif",
               fontWeight: 300,
-              fontSize: "clamp(15px, 1.4vw, 20px)",
+              fontSize: "clamp(13px, 1.05vw, 16px)",
               color: "hsl(var(--foreground) / 0.72)",
               lineHeight: 1.9,
               maxWidth: "40vw",
@@ -277,7 +277,8 @@ export default function EtqanHero3D() {
                 background: "linear-gradient(135deg, #1D9E75, #2ec48f)",
                 color: "#04201a",
                 fontFamily: "'El Messiri', sans-serif",
-                fontSize: 17,
+                fontSize: 14,
+
                 boxShadow: "0 10px 30px -8px rgba(29,158,117,0.6)",
               }}
             >
@@ -290,7 +291,7 @@ export default function EtqanHero3D() {
                 border: "1px solid rgba(255,255,255,0.25)",
                 color: "hsl(var(--foreground))",
                 fontFamily: "'El Messiri', sans-serif",
-                fontSize: 17,
+                fontSize: 14,
               }}
             >
               أعمالنا
@@ -311,7 +312,7 @@ export default function EtqanHero3D() {
             style={{
               fontFamily: "'El Messiri', 'Reem Kufi', serif",
               fontWeight: 700,
-              fontSize: "clamp(56px, 7.5vw, 110px)",
+              fontSize: "clamp(36px, 4.8vw, 72px)",
               color: "#1D9E75",
               textShadow: "0 0 45px rgba(29,158,117,0.45)",
               lineHeight: 1.05,
@@ -324,7 +325,7 @@ export default function EtqanHero3D() {
             style={{
               fontFamily: "'Tajawal', sans-serif",
               fontWeight: 300,
-              fontSize: "clamp(15px, 1.3vw, 19px)",
+              fontSize: "clamp(13px, 1.05vw, 16px)",
               color: "hsl(var(--foreground) / 0.78)",
               lineHeight: 2,
               maxWidth: "38vw",
@@ -347,7 +348,7 @@ export default function EtqanHero3D() {
             style={{
               fontFamily: "'El Messiri', 'Reem Kufi', serif",
               fontWeight: 700,
-              fontSize: "clamp(48px, 6.8vw, 104px)",
+              fontSize: "clamp(32px, 4.4vw, 68px)",
               color: "hsl(var(--foreground))",
               lineHeight: 1.05,
               letterSpacing: "-0.02em",
@@ -372,7 +373,8 @@ export default function EtqanHero3D() {
             style={{
               fontFamily: "'Tajawal', sans-serif",
               fontWeight: 300,
-              fontSize: "clamp(15px, 1.25vw, 19px)",
+              fontSize: "clamp(13px, 1.05vw, 16px)",
+
               color: "hsl(var(--foreground) / 0.78)",
               lineHeight: 2,
               maxWidth: "38vw",
@@ -385,7 +387,7 @@ export default function EtqanHero3D() {
             style={{
               fontFamily: "'Tajawal', sans-serif",
               fontWeight: 300,
-              fontSize: "clamp(15px, 1.25vw, 19px)",
+              fontSize: "clamp(13px, 1.05vw, 16px)",
               color: "hsl(var(--foreground) / 0.78)",
               lineHeight: 2,
               maxWidth: "38vw",
@@ -410,7 +412,7 @@ function Badge({ children }: { children: React.ReactNode }) {
         borderColor: "rgba(29,158,117,0.35)",
         color: "#5DCAA5",
         fontFamily: "'Cairo', sans-serif",
-        fontSize: 13,
+        fontSize: 11,
         letterSpacing: 5,
         background: "transparent",
       }}
