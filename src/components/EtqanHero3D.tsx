@@ -131,13 +131,13 @@ export default function EtqanHero3D() {
             translateY: "-50%",
           }}
         >
-          {/* Glowing ring */}
+          {/* Ring light — bright rim + outer halo + inner light bath */}
           <motion.div
             className="absolute inset-0 rounded-full"
             style={{
-              border: "1.5px solid rgba(180,255,225,0.75)",
+              border: "2.5px solid rgba(220,255,240,0.95)",
               boxShadow:
-                "0 0 180px 30px rgba(29,158,117,0.55), 0 0 80px 10px rgba(93,202,165,0.4), inset 0 0 80px rgba(93,202,165,0.18)",
+                "0 0 60px 6px rgba(220,255,240,0.85), 0 0 200px 40px rgba(29,158,117,0.7), 0 0 110px 18px rgba(93,202,165,0.55), inset 0 0 120px rgba(180,255,225,0.32)",
               opacity: ringOpacity,
             }}
           />
@@ -145,7 +145,7 @@ export default function EtqanHero3D() {
             className="absolute inset-0 rounded-full pointer-events-none"
             style={{
               background:
-                "radial-gradient(circle, rgba(93,202,165,0.18) 0%, rgba(29,158,117,0.06) 50%, transparent 75%)",
+                "radial-gradient(circle, rgba(180,255,225,0.28) 0%, rgba(93,202,165,0.14) 40%, rgba(29,158,117,0.05) 65%, transparent 78%)",
               opacity: ringOpacity,
             }}
           />
