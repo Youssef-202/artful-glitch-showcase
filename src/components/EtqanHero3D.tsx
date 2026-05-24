@@ -309,15 +309,14 @@ export default function EtqanHero3D() {
           </p>
         </motion.div>
 
-        {/* Panel 3 — نصنع علاماتٍ تبقى في الذاكرة */}
+        {/* Panel 3 — heading on the RIGHT (logo moves to the LEFT) */}
         <motion.div
           dir="rtl"
-          className="absolute top-1/2 -translate-y-1/2 left-[2.5vw] z-10 pointer-events-none"
-          style={{ opacity: panelMotion[2].opacity, y: panelMotion[2].y, width: "62vw" }}
+          className="absolute top-1/2 -translate-y-1/2 right-[2.5vw] max-w-[46vw] z-10 pointer-events-none text-right"
+          style={{ opacity: panelMotion[2].opacity, y: panelMotion[2].y }}
         >
           <Badge>{PANELS[2].badge}</Badge>
           <h2
-            className="mb-10"
             style={{
               fontFamily: "'El Messiri', 'Reem Kufi', serif",
               fontWeight: 700,
@@ -333,35 +332,43 @@ export default function EtqanHero3D() {
               تبقى في الذاكرة
             </span>
           </h2>
-          <div className="flex gap-10 pointer-events-auto">
-            <p
-              style={{
-                fontFamily: "'Tajawal', sans-serif",
-                fontWeight: 300,
-                fontSize: "clamp(13px, 1.1vw, 16px)",
-                color: "hsl(var(--foreground) / 0.7)",
-                lineHeight: 1.9,
-                maxWidth: "22vw",
-              }}
-            >
-              في إتقان، نؤمن أن التصميم ليس مجرد شكلٍ جميل بل تجربةٌ تُحرّك المشاعر
-              وتبني الثقة. نُتقن التفاصيل لنُقدّم نتائج تتجاوز توقّعات شركائنا.
-            </p>
-            <p
-              style={{
-                fontFamily: "'Tajawal', sans-serif",
-                fontWeight: 300,
-                fontSize: "clamp(13px, 1.1vw, 16px)",
-                color: "hsl(var(--foreground) / 0.7)",
-                lineHeight: 1.9,
-                maxWidth: "22vw",
-              }}
-            >
-              نعمل مع الشركات الناشئة والعلامات الراسخة في السعودية والوطن العربي،
-              ونصنع لكلٍّ منها قصةً بصريّةً تليق بها وتُميّزها في سوقها.
-            </p>
-          </div>
         </motion.div>
+
+        {/* Panel 4 — two paragraphs (each on its own line, well-spaced) */}
+        <motion.div
+          dir="rtl"
+          className="absolute top-1/2 -translate-y-1/2 left-[2.5vw] max-w-[46vw] z-10 pointer-events-none space-y-8"
+          style={{ opacity: panelMotion[3].opacity, y: panelMotion[3].y }}
+        >
+          <Badge>{PANELS[3].badge}</Badge>
+          <p
+            style={{
+              fontFamily: "'Tajawal', sans-serif",
+              fontWeight: 300,
+              fontSize: "clamp(15px, 1.25vw, 19px)",
+              color: "hsl(var(--foreground) / 0.78)",
+              lineHeight: 2,
+              maxWidth: "38vw",
+            }}
+          >
+            في إتقان، نؤمن أن التصميم ليس مجرد شكلٍ جميل بل تجربةٌ تُحرّك المشاعر
+            وتبني الثقة. نُتقن التفاصيل لنُقدّم نتائج تتجاوز توقّعات شركائنا.
+          </p>
+          <p
+            style={{
+              fontFamily: "'Tajawal', sans-serif",
+              fontWeight: 300,
+              fontSize: "clamp(15px, 1.25vw, 19px)",
+              color: "hsl(var(--foreground) / 0.78)",
+              lineHeight: 2,
+              maxWidth: "38vw",
+            }}
+          >
+            نعمل مع الشركات الناشئة والعلامات الراسخة في السعودية والوطن العربي،
+            ونصنع لكلٍّ منها قصةً بصريّةً تليق بها وتُميّزها في سوقها.
+          </p>
+        </motion.div>
+
       </div>
     </section>
   );
