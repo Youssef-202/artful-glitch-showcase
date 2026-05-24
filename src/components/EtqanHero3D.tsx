@@ -373,7 +373,8 @@ export default function EtqanHero3D() {
             style={{
               fontFamily: "'Tajawal', sans-serif",
               fontWeight: 300,
-              fontSize: "clamp(15px, 1.25vw, 19px)",
+              fontSize: "clamp(13px, 1.05vw, 16px)",
+
               color: "hsl(var(--foreground) / 0.78)",
               lineHeight: 2,
               maxWidth: "38vw",
