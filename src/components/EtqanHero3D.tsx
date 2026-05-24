@@ -147,8 +147,9 @@ export default function EtqanHero3D() {
             x: logoX,
             scale: logoScale,
             opacity: logoOpacity,
-            width: "min(440px, 55vh)",
-            height: "min(440px, 55vh)",
+            width: "min(560px, 82vh)",
+            height: "min(560px, 82vh)",
+
             translateX: "-50%",
             translateY: "-50%",
           }}
