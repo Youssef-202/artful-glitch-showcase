@@ -291,7 +291,7 @@ export default function EtqanHero3D() {
                 border: "1px solid rgba(255,255,255,0.25)",
                 color: "hsl(var(--foreground))",
                 fontFamily: "'El Messiri', sans-serif",
-                fontSize: 17,
+                fontSize: 14,
               }}
             >
               أعمالنا
