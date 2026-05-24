@@ -233,7 +233,7 @@ export default function EtqanHero3D() {
             style={{
               fontFamily: "'El Messiri', 'Reem Kufi', serif",
               fontWeight: 700,
-              fontSize: "clamp(56px, 8vw, 120px)",
+              fontSize: "clamp(40px, 5.4vw, 80px)",
               lineHeight: 1,
               letterSpacing: "-0.02em",
             }}
