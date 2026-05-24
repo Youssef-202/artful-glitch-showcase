@@ -33,13 +33,16 @@ function Model() {
   const maxDim = Math.max(size.x, size.y, size.z);
   const scale = 2.6 / maxDim;
 
-  // Smoothly follow the scroll-driven target rotation
+  // Smoothly follow the scroll-driven target rotation (frame-rate independent
+  // exponential smoothing — equivalent to GSAP scrub easing).
   useFrame((_, dt) => {
     if (!ref.current || !targetRot) return;
     const target = targetRot.current;
     const current = ref.current.rotation.y;
-    ref.current.rotation.y = current + (target - current) * Math.min(1, dt * 6);
+    const alpha = 1 - Math.exp(-dt * 4.5);
+    ref.current.rotation.y = current + (target - current) * alpha;
   });
+
 
   return (
     <group ref={ref} rotation={[0, Math.PI / 2, 0]}>
