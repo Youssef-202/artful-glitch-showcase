@@ -48,11 +48,15 @@ useGLTF.preload("/models/etqan.glb");
 function Scene() {
   return (
     <>
-      <ambientLight intensity={0.4} />
-      <pointLight position={[6, 6, 4]} intensity={2.2} color="#1D9E75" />
-      <pointLight position={[-6, 2, 3]} intensity={1.4} color="#5DCAA5" />
-      <pointLight position={[0, -4, 3]} intensity={0.8} color="#C8A84B" />
-      <directionalLight position={[0, 5, 5]} intensity={0.6} />
+      <ambientLight intensity={0.55} />
+      {/* Ring light — bright frontal light that mimics the glowing ring reflecting on the logo */}
+      <pointLight position={[0, 0, 3.2]} intensity={3.4} color="#B4FFE1" distance={10} decay={1.6} />
+      <pointLight position={[1.7, 1.2, 2.4]} intensity={1.9} color="#5DCAA5" distance={9} decay={1.6} />
+      <pointLight position={[-1.7, -1.0, 2.4]} intensity={1.7} color="#1D9E75" distance={9} decay={1.6} />
+      <pointLight position={[6, 6, 4]} intensity={1.4} color="#1D9E75" />
+      <pointLight position={[-6, 2, 3]} intensity={1.0} color="#5DCAA5" />
+      <pointLight position={[0, -4, 3]} intensity={0.6} color="#C8A84B" />
+      <directionalLight position={[0, 5, 5]} intensity={0.5} />
       <Suspense fallback={null}>
         <Float speed={1.2} rotationIntensity={0} floatIntensity={0.5}>
           <Model />
@@ -127,13 +131,13 @@ export default function EtqanHero3D() {
             translateY: "-50%",
           }}
         >
-          {/* Glowing ring */}
+          {/* Ring light — bright rim + outer halo + inner light bath */}
           <motion.div
             className="absolute inset-0 rounded-full"
             style={{
-              border: "1.5px solid rgba(180,255,225,0.75)",
+              border: "2.5px solid rgba(220,255,240,0.95)",
               boxShadow:
-                "0 0 180px 30px rgba(29,158,117,0.55), 0 0 80px 10px rgba(93,202,165,0.4), inset 0 0 80px rgba(93,202,165,0.18)",
+                "0 0 60px 6px rgba(220,255,240,0.85), 0 0 200px 40px rgba(29,158,117,0.7), 0 0 110px 18px rgba(93,202,165,0.55), inset 0 0 120px rgba(180,255,225,0.32)",
               opacity: ringOpacity,
             }}
           />
@@ -141,7 +145,7 @@ export default function EtqanHero3D() {
             className="absolute inset-0 rounded-full pointer-events-none"
             style={{
               background:
-                "radial-gradient(circle, rgba(93,202,165,0.18) 0%, rgba(29,158,117,0.06) 50%, transparent 75%)",
+                "radial-gradient(circle, rgba(180,255,225,0.28) 0%, rgba(93,202,165,0.14) 40%, rgba(29,158,117,0.05) 65%, transparent 78%)",
               opacity: ringOpacity,
             }}
           />
