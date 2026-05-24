@@ -1,12 +1,16 @@
-import { Suspense, useRef } from "react";
+import { Suspense, useRef, createContext, useContext, MutableRefObject } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, Float, useGLTF } from "@react-three/drei";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from "framer-motion";
 import * as THREE from "three";
+
+// Shared rotation target driven by parent scroll
+const RotationCtx = createContext<MutableRefObject<number> | null>(null);
 
 function Model() {
   const ref = useRef<THREE.Group>(null);
   const gltf = useGLTF("/models/etqan.glb");
+  const targetRot = useContext(RotationCtx);
 
   gltf.scene.traverse((obj: any) => {
     if (obj.isMesh) {
@@ -29,8 +33,13 @@ function Model() {
   const maxDim = Math.max(size.x, size.y, size.z);
   const scale = 2.6 / maxDim;
 
-  // Rotation is driven by scroll only — no auto-spin
-
+  // Smoothly follow the scroll-driven target rotation
+  useFrame((_, dt) => {
+    if (!ref.current || !targetRot) return;
+    const target = targetRot.current;
+    const current = ref.current.rotation.y;
+    ref.current.rotation.y = current + (target - current) * Math.min(1, dt * 6);
+  });
 
   return (
     <group ref={ref} rotation={[0, Math.PI / 2, 0]}>
@@ -65,6 +74,7 @@ function Scene() {
     </>
   );
 }
+
 
 export default function EtqanHero3D() {
   const containerRef = useRef<HTMLDivElement>(null);
