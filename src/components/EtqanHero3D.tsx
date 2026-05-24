@@ -144,7 +144,7 @@ export default function EtqanHero3D() {
         {/* Panel 1 — Hero (logo LEFT → text RIGHT, far edge) */}
         <motion.div
           dir="rtl"
-          className="absolute top-1/2 -translate-y-1/2 right-[4vw] max-w-[44vw] z-10 pointer-events-none"
+          className="absolute top-1/2 -translate-y-1/2 right-[2.5vw] max-w-[46vw] z-10 pointer-events-none"
           style={{ opacity: heroOpacity, y: heroY, background: "transparent" }}
         >
           <span
@@ -211,7 +211,7 @@ export default function EtqanHero3D() {
         {/* Panel 2 — رؤيتنا (logo RIGHT → text LEFT, far edge) */}
         <motion.div
           dir="rtl"
-          className="absolute top-1/2 -translate-y-1/2 left-[4vw] max-w-[44vw] z-10 pointer-events-none"
+          className="absolute top-1/2 -translate-y-1/2 left-[2.5vw] max-w-[46vw] z-10 pointer-events-none"
           style={{ opacity: visionOpacity, y: visionY, background: "transparent" }}
         >
           <span
@@ -259,7 +259,7 @@ export default function EtqanHero3D() {
         {/* Panel 3 — من نحن (logo LEFT → text RIGHT, far edge) */}
         <motion.div
           dir="rtl"
-          className="absolute top-1/2 -translate-y-1/2 right-[4vw] max-w-[44vw] z-10 pointer-events-none"
+          className="absolute top-1/2 -translate-y-1/2 right-[2.5vw] max-w-[46vw] z-10 pointer-events-none"
           style={{ opacity: aboutOpacity, y: aboutY, background: "transparent" }}
         >
           <span
