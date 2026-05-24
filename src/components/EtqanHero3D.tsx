@@ -91,16 +91,18 @@ type Panel = {
 };
 
 const PANELS: Panel[] = [
-  { badge: "ETQAN AGENCY", logoX: "28%", logoScale: 1.0, ring: 1, rotation: FRONT, align: "left" },
-  { badge: "01 — ABOUT US", logoX: "30%", logoScale: 1.05, ring: 0, rotation: FRONT + Math.PI * 0.7, align: "left" },
-  { badge: "02 — VISION", logoX: "28%", logoScale: 1.0, ring: 1, rotation: FRONT + Math.PI * 1.6, align: "left" },
+  // each panel gets its own logo angle so rotation feels intentional, not linear
+  { badge: "ETQAN AGENCY",   logoX: "28%",  logoScale: 1.00, ring: 1, rotation: FRONT,                       align: "left" },
+  { badge: "01 — ABOUT US",  logoX: "30%",  logoScale: 1.05, ring: 0, rotation: FRONT + Math.PI * 0.55,      align: "left" },
+  { badge: "02 — VISION",    logoX: "-26%", logoScale: 1.00, ring: 0, rotation: FRONT + Math.PI * 1.10,      align: "right" },
+  { badge: "03 — VALUES",    logoX: "28%",  logoScale: 1.00, ring: 1, rotation: FRONT + Math.PI * 1.75,      align: "left" },
 ];
 
-// keyframe stops for 3 panels: pause on each, transition between
-const STOPS = [0, 0.22, 0.38, 0.62, 0.78, 1];
-const seriesAt = (a: number, b: number, c: number): number[] =>
-  [a, a, b, b, c, c];
-
+// Build keyframe stops: hold on each panel, transition between.
+// 4 panels → 8 stops [holdInA, holdOutA, holdInB, holdOutB, ...]
+const STOPS = [0, 0.14, 0.24, 0.42, 0.50, 0.68, 0.78, 1];
+const seriesAt = (vals: number[]): number[] =>
+  vals.flatMap((v) => [v, v]);
 
 
 export default function EtqanHero3D() {
@@ -109,52 +111,37 @@ export default function EtqanHero3D() {
     target: containerRef,
     offset: ["start start", "end end"],
   });
-  // Light, gentle spring → smooth scroll, no jank
-  const progress = useSpring(scrollYProgress, { stiffness: 45, damping: 22, mass: 0.35 });
+  // Soft, low-stiffness spring → buttery scroll with no jank
+  const progress = useSpring(scrollYProgress, { stiffness: 28, damping: 24, mass: 0.3 });
 
-  // Logo transforms
+  // Logo transforms — driven by the same STOPS array for all panels
   const logoX = useTransform(
     progress,
     STOPS,
-    seriesAt(...(PANELS.map((p) => parseFloat(p.logoX)) as [number, number, number])).map(
-      (v) => `${v}%`
-    )
+    seriesAt(PANELS.map((p) => parseFloat(p.logoX))).map((v) => `${v}%`)
   );
-  const logoScale = useTransform(
-    progress,
-    STOPS,
-    seriesAt(...(PANELS.map((p) => p.logoScale) as [number, number, number]))
-  );
-  const ringOpacity = useTransform(
-    progress,
-    STOPS,
-    seriesAt(...(PANELS.map((p) => p.ring) as [number, number, number]))
-  );
+  const logoScale = useTransform(progress, STOPS, seriesAt(PANELS.map((p) => p.logoScale)));
+  const ringOpacity = useTransform(progress, STOPS, seriesAt(PANELS.map((p) => p.ring)));
 
-  // Rotation target driven by scroll → smooth-followed inside the Model
-  const rotationMV = useTransform(
-    progress,
-    STOPS,
-    seriesAt(...(PANELS.map((p) => p.rotation) as [number, number, number]))
-  );
+  // Rotation target → smoothly followed inside the Model via useFrame
+  const rotationMV = useTransform(progress, STOPS, seriesAt(PANELS.map((p) => p.rotation)));
   const rotationRef = useRef(FRONT);
   useMotionValueEvent(rotationMV, "change", (v) => {
     rotationRef.current = v;
   });
 
-
-  // Per-panel content opacity/Y — pop in around each pause
+  // Per-panel text fade — pops in/out around its hold window
   const panelMotion = PANELS.map((_, i) => {
-    const center = (STOPS[i * 2] + STOPS[i * 2 + 1]) / 2;
-    const fadeIn = Math.max(0, center - 0.07);
     const inHold = STOPS[i * 2];
     const outHold = STOPS[i * 2 + 1];
-    const fadeOut = Math.min(1, center + 0.07);
+    const fadeIn = Math.max(0, inHold - 0.05);
+    const fadeOut = Math.min(1, outHold + 0.05);
     return {
       opacity: useTransform(progress, [fadeIn, inHold, outHold, fadeOut], [0, 1, 1, 0]),
       y: useTransform(progress, [fadeIn, inHold, outHold, fadeOut], [40, 0, 0, -40]),
     };
   });
+
 
   return (
     <section
