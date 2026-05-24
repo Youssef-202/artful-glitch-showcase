@@ -1,7 +1,7 @@
 import { Suspense, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, Float, useGLTF } from "@react-three/drei";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
 import * as THREE from "three";
 
 function Model() {
@@ -77,32 +77,29 @@ export default function EtqanHero3D() {
     target: containerRef,
     offset: ["start start", "end end"],
   });
+  // Smooth the scroll progress for buttery transitions
+  const progress = useSpring(scrollYProgress, { stiffness: 80, damping: 24, mass: 0.6 });
 
-  // 0 → 0.33 hero centered | 0.33 → 0.66 vision | 0.66 → 1 about (then fade)
-  // Logo moves from center → right side during 0.15 → 0.55, then fades 0.85 → 1
-  const logoX = useTransform(scrollYProgress, [0, 0.15, 0.55, 0.85, 1], ["0%", "0%", "28%", "28%", "28%"]);
-  const logoScale = useTransform(scrollYProgress, [0, 0.15, 0.55, 0.85, 1], [1, 1, 0.78, 0.78, 0.6]);
-  const logoOpacity = useTransform(scrollYProgress, [0, 0.85, 1], [1, 1, 0]);
-  const ringOpacity = useTransform(scrollYProgress, [0, 0.15, 0.55, 0.85, 1], [1, 1, 0.4, 0.4, 0]);
+  const logoX = useTransform(progress, [0, 0.15, 0.55, 0.85, 1], ["0%", "0%", "28%", "28%", "28%"]);
+  const logoScale = useTransform(progress, [0, 0.15, 0.55, 0.85, 1], [1, 1, 0.78, 0.78, 0.6]);
+  const logoOpacity = useTransform(progress, [0, 0.85, 1], [1, 1, 0]);
+  const ringOpacity = useTransform(progress, [0, 0.15, 0.55, 0.85, 1], [1, 1, 0.4, 0.4, 0]);
 
-  // Hero text (centered)
-  const heroOpacity = usePanelOpacity(scrollYProgress, 0, 0.05, 0.22);
-  const heroY = usePanelY(scrollYProgress, 0, 0.05, 0.22);
+  const heroOpacity = usePanelOpacity(progress, 0, 0.05, 0.22);
+  const heroY = usePanelY(progress, 0, 0.05, 0.22);
 
-  // Vision (first scroll)
-  const visionOpacity = usePanelOpacity(scrollYProgress, 0.25, 0.4, 0.55);
-  const visionY = usePanelY(scrollYProgress, 0.25, 0.4, 0.55);
+  const visionOpacity = usePanelOpacity(progress, 0.25, 0.4, 0.55);
+  const visionY = usePanelY(progress, 0.25, 0.4, 0.55);
 
-  // About (second scroll)
-  const aboutOpacity = usePanelOpacity(scrollYProgress, 0.58, 0.72, 0.88);
-  const aboutY = usePanelY(scrollYProgress, 0.58, 0.72, 0.88);
+  const aboutOpacity = usePanelOpacity(progress, 0.58, 0.72, 0.88);
+  const aboutY = usePanelY(progress, 0.58, 0.72, 0.88);
 
   return (
     <section
       ref={containerRef}
       dir="rtl"
       className="relative w-full"
-      style={{ height: "320vh" }}
+      style={{ height: "500vh" }}
     >
       <div
         className="sticky top-0 w-full h-screen overflow-hidden"
