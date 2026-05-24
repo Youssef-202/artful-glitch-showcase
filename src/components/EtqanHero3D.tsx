@@ -114,7 +114,7 @@ export default function EtqanHero3D() {
     <section
       ref={containerRef}
       dir="rtl"
-      className="relative w-full"
+      className="relative w-full border-0"
       style={{ height: "700vh" }}
     >
       <div className="sticky top-0 w-full h-screen overflow-hidden">
