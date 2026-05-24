@@ -119,6 +119,15 @@ export default function EtqanHero3D() {
   const aboutOpacity = useTransform(progress, [0.66, 0.72, 0.88, 0.94], [0, 1, 1, 0]);
   const aboutY = useTransform(progress, [0.66, 0.72, 0.88, 0.94], [40, 0, 0, -40]);
 
+  // Scroll-driven rotation target for the 3D logo (radians around Y).
+  // Panel 1 → front, Panel 2 → ~3/4 turn, Panel 3 → ~5/4 turn.
+  const rotationMV = useTransform(progress, [0, 1], [0, Math.PI * 2]);
+  const rotationRef = useRef(0);
+  useMotionValueEvent(rotationMV, "change", (v) => {
+    rotationRef.current = v;
+  });
+
+
   return (
     <section
       ref={containerRef}
