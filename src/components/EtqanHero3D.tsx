@@ -82,7 +82,7 @@ export default function EtqanHero3D() {
   const progress = useSpring(scrollYProgress, { stiffness: 80, damping: 24, mass: 0.6 });
 
   // Logo path: LEFT (hero) → RIGHT (vision) → LEFT (about) → fade
-  const logoX = useTransform(progress, [0, 0.18, 0.4, 0.62, 0.85, 1], ["-38%", "-38%", "38%", "38%", "-38%", "-38%"]);
+  const logoX = useTransform(progress, [0, 0.18, 0.4, 0.62, 0.85, 1], ["-44%", "-44%", "44%", "44%", "-44%", "-44%"]);
   const logoScale = useTransform(progress, [0, 0.18, 0.85, 1], [1, 1, 1, 0.85]);
   const logoOpacity = useTransform(progress, [0, 0.88, 1], [1, 1, 0]);
   const ringOpacity = useTransform(progress, [0, 0.85, 1], [1, 1, 0]);
