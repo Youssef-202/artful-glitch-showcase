@@ -29,9 +29,8 @@ function Model() {
   const maxDim = Math.max(size.x, size.y, size.z);
   const scale = 2.6 / maxDim;
 
-  useFrame((_, dt) => {
-    if (ref.current) ref.current.rotation.y += dt * ((Math.PI * 2) / 20);
-  });
+  // Rotation is driven by scroll only — no auto-spin
+
 
   return (
     <group ref={ref}>
