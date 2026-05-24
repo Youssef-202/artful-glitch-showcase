@@ -94,18 +94,29 @@ type Panel = {
 };
 
 const PANELS: Panel[] = [
-  // each panel gets its own logo angle so rotation feels intentional, not linear
-  { badge: "ETQAN AGENCY",   logoX: "28%",  logoScale: 1.00, ring: 1, rotation: FRONT,                       align: "left" },
-  { badge: "01 — ABOUT US",  logoX: "30%",  logoScale: 1.05, ring: 0, rotation: FRONT + Math.PI * 0.55,      align: "left" },
-  { badge: "02 — VISION",    logoX: "-26%", logoScale: 1.00, ring: 0, rotation: FRONT + Math.PI * 1.10,      align: "right" },
-  { badge: "03 — VALUES",    logoX: "28%",  logoScale: 1.00, ring: 1, rotation: FRONT + Math.PI * 1.75,      align: "left" },
+  // Even 0.6π rotation increments — one continuous, monotonic turn across all 4 panels.
+  { badge: "ETQAN AGENCY",   logoX: "28%",  logoScale: 1.00, ring: 1, rotation: FRONT,                  align: "left"  },
+  { badge: "01 — ABOUT US",  logoX: "30%",  logoScale: 1.05, ring: 0, rotation: FRONT + Math.PI * 0.60, align: "left"  },
+  { badge: "02 — VISION",    logoX: "-26%", logoScale: 1.00, ring: 0, rotation: FRONT + Math.PI * 1.20, align: "right" },
+  { badge: "03 — VALUES",    logoX: "28%",  logoScale: 1.00, ring: 1, rotation: FRONT + Math.PI * 1.80, align: "left"  },
 ];
 
-// Build keyframe stops: hold on each panel, transition between.
-// 4 panels → 8 stops [holdInA, holdOutA, holdInB, holdOutB, ...]
-const STOPS = [0, 0.14, 0.24, 0.42, 0.50, 0.68, 0.78, 1];
+// Adjacent-hold keyframes — no dead scroll between panels.
+// 4 panels × [holdIn, holdOut] = 8 stops. Transitions live at the boundary.
+const STOPS = [
+  0.00, 0.22,  // Panel 1 hold
+  0.28, 0.47,  // Panel 2 hold (transition 0.22→0.28)
+  0.53, 0.72,  // Panel 3 hold (transition 0.47→0.53)
+  0.78, 1.00,  // Panel 4 hold (transition 0.72→0.78)
+];
+const TRANSITIONS = [
+  [0.22, 0.28], // 1→2
+  [0.47, 0.53], // 2→3
+  [0.72, 0.78], // 3→4
+];
 const seriesAt = (vals: number[]): number[] =>
   vals.flatMap((v) => [v, v]);
+
 
 
 export default function EtqanHero3D() {
