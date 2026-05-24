@@ -248,7 +248,7 @@ export default function EtqanHero3D() {
             style={{
               fontFamily: "'El Messiri', 'Tajawal', sans-serif",
               fontWeight: 500,
-              fontSize: "clamp(22px, 2.6vw, 40px)",
+              fontSize: "clamp(16px, 1.7vw, 24px)",
               color: "hsl(var(--foreground) / 0.9)",
               lineHeight: 1.4,
             }}
