@@ -152,17 +152,22 @@ export default function EtqanHero3D() {
     rotationRef.current = v;
   });
 
-  // Per-panel text fade — pops in/out around its hold window
+  // Per-panel text fade — fades happen INSIDE the transition band of the
+  // adjacent panel, so there's never an overlap or empty-text gap.
   const panelMotion = PANELS.map((_, i) => {
     const inHold = STOPS[i * 2];
     const outHold = STOPS[i * 2 + 1];
-    const fadeIn = Math.max(0, inHold - 0.05);
-    const fadeOut = Math.min(1, outHold + 0.05);
+    // fadeIn = transition before this panel (or 0 for the first)
+    const prevTrans = TRANSITIONS[i - 1];
+    const nextTrans = TRANSITIONS[i];
+    const fadeIn = prevTrans ? prevTrans[0] : 0;
+    const fadeOut = nextTrans ? nextTrans[1] : 1;
     return {
       opacity: useTransform(progress, [fadeIn, inHold, outHold, fadeOut], [0, 1, 1, 0]),
       y: useTransform(progress, [fadeIn, inHold, outHold, fadeOut], [40, 0, 0, -40]),
     };
   });
+
 
 
   return (
