@@ -131,31 +131,33 @@ export default function EtqanHero3D() {
             translateY: "-50%",
           }}
         >
-          {/* 3D logo takes the full container */}
-          <div className="absolute inset-0">
+          {/* Ring light — sits behind, logo is centered in front */}
+          <motion.div
+            className="absolute rounded-full pointer-events-none"
+            style={{
+              inset: "8%",
+              border: "10px solid rgba(220,255,240,0.95)",
+              boxShadow:
+                "0 0 60px 6px rgba(220,255,240,0.85), 0 0 200px 40px rgba(29,158,117,0.7), 0 0 110px 18px rgba(93,202,165,0.55), inset 0 0 120px rgba(180,255,225,0.32)",
+              opacity: ringOpacity,
+              zIndex: 1,
+            }}
+          />
+          <motion.div
+            className="absolute rounded-full pointer-events-none"
+            style={{
+              inset: "8%",
+              background:
+                "radial-gradient(circle, rgba(180,255,225,0.28) 0%, rgba(93,202,165,0.14) 40%, rgba(29,158,117,0.05) 65%, transparent 78%)",
+              opacity: ringOpacity,
+              zIndex: 1,
+            }}
+          />
+          {/* 3D logo — always centered in front of the ring */}
+          <div className="absolute inset-0" style={{ zIndex: 2 }}>
             <Canvas camera={{ position: [0, 0, 4], fov: 38 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
               <Scene />
             </Canvas>
-            {/* Ring light — child of the logo, sits inside its bounds */}
-            <motion.div
-              className="absolute rounded-full pointer-events-none"
-              style={{
-                inset: "8%",
-                border: "6px solid rgba(220,255,240,0.95)",
-                boxShadow:
-                  "0 0 60px 6px rgba(220,255,240,0.85), 0 0 200px 40px rgba(29,158,117,0.7), 0 0 110px 18px rgba(93,202,165,0.55), inset 0 0 120px rgba(180,255,225,0.32)",
-                opacity: ringOpacity,
-              }}
-            />
-            <motion.div
-              className="absolute rounded-full pointer-events-none"
-              style={{
-                inset: "8%",
-                background:
-                  "radial-gradient(circle, rgba(180,255,225,0.28) 0%, rgba(93,202,165,0.14) 40%, rgba(29,158,117,0.05) 65%, transparent 78%)",
-                opacity: ringOpacity,
-              }}
-            />
           </div>
         </motion.div>
 
