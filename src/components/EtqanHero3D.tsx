@@ -92,15 +92,15 @@ type Panel = {
 
 const PANELS: Panel[] = [
   { badge: "ETQAN AGENCY", logoX: "28%", logoScale: 1.0, ring: 1, rotation: FRONT, align: "left" },
-  { badge: "01 — ABOUT US", logoX: "30%", logoScale: 1.05, ring: 0, rotation: FRONT + Math.PI * 0.55, align: "left" },
-  { badge: "02 — SERVICES", logoX: "-28%", logoScale: 1.0, ring: 0, rotation: FRONT + Math.PI * 1.15, align: "right" },
-  { badge: "03 — START", logoX: "0%", logoScale: 1.15, ring: 1, rotation: FRONT + Math.PI * 1.85, align: "left" },
+  { badge: "01 — ABOUT US", logoX: "30%", logoScale: 1.05, ring: 0, rotation: FRONT + Math.PI * 0.7, align: "left" },
+  { badge: "02 — VISION", logoX: "28%", logoScale: 1.0, ring: 1, rotation: FRONT + Math.PI * 1.6, align: "left" },
 ];
 
-// keyframe stops: pause on each panel, then transition
-const STOPS = [0, 0.18, 0.28, 0.48, 0.55, 0.75, 0.82, 1];
-const seriesAt = (a: number, b: number, c: number, d: number): number[] =>
-  [a, a, b, b, c, c, d, d];
+// keyframe stops for 3 panels: pause on each, transition between
+const STOPS = [0, 0.22, 0.38, 0.62, 0.78, 1];
+const seriesAt = (a: number, b: number, c: number): number[] =>
+  [a, a, b, b, c, c];
+
 
 
 export default function EtqanHero3D() {
@@ -116,31 +116,32 @@ export default function EtqanHero3D() {
   const logoX = useTransform(
     progress,
     STOPS,
-    seriesAt(...(PANELS.map((p) => parseFloat(p.logoX)) as [number, number, number, number])).map(
+    seriesAt(...(PANELS.map((p) => parseFloat(p.logoX)) as [number, number, number])).map(
       (v) => `${v}%`
     )
   );
   const logoScale = useTransform(
     progress,
     STOPS,
-    seriesAt(...(PANELS.map((p) => p.logoScale) as [number, number, number, number]))
+    seriesAt(...(PANELS.map((p) => p.logoScale) as [number, number, number]))
   );
   const ringOpacity = useTransform(
     progress,
     STOPS,
-    seriesAt(...(PANELS.map((p) => p.ring) as [number, number, number, number]))
+    seriesAt(...(PANELS.map((p) => p.ring) as [number, number, number]))
   );
 
   // Rotation target driven by scroll → smooth-followed inside the Model
   const rotationMV = useTransform(
     progress,
     STOPS,
-    seriesAt(...(PANELS.map((p) => p.rotation) as [number, number, number, number]))
+    seriesAt(...(PANELS.map((p) => p.rotation) as [number, number, number]))
   );
   const rotationRef = useRef(FRONT);
   useMotionValueEvent(rotationMV, "change", (v) => {
     rotationRef.current = v;
   });
+
 
   // Per-panel content opacity/Y — pop in around each pause
   const panelMotion = PANELS.map((_, i) => {
@@ -321,90 +322,64 @@ export default function EtqanHero3D() {
           </p>
         </motion.div>
 
-        {/* Panel 3 — خدماتنا (text on the RIGHT, logo on LEFT) */}
+        {/* Panel 3 — نصنع علاماتٍ تبقى في الذاكرة */}
         <motion.div
           dir="rtl"
-          className="absolute top-1/2 -translate-y-1/2 right-[2.5vw] max-w-[44vw] z-10 pointer-events-none text-right"
-          style={{ opacity: panelMotion[2].opacity, y: panelMotion[2].y }}
+          className="absolute top-1/2 -translate-y-1/2 left-[2.5vw] z-10 pointer-events-none"
+          style={{ opacity: panelMotion[2].opacity, y: panelMotion[2].y, width: "62vw" }}
         >
           <Badge>{PANELS[2].badge}</Badge>
           <h2
-            className="mb-8"
+            className="mb-10"
             style={{
               fontFamily: "'El Messiri', 'Reem Kufi', serif",
               fontWeight: 700,
-              fontSize: "clamp(56px, 7.5vw, 110px)",
+              fontSize: "clamp(48px, 6.8vw, 104px)",
               color: "hsl(var(--foreground))",
               lineHeight: 1.05,
               letterSpacing: "-0.02em",
             }}
           >
-            خدماتنا
-          </h2>
-          <ul
-            className="space-y-3"
-            style={{
-              fontFamily: "'Tajawal', sans-serif",
-              fontWeight: 400,
-              fontSize: "clamp(15px, 1.3vw, 20px)",
-              color: "hsl(var(--foreground) / 0.82)",
-              lineHeight: 1.8,
-            }}
-          >
-            <li>· الهوية البصرية والعلامات التجارية</li>
-            <li>· التسويق الرقمي وإدارة المنصات</li>
-            <li>· تصميم وتطوير المواقع والتطبيقات</li>
-            <li>· إنتاج المحتوى الإبداعي والإعلانات</li>
-          </ul>
-        </motion.div>
-
-        {/* Panel 4 — CTA (logo center, ring on) */}
-        <motion.div
-          dir="rtl"
-          className="absolute top-[8vh] left-1/2 -translate-x-1/2 max-w-[60vw] z-10 pointer-events-none text-center"
-          style={{ opacity: panelMotion[3].opacity, y: panelMotion[3].y }}
-        >
-          <Badge>{PANELS[3].badge}</Badge>
-          <h2
-            className="mb-6"
-            style={{
-              fontFamily: "'El Messiri', 'Reem Kufi', serif",
-              fontWeight: 700,
-              fontSize: "clamp(48px, 6.5vw, 96px)",
-              lineHeight: 1.05,
-              letterSpacing: "-0.02em",
-            }}
-          >
-            <span style={{ color: "hsl(var(--foreground))" }}>جاهز تبدأ </span>
-            <span style={{ color: "#1D9E75", textShadow: "0 0 45px rgba(29,158,117,0.55)" }}>
-              مشروعك؟
+            نصنع علاماتٍ
+            <br />
+            <span style={{ color: "#1D9E75", textShadow: "0 0 45px rgba(29,158,117,0.45)" }}>
+              تبقى في الذاكرة
             </span>
           </h2>
-        </motion.div>
-
-        {/* Bottom-centered CTA for panel 4, so it sits below the logo */}
-        <motion.div
-          className="absolute bottom-[10vh] left-1/2 -translate-x-1/2 z-10 pointer-events-auto"
-          style={{ opacity: panelMotion[3].opacity }}
-        >
-          <a
-            href="#contact"
-            className="inline-flex items-center justify-center px-9 py-4 rounded-full font-medium transition-all hover:scale-105"
-            style={{
-              background: "linear-gradient(135deg, #1D9E75, #2ec48f)",
-              color: "#04201a",
-              fontFamily: "'El Messiri', sans-serif",
-              fontSize: 18,
-              boxShadow: "0 10px 30px -8px rgba(29,158,117,0.6)",
-            }}
-          >
-            تواصل معنا الآن
-          </a>
+          <div className="flex gap-10 pointer-events-auto">
+            <p
+              style={{
+                fontFamily: "'Tajawal', sans-serif",
+                fontWeight: 300,
+                fontSize: "clamp(13px, 1.1vw, 16px)",
+                color: "hsl(var(--foreground) / 0.7)",
+                lineHeight: 1.9,
+                maxWidth: "22vw",
+              }}
+            >
+              في إتقان، نؤمن أن التصميم ليس مجرد شكلٍ جميل بل تجربةٌ تُحرّك المشاعر
+              وتبني الثقة. نُتقن التفاصيل لنُقدّم نتائج تتجاوز توقّعات شركائنا.
+            </p>
+            <p
+              style={{
+                fontFamily: "'Tajawal', sans-serif",
+                fontWeight: 300,
+                fontSize: "clamp(13px, 1.1vw, 16px)",
+                color: "hsl(var(--foreground) / 0.7)",
+                lineHeight: 1.9,
+                maxWidth: "22vw",
+              }}
+            >
+              نعمل مع الشركات الناشئة والعلامات الراسخة في السعودية والوطن العربي،
+              ونصنع لكلٍّ منها قصةً بصريّةً تليق بها وتُميّزها في سوقها.
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>
   );
 }
+
 
 function Badge({ children }: { children: React.ReactNode }) {
   return (
