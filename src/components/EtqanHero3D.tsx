@@ -33,7 +33,7 @@ function Model() {
 
 
   return (
-    <group ref={ref}>
+    <group ref={ref} rotation={[0, Math.PI / 2, 0]}>
       <primitive
         object={gltf.scene}
         position={[-center.x * scale, -center.y * scale, -center.z * scale]}
