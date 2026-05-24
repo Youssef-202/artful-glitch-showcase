@@ -412,7 +412,7 @@ function Badge({ children }: { children: React.ReactNode }) {
         borderColor: "rgba(29,158,117,0.35)",
         color: "#5DCAA5",
         fontFamily: "'Cairo', sans-serif",
-        fontSize: 13,
+        fontSize: 11,
         letterSpacing: 5,
         background: "transparent",
       }}
