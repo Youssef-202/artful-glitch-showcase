@@ -1,7 +1,7 @@
 import { Suspense, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, Float, useGLTF } from "@react-three/drei";
-import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import * as THREE from "three";
 
 function Model() {
@@ -27,7 +27,6 @@ function Model() {
   box.getSize(size);
   box.getCenter(center);
   const maxDim = Math.max(size.x, size.y, size.z);
-  // Fill the glowing circle a bit more
   const scale = 2.6 / maxDim;
 
   useFrame((_, dt) => {
@@ -64,42 +63,41 @@ function Scene() {
   );
 }
 
-/** Fades a panel in over [start, mid] and out over [mid, end] */
-function usePanelOpacity(progress: MotionValue<number>, start: number, mid: number, end: number) {
-  return useTransform(progress, [start, mid - 0.02, mid + 0.02, end], [0, 1, 1, 0]);
-}
-function usePanelY(progress: MotionValue<number>, start: number, mid: number, end: number) {
-  return useTransform(progress, [start, mid, end], [40, 0, -40]);
-}
-
 export default function EtqanHero3D() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
-  // Smooth the scroll progress for buttery transitions
   const progress = useSpring(scrollYProgress, { stiffness: 80, damping: 24, mass: 0.6 });
 
-  // Logo path: LEFT (hero hold) → RIGHT (vision hold) → LEFT (about hold) → fade
+  // Logo stays on the RIGHT throughout, slides further right during the
+  // middle section (no ring), then drifts back toward center-right for the
+  // final panel (ring on again) — matching the reference choreography.
   const logoX = useTransform(
     progress,
     [0, 0.22, 0.36, 0.58, 0.72, 0.92, 1],
-    ["-44%", "-44%", "44%", "44%", "-44%", "-44%", "-44%"]
+    ["28%", "28%", "44%", "44%", "28%", "28%", "28%"]
   );
-  const logoScale = useTransform(progress, [0, 0.9, 1], [1, 1, 0.85]);
+  const logoScale = useTransform(progress, [0, 0.9, 1], [1, 1, 0.9]);
   const logoOpacity = useTransform(progress, [0, 0.92, 1], [1, 1, 0]);
-  const ringOpacity = useTransform(progress, [0, 0.9, 1], [1, 1, 0]);
 
-  // Hero: visible from the very start, fade out as logo starts moving
+  // Ring: bright on Panel 1, FADES OUT during Panel 2, FADES BACK IN on Panel 3
+  const ringOpacity = useTransform(
+    progress,
+    [0, 0.24, 0.34, 0.6, 0.72, 0.92, 1],
+    [1, 1, 0, 0, 1, 1, 0]
+  );
+
+  // Panel 1 (hero): visible from start
   const heroOpacity = useTransform(progress, [0, 0.24, 0.32], [1, 1, 0]);
   const heroY = useTransform(progress, [0, 0.24, 0.32], [0, 0, -40]);
 
-  // Vision: appears after logo settles on the right, holds, then fades
+  // Panel 2 (specs/vision): three stacked rows on the LEFT
   const visionOpacity = useTransform(progress, [0.36, 0.42, 0.56, 0.62], [0, 1, 1, 0]);
   const visionY = useTransform(progress, [0.36, 0.42, 0.56, 0.62], [40, 0, 0, -40]);
 
-  // About: appears after logo settles back on the left, holds, then fades
+  // Panel 3 (about): big title LEFT + two small paragraphs on the RIGHT
   const aboutOpacity = useTransform(progress, [0.66, 0.72, 0.88, 0.94], [0, 1, 1, 0]);
   const aboutY = useTransform(progress, [0.66, 0.72, 0.88, 0.94], [40, 0, 0, -40]);
 
@@ -111,7 +109,7 @@ export default function EtqanHero3D() {
       style={{ height: "700vh" }}
     >
       <div className="sticky top-0 w-full h-screen overflow-hidden">
-        {/* 3D logo layer — compact box matching logo footprint, moves with scroll */}
+        {/* 3D logo layer — stays on the right, ring fades in/out with scroll */}
         <motion.div
           className="absolute top-1/2 left-1/2 pointer-events-none"
           style={{
@@ -124,7 +122,7 @@ export default function EtqanHero3D() {
             translateY: "-50%",
           }}
         >
-          {/* White ring — exactly the size of the logo box */}
+          {/* Glowing ring */}
           <motion.div
             className="absolute inset-0 rounded-full"
             style={{
@@ -134,11 +132,12 @@ export default function EtqanHero3D() {
               opacity: ringOpacity,
             }}
           />
-          <div
+          <motion.div
             className="absolute inset-0 rounded-full pointer-events-none"
             style={{
               background:
                 "radial-gradient(circle, rgba(93,202,165,0.18) 0%, rgba(29,158,117,0.06) 50%, transparent 75%)",
+              opacity: ringOpacity,
             }}
           />
           <div className="absolute inset-0">
@@ -148,10 +147,10 @@ export default function EtqanHero3D() {
           </div>
         </motion.div>
 
-        {/* Panel 1 — Hero (logo LEFT → text RIGHT, far edge) */}
+        {/* Panel 1 — Hero: title on the LEFT (far edge) */}
         <motion.div
           dir="rtl"
-          className="absolute top-1/2 -translate-y-1/2 right-[2.5vw] max-w-[46vw] z-10 pointer-events-none"
+          className="absolute top-1/2 -translate-y-1/2 left-[2.5vw] max-w-[46vw] z-10 pointer-events-none"
           style={{ opacity: heroOpacity, y: heroY, background: "transparent" }}
         >
           <span
@@ -243,59 +242,60 @@ export default function EtqanHero3D() {
           </div>
         </motion.div>
 
-        {/* Panel 2 — رؤيتنا (logo RIGHT → text LEFT, far edge) */}
+        {/* Panel 2 — three stacked specs on the LEFT (ring is OFF here) */}
         <motion.div
           dir="rtl"
-          className="absolute top-1/2 -translate-y-1/2 left-[2.5vw] max-w-[46vw] z-10 pointer-events-none"
+          className="absolute top-1/2 -translate-y-1/2 left-[2.5vw] max-w-[46vw] z-10 pointer-events-none space-y-8"
           style={{ opacity: visionOpacity, y: visionY, background: "transparent" }}
         >
-          <span
-            className="inline-block mb-6 px-4 py-1.5 rounded-full border"
-            style={{
-              borderColor: "rgba(29,158,117,0.35)",
-              color: "#5DCAA5",
-              fontFamily: "'Cairo', sans-serif",
-              fontSize: 13,
-              letterSpacing: 5,
-              background: "transparent",
-            }}
-          >
-            01 — VISION
-          </span>
-          <h2
-            className="mb-8"
-            style={{
-              fontFamily: "'El Messiri', 'Reem Kufi', serif",
-              fontWeight: 700,
-              fontSize: "clamp(56px, 8.5vw, 120px)",
-              color: "#1D9E75",
-              lineHeight: 1,
-              letterSpacing: "-0.02em",
-              textShadow: "0 0 45px rgba(29,158,117,0.45)",
-            }}
-          >
-            رؤيتنا
-          </h2>
-          <p
-            style={{
-              fontFamily: "'Tajawal', 'El Messiri', sans-serif",
-              fontWeight: 300,
-              fontSize: "clamp(18px, 1.9vw, 28px)",
-              color: "hsl(var(--foreground) / 0.85)",
-              lineHeight: 1.85,
-            }}
-          >
-            أن نكون الوكالة الرائدة في صناعة العلامات التجارية والتسويق الرقمي،
-            نُقدّم تجارب بصرية مُتقنة تجمع بين الإبداع والاحترافية، لنصنع أثراً
-            يمتد في السوق السعودي والعربي.
-          </p>
+          {[
+            {
+              title: "وكالة إتقان",
+              body: "وكالة سعودية متخصصة في التسويق الرقمي والهوية البصرية، نُقدّم حلولاً متكاملة تحاكي طموح العلامات التجارية.",
+            },
+            {
+              title: "+120 مشروع",
+              body: "نفّذنا أكثر من مئة مشروع لعلاماتٍ رائدة في السعودية والخليج، من الهوية البصرية إلى الحملات الرقمية المتكاملة.",
+            },
+            {
+              title: "فريق متعدد التخصصات",
+              body: "مصمّمون، مطوّرون، صنّاع محتوى ومخططو إعلانات يعملون يداً بيد لصياغة تجاربٍ رقمية لا تُنسى.",
+            },
+          ].map((item, i) => (
+            <div key={i}>
+              <h3
+                style={{
+                  fontFamily: "'El Messiri', 'Reem Kufi', serif",
+                  fontWeight: 700,
+                  fontSize: "clamp(30px, 3.6vw, 54px)",
+                  color: "hsl(var(--foreground))",
+                  lineHeight: 1.1,
+                  marginBottom: 10,
+                }}
+              >
+                {item.title}
+              </h3>
+              <p
+                style={{
+                  fontFamily: "'Tajawal', sans-serif",
+                  fontWeight: 300,
+                  fontSize: "clamp(13px, 1.1vw, 16px)",
+                  color: "hsl(var(--foreground) / 0.65)",
+                  lineHeight: 1.8,
+                  maxWidth: "32vw",
+                }}
+              >
+                {item.body}
+              </p>
+            </div>
+          ))}
         </motion.div>
 
-        {/* Panel 3 — من نحن (logo LEFT → text RIGHT, far edge) */}
+        {/* Panel 3 — big title LEFT + two small paragraphs below-right */}
         <motion.div
           dir="rtl"
-          className="absolute top-1/2 -translate-y-1/2 right-[2.5vw] max-w-[46vw] z-10 pointer-events-none"
-          style={{ opacity: aboutOpacity, y: aboutY, background: "transparent" }}
+          className="absolute top-1/2 -translate-y-1/2 left-[2.5vw] z-10 pointer-events-none"
+          style={{ opacity: aboutOpacity, y: aboutY, background: "transparent", width: "62vw" }}
         >
           <span
             className="inline-block mb-6 px-4 py-1.5 rounded-full border"
@@ -311,32 +311,50 @@ export default function EtqanHero3D() {
             02 — ABOUT
           </span>
           <h2
-            className="mb-8"
+            className="mb-10"
             style={{
               fontFamily: "'El Messiri', 'Reem Kufi', serif",
               fontWeight: 700,
-              fontSize: "clamp(56px, 8.5vw, 120px)",
-              color: "#1D9E75",
-              lineHeight: 1,
+              fontSize: "clamp(48px, 6.8vw, 104px)",
+              color: "hsl(var(--foreground))",
+              lineHeight: 1.05,
               letterSpacing: "-0.02em",
-              textShadow: "0 0 45px rgba(29,158,117,0.45)",
             }}
           >
-            من نحن
+            نصنع علاماتٍ
+            <br />
+            <span style={{ color: "#1D9E75", textShadow: "0 0 45px rgba(29,158,117,0.45)" }}>
+              تبقى في الذاكرة
+            </span>
           </h2>
-          <p
-            style={{
-              fontFamily: "'Tajawal', 'El Messiri', sans-serif",
-              fontWeight: 300,
-              fontSize: "clamp(18px, 1.9vw, 28px)",
-              color: "hsl(var(--foreground) / 0.85)",
-              lineHeight: 1.85,
-            }}
-          >
-            وكالة إتقان الرائدة في التسويق الرقمي والتصميم الإبداعي. نُقدّم
-            حلولاً متكاملة للعلامات التجارية في السعودية والوطن العربي،
-            بفريقٍ يجمع بين الفن والتقنية لصياغة هوياتٍ لا تُنسى.
-          </p>
+          <div className="flex gap-10 pointer-events-auto" style={{ direction: "rtl" }}>
+            <p
+              style={{
+                fontFamily: "'Tajawal', sans-serif",
+                fontWeight: 300,
+                fontSize: "clamp(13px, 1.1vw, 16px)",
+                color: "hsl(var(--foreground) / 0.7)",
+                lineHeight: 1.9,
+                maxWidth: "22vw",
+              }}
+            >
+              في إتقان، نؤمن أن التصميم ليس مجرد شكلٍ جميل بل تجربةٌ تُحرّك المشاعر
+              وتبني الثقة. نُتقن التفاصيل لنُقدّم نتائج تتجاوز توقّعات شركائنا.
+            </p>
+            <p
+              style={{
+                fontFamily: "'Tajawal', sans-serif",
+                fontWeight: 300,
+                fontSize: "clamp(13px, 1.1vw, 16px)",
+                color: "hsl(var(--foreground) / 0.7)",
+                lineHeight: 1.9,
+                maxWidth: "22vw",
+              }}
+            >
+              نعمل مع الشركات الناشئة والعلامات الراسخة في السعودية والوطن العربي،
+              ونصنع لكلٍّ منها قصةً بصريّةً تليق بها وتُميّزها في سوقها.
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>
