@@ -76,85 +76,106 @@ function Scene() {
 }
 
 
+// ────────────────────────────────────────────────────────────
+// Panel config — 4 sections, smooth scroll-driven choreography
+// ────────────────────────────────────────────────────────────
+const FRONT = Math.PI / 2 - 0.28; // front-facing, slight left tilt
+
+type Panel = {
+  badge: string;
+  logoX: string; // % offset from center
+  logoScale: number;
+  ring: number; // 0..1
+  rotation: number; // radians (Y axis)
+  align: "left" | "right";
+};
+
+const PANELS: Panel[] = [
+  { badge: "ETQAN AGENCY", logoX: "28%", logoScale: 1.0, ring: 1, rotation: FRONT, align: "left" },
+  { badge: "01 — ABOUT US", logoX: "30%", logoScale: 1.05, ring: 0, rotation: FRONT + Math.PI * 0.55, align: "left" },
+  { badge: "02 — SERVICES", logoX: "-28%", logoScale: 1.0, ring: 0, rotation: FRONT + Math.PI * 1.15, align: "right" },
+  { badge: "03 — START", logoX: "0%", logoScale: 1.15, ring: 1, rotation: FRONT + Math.PI * 1.85, align: "left" },
+];
+
+// keyframe stops: pause on each panel, then transition
+const STOPS = [0, 0.18, 0.28, 0.48, 0.55, 0.75, 0.82, 1];
+const seriesAt = (a: number, b: number, c: number, d: number): number[] =>
+  [a, a, b, b, c, c, d, d];
+
+
 export default function EtqanHero3D() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
-  const progress = useSpring(scrollYProgress, { stiffness: 60, damping: 28, mass: 0.4 });
+  // Light, gentle spring → smooth scroll, no jank
+  const progress = useSpring(scrollYProgress, { stiffness: 45, damping: 22, mass: 0.35 });
 
-  // Logo sits on the RIGHT half of the screen across all panels — never overflows.
+  // Logo transforms
   const logoX = useTransform(
     progress,
-    [0, 0.22, 0.36, 0.58, 0.72, 0.92, 1],
-    ["28%", "28%", "30%", "30%", "28%", "28%", "28%"]
+    STOPS,
+    seriesAt(...(PANELS.map((p) => parseFloat(p.logoX)) as [number, number, number, number])).map(
+      (v) => `${v}%`
+    )
   );
-  // Scale kept under 1.1 so the logo fits within the sticky viewport.
   const logoScale = useTransform(
     progress,
-    [0, 0.22, 0.36, 0.48, 0.58, 0.72, 0.92, 1],
-    [1, 1, 1.05, 1.08, 1.08, 1.02, 1, 0.95]
+    STOPS,
+    seriesAt(...(PANELS.map((p) => p.logoScale) as [number, number, number, number]))
   );
-  const logoOpacity = useTransform(progress, [0, 0.92, 1], [1, 1, 0]);
-
-  // Ring: bright on Panel 1, FADES OUT during Panel 2, FADES BACK IN on Panel 3
   const ringOpacity = useTransform(
     progress,
-    [0, 0.24, 0.34, 0.6, 0.72, 0.92, 1],
-    [1, 1, 0, 0, 1, 1, 0]
+    STOPS,
+    seriesAt(...(PANELS.map((p) => p.ring) as [number, number, number, number]))
   );
 
-  // Panel 1 (hero): visible from start
-  const heroOpacity = useTransform(progress, [0, 0.24, 0.32], [1, 1, 0]);
-  const heroY = useTransform(progress, [0, 0.24, 0.32], [0, 0, -40]);
-
-  // Panel 2 (specs/vision): three stacked rows on the LEFT
-  const visionOpacity = useTransform(progress, [0.36, 0.42, 0.56, 0.62], [0, 1, 1, 0]);
-  const visionY = useTransform(progress, [0.36, 0.42, 0.56, 0.62], [40, 0, 0, -40]);
-
-  // Panel 3 (about): big title LEFT + two small paragraphs on the RIGHT
-  const aboutOpacity = useTransform(progress, [0.66, 0.72, 0.88, 0.94], [0, 1, 1, 0]);
-  const aboutY = useTransform(progress, [0.66, 0.72, 0.88, 0.94], [40, 0, 0, -40]);
-
-  // Scroll-driven rotation target. Default = front facing with a slight left tilt.
-  // Smoothly turns between panels then settles back near front-left tilt.
-  const FRONT = Math.PI / 2 - 0.28; // slight tilt to the left
+  // Rotation target driven by scroll → smooth-followed inside the Model
   const rotationMV = useTransform(
     progress,
-    [0, 0.25, 0.5, 0.75, 1],
-    [FRONT, FRONT, FRONT + Math.PI * 0.55, FRONT + Math.PI * 1.1, FRONT + Math.PI * 1.6]
+    STOPS,
+    seriesAt(...(PANELS.map((p) => p.rotation) as [number, number, number, number]))
   );
   const rotationRef = useRef(FRONT);
   useMotionValueEvent(rotationMV, "change", (v) => {
     rotationRef.current = v;
   });
 
-
+  // Per-panel content opacity/Y — pop in around each pause
+  const panelMotion = PANELS.map((_, i) => {
+    const center = (STOPS[i * 2] + STOPS[i * 2 + 1]) / 2;
+    const fadeIn = Math.max(0, center - 0.07);
+    const inHold = STOPS[i * 2];
+    const outHold = STOPS[i * 2 + 1];
+    const fadeOut = Math.min(1, center + 0.07);
+    return {
+      opacity: useTransform(progress, [fadeIn, inHold, outHold, fadeOut], [0, 1, 1, 0]),
+      y: useTransform(progress, [fadeIn, inHold, outHold, fadeOut], [40, 0, 0, -40]),
+    };
+  });
 
   return (
     <section
       ref={containerRef}
       dir="rtl"
       className="relative w-full border-0"
-      style={{ height: "700vh" }}
+      style={{ height: "560vh" }}
     >
       <div className="sticky top-0 w-full h-screen overflow-hidden">
-        {/* 3D logo layer — stays on the right, ring fades in/out with scroll */}
+        {/* 3D logo layer */}
         <motion.div
           className="absolute top-1/2 left-1/2 pointer-events-none"
           style={{
             x: logoX,
             scale: logoScale,
-            opacity: logoOpacity,
             width: "min(560px, 82vh)",
             height: "min(560px, 82vh)",
-
             translateX: "-50%",
             translateY: "-50%",
           }}
         >
-          {/* Ring light — sits behind, logo is centered in front */}
+          {/* Ring light */}
           <motion.div
             className="absolute rounded-full pointer-events-none"
             style={{
@@ -176,7 +197,6 @@ export default function EtqanHero3D() {
               zIndex: 1,
             }}
           />
-          {/* 3D logo — always centered in front of the ring */}
           <div className="absolute inset-0" style={{ zIndex: 2 }}>
             <Canvas camera={{ position: [0, 0, 4], fov: 38 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
               <RotationCtx.Provider value={rotationRef}>
@@ -184,28 +204,15 @@ export default function EtqanHero3D() {
               </RotationCtx.Provider>
             </Canvas>
           </div>
-
         </motion.div>
 
-        {/* Panel 1 — Hero: title on the LEFT (far edge) */}
+        {/* Panel 1 — Hero */}
         <motion.div
           dir="rtl"
           className="absolute top-1/2 -translate-y-1/2 left-[2.5vw] max-w-[46vw] z-10 pointer-events-none"
-          style={{ opacity: heroOpacity, y: heroY, background: "transparent" }}
+          style={{ opacity: panelMotion[0].opacity, y: panelMotion[0].y }}
         >
-          <span
-            className="inline-block mb-6 px-4 py-1.5 rounded-full border"
-            style={{
-              borderColor: "rgba(29,158,117,0.35)",
-              color: "#5DCAA5",
-              fontFamily: "'Cairo', sans-serif",
-              fontSize: 13,
-              letterSpacing: 5,
-              background: "transparent",
-            }}
-          >
-            ETQAN AGENCY
-          </span>
+          <Badge>{PANELS[0].badge}</Badge>
           <h1
             className="mb-4"
             style={{
@@ -217,12 +224,7 @@ export default function EtqanHero3D() {
             }}
           >
             <span style={{ color: "hsl(var(--foreground))" }}>نصنع الـ </span>
-            <span
-              style={{
-                color: "#1D9E75",
-                textShadow: "0 0 45px rgba(29,158,117,0.55)",
-              }}
-            >
+            <span style={{ color: "#1D9E75", textShadow: "0 0 45px rgba(29,158,117,0.55)" }}>
               إتقان
             </span>
           </h1>
@@ -241,7 +243,7 @@ export default function EtqanHero3D() {
           <p
             className="mb-8"
             style={{
-              fontFamily: "'Tajawal', 'El Messiri', sans-serif",
+              fontFamily: "'Tajawal', sans-serif",
               fontWeight: 300,
               fontSize: "clamp(15px, 1.4vw, 20px)",
               color: "hsl(var(--foreground) / 0.72)",
@@ -252,7 +254,7 @@ export default function EtqanHero3D() {
             حيث تلتقي الرؤية بالإبداع. نحن وكالة تصميم تركز على بناء تجارب رقمية
             تترك أثراً، مدمجين الفن بالتكنولوجيا لتحقيق الكمال.
           </p>
-          <div className="flex items-center gap-4 pointer-events-auto" style={{ direction: "rtl" }}>
+          <div className="flex items-center gap-4 pointer-events-auto">
             <a
               href="#contact"
               className="inline-flex items-center justify-center px-7 py-3 rounded-full font-medium transition-all hover:scale-105"
@@ -282,39 +284,26 @@ export default function EtqanHero3D() {
           </div>
         </motion.div>
 
-        {/* Panel 2 — "من نحن" on the LEFT (ring is OFF here) */}
+        {/* Panel 2 — من نحن */}
         <motion.div
           dir="rtl"
           className="absolute top-1/2 -translate-y-1/2 left-[2.5vw] max-w-[44vw] z-10 pointer-events-none"
-          style={{ opacity: visionOpacity, y: visionY, background: "transparent" }}
+          style={{ opacity: panelMotion[1].opacity, y: panelMotion[1].y }}
         >
-          <span
-            className="inline-block mb-6 px-4 py-1.5 rounded-full border"
-            style={{
-              borderColor: "rgba(29,158,117,0.35)",
-              color: "#5DCAA5",
-              fontFamily: "'Cairo', sans-serif",
-              fontSize: 13,
-              letterSpacing: 5,
-              background: "transparent",
-            }}
-          >
-            01 — ABOUT US
-          </span>
+          <Badge>{PANELS[1].badge}</Badge>
           <h2
             className="mb-8"
             style={{
               fontFamily: "'El Messiri', 'Reem Kufi', serif",
               fontWeight: 700,
               fontSize: "clamp(56px, 7.5vw, 110px)",
-              color: "hsl(var(--foreground))",
+              color: "#1D9E75",
+              textShadow: "0 0 45px rgba(29,158,117,0.45)",
               lineHeight: 1.05,
               letterSpacing: "-0.02em",
             }}
           >
-            <span style={{ color: "#1D9E75", textShadow: "0 0 45px rgba(29,158,117,0.45)" }}>
-              من نحن
-            </span>
+            من نحن
           </h2>
           <p
             style={{
@@ -332,73 +321,106 @@ export default function EtqanHero3D() {
           </p>
         </motion.div>
 
-
-        {/* Panel 3 — big title LEFT + two small paragraphs below-right */}
+        {/* Panel 3 — خدماتنا (text on the RIGHT, logo on LEFT) */}
         <motion.div
           dir="rtl"
-          className="absolute top-1/2 -translate-y-1/2 left-[2.5vw] z-10 pointer-events-none"
-          style={{ opacity: aboutOpacity, y: aboutY, background: "transparent", width: "62vw" }}
+          className="absolute top-1/2 -translate-y-1/2 right-[2.5vw] max-w-[44vw] z-10 pointer-events-none text-right"
+          style={{ opacity: panelMotion[2].opacity, y: panelMotion[2].y }}
         >
-          <span
-            className="inline-block mb-6 px-4 py-1.5 rounded-full border"
-            style={{
-              borderColor: "rgba(200,168,75,0.4)",
-              color: "#C8A84B",
-              fontFamily: "'Cairo', sans-serif",
-              fontSize: 13,
-              letterSpacing: 5,
-              background: "transparent",
-            }}
-          >
-            02 — ABOUT
-          </span>
+          <Badge>{PANELS[2].badge}</Badge>
           <h2
-            className="mb-10"
+            className="mb-8"
             style={{
               fontFamily: "'El Messiri', 'Reem Kufi', serif",
               fontWeight: 700,
-              fontSize: "clamp(48px, 6.8vw, 104px)",
+              fontSize: "clamp(56px, 7.5vw, 110px)",
               color: "hsl(var(--foreground))",
               lineHeight: 1.05,
               letterSpacing: "-0.02em",
             }}
           >
-            نصنع علاماتٍ
-            <br />
-            <span style={{ color: "#1D9E75", textShadow: "0 0 45px rgba(29,158,117,0.45)" }}>
-              تبقى في الذاكرة
+            خدماتنا
+          </h2>
+          <ul
+            className="space-y-3"
+            style={{
+              fontFamily: "'Tajawal', sans-serif",
+              fontWeight: 400,
+              fontSize: "clamp(15px, 1.3vw, 20px)",
+              color: "hsl(var(--foreground) / 0.82)",
+              lineHeight: 1.8,
+            }}
+          >
+            <li>· الهوية البصرية والعلامات التجارية</li>
+            <li>· التسويق الرقمي وإدارة المنصات</li>
+            <li>· تصميم وتطوير المواقع والتطبيقات</li>
+            <li>· إنتاج المحتوى الإبداعي والإعلانات</li>
+          </ul>
+        </motion.div>
+
+        {/* Panel 4 — CTA (logo center, ring on) */}
+        <motion.div
+          dir="rtl"
+          className="absolute top-[8vh] left-1/2 -translate-x-1/2 max-w-[60vw] z-10 pointer-events-none text-center"
+          style={{ opacity: panelMotion[3].opacity, y: panelMotion[3].y }}
+        >
+          <Badge>{PANELS[3].badge}</Badge>
+          <h2
+            className="mb-6"
+            style={{
+              fontFamily: "'El Messiri', 'Reem Kufi', serif",
+              fontWeight: 700,
+              fontSize: "clamp(48px, 6.5vw, 96px)",
+              lineHeight: 1.05,
+              letterSpacing: "-0.02em",
+            }}
+          >
+            <span style={{ color: "hsl(var(--foreground))" }}>جاهز تبدأ </span>
+            <span style={{ color: "#1D9E75", textShadow: "0 0 45px rgba(29,158,117,0.55)" }}>
+              مشروعك؟
             </span>
           </h2>
-          <div className="flex gap-10 pointer-events-auto" style={{ direction: "rtl" }}>
-            <p
-              style={{
-                fontFamily: "'Tajawal', sans-serif",
-                fontWeight: 300,
-                fontSize: "clamp(13px, 1.1vw, 16px)",
-                color: "hsl(var(--foreground) / 0.7)",
-                lineHeight: 1.9,
-                maxWidth: "22vw",
-              }}
-            >
-              في إتقان، نؤمن أن التصميم ليس مجرد شكلٍ جميل بل تجربةٌ تُحرّك المشاعر
-              وتبني الثقة. نُتقن التفاصيل لنُقدّم نتائج تتجاوز توقّعات شركائنا.
-            </p>
-            <p
-              style={{
-                fontFamily: "'Tajawal', sans-serif",
-                fontWeight: 300,
-                fontSize: "clamp(13px, 1.1vw, 16px)",
-                color: "hsl(var(--foreground) / 0.7)",
-                lineHeight: 1.9,
-                maxWidth: "22vw",
-              }}
-            >
-              نعمل مع الشركات الناشئة والعلامات الراسخة في السعودية والوطن العربي،
-              ونصنع لكلٍّ منها قصةً بصريّةً تليق بها وتُميّزها في سوقها.
-            </p>
-          </div>
+        </motion.div>
+
+        {/* Bottom-centered CTA for panel 4, so it sits below the logo */}
+        <motion.div
+          className="absolute bottom-[10vh] left-1/2 -translate-x-1/2 z-10 pointer-events-auto"
+          style={{ opacity: panelMotion[3].opacity }}
+        >
+          <a
+            href="#contact"
+            className="inline-flex items-center justify-center px-9 py-4 rounded-full font-medium transition-all hover:scale-105"
+            style={{
+              background: "linear-gradient(135deg, #1D9E75, #2ec48f)",
+              color: "#04201a",
+              fontFamily: "'El Messiri', sans-serif",
+              fontSize: 18,
+              boxShadow: "0 10px 30px -8px rgba(29,158,117,0.6)",
+            }}
+          >
+            تواصل معنا الآن
+          </a>
         </motion.div>
       </div>
     </section>
   );
 }
+
+function Badge({ children }: { children: React.ReactNode }) {
+  return (
+    <span
+      className="inline-block mb-6 px-4 py-1.5 rounded-full border"
+      style={{
+        borderColor: "rgba(29,158,117,0.35)",
+        color: "#5DCAA5",
+        fontFamily: "'Cairo', sans-serif",
+        fontSize: 13,
+        letterSpacing: 5,
+        background: "transparent",
+      }}
+    >
+      {children}
+    </span>
+  );
+}
+
