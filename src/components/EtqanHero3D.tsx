@@ -80,19 +80,20 @@ export default function EtqanHero3D() {
   // Smooth the scroll progress for buttery transitions
   const progress = useSpring(scrollYProgress, { stiffness: 80, damping: 24, mass: 0.6 });
 
-  const logoX = useTransform(progress, [0, 0.15, 0.55, 0.85, 1], ["0%", "0%", "28%", "28%", "28%"]);
-  const logoScale = useTransform(progress, [0, 0.15, 0.55, 0.85, 1], [1, 1, 0.78, 0.78, 0.6]);
-  const logoOpacity = useTransform(progress, [0, 0.85, 1], [1, 1, 0]);
-  const ringOpacity = useTransform(progress, [0, 0.15, 0.55, 0.85, 1], [1, 1, 0.4, 0.4, 0]);
+  // Logo path: LEFT (hero) → RIGHT (vision) → LEFT (about) → fade
+  const logoX = useTransform(progress, [0, 0.18, 0.4, 0.62, 0.85, 1], ["-26%", "-26%", "26%", "26%", "-26%", "-26%"]);
+  const logoScale = useTransform(progress, [0, 0.18, 0.85, 1], [1, 1, 1, 0.85]);
+  const logoOpacity = useTransform(progress, [0, 0.88, 1], [1, 1, 0]);
+  const ringOpacity = useTransform(progress, [0, 0.85, 1], [1, 1, 0]);
 
-  const heroOpacity = usePanelOpacity(progress, 0, 0.05, 0.22);
-  const heroY = usePanelY(progress, 0, 0.05, 0.22);
+  const heroOpacity = usePanelOpacity(progress, 0, 0.06, 0.22);
+  const heroY = usePanelY(progress, 0, 0.06, 0.22);
 
-  const visionOpacity = usePanelOpacity(progress, 0.25, 0.4, 0.55);
-  const visionY = usePanelY(progress, 0.25, 0.4, 0.55);
+  const visionOpacity = usePanelOpacity(progress, 0.28, 0.42, 0.55);
+  const visionY = usePanelY(progress, 0.28, 0.42, 0.55);
 
-  const aboutOpacity = usePanelOpacity(progress, 0.58, 0.72, 0.88);
-  const aboutY = usePanelY(progress, 0.58, 0.72, 0.88);
+  const aboutOpacity = usePanelOpacity(progress, 0.6, 0.72, 0.86);
+  const aboutY = usePanelY(progress, 0.6, 0.72, 0.86);
 
   return (
     <section
@@ -101,35 +102,35 @@ export default function EtqanHero3D() {
       className="relative w-full"
       style={{ height: "500vh" }}
     >
-      <div
-        className="sticky top-0 w-full h-screen overflow-hidden"
-        style={{ background: "radial-gradient(ellipse at center, #0a0e1a 0%, #000000 70%)" }}
-      >
-        {/* 3D logo layer (moves with scroll) */}
+      <div className="sticky top-0 w-full h-screen overflow-hidden bg-background">
+        {/* 3D logo layer — compact box matching logo footprint, moves with scroll */}
         <motion.div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          style={{ x: logoX, scale: logoScale, opacity: logoOpacity }}
+          className="absolute top-1/2 left-1/2 pointer-events-none"
+          style={{
+            x: logoX,
+            scale: logoScale,
+            opacity: logoOpacity,
+            width: "min(440px, 55vh)",
+            height: "min(440px, 55vh)",
+            translateX: "-50%",
+            translateY: "-50%",
+          }}
         >
-          {/* White ring */}
+          {/* White ring — exactly the size of the logo box */}
           <motion.div
-            className="absolute rounded-full"
+            className="absolute inset-0 rounded-full"
             style={{
-              width: "min(560px, 70vw)",
-              height: "min(560px, 70vw)",
-              border: "1.5px solid rgba(255,255,255,0.5)",
+              border: "1.5px solid rgba(255,255,255,0.45)",
               boxShadow:
-                "0 0 80px 10px rgba(29,158,117,0.25), inset 0 0 60px rgba(255,255,255,0.04)",
+                "0 0 70px 8px rgba(29,158,117,0.22), inset 0 0 40px rgba(255,255,255,0.04)",
               opacity: ringOpacity,
             }}
           />
-          {/* Soft glow disc */}
           <div
-            className="absolute rounded-full pointer-events-none"
+            className="absolute inset-0 rounded-full pointer-events-none"
             style={{
-              width: "min(560px, 70vw)",
-              height: "min(560px, 70vw)",
               background:
-                "radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 65%)",
+                "radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 65%)",
             }}
           />
           <div className="absolute inset-0">
@@ -139,44 +140,59 @@ export default function EtqanHero3D() {
           </div>
         </motion.div>
 
-        {/* Panel 1 — Hero centered */}
+        {/* Panel 1 — Hero (logo LEFT → text RIGHT) */}
         <motion.div
-          className="absolute inset-x-0 bottom-[12vh] flex flex-col items-center text-center px-6 z-10 pointer-events-none"
+          dir="rtl"
+          className="absolute top-1/2 -translate-y-1/2 right-[6vw] max-w-[40vw] z-10 pointer-events-none"
           style={{ opacity: heroOpacity, y: heroY }}
         >
+          <span
+            className="inline-block mb-4 px-3 py-1 rounded-full border"
+            style={{
+              borderColor: "rgba(29,158,117,0.35)",
+              color: "#5DCAA5",
+              fontFamily: "'Cairo', sans-serif",
+              fontSize: 12,
+              letterSpacing: 4,
+            }}
+          >
+            ETQAN AGENCY
+          </span>
           <h1
-            className="font-black"
+            className="font-black mb-4"
             style={{
               fontFamily: "'Cairo', sans-serif",
-              fontSize: "clamp(40px, 7vw, 64px)",
+              fontSize: "clamp(48px, 7vw, 96px)",
               color: "#1D9E75",
               lineHeight: 1,
-              textShadow: "0 0 30px rgba(29,158,117,0.5)",
+              textShadow: "0 0 30px rgba(29,158,117,0.45)",
             }}
           >
             إتقان
           </h1>
           <p
-            className="mt-3 font-light"
+            className="font-light"
             style={{
               fontFamily: "'Cairo', sans-serif",
-              fontSize: "clamp(16px, 2.4vw, 24px)",
+              fontSize: "clamp(16px, 1.6vw, 24px)",
               color: "#5DCAA5",
+              lineHeight: 1.7,
             }}
           >
             في إتقان نصنع من رؤيتك حقيقة
           </p>
-          <div className="mt-8 flex flex-col items-center gap-2 opacity-60">
-            <span style={{ color: "#5DCAA5", fontFamily: "'Cairo', sans-serif", fontSize: 12, letterSpacing: 4 }}>
+          <div className="mt-8 flex items-center gap-3 opacity-60">
+            <div className="w-12 h-[1px]" style={{ background: "linear-gradient(to left, #1D9E75, transparent)" }} />
+            <span style={{ color: "#5DCAA5", fontFamily: "'Cairo', sans-serif", fontSize: 11, letterSpacing: 3 }}>
               مرر للأسفل
             </span>
-            <div className="w-[1px] h-12" style={{ background: "linear-gradient(to bottom, #1D9E75, transparent)" }} />
           </div>
         </motion.div>
 
-        {/* Panel 2 — رؤيتنا (left side, RTL means visually right of viewport vs logo on left… we keep text on the right since RTL) */}
+        {/* Panel 2 — رؤيتنا (logo RIGHT → text LEFT) */}
         <motion.div
-          className="absolute top-1/2 -translate-y-1/2 right-[6vw] max-w-[42vw] z-10 pointer-events-none"
+          dir="rtl"
+          className="absolute top-1/2 -translate-y-1/2 left-[6vw] max-w-[40vw] z-10 pointer-events-none"
           style={{ opacity: visionOpacity, y: visionY }}
         >
           <span
@@ -207,7 +223,7 @@ export default function EtqanHero3D() {
             style={{
               fontFamily: "'Cairo', sans-serif",
               fontSize: "clamp(15px, 1.4vw, 20px)",
-              color: "rgba(255,255,255,0.75)",
+              color: "hsl(var(--foreground) / 0.8)",
               lineHeight: 1.9,
             }}
           >
@@ -217,9 +233,10 @@ export default function EtqanHero3D() {
           </p>
         </motion.div>
 
-        {/* Panel 3 — من نحن */}
+        {/* Panel 3 — من نحن (logo LEFT → text RIGHT) */}
         <motion.div
-          className="absolute top-1/2 -translate-y-1/2 right-[6vw] max-w-[42vw] z-10 pointer-events-none"
+          dir="rtl"
+          className="absolute top-1/2 -translate-y-1/2 right-[6vw] max-w-[40vw] z-10 pointer-events-none"
           style={{ opacity: aboutOpacity, y: aboutY }}
         >
           <span
@@ -250,7 +267,7 @@ export default function EtqanHero3D() {
             style={{
               fontFamily: "'Cairo', sans-serif",
               fontSize: "clamp(15px, 1.4vw, 20px)",
-              color: "rgba(255,255,255,0.75)",
+              color: "hsl(var(--foreground) / 0.8)",
               lineHeight: 1.9,
             }}
           >
