@@ -27,8 +27,8 @@ function Model() {
   box.getSize(size);
   box.getCenter(center);
   const maxDim = Math.max(size.x, size.y, size.z);
-  // Larger scale so logo fills the glowing circle
-  const scale = 4.2 / maxDim;
+  // Fill the glowing circle
+  const scale = 9 / maxDim;
 
   useFrame((_, dt) => {
     if (ref.current) ref.current.rotation.y += dt * ((Math.PI * 2) / 20);
@@ -135,7 +135,7 @@ export default function EtqanHero3D() {
             }}
           />
           <div className="absolute inset-0">
-            <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
+            <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
               <Scene />
             </Canvas>
           </div>
