@@ -27,7 +27,8 @@ function Model() {
   box.getSize(size);
   box.getCenter(center);
   const maxDim = Math.max(size.x, size.y, size.z);
-  const scale = 2.4 / maxDim;
+  // Larger scale so logo fills the glowing circle
+  const scale = 4.2 / maxDim;
 
   useFrame((_, dt) => {
     if (ref.current) ref.current.rotation.y += dt * ((Math.PI * 2) / 20);
@@ -81,7 +82,7 @@ export default function EtqanHero3D() {
   const progress = useSpring(scrollYProgress, { stiffness: 80, damping: 24, mass: 0.6 });
 
   // Logo path: LEFT (hero) → RIGHT (vision) → LEFT (about) → fade
-  const logoX = useTransform(progress, [0, 0.18, 0.4, 0.62, 0.85, 1], ["-26%", "-26%", "26%", "26%", "-26%", "-26%"]);
+  const logoX = useTransform(progress, [0, 0.18, 0.4, 0.62, 0.85, 1], ["-38%", "-38%", "38%", "38%", "-38%", "-38%"]);
   const logoScale = useTransform(progress, [0, 0.18, 0.85, 1], [1, 1, 1, 0.85]);
   const logoOpacity = useTransform(progress, [0, 0.88, 1], [1, 1, 0]);
   const ringOpacity = useTransform(progress, [0, 0.85, 1], [1, 1, 0]);
@@ -140,91 +141,98 @@ export default function EtqanHero3D() {
           </div>
         </motion.div>
 
-        {/* Panel 1 — Hero (logo LEFT → text RIGHT) */}
+        {/* Panel 1 — Hero (logo LEFT → text RIGHT, far edge) */}
         <motion.div
           dir="rtl"
-          className="absolute top-1/2 -translate-y-1/2 right-[6vw] max-w-[40vw] z-10 pointer-events-none"
-          style={{ opacity: heroOpacity, y: heroY }}
+          className="absolute top-1/2 -translate-y-1/2 right-[4vw] max-w-[44vw] z-10 pointer-events-none"
+          style={{ opacity: heroOpacity, y: heroY, background: "transparent" }}
         >
           <span
-            className="inline-block mb-4 px-3 py-1 rounded-full border"
+            className="inline-block mb-6 px-4 py-1.5 rounded-full border"
             style={{
               borderColor: "rgba(29,158,117,0.35)",
               color: "#5DCAA5",
               fontFamily: "'Cairo', sans-serif",
-              fontSize: 12,
-              letterSpacing: 4,
+              fontSize: 13,
+              letterSpacing: 5,
+              background: "transparent",
             }}
           >
             ETQAN AGENCY
           </span>
           <h1
-            className="font-black mb-4"
+            className="mb-6"
             style={{
-              fontFamily: "'Cairo', sans-serif",
-              fontSize: "clamp(48px, 7vw, 96px)",
+              fontFamily: "'Reem Kufi', 'Amiri', 'Cairo', serif",
+              fontWeight: 700,
+              fontSize: "clamp(72px, 11vw, 160px)",
               color: "#1D9E75",
-              lineHeight: 1,
-              textShadow: "0 0 30px rgba(29,158,117,0.45)",
+              lineHeight: 0.95,
+              letterSpacing: "-0.02em",
+              textShadow: "0 0 50px rgba(29,158,117,0.55)",
             }}
           >
             إتقان
           </h1>
           <p
-            className="font-light"
             style={{
-              fontFamily: "'Cairo', sans-serif",
-              fontSize: "clamp(16px, 1.6vw, 24px)",
+              fontFamily: "'Reem Kufi', 'Cairo', sans-serif",
+              fontWeight: 300,
+              fontSize: "clamp(20px, 2.2vw, 34px)",
               color: "#5DCAA5",
-              lineHeight: 1.7,
+              lineHeight: 1.6,
             }}
           >
             في إتقان نصنع من رؤيتك حقيقة
           </p>
-          <div className="mt-8 flex items-center gap-3 opacity-60">
-            <div className="w-12 h-[1px]" style={{ background: "linear-gradient(to left, #1D9E75, transparent)" }} />
-            <span style={{ color: "#5DCAA5", fontFamily: "'Cairo', sans-serif", fontSize: 11, letterSpacing: 3 }}>
+          <div className="mt-10 flex items-center gap-3 opacity-60">
+            <div className="w-16 h-[1px]" style={{ background: "linear-gradient(to left, #1D9E75, transparent)" }} />
+            <span style={{ color: "#5DCAA5", fontFamily: "'Cairo', sans-serif", fontSize: 12, letterSpacing: 3 }}>
               مرر للأسفل
             </span>
           </div>
         </motion.div>
 
-        {/* Panel 2 — رؤيتنا (logo RIGHT → text LEFT) */}
+        {/* Panel 2 — رؤيتنا (logo RIGHT → text LEFT, far edge) */}
         <motion.div
           dir="rtl"
-          className="absolute top-1/2 -translate-y-1/2 left-[6vw] max-w-[40vw] z-10 pointer-events-none"
-          style={{ opacity: visionOpacity, y: visionY }}
+          className="absolute top-1/2 -translate-y-1/2 left-[4vw] max-w-[44vw] z-10 pointer-events-none"
+          style={{ opacity: visionOpacity, y: visionY, background: "transparent" }}
         >
           <span
-            className="inline-block mb-4 px-3 py-1 rounded-full border"
+            className="inline-block mb-6 px-4 py-1.5 rounded-full border"
             style={{
               borderColor: "rgba(29,158,117,0.35)",
               color: "#5DCAA5",
               fontFamily: "'Cairo', sans-serif",
-              fontSize: 12,
-              letterSpacing: 4,
+              fontSize: 13,
+              letterSpacing: 5,
+              background: "transparent",
             }}
           >
             01 — VISION
           </span>
           <h2
-            className="font-black mb-6"
+            className="mb-8"
             style={{
-              fontFamily: "'Cairo', sans-serif",
-              fontSize: "clamp(36px, 5.5vw, 72px)",
+              fontFamily: "'Reem Kufi', 'Amiri', 'Cairo', serif",
+              fontWeight: 700,
+              fontSize: "clamp(56px, 8.5vw, 120px)",
               color: "#1D9E75",
-              lineHeight: 1.05,
-              textShadow: "0 0 30px rgba(29,158,117,0.35)",
+              lineHeight: 1,
+              letterSpacing: "-0.02em",
+              textShadow: "0 0 45px rgba(29,158,117,0.45)",
             }}
           >
             رؤيتنا
           </h2>
           <p
             style={{
-              fontFamily: "'Cairo', sans-serif",
-              fontSize: "clamp(15px, 1.4vw, 20px)",
-              color: "hsl(var(--foreground) / 0.8)",
-              lineHeight: 1.9,
+              fontFamily: "'Reem Kufi', 'Cairo', sans-serif",
+              fontWeight: 300,
+              fontSize: "clamp(18px, 1.9vw, 28px)",
+              color: "hsl(var(--foreground) / 0.85)",
+              lineHeight: 1.85,
             }}
           >
             أن نكون الوكالة الرائدة في صناعة العلامات التجارية والتسويق الرقمي،
@@ -233,42 +241,46 @@ export default function EtqanHero3D() {
           </p>
         </motion.div>
 
-        {/* Panel 3 — من نحن (logo LEFT → text RIGHT) */}
+        {/* Panel 3 — من نحن (logo LEFT → text RIGHT, far edge) */}
         <motion.div
           dir="rtl"
-          className="absolute top-1/2 -translate-y-1/2 right-[6vw] max-w-[40vw] z-10 pointer-events-none"
-          style={{ opacity: aboutOpacity, y: aboutY }}
+          className="absolute top-1/2 -translate-y-1/2 right-[4vw] max-w-[44vw] z-10 pointer-events-none"
+          style={{ opacity: aboutOpacity, y: aboutY, background: "transparent" }}
         >
           <span
-            className="inline-block mb-4 px-3 py-1 rounded-full border"
+            className="inline-block mb-6 px-4 py-1.5 rounded-full border"
             style={{
               borderColor: "rgba(200,168,75,0.4)",
               color: "#C8A84B",
               fontFamily: "'Cairo', sans-serif",
-              fontSize: 12,
-              letterSpacing: 4,
+              fontSize: 13,
+              letterSpacing: 5,
+              background: "transparent",
             }}
           >
             02 — ABOUT
           </span>
           <h2
-            className="font-black mb-6"
+            className="mb-8"
             style={{
-              fontFamily: "'Cairo', sans-serif",
-              fontSize: "clamp(36px, 5.5vw, 72px)",
+              fontFamily: "'Reem Kufi', 'Amiri', 'Cairo', serif",
+              fontWeight: 700,
+              fontSize: "clamp(56px, 8.5vw, 120px)",
               color: "#1D9E75",
-              lineHeight: 1.05,
-              textShadow: "0 0 30px rgba(29,158,117,0.35)",
+              lineHeight: 1,
+              letterSpacing: "-0.02em",
+              textShadow: "0 0 45px rgba(29,158,117,0.45)",
             }}
           >
             من نحن
           </h2>
           <p
             style={{
-              fontFamily: "'Cairo', sans-serif",
-              fontSize: "clamp(15px, 1.4vw, 20px)",
-              color: "hsl(var(--foreground) / 0.8)",
-              lineHeight: 1.9,
+              fontFamily: "'Reem Kufi', 'Cairo', sans-serif",
+              fontWeight: 300,
+              fontSize: "clamp(18px, 1.9vw, 28px)",
+              color: "hsl(var(--foreground) / 0.85)",
+              lineHeight: 1.85,
             }}
           >
             وكالة إتقان الرائدة في التسويق الرقمي والتصميم الإبداعي. نُقدّم
