@@ -79,7 +79,12 @@ export default function EtqanHero3D() {
     [0, 0.22, 0.36, 0.58, 0.72, 0.92, 1],
     ["28%", "28%", "44%", "44%", "28%", "28%", "28%"]
   );
-  const logoScale = useTransform(progress, [0, 0.9, 1], [1, 1, 0.9]);
+  // Scale: big on Panel 1, shrinks during Panel 2, grows back on Panel 3 (like the reference)
+  const logoScale = useTransform(
+    progress,
+    [0, 0.22, 0.36, 0.58, 0.72, 0.92, 1],
+    [1, 1, 0.72, 0.72, 1.05, 1.05, 0.95]
+  );
   const logoOpacity = useTransform(progress, [0, 0.92, 1], [1, 1, 0]);
 
   // Ring: bright on Panel 1, FADES OUT during Panel 2, FADES BACK IN on Panel 3
