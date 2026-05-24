@@ -161,50 +161,78 @@ export default function EtqanHero3D() {
             ETQAN AGENCY
           </span>
           <h1
-            className="mb-6"
+            className="mb-4"
             style={{
               fontFamily: "'El Messiri', 'Reem Kufi', serif",
               fontWeight: 700,
-              fontSize: "clamp(72px, 11vw, 160px)",
-              color: "#1D9E75",
-              lineHeight: 0.95,
+              fontSize: "clamp(56px, 8vw, 120px)",
+              lineHeight: 1,
               letterSpacing: "-0.02em",
-              textShadow: "0 0 50px rgba(29,158,117,0.55)",
             }}
           >
-            إتقان
+            <span style={{ color: "hsl(var(--foreground))" }}>نصنع الـ </span>
+            <span
+              style={{
+                color: "#1D9E75",
+                textShadow: "0 0 45px rgba(29,158,117,0.55)",
+              }}
+            >
+              إتقان
+            </span>
           </h1>
           <p
-            className="mb-5"
+            className="mb-6"
             style={{
               fontFamily: "'El Messiri', 'Tajawal', sans-serif",
               fontWeight: 500,
-              fontSize: "clamp(22px, 2.4vw, 38px)",
-              color: "#5DCAA5",
-              lineHeight: 1.5,
+              fontSize: "clamp(22px, 2.6vw, 40px)",
+              color: "hsl(var(--foreground) / 0.9)",
+              lineHeight: 1.4,
             }}
           >
-            في إتقان نصنع من رؤيتك حقيقة
+            في كل تفصيل رقمي
           </p>
           <p
+            className="mb-8"
             style={{
               fontFamily: "'Tajawal', 'El Messiri', sans-serif",
               fontWeight: 300,
-              fontSize: "clamp(15px, 1.45vw, 21px)",
-              color: "hsl(var(--foreground) / 0.78)",
-              lineHeight: 1.95,
-              maxWidth: "38vw",
+              fontSize: "clamp(15px, 1.4vw, 20px)",
+              color: "hsl(var(--foreground) / 0.72)",
+              lineHeight: 1.9,
+              maxWidth: "40vw",
             }}
           >
-            وكالة إتقان وكالة سعودية متخصّصة في التسويق الرقمي، التصميم الإبداعي،
-            وبناء العلامات التجارية. نُترجم رؤيتك إلى تجربة بصرية متكاملة تُعبّر
-            عن قيمتك، وتترك أثراً يدوم في ذهن جمهورك.
+            حيث تلتقي الرؤية بالإبداع. نحن وكالة تصميم تركز على بناء تجارب رقمية
+            تترك أثراً، مدمجين الفن بالتكنولوجيا لتحقيق الكمال.
           </p>
-          <div className="mt-10 flex items-center gap-3 opacity-60">
-            <div className="w-16 h-[1px]" style={{ background: "linear-gradient(to left, #1D9E75, transparent)" }} />
-            <span style={{ color: "#5DCAA5", fontFamily: "'Cairo', sans-serif", fontSize: 12, letterSpacing: 3 }}>
-              مرر للأسفل
-            </span>
+          <div className="flex items-center gap-4 pointer-events-auto" style={{ direction: "rtl" }}>
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center px-7 py-3 rounded-full font-medium transition-all hover:scale-105"
+              style={{
+                background: "linear-gradient(135deg, #1D9E75, #2ec48f)",
+                color: "#04201a",
+                fontFamily: "'El Messiri', sans-serif",
+                fontSize: 17,
+                boxShadow: "0 10px 30px -8px rgba(29,158,117,0.6)",
+              }}
+            >
+              ابدأ مشروعك
+            </a>
+            <a
+              href="/portfolio"
+              className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full font-medium transition-all hover:bg-white/5"
+              style={{
+                border: "1px solid rgba(255,255,255,0.25)",
+                color: "hsl(var(--foreground))",
+                fontFamily: "'El Messiri', sans-serif",
+                fontSize: 17,
+              }}
+            >
+              أعمالنا
+              <span aria-hidden>←</span>
+            </a>
           </div>
         </motion.div>
 
