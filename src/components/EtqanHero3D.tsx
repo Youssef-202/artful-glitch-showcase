@@ -174,9 +174,12 @@ export default function EtqanHero3D() {
           {/* 3D logo — always centered in front of the ring */}
           <div className="absolute inset-0" style={{ zIndex: 2 }}>
             <Canvas camera={{ position: [0, 0, 4], fov: 38 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
-              <Scene />
+              <RotationCtx.Provider value={rotationRef}>
+                <Scene />
+              </RotationCtx.Provider>
             </Canvas>
           </div>
+
         </motion.div>
 
         {/* Panel 1 — Hero: title on the LEFT (far edge) */}
