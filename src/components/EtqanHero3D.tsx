@@ -82,21 +82,19 @@ export default function EtqanHero3D() {
     target: containerRef,
     offset: ["start start", "end end"],
   });
-  const progress = useSpring(scrollYProgress, { stiffness: 80, damping: 24, mass: 0.6 });
+  const progress = useSpring(scrollYProgress, { stiffness: 60, damping: 28, mass: 0.4 });
 
-  // Logo stays on the RIGHT throughout, slides further right during the
-  // middle section (no ring), then drifts back toward center-right for the
-  // final panel (ring on again) — matching the reference choreography.
+  // Logo sits on the RIGHT half of the screen across all panels — never overflows.
   const logoX = useTransform(
     progress,
     [0, 0.22, 0.36, 0.58, 0.72, 0.92, 1],
-    ["28%", "28%", "44%", "44%", "28%", "28%", "28%"]
+    ["28%", "28%", "30%", "30%", "28%", "28%", "28%"]
   );
-  // Scale: normal on Panel 1, GROWS BIG on Panel 2 to fill the right area, then settles on Panel 3
+  // Scale kept under 1.1 so the logo fits within the sticky viewport.
   const logoScale = useTransform(
     progress,
     [0, 0.22, 0.36, 0.48, 0.58, 0.72, 0.92, 1],
-    [1, 1, 1.35, 1.6, 1.6, 1.15, 1.05, 0.95]
+    [1, 1, 1.05, 1.08, 1.08, 1.02, 1, 0.95]
   );
   const logoOpacity = useTransform(progress, [0, 0.92, 1], [1, 1, 0]);
 
@@ -119,13 +117,19 @@ export default function EtqanHero3D() {
   const aboutOpacity = useTransform(progress, [0.66, 0.72, 0.88, 0.94], [0, 1, 1, 0]);
   const aboutY = useTransform(progress, [0.66, 0.72, 0.88, 0.94], [40, 0, 0, -40]);
 
-  // Scroll-driven rotation target for the 3D logo (radians around Y).
-  // Panel 1 → front, Panel 2 → ~3/4 turn, Panel 3 → ~5/4 turn.
-  const rotationMV = useTransform(progress, [0, 1], [Math.PI / 2, Math.PI / 2 + Math.PI * 2]);
-  const rotationRef = useRef(Math.PI / 2);
+  // Scroll-driven rotation target. Default = front facing with a slight left tilt.
+  // Smoothly turns between panels then settles back near front-left tilt.
+  const FRONT = Math.PI / 2 - 0.28; // slight tilt to the left
+  const rotationMV = useTransform(
+    progress,
+    [0, 0.25, 0.5, 0.75, 1],
+    [FRONT, FRONT, FRONT + Math.PI * 0.55, FRONT + Math.PI * 1.1, FRONT + Math.PI * 1.6]
+  );
+  const rotationRef = useRef(FRONT);
   useMotionValueEvent(rotationMV, "change", (v) => {
     rotationRef.current = v;
   });
+
 
 
   return (
