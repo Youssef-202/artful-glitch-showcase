@@ -57,7 +57,7 @@ function Scene() {
       <pointLight position={[0, -4, 3]} intensity={0.6} color="#C8A84B" />
       <directionalLight position={[0, 5, 5]} intensity={0.5} />
       <Suspense fallback={null}>
-        <Float speed={1.2} rotationIntensity={0} floatIntensity={0.5}>
+        <Float speed={0} rotationIntensity={0} floatIntensity={0}>
           <Model />
         </Float>
         <Environment preset="city" />
