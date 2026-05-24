@@ -81,27 +81,34 @@ export default function EtqanHero3D() {
   // Smooth the scroll progress for buttery transitions
   const progress = useSpring(scrollYProgress, { stiffness: 80, damping: 24, mass: 0.6 });
 
-  // Logo path: LEFT (hero) → RIGHT (vision) → LEFT (about) → fade
-  const logoX = useTransform(progress, [0, 0.18, 0.4, 0.62, 0.85, 1], ["-44%", "-44%", "44%", "44%", "-44%", "-44%"]);
-  const logoScale = useTransform(progress, [0, 0.18, 0.85, 1], [1, 1, 1, 0.85]);
-  const logoOpacity = useTransform(progress, [0, 0.88, 1], [1, 1, 0]);
-  const ringOpacity = useTransform(progress, [0, 0.85, 1], [1, 1, 0]);
+  // Logo path: LEFT (hero hold) → RIGHT (vision hold) → LEFT (about hold) → fade
+  const logoX = useTransform(
+    progress,
+    [0, 0.22, 0.36, 0.58, 0.72, 0.92, 1],
+    ["-44%", "-44%", "44%", "44%", "-44%", "-44%", "-44%"]
+  );
+  const logoScale = useTransform(progress, [0, 0.9, 1], [1, 1, 0.85]);
+  const logoOpacity = useTransform(progress, [0, 0.92, 1], [1, 1, 0]);
+  const ringOpacity = useTransform(progress, [0, 0.9, 1], [1, 1, 0]);
 
-  const heroOpacity = usePanelOpacity(progress, 0, 0.06, 0.22);
-  const heroY = usePanelY(progress, 0, 0.06, 0.22);
+  // Hero: visible from the very start, fade out as logo starts moving
+  const heroOpacity = useTransform(progress, [0, 0.24, 0.32], [1, 1, 0]);
+  const heroY = useTransform(progress, [0, 0.24, 0.32], [0, 0, -40]);
 
-  const visionOpacity = usePanelOpacity(progress, 0.28, 0.42, 0.55);
-  const visionY = usePanelY(progress, 0.28, 0.42, 0.55);
+  // Vision: appears after logo settles on the right, holds, then fades
+  const visionOpacity = useTransform(progress, [0.36, 0.42, 0.56, 0.62], [0, 1, 1, 0]);
+  const visionY = useTransform(progress, [0.36, 0.42, 0.56, 0.62], [40, 0, 0, -40]);
 
-  const aboutOpacity = usePanelOpacity(progress, 0.6, 0.72, 0.86);
-  const aboutY = usePanelY(progress, 0.6, 0.72, 0.86);
+  // About: appears after logo settles back on the left, holds, then fades
+  const aboutOpacity = useTransform(progress, [0.66, 0.72, 0.88, 0.94], [0, 1, 1, 0]);
+  const aboutY = useTransform(progress, [0.66, 0.72, 0.88, 0.94], [40, 0, 0, -40]);
 
   return (
     <section
       ref={containerRef}
       dir="rtl"
       className="relative w-full"
-      style={{ height: "500vh" }}
+      style={{ height: "700vh" }}
     >
       <div className="sticky top-0 w-full h-screen overflow-hidden">
         {/* 3D logo layer — compact box matching logo footprint, moves with scroll */}
