@@ -135,7 +135,7 @@ export default function EtqanHero3D() {
             }}
           />
           <div className="absolute inset-0">
-            <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
+            <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
               <Scene />
             </Canvas>
           </div>
