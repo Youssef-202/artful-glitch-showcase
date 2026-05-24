@@ -282,54 +282,56 @@ export default function EtqanHero3D() {
           </div>
         </motion.div>
 
-        {/* Panel 2 — three stacked specs on the LEFT (ring is OFF here) */}
+        {/* Panel 2 — "من نحن" on the LEFT (ring is OFF here) */}
         <motion.div
           dir="rtl"
-          className="absolute top-1/2 -translate-y-1/2 left-[2.5vw] max-w-[46vw] z-10 pointer-events-none space-y-8"
+          className="absolute top-1/2 -translate-y-1/2 left-[2.5vw] max-w-[44vw] z-10 pointer-events-none"
           style={{ opacity: visionOpacity, y: visionY, background: "transparent" }}
         >
-          {[
-            {
-              title: "وكالة إتقان",
-              body: "وكالة سعودية متخصصة في التسويق الرقمي والهوية البصرية، نُقدّم حلولاً متكاملة تحاكي طموح العلامات التجارية.",
-            },
-            {
-              title: "+120 مشروع",
-              body: "نفّذنا أكثر من مئة مشروع لعلاماتٍ رائدة في السعودية والخليج، من الهوية البصرية إلى الحملات الرقمية المتكاملة.",
-            },
-            {
-              title: "فريق متعدد التخصصات",
-              body: "مصمّمون، مطوّرون، صنّاع محتوى ومخططو إعلانات يعملون يداً بيد لصياغة تجاربٍ رقمية لا تُنسى.",
-            },
-          ].map((item, i) => (
-            <div key={i}>
-              <h3
-                style={{
-                  fontFamily: "'El Messiri', 'Reem Kufi', serif",
-                  fontWeight: 700,
-                  fontSize: "clamp(30px, 3.6vw, 54px)",
-                  color: "hsl(var(--foreground))",
-                  lineHeight: 1.1,
-                  marginBottom: 10,
-                }}
-              >
-                {item.title}
-              </h3>
-              <p
-                style={{
-                  fontFamily: "'Tajawal', sans-serif",
-                  fontWeight: 300,
-                  fontSize: "clamp(13px, 1.1vw, 16px)",
-                  color: "hsl(var(--foreground) / 0.65)",
-                  lineHeight: 1.8,
-                  maxWidth: "32vw",
-                }}
-              >
-                {item.body}
-              </p>
-            </div>
-          ))}
+          <span
+            className="inline-block mb-6 px-4 py-1.5 rounded-full border"
+            style={{
+              borderColor: "rgba(29,158,117,0.35)",
+              color: "#5DCAA5",
+              fontFamily: "'Cairo', sans-serif",
+              fontSize: 13,
+              letterSpacing: 5,
+              background: "transparent",
+            }}
+          >
+            01 — ABOUT US
+          </span>
+          <h2
+            className="mb-8"
+            style={{
+              fontFamily: "'El Messiri', 'Reem Kufi', serif",
+              fontWeight: 700,
+              fontSize: "clamp(56px, 7.5vw, 110px)",
+              color: "hsl(var(--foreground))",
+              lineHeight: 1.05,
+              letterSpacing: "-0.02em",
+            }}
+          >
+            <span style={{ color: "#1D9E75", textShadow: "0 0 45px rgba(29,158,117,0.45)" }}>
+              من نحن
+            </span>
+          </h2>
+          <p
+            style={{
+              fontFamily: "'Tajawal', sans-serif",
+              fontWeight: 300,
+              fontSize: "clamp(15px, 1.3vw, 19px)",
+              color: "hsl(var(--foreground) / 0.78)",
+              lineHeight: 2,
+              maxWidth: "38vw",
+            }}
+          >
+            وكالة سعودية متخصصة في التسويق الرقمي والهوية البصرية. نُقدّم
+            حلولاً متكاملة تحاكي طموح العلامات التجارية، ونصنع تجاربَ رقمية
+            تترك أثراً حقيقياً في أسواقها.
+          </p>
         </motion.div>
+
 
         {/* Panel 3 — big title LEFT + two small paragraphs below-right */}
         <motion.div
