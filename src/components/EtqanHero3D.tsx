@@ -230,7 +230,7 @@ export default function EtqanHero3D() {
           <h2
             className="mb-8"
             style={{
-              fontFamily: "'Reem Kufi', 'Amiri', 'Cairo', serif",
+              fontFamily: "'El Messiri', 'Reem Kufi', serif",
               fontWeight: 700,
               fontSize: "clamp(56px, 8.5vw, 120px)",
               color: "#1D9E75",
@@ -243,7 +243,7 @@ export default function EtqanHero3D() {
           </h2>
           <p
             style={{
-              fontFamily: "'Reem Kufi', 'Cairo', sans-serif",
+              fontFamily: "'Tajawal', 'El Messiri', sans-serif",
               fontWeight: 300,
               fontSize: "clamp(18px, 1.9vw, 28px)",
               color: "hsl(var(--foreground) / 0.85)",
@@ -278,7 +278,7 @@ export default function EtqanHero3D() {
           <h2
             className="mb-8"
             style={{
-              fontFamily: "'Reem Kufi', 'Amiri', 'Cairo', serif",
+              fontFamily: "'El Messiri', 'Reem Kufi', serif",
               fontWeight: 700,
               fontSize: "clamp(56px, 8.5vw, 120px)",
               color: "#1D9E75",
@@ -291,7 +291,7 @@ export default function EtqanHero3D() {
           </h2>
           <p
             style={{
-              fontFamily: "'Reem Kufi', 'Cairo', sans-serif",
+              fontFamily: "'Tajawal', 'El Messiri', sans-serif",
               fontWeight: 300,
               fontSize: "clamp(18px, 1.9vw, 28px)",
               color: "hsl(var(--foreground) / 0.85)",
