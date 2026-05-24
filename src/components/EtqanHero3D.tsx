@@ -277,7 +277,8 @@ export default function EtqanHero3D() {
                 background: "linear-gradient(135deg, #1D9E75, #2ec48f)",
                 color: "#04201a",
                 fontFamily: "'El Messiri', sans-serif",
-                fontSize: 17,
+                fontSize: 14,
+
                 boxShadow: "0 10px 30px -8px rgba(29,158,117,0.6)",
               }}
             >
