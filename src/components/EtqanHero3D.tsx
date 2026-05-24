@@ -269,17 +269,18 @@ export default function EtqanHero3D() {
               color: "#1D9E75",
               lineHeight: 1,
               letterSpacing: "-0.02em",
-
+              textShadow: "0 0 45px rgba(29,158,117,0.45)",
             }}
           >
             من نحن
           </h2>
           <p
             style={{
-              fontFamily: "'Cairo', sans-serif",
-              fontSize: "clamp(15px, 1.4vw, 20px)",
-              color: "hsl(var(--foreground) / 0.8)",
-              lineHeight: 1.9,
+              fontFamily: "'Reem Kufi', 'Cairo', sans-serif",
+              fontWeight: 300,
+              fontSize: "clamp(18px, 1.9vw, 28px)",
+              color: "hsl(var(--foreground) / 0.85)",
+              lineHeight: 1.85,
             }}
           >
             وكالة إتقان الرائدة في التسويق الرقمي والتصميم الإبداعي. نُقدّم
