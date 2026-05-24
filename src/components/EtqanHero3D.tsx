@@ -82,21 +82,19 @@ export default function EtqanHero3D() {
     target: containerRef,
     offset: ["start start", "end end"],
   });
-  const progress = useSpring(scrollYProgress, { stiffness: 80, damping: 24, mass: 0.6 });
+  const progress = useSpring(scrollYProgress, { stiffness: 60, damping: 28, mass: 0.4 });
 
-  // Logo stays on the RIGHT throughout, slides further right during the
-  // middle section (no ring), then drifts back toward center-right for the
-  // final panel (ring on again) — matching the reference choreography.
+  // Logo sits on the RIGHT half of the screen across all panels — never overflows.
   const logoX = useTransform(
     progress,
     [0, 0.22, 0.36, 0.58, 0.72, 0.92, 1],
-    ["28%", "28%", "44%", "44%", "28%", "28%", "28%"]
+    ["28%", "28%", "30%", "30%", "28%", "28%", "28%"]
   );
-  // Scale: normal on Panel 1, GROWS BIG on Panel 2 to fill the right area, then settles on Panel 3
+  // Scale kept under 1.1 so the logo fits within the sticky viewport.
   const logoScale = useTransform(
     progress,
     [0, 0.22, 0.36, 0.48, 0.58, 0.72, 0.92, 1],
-    [1, 1, 1.35, 1.6, 1.6, 1.15, 1.05, 0.95]
+    [1, 1, 1.05, 1.08, 1.08, 1.02, 1, 0.95]
   );
   const logoOpacity = useTransform(progress, [0, 0.92, 1], [1, 1, 0]);
 
@@ -119,13 +117,19 @@ export default function EtqanHero3D() {
   const aboutOpacity = useTransform(progress, [0.66, 0.72, 0.88, 0.94], [0, 1, 1, 0]);
   const aboutY = useTransform(progress, [0.66, 0.72, 0.88, 0.94], [40, 0, 0, -40]);
 
-  // Scroll-driven rotation target for the 3D logo (radians around Y).
-  // Panel 1 → front, Panel 2 → ~3/4 turn, Panel 3 → ~5/4 turn.
-  const rotationMV = useTransform(progress, [0, 1], [Math.PI / 2, Math.PI / 2 + Math.PI * 2]);
-  const rotationRef = useRef(Math.PI / 2);
+  // Scroll-driven rotation target. Default = front facing with a slight left tilt.
+  // Smoothly turns between panels then settles back near front-left tilt.
+  const FRONT = Math.PI / 2 - 0.28; // slight tilt to the left
+  const rotationMV = useTransform(
+    progress,
+    [0, 0.25, 0.5, 0.75, 1],
+    [FRONT, FRONT, FRONT + Math.PI * 0.55, FRONT + Math.PI * 1.1, FRONT + Math.PI * 1.6]
+  );
+  const rotationRef = useRef(FRONT);
   useMotionValueEvent(rotationMV, "change", (v) => {
     rotationRef.current = v;
   });
+
 
 
   return (
@@ -143,8 +147,9 @@ export default function EtqanHero3D() {
             x: logoX,
             scale: logoScale,
             opacity: logoOpacity,
-            width: "min(440px, 55vh)",
-            height: "min(440px, 55vh)",
+            width: "min(560px, 82vh)",
+            height: "min(560px, 82vh)",
+
             translateX: "-50%",
             translateY: "-50%",
           }}
@@ -277,54 +282,56 @@ export default function EtqanHero3D() {
           </div>
         </motion.div>
 
-        {/* Panel 2 — three stacked specs on the LEFT (ring is OFF here) */}
+        {/* Panel 2 — "من نحن" on the LEFT (ring is OFF here) */}
         <motion.div
           dir="rtl"
-          className="absolute top-1/2 -translate-y-1/2 left-[2.5vw] max-w-[46vw] z-10 pointer-events-none space-y-8"
+          className="absolute top-1/2 -translate-y-1/2 left-[2.5vw] max-w-[44vw] z-10 pointer-events-none"
           style={{ opacity: visionOpacity, y: visionY, background: "transparent" }}
         >
-          {[
-            {
-              title: "وكالة إتقان",
-              body: "وكالة سعودية متخصصة في التسويق الرقمي والهوية البصرية، نُقدّم حلولاً متكاملة تحاكي طموح العلامات التجارية.",
-            },
-            {
-              title: "+120 مشروع",
-              body: "نفّذنا أكثر من مئة مشروع لعلاماتٍ رائدة في السعودية والخليج، من الهوية البصرية إلى الحملات الرقمية المتكاملة.",
-            },
-            {
-              title: "فريق متعدد التخصصات",
-              body: "مصمّمون، مطوّرون، صنّاع محتوى ومخططو إعلانات يعملون يداً بيد لصياغة تجاربٍ رقمية لا تُنسى.",
-            },
-          ].map((item, i) => (
-            <div key={i}>
-              <h3
-                style={{
-                  fontFamily: "'El Messiri', 'Reem Kufi', serif",
-                  fontWeight: 700,
-                  fontSize: "clamp(30px, 3.6vw, 54px)",
-                  color: "hsl(var(--foreground))",
-                  lineHeight: 1.1,
-                  marginBottom: 10,
-                }}
-              >
-                {item.title}
-              </h3>
-              <p
-                style={{
-                  fontFamily: "'Tajawal', sans-serif",
-                  fontWeight: 300,
-                  fontSize: "clamp(13px, 1.1vw, 16px)",
-                  color: "hsl(var(--foreground) / 0.65)",
-                  lineHeight: 1.8,
-                  maxWidth: "32vw",
-                }}
-              >
-                {item.body}
-              </p>
-            </div>
-          ))}
+          <span
+            className="inline-block mb-6 px-4 py-1.5 rounded-full border"
+            style={{
+              borderColor: "rgba(29,158,117,0.35)",
+              color: "#5DCAA5",
+              fontFamily: "'Cairo', sans-serif",
+              fontSize: 13,
+              letterSpacing: 5,
+              background: "transparent",
+            }}
+          >
+            01 — ABOUT US
+          </span>
+          <h2
+            className="mb-8"
+            style={{
+              fontFamily: "'El Messiri', 'Reem Kufi', serif",
+              fontWeight: 700,
+              fontSize: "clamp(56px, 7.5vw, 110px)",
+              color: "hsl(var(--foreground))",
+              lineHeight: 1.05,
+              letterSpacing: "-0.02em",
+            }}
+          >
+            <span style={{ color: "#1D9E75", textShadow: "0 0 45px rgba(29,158,117,0.45)" }}>
+              من نحن
+            </span>
+          </h2>
+          <p
+            style={{
+              fontFamily: "'Tajawal', sans-serif",
+              fontWeight: 300,
+              fontSize: "clamp(15px, 1.3vw, 19px)",
+              color: "hsl(var(--foreground) / 0.78)",
+              lineHeight: 2,
+              maxWidth: "38vw",
+            }}
+          >
+            وكالة سعودية متخصصة في التسويق الرقمي والهوية البصرية. نُقدّم
+            حلولاً متكاملة تحاكي طموح العلامات التجارية، ونصنع تجاربَ رقمية
+            تترك أثراً حقيقياً في أسواقها.
+          </p>
         </motion.div>
+
 
         {/* Panel 3 — big title LEFT + two small paragraphs below-right */}
         <motion.div
