@@ -29,9 +29,8 @@ function Model() {
   const maxDim = Math.max(size.x, size.y, size.z);
   const scale = 2.6 / maxDim;
 
-  useFrame((_, dt) => {
-    if (ref.current) ref.current.rotation.y += dt * ((Math.PI * 2) / 20);
-  });
+  // Rotation is driven by scroll only — no auto-spin
+
 
   return (
     <group ref={ref}>
@@ -58,7 +57,7 @@ function Scene() {
       <pointLight position={[0, -4, 3]} intensity={0.6} color="#C8A84B" />
       <directionalLight position={[0, 5, 5]} intensity={0.5} />
       <Suspense fallback={null}>
-        <Float speed={1.2} rotationIntensity={0} floatIntensity={0.5}>
+        <Float speed={0} rotationIntensity={0} floatIntensity={0}>
           <Model />
         </Float>
         <Environment preset="city" />
