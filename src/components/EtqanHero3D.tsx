@@ -94,18 +94,29 @@ type Panel = {
 };
 
 const PANELS: Panel[] = [
-  // each panel gets its own logo angle so rotation feels intentional, not linear
-  { badge: "ETQAN AGENCY",   logoX: "28%",  logoScale: 1.00, ring: 1, rotation: FRONT,                       align: "left" },
-  { badge: "01 — ABOUT US",  logoX: "30%",  logoScale: 1.05, ring: 0, rotation: FRONT + Math.PI * 0.55,      align: "left" },
-  { badge: "02 — VISION",    logoX: "-26%", logoScale: 1.00, ring: 0, rotation: FRONT + Math.PI * 1.10,      align: "right" },
-  { badge: "03 — VALUES",    logoX: "28%",  logoScale: 1.00, ring: 1, rotation: FRONT + Math.PI * 1.75,      align: "left" },
+  // Even 0.6π rotation increments — one continuous, monotonic turn across all 4 panels.
+  { badge: "ETQAN AGENCY",   logoX: "28%",  logoScale: 1.00, ring: 1, rotation: FRONT,                  align: "left"  },
+  { badge: "01 — ABOUT US",  logoX: "30%",  logoScale: 1.05, ring: 0, rotation: FRONT + Math.PI * 0.60, align: "left"  },
+  { badge: "02 — VISION",    logoX: "-26%", logoScale: 1.00, ring: 0, rotation: FRONT + Math.PI * 1.20, align: "right" },
+  { badge: "03 — VALUES",    logoX: "28%",  logoScale: 1.00, ring: 1, rotation: FRONT + Math.PI * 1.80, align: "left"  },
 ];
 
-// Build keyframe stops: hold on each panel, transition between.
-// 4 panels → 8 stops [holdInA, holdOutA, holdInB, holdOutB, ...]
-const STOPS = [0, 0.14, 0.24, 0.42, 0.50, 0.68, 0.78, 1];
+// Adjacent-hold keyframes — no dead scroll between panels.
+// 4 panels × [holdIn, holdOut] = 8 stops. Transitions live at the boundary.
+const STOPS = [
+  0.00, 0.22,  // Panel 1 hold
+  0.28, 0.47,  // Panel 2 hold (transition 0.22→0.28)
+  0.53, 0.72,  // Panel 3 hold (transition 0.47→0.53)
+  0.78, 1.00,  // Panel 4 hold (transition 0.72→0.78)
+];
+const TRANSITIONS = [
+  [0.22, 0.28], // 1→2
+  [0.47, 0.53], // 2→3
+  [0.72, 0.78], // 3→4
+];
 const seriesAt = (vals: number[]): number[] =>
   vals.flatMap((v) => [v, v]);
+
 
 
 export default function EtqanHero3D() {
@@ -141,17 +152,22 @@ export default function EtqanHero3D() {
     rotationRef.current = v;
   });
 
-  // Per-panel text fade — pops in/out around its hold window
+  // Per-panel text fade — fades happen INSIDE the transition band of the
+  // adjacent panel, so there's never an overlap or empty-text gap.
   const panelMotion = PANELS.map((_, i) => {
     const inHold = STOPS[i * 2];
     const outHold = STOPS[i * 2 + 1];
-    const fadeIn = Math.max(0, inHold - 0.05);
-    const fadeOut = Math.min(1, outHold + 0.05);
+    // fadeIn = transition before this panel (or 0 for the first)
+    const prevTrans = TRANSITIONS[i - 1];
+    const nextTrans = TRANSITIONS[i];
+    const fadeIn = prevTrans ? prevTrans[0] : 0;
+    const fadeOut = nextTrans ? nextTrans[1] : 1;
     return {
       opacity: useTransform(progress, [fadeIn, inHold, outHold, fadeOut], [0, 1, 1, 0]),
       y: useTransform(progress, [fadeIn, inHold, outHold, fadeOut], [40, 0, 0, -40]),
     };
   });
+
 
 
   return (
