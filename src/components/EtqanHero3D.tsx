@@ -112,7 +112,15 @@ export default function EtqanHero3D() {
     offset: ["start start", "end end"],
   });
   // Soft, low-stiffness spring → buttery scroll with no jank
-  const progress = useSpring(scrollYProgress, { stiffness: 28, damping: 24, mass: 0.3 });
+  // Scrub-equivalent: very soft spring → motion catches up to scroll smoothly,
+  // fast flings settle quickly without overshoot (mimics ScrollTrigger fastScrollEnd).
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 22,
+    damping: 26,
+    mass: 0.22,
+    restDelta: 0.0005,
+  });
+
 
   // Logo transforms — driven by the same STOPS array for all panels
   const logoX = useTransform(
