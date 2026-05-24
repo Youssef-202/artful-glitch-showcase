@@ -5,7 +5,7 @@ import aboutWho from "@/assets/about-who.png";
 import aboutVision from "@/assets/about-vision.png";
 import { useEffect, useState } from "react";
 import { useLang } from "@/i18n/LanguageProvider";
-import ArchitecturalHero from "@/components/ui/architectural-hero";
+import EtqanHero3D from "@/components/EtqanHero3D";
 import PartnersLogoCloud from "@/components/PartnersLogoCloud";
 import ServicesShowcase3D from "@/components/ServicesShowcase3D";
 import PortfolioMarquee from "@/components/PortfolioMarquee";
@@ -32,7 +32,7 @@ export default function Home() {
 
   return (
     <>
-      <ArchitecturalHero />
+      <EtqanHero3D />
 
       {/* Partners logo cloud */}
       <PartnersLogoCloud />
