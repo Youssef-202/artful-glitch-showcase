@@ -121,9 +121,9 @@ export default function EtqanHero3D() {
           <motion.div
             className="absolute inset-0 rounded-full"
             style={{
-              border: "1.5px solid rgba(255,255,255,0.45)",
+              border: "1.5px solid rgba(180,255,225,0.75)",
               boxShadow:
-                "0 0 70px 8px rgba(29,158,117,0.22), inset 0 0 40px rgba(255,255,255,0.04)",
+                "0 0 180px 30px rgba(29,158,117,0.55), 0 0 80px 10px rgba(93,202,165,0.4), inset 0 0 80px rgba(93,202,165,0.18)",
               opacity: ringOpacity,
             }}
           />
@@ -131,7 +131,7 @@ export default function EtqanHero3D() {
             className="absolute inset-0 rounded-full pointer-events-none"
             style={{
               background:
-                "radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 65%)",
+                "radial-gradient(circle, rgba(93,202,165,0.18) 0%, rgba(29,158,117,0.06) 50%, transparent 75%)",
             }}
           />
           <div className="absolute inset-0">
