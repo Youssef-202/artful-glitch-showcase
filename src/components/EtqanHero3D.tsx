@@ -99,8 +99,9 @@ const PANELS: Panel[] = [
 
 // keyframe stops: pause on each panel, then transition
 const STOPS = [0, 0.18, 0.28, 0.48, 0.55, 0.75, 0.82, 1];
-const seriesAt = (a: number, b: number, c: number, d: number) =>
-  [a, a, b, b, c, c, d, d] as const;
+const seriesAt = (a: number, b: number, c: number, d: number): number[] =>
+  [a, a, b, b, c, c, d, d];
+
 
 export default function EtqanHero3D() {
   const containerRef = useRef<HTMLDivElement>(null);
