@@ -116,31 +116,32 @@ export default function EtqanHero3D() {
   const logoX = useTransform(
     progress,
     STOPS,
-    seriesAt(...(PANELS.map((p) => parseFloat(p.logoX)) as [number, number, number, number])).map(
+    seriesAt(...(PANELS.map((p) => parseFloat(p.logoX)) as [number, number, number])).map(
       (v) => `${v}%`
     )
   );
   const logoScale = useTransform(
     progress,
     STOPS,
-    seriesAt(...(PANELS.map((p) => p.logoScale) as [number, number, number, number]))
+    seriesAt(...(PANELS.map((p) => p.logoScale) as [number, number, number]))
   );
   const ringOpacity = useTransform(
     progress,
     STOPS,
-    seriesAt(...(PANELS.map((p) => p.ring) as [number, number, number, number]))
+    seriesAt(...(PANELS.map((p) => p.ring) as [number, number, number]))
   );
 
   // Rotation target driven by scroll → smooth-followed inside the Model
   const rotationMV = useTransform(
     progress,
     STOPS,
-    seriesAt(...(PANELS.map((p) => p.rotation) as [number, number, number, number]))
+    seriesAt(...(PANELS.map((p) => p.rotation) as [number, number, number]))
   );
   const rotationRef = useRef(FRONT);
   useMotionValueEvent(rotationMV, "change", (v) => {
     rotationRef.current = v;
   });
+
 
   // Per-panel content opacity/Y — pop in around each pause
   const panelMotion = PANELS.map((_, i) => {
