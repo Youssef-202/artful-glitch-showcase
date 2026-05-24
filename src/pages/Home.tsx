@@ -34,8 +34,6 @@ export default function Home() {
     <>
       <EtqanHero3D />
 
-      {/* Partners logo cloud */}
-      <PartnersLogoCloud />
 
       {/* Services grid */}
       <ServicesShowcase3D />

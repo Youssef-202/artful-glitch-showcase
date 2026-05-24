@@ -1,7 +1,7 @@
 import { Suspense, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, Float, useGLTF } from "@react-three/drei";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
 import * as THREE from "three";
 
 function Model() {
