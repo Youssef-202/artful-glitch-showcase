@@ -27,8 +27,8 @@ function Model() {
   box.getSize(size);
   box.getCenter(center);
   const maxDim = Math.max(size.x, size.y, size.z);
-  // Fill the glowing circle (camera moved back to fit)
-  const scale = 3.2 / maxDim;
+  // Fill the glowing circle a bit more
+  const scale = 3.9 / maxDim;
 
   useFrame((_, dt) => {
     if (ref.current) ref.current.rotation.y += dt * ((Math.PI * 2) / 20);
@@ -163,7 +163,7 @@ export default function EtqanHero3D() {
           <h1
             className="mb-6"
             style={{
-              fontFamily: "'Reem Kufi', 'Amiri', 'Cairo', serif",
+              fontFamily: "'El Messiri', 'Reem Kufi', serif",
               fontWeight: 700,
               fontSize: "clamp(72px, 11vw, 160px)",
               color: "#1D9E75",
@@ -175,15 +175,30 @@ export default function EtqanHero3D() {
             إتقان
           </h1>
           <p
+            className="mb-5"
             style={{
-              fontFamily: "'Reem Kufi', 'Cairo', sans-serif",
-              fontWeight: 300,
-              fontSize: "clamp(20px, 2.2vw, 34px)",
+              fontFamily: "'El Messiri', 'Tajawal', sans-serif",
+              fontWeight: 500,
+              fontSize: "clamp(22px, 2.4vw, 38px)",
               color: "#5DCAA5",
-              lineHeight: 1.6,
+              lineHeight: 1.5,
             }}
           >
             في إتقان نصنع من رؤيتك حقيقة
+          </p>
+          <p
+            style={{
+              fontFamily: "'Tajawal', 'El Messiri', sans-serif",
+              fontWeight: 300,
+              fontSize: "clamp(15px, 1.45vw, 21px)",
+              color: "hsl(var(--foreground) / 0.78)",
+              lineHeight: 1.95,
+              maxWidth: "38vw",
+            }}
+          >
+            وكالة إتقان وكالة سعودية متخصّصة في التسويق الرقمي، التصميم الإبداعي،
+            وبناء العلامات التجارية. نُترجم رؤيتك إلى تجربة بصرية متكاملة تُعبّر
+            عن قيمتك، وتترك أثراً يدوم في ذهن جمهورك.
           </p>
           <div className="mt-10 flex items-center gap-3 opacity-60">
             <div className="w-16 h-[1px]" style={{ background: "linear-gradient(to left, #1D9E75, transparent)" }} />
@@ -215,7 +230,7 @@ export default function EtqanHero3D() {
           <h2
             className="mb-8"
             style={{
-              fontFamily: "'Reem Kufi', 'Amiri', 'Cairo', serif",
+              fontFamily: "'El Messiri', 'Reem Kufi', serif",
               fontWeight: 700,
               fontSize: "clamp(56px, 8.5vw, 120px)",
               color: "#1D9E75",
@@ -228,7 +243,7 @@ export default function EtqanHero3D() {
           </h2>
           <p
             style={{
-              fontFamily: "'Reem Kufi', 'Cairo', sans-serif",
+              fontFamily: "'Tajawal', 'El Messiri', sans-serif",
               fontWeight: 300,
               fontSize: "clamp(18px, 1.9vw, 28px)",
               color: "hsl(var(--foreground) / 0.85)",
@@ -263,7 +278,7 @@ export default function EtqanHero3D() {
           <h2
             className="mb-8"
             style={{
-              fontFamily: "'Reem Kufi', 'Amiri', 'Cairo', serif",
+              fontFamily: "'El Messiri', 'Reem Kufi', serif",
               fontWeight: 700,
               fontSize: "clamp(56px, 8.5vw, 120px)",
               color: "#1D9E75",
@@ -276,7 +291,7 @@ export default function EtqanHero3D() {
           </h2>
           <p
             style={{
-              fontFamily: "'Reem Kufi', 'Cairo', sans-serif",
+              fontFamily: "'Tajawal', 'El Messiri', sans-serif",
               fontWeight: 300,
               fontSize: "clamp(18px, 1.9vw, 28px)",
               color: "hsl(var(--foreground) / 0.85)",
