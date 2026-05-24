@@ -92,15 +92,15 @@ type Panel = {
 
 const PANELS: Panel[] = [
   { badge: "ETQAN AGENCY", logoX: "28%", logoScale: 1.0, ring: 1, rotation: FRONT, align: "left" },
-  { badge: "01 — ABOUT US", logoX: "30%", logoScale: 1.05, ring: 0, rotation: FRONT + Math.PI * 0.55, align: "left" },
-  { badge: "02 — SERVICES", logoX: "-28%", logoScale: 1.0, ring: 0, rotation: FRONT + Math.PI * 1.15, align: "right" },
-  { badge: "03 — START", logoX: "0%", logoScale: 1.15, ring: 1, rotation: FRONT + Math.PI * 1.85, align: "left" },
+  { badge: "01 — ABOUT US", logoX: "30%", logoScale: 1.05, ring: 0, rotation: FRONT + Math.PI * 0.7, align: "left" },
+  { badge: "02 — VISION", logoX: "28%", logoScale: 1.0, ring: 1, rotation: FRONT + Math.PI * 1.6, align: "left" },
 ];
 
-// keyframe stops: pause on each panel, then transition
-const STOPS = [0, 0.18, 0.28, 0.48, 0.55, 0.75, 0.82, 1];
-const seriesAt = (a: number, b: number, c: number, d: number): number[] =>
-  [a, a, b, b, c, c, d, d];
+// keyframe stops for 3 panels: pause on each, transition between
+const STOPS = [0, 0.22, 0.38, 0.62, 0.78, 1];
+const seriesAt = (a: number, b: number, c: number): number[] =>
+  [a, a, b, b, c, c];
+
 
 
 export default function EtqanHero3D() {
