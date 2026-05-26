@@ -15,10 +15,13 @@ type Post = {
   created_at: string;
 };
 
+type PageContent = { kicker?: string; title?: string; subtitle?: string; cover_url?: string };
+
 export default function Blog() {
   const { t, dir } = useLang();
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
   const [posts, setPosts] = useState<Post[]>([]);
+  const [page, setPage] = useState<PageContent>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -31,16 +34,21 @@ export default function Blog() {
         setPosts(data ?? []);
         setLoading(false);
       });
+    (supabase.from as any)("site_pages").select("content").eq("page_key", "blog").maybeSingle()
+      .then(({ data }: any) => { if (data?.content) setPage(data.content as PageContent); });
   }, []);
 
   return (
     <div className="px-6 max-w-7xl mx-auto">
+      {page.cover_url && (
+        <img src={page.cover_url} alt="" className="w-full max-h-72 object-cover rounded-3xl mb-8 shadow-elegant" />
+      )}
       <header className="text-center mb-12">
-        <p className="text-sm text-primary tracking-widest mb-3">{t.blog.kicker}</p>
+        <p className="text-sm text-primary tracking-widest mb-3">{page.kicker || t.blog.kicker}</p>
         <h1 className="text-4xl sm:text-6xl font-black mb-4">
-          <span className="text-gradient">{t.blog.title}</span>
+          <span className="text-gradient">{page.title || t.blog.title}</span>
         </h1>
-        <p className="text-muted-foreground max-w-xl mx-auto">{t.blog.subtitle}</p>
+        <p className="text-muted-foreground max-w-xl mx-auto">{page.subtitle || t.blog.subtitle}</p>
       </header>
 
       {loading ? (
