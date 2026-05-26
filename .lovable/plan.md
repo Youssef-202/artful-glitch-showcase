@@ -1,59 +1,114 @@
-## Goal
+# موقع وكالة إبداعية — تجربة 3D كاملة
 
-Eliminate the dead-scroll gaps between panels and make sure every panel's RTL text sits opposite its logo with a clean, monotonic rotation arc.
+موقع صفحة واحدة (SPA) باللغة العربية مع تخطيط RTL، ثيم داكن، لمسة زجاجية (glassmorphism)، ولون أساسي `#3565F5`. ٨ أقسام خدمات كل منها بمشهد ثلاثي الأبعاد مستقل.
 
-## Issues found
+## الهيكل العام للصفحة
 
-1. **Scroll gaps between panels.** `STOPS = [0, 0.14, 0.24, 0.42, 0.50, 0.68, 0.78, 1]` leaves 8–10% of scroll between each pair of holds. During those windows the previous text is gone, the next hasn't faded in yet, and the logo is still mid-rotation — looks like empty scroll.
-2. **Text fade ranges spill into hold windows.** Each panel's `fadeIn/fadeOut` extends ±0.05 past its hold, which overlaps the next panel's hold and causes a brief stacking/flash.
-3. **RTL alignment of Panel 3.** Logo `logoX = "-26%"` moves it to the viewport's left, and text uses `right-[2.5vw] text-right`. That is the correct mirror for the other panels, but worth re-verifying against the live preview.
-4. **Rotation deltas are uneven.** Current jumps: 0.55π → 0.55π → 0.65π. Small, but the last leg is noticeably faster. Should be equal increments so the spin reads as one continuous turn.
-
-## Plan
-
-### 1. Remove scroll gaps
-Switch from "hold–gap–hold" to **adjacent holds**: each panel owns 25% of scroll and the transition happens at the boundary. New stops:
-
-```
-panel 1 hold: 0.00 → 0.22
-transition:   0.22 → 0.28
-panel 2 hold: 0.28 → 0.47
-transition:   0.47 → 0.53
-panel 3 hold: 0.53 → 0.72
-transition:   0.72 → 0.78
-panel 4 hold: 0.78 → 1.00
+```text
+[Loading Screen 3D]
+   ↓
+[Cursor Follower + Particles Background ثابت خلف كل القسم]
+   ↓
+1. Hero (اسم الشركة + شعار + كرة/شبكة 3D متحركة)
+2. About / مقدمة قصيرة
+3-10. ٨ أقسام خدمات (واحد تلو الآخر، scroll-snap)
+11. Footer مختصر
+[Floating CTA — واتساب/بريد — bottom-right]
 ```
 
-Transitions shrink from ~10% to 6% so movement feels deliberate but never empty.
+## الأقسام الثمانية
 
-### 2. Tighten text fades to the transition window
-Each panel's text fades **inside its own transition band**, not past it:
-- fadeIn = transition start of incoming panel
-- fadeOut = transition end of outgoing panel
+| #   | الخدمة                         | المشهد ثلاثي الأبعاد                                |
+| --- | ------------------------------ | --------------------------------------------------- |
+| 01  | إدارة الحسابات                 | لوحة بيانات عائمة + رسوم بيانية بأعمدة متحركة       |
+| 02  | التصوير والإنتاج البصري        | عدسة كاميرا (أسطوانات + حلقات) مع سحابة جزيئات      |
+| 03  | كتابة وصناعة المحتوى           | حروف عربية ثلاثية الأبعاد عائمة فوق لوحة مفاتيح     |
+| 04  | الخطط والاستراتيجيات التسويقية | منحنى نمو/خط طريق بنقاط مضيئة                       |
+| 05  | إدارة الحملات الإعلانية        | مخروط مكبّر صوت + تيارات بيانات (lines + particles) |
+| 06  | تطوير المواقع                  | نافذة متصفح 3D مع تأثير كتابة كود                   |
+| 07  | التصميم الجرافيكي              | كرات ألوان متحوّلة + قلم Bezier متحرك               |
+| 08  | بناء العلامة التجارية          | قطع شعار تتجمع من الفضاء إلى مكانها                 |
 
-No overlap, no stacking flash.
+كل قسم: عنوان كبير + وصف قصير + بطاقة زجاجية + مشهد 3D على الجانب. عند hover على بطاقة الخدمة، يدور/يتفاعل المشهد.
 
-### 3. Even rotation arc
-Replace the current rotations with equal 0.6π increments so the logo turns at a constant rate across the four panels:
+## التفاعلات
 
-```
-Panel 1: FRONT
-Panel 2: FRONT + 0.60π
-Panel 3: FRONT + 1.20π
-Panel 4: FRONT + 1.80π
-```
+- **Smooth scroll** عبر Lenis، مع `scroll-snap` على الأقسام في الديسكتوب فقط (يُعطّل على الموبايل لتجربة أفضل).
+- **GSAP ScrollTrigger** لكل قسم: fade + translate + scale للنصوص، وتغيير زاوية الكاميرا/دوران المشهد.
+- **Cursor follower**: دائرة blur مع وهج بلون `#3565F5` تتبع المؤشر بسلاسة (مخفي على الموبايل).
+- **Particles خلفية ثابتة**: نجوم/جزيئات في `<Canvas>` واحد خلف الـ DOM (`fixed inset-0 -z-10`).
+- **Hover على البطاقات**: زيادة سرعة الدوران + إضاءة إضافية.
+- **Page enter transition**: fade + scale عند انتهاء التحميل.
 
-Total ~1 full turn across the whole scroll, no sudden jumps. The existing exponential smoothing in `useFrame` keeps it visually buttery.
+## شاشة التحميل
 
-### 4. RTL verification pass
-After the edit, screenshot each of the 4 panel hold positions and confirm:
-- Panel 1: logo right, text left ✓ expected
-- Panel 2: logo right, text left ✓ expected
-- Panel 3: logo left, text right ✓ expected
-- Panel 4: logo right, text left ✓ expected
+`<Canvas>` صغير مع كرة wireframe دوّارة + نص "...جاري التحميل" + شريط تقدم. تُخفى عند `useProgress().active === false` من drei.
 
-Fix any mismatch by flipping `logoX` sign or swapping `left-[2.5vw]` / `right-[2.5vw]` on that panel.
+## Floating CTA
 
-## Scope
+زر دائري ثابت `bottom-right` (يسار في RTL سيكون يمين بصرياً = نفس المكان عبر `right-6`)، يفتح رابط واتساب (`https://wa.me/`) في تبويب جديد. micro-interaction: نبض + scale عند hover + أيقونة تتحرك.
 
-Single file: `src/components/EtqanHero3D.tsx`. No other components, no new dependencies, no design-token changes. Spring tuning from the previous step stays as is.
+اسم الشركة سيظل **`[اسم الشركة]`** كنص نائب في كل المواضع (Hero, Footer, meta tags, CTA tooltip).
+
+## الجوانب التقنية
+
+- **Stack**: المشروع الحالي React 18 + Vite + Tailwind v3 + TypeScript. سنبقى عليه (لا CDN).
+- **حزم نضيفها بإصدارات متوافقة مع React 18**:
+  - `three@0.160.x`
+  - `@react-three/fiber@^8.18`
+  - `@react-three/drei@^9.122`
+  - `gsap` (مع ScrollTrigger)
+  - `framer-motion`
+  - `@studio-freight/lenis` (smooth scroll)
+- **التقسيم إلى ملفات** (وداعاً لمتطلب الملف الواحد — مع موافقتك على بنية React/Vite):
+  ```text
+  src/
+    pages/Index.tsx               # تركيب كل الأقسام
+    components/
+      Loader.tsx                  # شاشة تحميل 3D
+      CursorFollower.tsx
+      FloatingCTA.tsx
+      ParticleBackground.tsx      # Canvas خلفي ثابت
+      SectionShell.tsx            # غلاف قسم (snap + glass + scroll trigger)
+      Hero.tsx
+      services/
+        AccountMgmt3D.tsx
+        Photography3D.tsx
+        Content3D.tsx
+        Strategy3D.tsx
+        AdsCampaign3D.tsx
+        WebDev3D.tsx
+        GraphicDesign3D.tsx
+        Branding3D.tsx
+      ServiceSection.tsx          # غلاف موحّد لكل خدمة (نص + سلوت 3D)
+    hooks/
+      useLenis.ts
+      useScrollReveal.ts          # GSAP wrapper
+    lib/
+      services.ts                 # بيانات الخدمات الثمانية (عناوين عربية، أوصاف)
+  ```
+- **الأداء**:
+  - `<Suspense fallback={<Loader/>}>` حول كل مشهد ثقيل.
+  - `lazy()` على مشاهد الخدمات (تُحمَّل عند اقتراب القسم عبر IntersectionObserver — مكوّن `LazyScene`).
+  - `dpr={[1, 2]}` و `frameloop="demand"` للمشاهد الثانوية، `"always"` للمشهد المرئي حالياً.
+  - تعطيل المشاهد عندما تكون خارج الـ viewport (`useInView`).
+  - تقليل الـ particles على الموبايل (تحقّق `matchMedia`).
+- **RTL**:
+  - `<html dir="rtl" lang="ar">` في `index.html`.
+  - خط عربي: Tajawal أو Cairo عبر Google Fonts (محمّل في `index.html`).
+  - تحديث `tailwind.config.ts` بإضافة `fontFamily.sans = ['Tajawal', ...]`.
+- **نظام التصميم** (في `src/index.css` — تحديث متغيرات HSL):
+  - `--background: 222 47% 5%` (داكن)
+  - `--primary: 222 91% 58%` (≈ #3565F5)
+  - `--accent: 222 91% 65%`
+  - بطاقات زجاجية: `bg-white/5 backdrop-blur-xl border border-white/10`
+  - تدرّجات: `from-[#3565F5] via-[#5B7CF7] to-[#8A9FFA]`
+- **SEO**: تحديث `index.html` بـ `<title>`, `meta description`, `og:*`, `twitter:*` بالعربية، و `lang="ar"`, `dir="rtl"`.
+- **استجابة**: شبكة `grid-cols-1 lg:grid-cols-2` في كل قسم خدمة (نص + 3D)، الكانفاس بارتفاع `h-[50vh] lg:h-screen`.
+
+## ملاحظات مهمة (انحرافات مقصودة عن طلبك)
+
+1. **ليس ملف HTML واحد بـ CDN** — اخترتَ "مشروع React/Vite كامل" في الأسئلة، لذلك سأستخدم بنية المشروع الحالية بدلاً من CDN، مع تقسيم نظيف للمكوّنات.
+2. **اسم الشركة** سيظل حرفياً `[اسم الشركة]` في الكود. استبدله لاحقاً بكلمة بحث/استبدال واحدة.
+3. **النماذج 3D**: مشاهد إجرائية (procedural) من primitives + shaders + drei helpers — بدون ملفات GLTF خارجية، حسب اختيارك "متوسط".
+4. **CTA**: زر واتساب عائم فقط (رقم placeholder `+9665XXXXXXXX` تستبدله لاحقاً)، بدون نموذج اتصال.
