@@ -552,6 +552,7 @@ function PartnerForm({ item, onClose }: { item: Partner | null; onClose: () => v
   const [form, setForm] = useState({
     name: item?.name ?? "",
     logo_url: item?.logo_url ?? "",
+    cover_url: item?.cover_url ?? "",
     website_url: item?.website_url ?? "",
     sort_order: item?.sort_order ?? 0,
     published: item?.published ?? true,
@@ -566,6 +567,7 @@ function PartnerForm({ item, onClose }: { item: Partner | null; onClose: () => v
     const payload = {
       name: parsed.data.name,
       logo_url: parsed.data.logo_url || null,
+      cover_url: parsed.data.cover_url || null,
       website_url: parsed.data.website_url || null,
       sort_order: parsed.data.sort_order,
       published: parsed.data.published,
@@ -590,6 +592,9 @@ function PartnerForm({ item, onClose }: { item: Partner | null; onClose: () => v
         className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-lg font-bold" />
       <FileUpload value={form.logo_url} onChange={(url) => setForm({ ...form, logo_url: url ?? "" })} folder="partners" accept="image/*" label="شعار الشريك" />
       <input type="url" placeholder="رابط الشعار (أو رابط مباشر)" value={form.logo_url} onChange={(e) => setForm({ ...form, logo_url: e.target.value })}
+        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-xs" />
+      <FileUpload value={form.cover_url} onChange={(url) => setForm({ ...form, cover_url: url ?? "" })} folder="partners/covers" accept="image/*" label="صورة الغلاف" />
+      <input type="url" placeholder="رابط صورة الغلاف (اختياري)" value={form.cover_url} onChange={(e) => setForm({ ...form, cover_url: e.target.value })}
         className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-xs" />
       <input type="url" placeholder="رابط موقع الشركة (اختياري)" value={form.website_url} onChange={(e) => setForm({ ...form, website_url: e.target.value })}
         className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
