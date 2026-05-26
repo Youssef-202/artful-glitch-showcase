@@ -80,29 +80,39 @@ export default function Blog() {
                 to={`/blog/${p.id}`}
                 className="group block glass rounded-2xl overflow-hidden h-full hover:shadow-glow hover:-translate-y-1 transition-all"
               >
-                {p.cover_url ? (
-                  <div className="aspect-video overflow-hidden bg-background/40">
-                    <img src={p.cover_url} alt={p.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
-                  </div>
-                ) : (
-                  <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                    <span className="text-4xl font-black text-gradient">{p.category?.[0] ?? "✦"}</span>
-                  </div>
-                )}
-                <div className="p-6">
-                  {p.category && (
-                    <span className="inline-block text-xs text-primary tracking-widest mb-2">{p.category}</span>
-                  )}
-                  <h2 className="text-xl font-bold mb-2 line-clamp-2">{p.title}</h2>
-                  {p.excerpt && <p className="text-sm text-muted-foreground line-clamp-3 mb-4">{p.excerpt}</p>}
-                  <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                    {p.author_name && <span className="flex items-center gap-1"><User className="w-3 h-3" />{p.author_name}</span>}
-                    <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{new Date(p.created_at).toLocaleDateString()}</span>
-                  </div>
-                  <span className="inline-flex items-center gap-1 mt-4 text-primary text-sm font-bold opacity-0 group-hover:opacity-100 transition">
-                    {t.blog.readMore} <Arrow className="w-3 h-3" />
-                  </span>
-                </div>
+                {(() => {
+                  const title = pick(p.title, p.title_en);
+                  const excerpt = pick(p.excerpt, p.excerpt_en);
+                  const category = pick(p.category, p.category_en);
+                  const author = pick(p.author_name, p.author_name_en);
+                  return (
+                    <>
+                      {p.cover_url ? (
+                        <div className="aspect-video overflow-hidden bg-background/40">
+                          <img src={p.cover_url} alt={title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+                        </div>
+                      ) : (
+                        <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                          <span className="text-4xl font-black text-gradient">{category?.[0] ?? "✦"}</span>
+                        </div>
+                      )}
+                      <div className="p-6">
+                        {category && (
+                          <span className="inline-block text-xs text-primary tracking-widest mb-2">{category}</span>
+                        )}
+                        <h2 className="text-xl font-bold mb-2 line-clamp-2">{title}</h2>
+                        {excerpt && <p className="text-sm text-muted-foreground line-clamp-3 mb-4">{excerpt}</p>}
+                        <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                          {author && <span className="flex items-center gap-1"><User className="w-3 h-3" />{author}</span>}
+                          <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{new Date(p.created_at).toLocaleDateString()}</span>
+                        </div>
+                        <span className="inline-flex items-center gap-1 mt-4 text-primary text-sm font-bold opacity-0 group-hover:opacity-100 transition">
+                          {t.blog.readMore} <Arrow className="w-3 h-3" />
+                        </span>
+                      </div>
+                    </>
+                  );
+                })()}
               </Link>
             </motion.article>
           ))}
