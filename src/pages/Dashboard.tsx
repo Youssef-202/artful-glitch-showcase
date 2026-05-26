@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, NavLink, Route, Routes, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FileText, Image as ImageIcon, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft, Building2, Package, Wrench, MessageSquare } from "lucide-react";
+import { FileText, Image as ImageIcon, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft, Building2, Package, Wrench, MessageSquare, Info } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -13,6 +13,7 @@ import { MultiFileUpload } from "@/components/MultiFileUpload";
 import OrdersManager from "@/components/admin/OrdersManager";
 import ServicesManager from "@/components/admin/ServicesManager";
 import TestimonialsManager from "@/components/admin/TestimonialsManager";
+import AboutManager from "@/components/admin/AboutManager";
 
 type Post = {
   id: string; title: string; excerpt: string | null; content: string;
@@ -42,6 +43,7 @@ function Sidebar() {
     { to: "/dashboard/portfolio", icon: ImageIcon, label: t.dashboard.portfolio },
     { to: "/dashboard/partners", icon: Building2, label: "الشركاء" },
     { to: "/dashboard/testimonials", icon: MessageSquare, label: "شركاء النجاح" },
+    { to: "/dashboard/about", icon: Info, label: "من نحن" },
   ];
   return (
     <aside className="w-64 shrink-0 glass-strong rounded-3xl p-4 flex flex-col gap-2 h-fit sticky top-24">
@@ -649,6 +651,7 @@ export default function Dashboard() {
           <Route path="portfolio" element={<PortfolioManager items={portfolio} onChange={() => setTick((t) => t + 1)} />} />
           <Route path="partners" element={<PartnersManager items={partners} onChange={() => setTick((t) => t + 1)} />} />
           <Route path="testimonials" element={<TestimonialsManager />} />
+          <Route path="about" element={<AboutManager />} />
         </Routes>
       </div>
     </div>
