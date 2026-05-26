@@ -524,8 +524,11 @@ function PartnersManager({ items, onChange }: { items: Partner[]; onChange: () =
         {items.map((p) => (
           <div key={p.id} className="flex items-center justify-between p-4 border-b border-border/40 last:border-0 hover:bg-foreground/5">
             <div className="flex items-center gap-3 min-w-0 flex-1">
-              <div className="w-12 h-12 rounded-xl shrink-0 overflow-hidden bg-background/40 flex items-center justify-center">
-                {p.logo_url ? <img src={p.logo_url} alt="" className="w-full h-full object-contain" /> : <Building2 className="w-5 h-5 text-muted-foreground" />}
+              <div
+                className="w-20 h-12 rounded-xl shrink-0 overflow-hidden bg-background/40 flex items-center justify-center bg-cover bg-center"
+                style={p.cover_url ? { backgroundImage: `url(${p.cover_url})` } : undefined}
+              >
+                {p.logo_url ? <img src={p.logo_url} alt="" className="w-full h-full object-contain" /> : !p.cover_url && <Building2 className="w-5 h-5 text-muted-foreground" />}
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-2 mb-1">
