@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Calendar, User } from "lucide-react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { useLang } from "@/i18n/LanguageProvider";
+import "@/components/rich-text-editor.css";
 
 type Post = {
   id: string; title: string; excerpt: string | null; content: string;
@@ -43,9 +44,10 @@ export default function BlogPost() {
         {post.cover_url && (
           <img src={post.cover_url} alt={post.title} className="w-full rounded-3xl mb-8 shadow-elegant" />
         )}
-        <div className="prose prose-invert max-w-none text-lg leading-relaxed whitespace-pre-wrap text-foreground/90">
-          {post.content}
-        </div>
+        <div
+          className="prose-rich max-w-none text-lg leading-relaxed text-foreground/90"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
       </motion.div>
       <div className="h-16" />
     </article>
