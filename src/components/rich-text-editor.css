@@ -1,0 +1,64 @@
+.rich-text-editor .ql-toolbar {
+  background: hsl(var(--background) / 0.5);
+  border-color: hsl(var(--border));
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+}
+.rich-text-editor .ql-container {
+  background: hsl(var(--background) / 0.5);
+  border-color: hsl(var(--border));
+  border-bottom-left-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+  font-family: inherit;
+  font-size: 1rem;
+  min-height: 280px;
+}
+.rich-text-editor .ql-editor {
+  min-height: 280px;
+  color: hsl(var(--foreground));
+}
+.rich-text-editor .ql-editor.ql-blank::before {
+  color: hsl(var(--muted-foreground));
+  font-style: normal;
+}
+.rich-text-editor .ql-stroke { stroke: hsl(var(--foreground)); }
+.rich-text-editor .ql-fill { fill: hsl(var(--foreground)); }
+.rich-text-editor .ql-picker { color: hsl(var(--foreground)); }
+.rich-text-editor .ql-picker-options {
+  background: hsl(var(--background));
+  border-color: hsl(var(--border));
+}
+.rich-text-editor .ql-snow .ql-tooltip {
+  background: hsl(var(--background));
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground));
+  box-shadow: 0 4px 12px hsl(0 0% 0% / 0.3);
+}
+.rich-text-editor .ql-snow .ql-tooltip input[type=text] {
+  background: hsl(var(--background));
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground));
+}
+
+/* Rendered content */
+.prose-rich :where(h1) { font-size: 2rem; font-weight: 800; margin: 1rem 0; }
+.prose-rich :where(h2) { font-size: 1.5rem; font-weight: 700; margin: 0.8rem 0; }
+.prose-rich :where(h3) { font-size: 1.25rem; font-weight: 700; margin: 0.6rem 0; }
+.prose-rich :where(p) { margin: 0.6rem 0; line-height: 1.8; }
+.prose-rich :where(ul) { list-style: disc; padding-inline-start: 1.5rem; margin: 0.6rem 0; }
+.prose-rich :where(ol) { list-style: decimal; padding-inline-start: 1.5rem; margin: 0.6rem 0; }
+.prose-rich :where(blockquote) {
+  border-inline-start: 3px solid hsl(var(--primary));
+  padding-inline-start: 1rem;
+  margin: 1rem 0;
+  color: hsl(var(--muted-foreground));
+  font-style: italic;
+}
+.prose-rich :where(a) { color: hsl(var(--primary)); text-decoration: underline; }
+.prose-rich :where(img) { border-radius: 0.75rem; margin: 1rem 0; max-width: 100%; }
+.prose-rich :where(pre) {
+  background: hsl(var(--background) / 0.7);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+}
