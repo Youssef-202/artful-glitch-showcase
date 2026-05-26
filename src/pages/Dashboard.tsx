@@ -19,17 +19,24 @@ import BlogPageManager from "@/components/admin/BlogPageManager";
 
 type Post = {
   id: string; title: string; excerpt: string | null; content: string;
-  cover_url: string | null; author_name: string | null; category: string | null;
+  title_en: string | null; excerpt_en: string | null; content_en: string | null;
+  cover_url: string | null; author_name: string | null; author_name_en: string | null;
+  category: string | null; category_en: string | null;
   published: boolean; created_at: string;
 };
 
 const postSchema = z.object({
   title: z.string().trim().min(1).max(200),
+  title_en: z.string().trim().max(200).optional().or(z.literal("")),
   excerpt: z.string().trim().max(500).optional().or(z.literal("")),
-  content: z.string().trim().min(1).max(20000),
+  excerpt_en: z.string().trim().max(500).optional().or(z.literal("")),
+  content: z.string().trim().min(1).max(50000),
+  content_en: z.string().trim().max(50000).optional().or(z.literal("")),
   cover_url: z.string().trim().url().optional().or(z.literal("")),
   author_name: z.string().trim().max(100).optional().or(z.literal("")),
+  author_name_en: z.string().trim().max(100).optional().or(z.literal("")),
   category: z.string().trim().max(50).optional().or(z.literal("")),
+  category_en: z.string().trim().max(50).optional().or(z.literal("")),
   published: z.boolean(),
 });
 
@@ -174,13 +181,19 @@ function PostsList({ posts, onChange }: { posts: Post[]; onChange: () => void })
 function PostForm({ post, onClose }: { post: Post | null; onClose: () => void }) {
   const { t } = useLang();
   const { user } = useAuth();
+  const [lang, setLang] = useState<"ar" | "en">("ar");
   const [form, setForm] = useState({
     title: post?.title ?? "",
+    title_en: post?.title_en ?? "",
     excerpt: post?.excerpt ?? "",
+    excerpt_en: post?.excerpt_en ?? "",
     content: post?.content ?? "",
+    content_en: post?.content_en ?? "",
     cover_url: post?.cover_url ?? "",
     author_name: post?.author_name ?? "",
+    author_name_en: post?.author_name_en ?? "",
     category: post?.category ?? "",
+    category_en: post?.category_en ?? "",
     published: post?.published ?? true,
   });
   const [busy, setBusy] = useState(false);
@@ -192,12 +205,17 @@ function PostForm({ post, onClose }: { post: Post | null; onClose: () => void })
     setBusy(true);
     const payload = {
       title: parsed.data.title,
+      title_en: parsed.data.title_en || null,
       content: parsed.data.content,
+      content_en: parsed.data.content_en || null,
       published: parsed.data.published,
       excerpt: parsed.data.excerpt || null,
+      excerpt_en: parsed.data.excerpt_en || null,
       cover_url: parsed.data.cover_url || null,
       author_name: parsed.data.author_name || null,
+      author_name_en: parsed.data.author_name_en || null,
       category: parsed.data.category || null,
+      category_en: parsed.data.category_en || null,
     };
     const res = post
       ? await supabase.from("blog_posts").update(payload).eq("id", post.id)
@@ -207,6 +225,9 @@ function PostForm({ post, onClose }: { post: Post | null; onClose: () => void })
     else { toast.success("✓"); onClose(); }
   };
 
+  const inp = "w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary";
+  const isAr = lang === "ar";
+
   return (
     <form onSubmit={save} className="glass-strong rounded-3xl p-8 space-y-4">
       <div className="flex items-center justify-between mb-4">
@@ -215,23 +236,50 @@ function PostForm({ post, onClose }: { post: Post | null; onClose: () => void })
           <ArrowLeft className="w-4 h-4" /> {t.dashboard.cancel}
         </button>
       </div>
-      <input required maxLength={200} placeholder={t.dashboard.postTitle} value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })}
-        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-lg font-bold" />
-      <div className="grid sm:grid-cols-2 gap-4">
-        <input maxLength={100} placeholder={t.dashboard.author} value={form.author_name} onChange={(e) => setForm({ ...form, author_name: e.target.value })}
-          className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
-        <input maxLength={50} placeholder={t.dashboard.category} value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}
-          className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
+
+      <div className="inline-flex rounded-full bg-background/50 border border-border p-1">
+        <button type="button" onClick={() => setLang("ar")}
+          className={cn("px-5 py-2 rounded-full text-sm font-bold transition", isAr ? "bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow" : "text-muted-foreground")}>
+          🇸🇦 العربية
+        </button>
+        <button type="button" onClick={() => setLang("en")}
+          className={cn("px-5 py-2 rounded-full text-sm font-bold transition", !isAr ? "bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow" : "text-muted-foreground")}>
+          🇬🇧 English
+        </button>
       </div>
-      <FileUpload value={form.cover_url} onChange={(url) => setForm({ ...form, cover_url: url ?? "" })} folder="blog" accept="image/*" label="صورة الغلاف" />
-      <input type="url" placeholder={t.dashboard.cover + " (أو رابط مباشر)"} value={form.cover_url} onChange={(e) => setForm({ ...form, cover_url: e.target.value })}
-        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-xs" />
-      <textarea maxLength={500} rows={2} placeholder={t.dashboard.excerpt} value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
-        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none" />
-      <div>
-        <p className="text-sm font-bold mb-2">{t.dashboard.content}</p>
-        <RichTextEditor value={form.content} onChange={(html) => setForm({ ...form, content: html })} placeholder={t.dashboard.content} />
-      </div>
+
+      {isAr ? (
+        <div className="space-y-4" dir="rtl">
+          <input required maxLength={200} placeholder="عنوان المقال (عربي)" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })}
+            className={inp + " text-lg font-bold"} />
+          <div className="grid sm:grid-cols-2 gap-4">
+            <input maxLength={100} placeholder="اسم الكاتب" value={form.author_name} onChange={(e) => setForm({ ...form, author_name: e.target.value })} className={inp} />
+            <input maxLength={50} placeholder="التصنيف" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className={inp} />
+          </div>
+          <textarea maxLength={500} rows={2} placeholder="مقتطف" value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} className={inp + " resize-none"} />
+          <div>
+            <p className="text-sm font-bold mb-2">محتوى المقال (عربي)</p>
+            <RichTextEditor value={form.content} onChange={(html) => setForm({ ...form, content: html })} placeholder="اكتب المقال هنا…" dir="rtl" />
+          </div>
+        </div>
+      ) : (
+        <div className="space-y-4" dir="ltr">
+          <input maxLength={200} placeholder="Article title (English)" value={form.title_en} onChange={(e) => setForm({ ...form, title_en: e.target.value })}
+            className={inp + " text-lg font-bold"} />
+          <div className="grid sm:grid-cols-2 gap-4">
+            <input maxLength={100} placeholder="Author name" value={form.author_name_en} onChange={(e) => setForm({ ...form, author_name_en: e.target.value })} className={inp} />
+            <input maxLength={50} placeholder="Category" value={form.category_en} onChange={(e) => setForm({ ...form, category_en: e.target.value })} className={inp} />
+          </div>
+          <textarea maxLength={500} rows={2} placeholder="Excerpt" value={form.excerpt_en} onChange={(e) => setForm({ ...form, excerpt_en: e.target.value })} className={inp + " resize-none"} />
+          <div>
+            <p className="text-sm font-bold mb-2">Article content (English)</p>
+            <RichTextEditor value={form.content_en} onChange={(html) => setForm({ ...form, content_en: html })} placeholder="Write the article here…" dir="ltr" />
+          </div>
+        </div>
+      )}
+
+      <FileUpload value={form.cover_url} onChange={(url) => setForm({ ...form, cover_url: url ?? "" })} folder="blog" accept="image/*" label="صورة الغلاف / Cover image" />
+
       <label className="flex items-center gap-2 text-sm">
         <input type="checkbox" checked={form.published} onChange={(e) => setForm({ ...form, published: e.target.checked })} />
         {t.dashboard.published}
