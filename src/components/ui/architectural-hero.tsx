@@ -72,13 +72,13 @@ export default function ArchitecturalHero() {
           <div className="flex flex-wrap gap-4 sm:gap-6">
             <a
               href="/contact"
-              className="rounded-full px-8 sm:px-10 py-4 sm:py-5 bg-[#2dd4bf] text-[#0a2e2b] font-bold text-base sm:text-lg hover:bg-[#f5f3ee] transition-all duration-300 cursor-pointer"
+              className="btn-liquid-glass rounded-full px-8 sm:px-10 py-4 sm:py-5 font-bold text-base sm:text-lg text-[#f5f3ee] cursor-pointer"
             >
               ابدأ مشروعك
             </a>
             <a
               href="/portfolio"
-              className="rounded-full px-8 sm:px-10 py-4 sm:py-5 border border-[#f5f3ee]/30 text-[#f5f3ee] font-medium text-base sm:text-lg hover:bg-[#f5f3ee]/10 transition-all duration-300 flex items-center gap-3 cursor-pointer"
+              className="btn-liquid-glass rounded-full px-8 sm:px-10 py-4 sm:py-5 font-medium text-base sm:text-lg text-[#f5f3ee] flex items-center gap-3 cursor-pointer"
             >
               أعمالنا
               <ArrowLeft className="w-5 h-5" />
