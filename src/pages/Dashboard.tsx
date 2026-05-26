@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, NavLink, Route, Routes, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FileText, Image as ImageIcon, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft, Building2, Package, Wrench, MessageSquare, Info } from "lucide-react";
+import { FileText, Image as ImageIcon, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft, Building2, Package, Wrench, MessageSquare, Info, Newspaper } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -10,10 +10,12 @@ import { useLang } from "@/i18n/LanguageProvider";
 import { cn } from "@/lib/utils";
 import { FileUpload } from "@/components/FileUpload";
 import { MultiFileUpload } from "@/components/MultiFileUpload";
+import { RichTextEditor } from "@/components/RichTextEditor";
 import OrdersManager from "@/components/admin/OrdersManager";
 import ServicesManager from "@/components/admin/ServicesManager";
 import TestimonialsManager from "@/components/admin/TestimonialsManager";
 import AboutManager from "@/components/admin/AboutManager";
+import BlogPageManager from "@/components/admin/BlogPageManager";
 
 type Post = {
   id: string; title: string; excerpt: string | null; content: string;
@@ -40,6 +42,7 @@ function Sidebar() {
     { to: "/dashboard/orders", icon: Package, label: "الطلبات" },
     { to: "/dashboard/services", icon: Wrench, label: "الخدمات" },
     { to: "/dashboard/posts", icon: FileText, label: t.dashboard.posts },
+    { to: "/dashboard/blog-page", icon: Newspaper, label: "صفحة المدونة" },
     { to: "/dashboard/portfolio", icon: ImageIcon, label: t.dashboard.portfolio },
     { to: "/dashboard/partners", icon: Building2, label: "الشركاء" },
     { to: "/dashboard/testimonials", icon: MessageSquare, label: "شركاء النجاح" },
@@ -225,8 +228,10 @@ function PostForm({ post, onClose }: { post: Post | null; onClose: () => void })
         className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-xs" />
       <textarea maxLength={500} rows={2} placeholder={t.dashboard.excerpt} value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
         className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none" />
-      <textarea required maxLength={20000} rows={10} placeholder={t.dashboard.content} value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })}
-        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none font-mono text-sm" />
+      <div>
+        <p className="text-sm font-bold mb-2">{t.dashboard.content}</p>
+        <RichTextEditor value={form.content} onChange={(html) => setForm({ ...form, content: html })} placeholder={t.dashboard.content} />
+      </div>
       <label className="flex items-center gap-2 text-sm">
         <input type="checkbox" checked={form.published} onChange={(e) => setForm({ ...form, published: e.target.checked })} />
         {t.dashboard.published}
@@ -648,6 +653,7 @@ export default function Dashboard() {
           <Route path="orders" element={<OrdersManager />} />
           <Route path="services" element={<ServicesManager />} />
           <Route path="posts" element={<PostsList posts={posts} onChange={() => setTick((t) => t + 1)} />} />
+          <Route path="blog-page" element={<BlogPageManager />} />
           <Route path="portfolio" element={<PortfolioManager items={portfolio} onChange={() => setTick((t) => t + 1)} />} />
           <Route path="partners" element={<PartnersManager items={partners} onChange={() => setTick((t) => t + 1)} />} />
           <Route path="testimonials" element={<TestimonialsManager />} />
