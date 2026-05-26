@@ -7,6 +7,7 @@ type Partner = {
   id: string;
   name: string;
   logo_url: string | null;
+  cover_url: string | null;
   website_url: string | null;
 };
 
@@ -17,7 +18,7 @@ export default function PartnersLogoCloud() {
   useEffect(() => {
     supabase
       .from("partners")
-      .select("id,name,logo_url,website_url")
+      .select("id,name,logo_url,cover_url,website_url")
       .eq("published", true)
       .order("sort_order", { ascending: true })
       .then(({ data }) => setItems((data as any) ?? []));
