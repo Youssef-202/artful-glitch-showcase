@@ -229,3 +229,49 @@
 .btn-liquid-glass:hover::after { left: 150%; }
 .btn-liquid-glass:active { transform: translateY(0) scale(0.99); }
 
+/* Nav link liquid glass — applied on hover/focus/active */
+.nav-link-glass {
+  position: relative;
+  transition: color 0.3s ease, background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  border: 1px solid transparent;
+  overflow: hidden;
+  isolation: isolate;
+}
+.nav-link-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, hsl(0 0% 100% / 0.35) 0%, hsl(0 0% 100% / 0.08) 45%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+.nav-link-glass:hover,
+.nav-link-glass:focus-visible,
+.nav-link-glass.is-active {
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.28), hsl(var(--accent) / 0.18));
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-color: hsl(var(--primary) / 0.45);
+  box-shadow:
+    inset 0 1px 0 0 hsl(0 0% 100% / 0.4),
+    inset 0 -1px 0 0 hsl(0 0% 0% / 0.08),
+    0 8px 24px -8px hsl(var(--primary) / 0.35);
+  color: hsl(var(--foreground));
+  transform: translateY(-1px);
+}
+.nav-link-glass:hover::before,
+.nav-link-glass:focus-visible::before,
+.nav-link-glass.is-active::before {
+  opacity: 1;
+}
+.dark .nav-link-glass:hover,
+.dark .nav-link-glass:focus-visible,
+.dark .nav-link-glass.is-active {
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.22), hsl(var(--accent) / 0.14));
+  border-color: hsl(var(--primary) / 0.5);
+}
+
+

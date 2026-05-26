@@ -83,8 +83,8 @@ export default function Navbar() {
                 end={l.to === "/"}
                 className={({ isActive }) =>
                   cn(
-                    "relative px-4 py-2 text-sm font-semibold transition-colors block tracking-normal whitespace-nowrap",
-                    isActive ? "text-primary" : "text-foreground/85 hover:text-primary"
+                    "nav-link-glass relative px-4 py-2 text-sm font-semibold block tracking-normal whitespace-nowrap rounded-full",
+                    isActive ? "is-active" : "text-foreground/85"
                   )
                 }
               >
