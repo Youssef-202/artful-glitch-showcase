@@ -48,6 +48,7 @@ export default function PartnersLogoCloud() {
             src: p.logo_url ?? "",
             alt: p.name,
             href: p.website_url ?? undefined,
+            cover: p.cover_url,
           }))}
         />
       ) : (
