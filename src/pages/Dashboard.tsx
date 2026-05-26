@@ -485,13 +485,14 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
 }
 
 type Partner = {
-  id: string; name: string; logo_url: string | null; website_url: string | null;
+  id: string; name: string; logo_url: string | null; cover_url: string | null; website_url: string | null;
   sort_order: number; published: boolean;
 };
 
 const partnerSchema = z.object({
   name: z.string().trim().min(1).max(200),
   logo_url: z.string().trim().url().optional().or(z.literal("")),
+  cover_url: z.string().trim().url().optional().or(z.literal("")),
   website_url: z.string().trim().url().optional().or(z.literal("")),
   sort_order: z.number().int(),
   published: z.boolean(),
