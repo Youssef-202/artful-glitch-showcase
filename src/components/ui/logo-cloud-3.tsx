@@ -7,6 +7,7 @@ type Logo = {
   href?: string;
   width?: number;
   height?: number;
+  cover?: string | null;
 };
 
 type LogoCloudProps = React.ComponentProps<"div"> & {
@@ -25,26 +26,45 @@ export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
       )}
       {...props}
     >
-      <InfiniteSlider gap={56} duration={30} durationOnHover={90}>
+      <InfiniteSlider gap={32} duration={30} durationOnHover={90}>
         {logosLoop.map((logo, i) => {
-          const content = logo.src ? (
+          const inner = logo.src ? (
             <img
               src={logo.src}
               alt={logo.alt}
               width={logo.width ?? 120}
               height={logo.height ?? 40}
               loading="lazy"
-              className="h-10 w-auto object-contain opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0"
+              className={cn(
+                "h-10 w-auto object-contain transition",
+                logo.cover
+                  ? "opacity-100 drop-shadow-lg"
+                  : "opacity-70 grayscale hover:opacity-100 hover:grayscale-0"
+              )}
             />
           ) : (
-            <span className="whitespace-nowrap text-xl sm:text-2xl font-black text-foreground/70 hover:text-foreground transition">
+            <span className={cn(
+              "whitespace-nowrap text-xl sm:text-2xl font-black transition",
+              logo.cover ? "text-white drop-shadow-lg" : "text-foreground/70 hover:text-foreground"
+            )}>
               {logo.alt}
             </span>
           );
+          const content = logo.cover ? (
+            <div
+              className="relative h-24 w-48 rounded-2xl overflow-hidden bg-cover bg-center border border-border/40 shadow-elegant group"
+              style={{ backgroundImage: `url(${logo.cover})` }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10 group-hover:from-black/50 transition" />
+              <div className="relative z-10 h-full w-full flex items-center justify-center px-4">
+                {inner}
+              </div>
+            </div>
+          ) : inner;
           return (
             <div
               key={`${logo.alt}-${i}`}
-              className="flex h-16 items-center justify-center px-4"
+              className="flex h-28 items-center justify-center px-2"
             >
               {logo.href ? (
                 <a href={logo.href} target="_blank" rel="noopener noreferrer">

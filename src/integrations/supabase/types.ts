@@ -130,6 +130,7 @@ export type Database = {
       }
       partners: {
         Row: {
+          cover_url: string | null
           created_at: string
           created_by: string | null
           id: string
@@ -141,6 +142,7 @@ export type Database = {
           website_url: string | null
         }
         Insert: {
+          cover_url?: string | null
           created_at?: string
           created_by?: string | null
           id?: string
@@ -152,6 +154,7 @@ export type Database = {
           website_url?: string | null
         }
         Update: {
+          cover_url?: string | null
           created_at?: string
           created_by?: string | null
           id?: string

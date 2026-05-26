@@ -485,13 +485,14 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
 }
 
 type Partner = {
-  id: string; name: string; logo_url: string | null; website_url: string | null;
+  id: string; name: string; logo_url: string | null; cover_url: string | null; website_url: string | null;
   sort_order: number; published: boolean;
 };
 
 const partnerSchema = z.object({
   name: z.string().trim().min(1).max(200),
   logo_url: z.string().trim().url().optional().or(z.literal("")),
+  cover_url: z.string().trim().url().optional().or(z.literal("")),
   website_url: z.string().trim().url().optional().or(z.literal("")),
   sort_order: z.number().int(),
   published: z.boolean(),
@@ -523,8 +524,11 @@ function PartnersManager({ items, onChange }: { items: Partner[]; onChange: () =
         {items.map((p) => (
           <div key={p.id} className="flex items-center justify-between p-4 border-b border-border/40 last:border-0 hover:bg-foreground/5">
             <div className="flex items-center gap-3 min-w-0 flex-1">
-              <div className="w-12 h-12 rounded-xl shrink-0 overflow-hidden bg-background/40 flex items-center justify-center">
-                {p.logo_url ? <img src={p.logo_url} alt="" className="w-full h-full object-contain" /> : <Building2 className="w-5 h-5 text-muted-foreground" />}
+              <div
+                className="w-20 h-12 rounded-xl shrink-0 overflow-hidden bg-background/40 flex items-center justify-center bg-cover bg-center"
+                style={p.cover_url ? { backgroundImage: `url(${p.cover_url})` } : undefined}
+              >
+                {p.logo_url ? <img src={p.logo_url} alt="" className="w-full h-full object-contain" /> : !p.cover_url && <Building2 className="w-5 h-5 text-muted-foreground" />}
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-2 mb-1">
@@ -551,6 +555,7 @@ function PartnerForm({ item, onClose }: { item: Partner | null; onClose: () => v
   const [form, setForm] = useState({
     name: item?.name ?? "",
     logo_url: item?.logo_url ?? "",
+    cover_url: item?.cover_url ?? "",
     website_url: item?.website_url ?? "",
     sort_order: item?.sort_order ?? 0,
     published: item?.published ?? true,
@@ -565,6 +570,7 @@ function PartnerForm({ item, onClose }: { item: Partner | null; onClose: () => v
     const payload = {
       name: parsed.data.name,
       logo_url: parsed.data.logo_url || null,
+      cover_url: parsed.data.cover_url || null,
       website_url: parsed.data.website_url || null,
       sort_order: parsed.data.sort_order,
       published: parsed.data.published,
@@ -589,6 +595,9 @@ function PartnerForm({ item, onClose }: { item: Partner | null; onClose: () => v
         className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-lg font-bold" />
       <FileUpload value={form.logo_url} onChange={(url) => setForm({ ...form, logo_url: url ?? "" })} folder="partners" accept="image/*" label="شعار الشريك" />
       <input type="url" placeholder="رابط الشعار (أو رابط مباشر)" value={form.logo_url} onChange={(e) => setForm({ ...form, logo_url: e.target.value })}
+        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-xs" />
+      <FileUpload value={form.cover_url} onChange={(url) => setForm({ ...form, cover_url: url ?? "" })} folder="partners/covers" accept="image/*" label="صورة الغلاف" />
+      <input type="url" placeholder="رابط صورة الغلاف (اختياري)" value={form.cover_url} onChange={(e) => setForm({ ...form, cover_url: e.target.value })}
         className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-xs" />
       <input type="url" placeholder="رابط موقع الشركة (اختياري)" value={form.website_url} onChange={(e) => setForm({ ...form, website_url: e.target.value })}
         className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
