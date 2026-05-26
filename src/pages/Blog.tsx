@@ -8,17 +8,22 @@ import { useLang } from "@/i18n/LanguageProvider";
 type Post = {
   id: string;
   title: string;
+  title_en: string | null;
   excerpt: string | null;
+  excerpt_en: string | null;
   cover_url: string | null;
   author_name: string | null;
+  author_name_en: string | null;
   category: string | null;
+  category_en: string | null;
   created_at: string;
 };
 
 type PageContent = { kicker?: string; title?: string; subtitle?: string; cover_url?: string };
 
 export default function Blog() {
-  const { t, dir } = useLang();
+  const { t, dir, lang } = useLang();
+  const isEn = lang === "en";
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
   const [posts, setPosts] = useState<Post[]>([]);
   const [page, setPage] = useState<PageContent>({});
@@ -27,16 +32,18 @@ export default function Blog() {
   useEffect(() => {
     supabase
       .from("blog_posts")
-      .select("id,title,excerpt,cover_url,author_name,category,created_at")
+      .select("id,title,title_en,excerpt,excerpt_en,cover_url,author_name,author_name_en,category,category_en,created_at")
       .eq("published", true)
       .order("created_at", { ascending: false })
       .then(({ data }) => {
-        setPosts(data ?? []);
+        setPosts((data as any) ?? []);
         setLoading(false);
       });
     (supabase.from as any)("site_pages").select("content").eq("page_key", "blog").maybeSingle()
       .then(({ data }: any) => { if (data?.content) setPage(data.content as PageContent); });
   }, []);
+
+  const pick = (ar: string | null, en: string | null) => (isEn && en ? en : ar) ?? "";
 
   return (
     <div className="px-6 max-w-7xl mx-auto">
