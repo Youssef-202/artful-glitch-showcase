@@ -1,49 +1,58 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Sparkles, Wand2, Star, Inbox, Clock, Tag, Award } from "lucide-react";
+import { ArrowLeft, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 import aboutWho from "@/assets/about-who.png";
 import aboutVision from "@/assets/about-vision.png";
+import { supabase } from "@/integrations/supabase/client";
 
-const reasons = [
-  {
-    icon: Inbox,
-    title: "الإبداع",
-    body: "نقدّم خلفية متنوّعة في الإعلان والتصميم والعلامات التجارية والعلاقات العامة، بالإضافة إلى التخطيط الاستراتيجي للعمل في شركتك. لن تبدو موادك الخاصة بك رائعة فحسب، بل ستحصل أيضًا على نتائج.",
-  },
-  {
-    icon: Wand2,
-    title: "الاهتمام بالتفاصيل",
-    body: "اهتمامنا بالأشياء الصغيرة وتخطيط الجداول الزمنية وإدارة المشاريع الصعبة هو ما يجعلنا متميّزين عن البقية. نحن مبدعون مع مراقبة دقيقة لميزانيتك.",
-  },
-  {
-    icon: Star,
-    title: "وضع خطة للنجاح",
-    body: "تريد نتائج؟ لقد وجدنا أن أفضل طريقة للحصول عليها هي البحث المسبق لشركتك والمنافسين والسوق المستهدف. فقط بعد أن نفهمك أنت وعملاءك تمامًا، نوصي بخطة نجاح.",
-  },
-  {
-    icon: Clock,
-    title: "المواعيد والتسليمات",
-    body: "لقد عملنا مع مجموعة مختارة من المؤسسات والوكالات الحكومية لسنوات عديدة. قاعدتهم: إذا فاتنا موعد نهائي فنحن خارج اللعبة. لقد حقّقنا بعضًا من أضيق التحوّلات في العمل، ولم نفوّت أيًّا منها على الإطلاق.",
-  },
-  {
-    icon: Tag,
-    title: "الأسعار",
-    body: "أسعارنا تنافسية وعادلة. لا توجد فواتير مفاجئة، يجب أن توافق مسبقًا على أي نفقات غير متوقّعة أو إضافية. هذه هي الطريقة التي نودّ أن نُعامل بها، وهذه هي الطريقة التي يُعامل بها عملاؤنا الكرام.",
-  },
-  {
-    icon: Award,
-    title: "خبراء",
-    body: "تتكوّن وكالة إتقان من متخصّصين في خدمات الإعلان والتصميم لديهم خبرة في الشركات والوكالات، يندرجون من خلفيات مختلفة. على هذا النحو، لن تقوم إتقان أبدًا بتعيين موظفي دعم من الدرجة الثانية لأي حساب.",
-  },
-];
+type Reason = { title: string; body: string };
+type AboutContent = {
+  header_kicker: string;
+  header_title: string;
+  who_kicker: string;
+  who_title: string;
+  who_body: string;
+  who_image: string;
+  vision_kicker: string;
+  vision_title: string;
+  vision_body: string;
+  vision_image: string;
+  reasons_kicker: string;
+  reasons_title: string;
+  reasons: Reason[];
+};
+
+const fallback: AboutContent = {
+  header_kicker: "تعرّف علينا",
+  header_title: "وكالة إتقان",
+  who_kicker: "نبذة عنّا",
+  who_title: "من نحن",
+  who_body: "وكالة إتقان هي وكالة دعاية وإعلان متخصّصة في تقديم خدمات الإعلان والتصميم والتسويق الرقمي بأعلى مستوى من الدقة والاحترافية.",
+  who_image: "",
+  vision_kicker: "إلى أين نتجه",
+  vision_title: "رؤيتنا",
+  vision_body: "تسعى وكالة إتقان لأن تكون الشريك الأول للمؤسسات والشركات في رحلة نموّها.",
+  vision_image: "",
+  reasons_kicker: "ما يميّزنا",
+  reasons_title: "لماذا تختارنا ؟",
+  reasons: [],
+};
 
 export default function About() {
+  const [c, setC] = useState<AboutContent>(fallback);
+
+  useEffect(() => {
+    (supabase.from as any)("site_pages").select("content").eq("page_key", "about").maybeSingle()
+      .then(({ data }: any) => { if (data?.content) setC({ ...fallback, ...(data.content as AboutContent) }); });
+  }, []);
+
   return (
     <div className="px-6 max-w-7xl mx-auto space-y-16" dir="rtl">
       <header className="text-center mb-4">
-        <p className="text-sm text-primary tracking-widest mb-3">تعرّف علينا</p>
+        <p className="text-sm text-primary tracking-widest mb-3">{c.header_kicker}</p>
         <h1 className="text-4xl sm:text-6xl font-black mb-6">
-          <span className="text-gradient">وكالة إتقان</span>
+          <span className="text-gradient">{c.header_title}</span>
         </h1>
       </header>
 
@@ -56,23 +65,19 @@ export default function About() {
         className="grid lg:grid-cols-2 gap-10 items-center glass-strong rounded-3xl p-8 lg:p-12"
       >
         <div className="text-right order-2 lg:order-1">
-          <p className="text-sm text-primary tracking-widest mb-4">نبذة عنّا</p>
+          <p className="text-sm text-primary tracking-widest mb-4">{c.who_kicker}</p>
           <h2 className="text-3xl sm:text-5xl font-black mb-4 leading-tight">
-            <span className="text-gradient">من نحن</span>
+            <span className="text-gradient">{c.who_title}</span>
           </h2>
-          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            وكالة إتقان هي وكالة دعاية وإعلان متخصّصة في تقديم خدمات الإعلان والتصميم والتسويق الرقمي
-            بأعلى مستوى من الدقة والاحترافية وبكل الطرق الممكنة. نرسم لعلامتك التجارية خطوطها العريضة
-            بناءً على دراسة معمّقة للسوق والمنافسين، ونبدأ معك من البداية بتحديد الجدوى من المشروع
-            واختيار الوسائل الإعلانية الأكثر تأثيراً، لنعمل جاهدين على تحقيق كافة الأهداف التي تطمح
-            إليها علامتك.
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed whitespace-pre-line">
+            {c.who_body}
           </p>
           <Link to="/contact" className="inline-flex items-center gap-2 mt-6 text-primary font-bold hover:gap-3 transition-all">
             تواصل معنا <ArrowLeft className="w-4 h-4" />
           </Link>
         </div>
         <div className="flex items-center justify-center order-1 lg:order-2">
-          <img src={aboutWho} alt="وكالة إتقان - من نحن" loading="lazy" width={1024} height={832} className="w-full max-w-md" />
+          <img src={c.who_image || aboutWho} alt={c.who_title} loading="lazy" className="w-full max-w-md rounded-2xl object-cover" />
         </div>
       </motion.div>
 
@@ -85,17 +90,15 @@ export default function About() {
         className="grid lg:grid-cols-2 gap-10 items-center glass-strong rounded-3xl p-8 lg:p-12"
       >
         <div className="flex items-center justify-center">
-          <img src={aboutVision} alt="وكالة إتقان - رؤيتنا" loading="lazy" width={1024} height={832} className="w-full max-w-md" />
+          <img src={c.vision_image || aboutVision} alt={c.vision_title} loading="lazy" className="w-full max-w-md rounded-2xl object-cover" />
         </div>
         <div className="text-right">
-          <p className="text-sm text-primary tracking-widest mb-4">إلى أين نتجه</p>
+          <p className="text-sm text-primary tracking-widest mb-4">{c.vision_kicker}</p>
           <h2 className="text-3xl sm:text-5xl font-black mb-4 leading-tight">
-            <span className="text-gradient">رؤيتنا</span>
+            <span className="text-gradient">{c.vision_title}</span>
           </h2>
-          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            تسعى وكالة إتقان لأن تكون الشريك الأول للمؤسسات والشركات في رحلة نموّها، عبر تقديم حلول
-            إعلانية وتسويقية مبتكرة وقادرة على تحقيق أهداف علامتك بأذكى الطرق وأكثرها تأثيراً، لنصنع
-            معاً قصص نجاح حقيقية تستحق أن تُروى.
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed whitespace-pre-line">
+            {c.vision_body}
           </p>
           <Link to="/contact" className="inline-flex items-center gap-2 mt-6 text-primary font-bold hover:gap-3 transition-all">
             تواصل معنا <ArrowLeft className="w-4 h-4" />
@@ -104,19 +107,18 @@ export default function About() {
       </motion.div>
 
       {/* لماذا تختارنا */}
-      <section className="pt-8 pb-16">
-        <div className="text-center mb-12">
-          <p className="text-sm text-primary tracking-widest mb-3">ما يميّزنا</p>
-          <h2 className="text-3xl sm:text-5xl font-black">
-            <span className="text-gradient">لماذا تختارنا ؟</span>
-          </h2>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {reasons.map((r, i) => {
-            const Icon = r.icon;
-            return (
+      {c.reasons.length > 0 && (
+        <section className="pt-8 pb-16">
+          <div className="text-center mb-12">
+            <p className="text-sm text-primary tracking-widest mb-3">{c.reasons_kicker}</p>
+            <h2 className="text-3xl sm:text-5xl font-black">
+              <span className="text-gradient">{c.reasons_title}</span>
+            </h2>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {c.reasons.map((r, i) => (
               <motion.div
-                key={r.title}
+                key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -124,15 +126,15 @@ export default function About() {
                 className="glass-strong rounded-3xl p-7 hover:shadow-glow hover:-translate-y-1 transition-all"
               >
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-primary to-accent flex items-center justify-center mb-4 shadow-glow">
-                  <Icon className="w-6 h-6 text-primary-foreground" />
+                  <Sparkles className="w-6 h-6 text-primary-foreground" />
                 </div>
                 <h3 className="text-xl font-black mb-3 text-foreground">{r.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{r.body}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{r.body}</p>
               </motion.div>
-            );
-          })}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
