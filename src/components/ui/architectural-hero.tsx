@@ -34,9 +34,9 @@ export default function ArchitecturalHero() {
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl w-full px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-        {/* Section 1 — Content (5/12) */}
-        <div className="lg:col-span-5 min-h-[420px] flex flex-col items-start text-right rounded-3xl p-6 lg:p-8 border border-[#2dd4bf]/10 bg-[#0a2e2b]/20 backdrop-blur-sm">
+      <div className="relative z-10 max-w-3xl w-full px-6 lg:px-12 flex flex-col gap-8 lg:gap-10 py-12">
+        {/* Section 1 — Content */}
+        <div className="w-full min-h-[420px] flex flex-col items-start text-right rounded-3xl p-6 lg:p-8 border border-[#2dd4bf]/10 bg-[#0a2e2b]/20 backdrop-blur-sm">
           <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-[#2dd4bf]/30 bg-[#115e59]/20 mb-8">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2dd4bf] opacity-75" />
