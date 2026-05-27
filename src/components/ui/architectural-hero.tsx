@@ -18,7 +18,7 @@ export default function ArchitecturalHero() {
   return (
     <section
       dir="rtl"
-      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden selection:bg-[#2dd4bf] selection:text-[#0a2e2b]"
+      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden py-12 selection:bg-[#2dd4bf] selection:text-[#0a2e2b]"
     >
       {/* Ambient glow layers (over the persistent canvas) */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
