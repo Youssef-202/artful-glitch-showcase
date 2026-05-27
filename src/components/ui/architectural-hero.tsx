@@ -86,8 +86,16 @@ export default function ArchitecturalHero() {
           </div>
         </div>
 
-        {/* Visual — 40% */}
-        <div className="lg:col-span-4 relative flex justify-center lg:justify-end">
+        {/* Section 2 — Spacer / reserved (3/12) */}
+        <div className="lg:col-span-3 min-h-[420px] hidden lg:flex items-center justify-center rounded-3xl border border-dashed border-[#2dd4bf]/15 bg-[#0a2e2b]/10 backdrop-blur-sm relative overflow-hidden">
+          <div className="absolute inset-0 opacity-30 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, #2dd4bf26 1px, transparent 0)", backgroundSize: "24px 24px" }} />
+          <div className="relative w-24 h-24 rounded-full border border-[#2dd4bf]/30 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#2dd4bf]/40 to-[#115e59]/40 blur-md" />
+          </div>
+        </div>
+
+        {/* Section 3 — Visual (4/12) */}
+        <div className="lg:col-span-4 min-h-[420px] relative flex justify-center lg:justify-end items-center rounded-3xl p-6 lg:p-8 border border-[#2dd4bf]/10 bg-[#0a2e2b]/20 backdrop-blur-sm">
           <div className="relative w-full aspect-square max-w-md flex items-center justify-center">
             <div
               className="absolute w-full h-full border-[16px] sm:border-[20px] border-[#2dd4bf] opacity-10 rotate-45 rounded-3xl"
