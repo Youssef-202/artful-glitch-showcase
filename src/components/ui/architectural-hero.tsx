@@ -18,7 +18,7 @@ export default function ArchitecturalHero() {
   return (
     <section
       dir="rtl"
-      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden py-12 selection:bg-[#2dd4bf] selection:text-[#0a2e2b]"
+      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden selection:bg-[#2dd4bf] selection:text-[#0a2e2b]"
     >
       {/* Ambient glow layers (over the persistent canvas) */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
@@ -34,9 +34,9 @@ export default function ArchitecturalHero() {
         />
       </div>
 
-      <div className="relative z-10 max-w-3xl w-full px-6 lg:px-12 flex flex-col gap-8 lg:gap-10 py-12">
-        {/* Section 1 — Content */}
-        <div className="w-full min-h-[420px] flex flex-col items-start text-right rounded-3xl p-6 lg:p-8 border border-[#2dd4bf]/10 bg-[#0a2e2b]/20 backdrop-blur-sm">
+      <div className="relative z-10 max-w-7xl w-full px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-10 gap-12 lg:gap-16 items-center">
+        {/* Content — 60% */}
+        <div className="lg:col-span-6 flex flex-col items-start text-right">
           <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-[#2dd4bf]/30 bg-[#115e59]/20 mb-8">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2dd4bf] opacity-75" />
@@ -86,16 +86,8 @@ export default function ArchitecturalHero() {
           </div>
         </div>
 
-        {/* Section 2 — Spacer / reserved */}
-        <div className="w-full min-h-[420px] flex items-center justify-center rounded-3xl border border-dashed border-[#2dd4bf]/15 bg-[#0a2e2b]/10 backdrop-blur-sm relative overflow-hidden">
-          <div className="absolute inset-0 opacity-30 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, #2dd4bf26 1px, transparent 0)", backgroundSize: "24px 24px" }} />
-          <div className="relative w-24 h-24 rounded-full border border-[#2dd4bf]/30 flex items-center justify-center">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#2dd4bf]/40 to-[#115e59]/40 blur-md" />
-          </div>
-        </div>
-
-        {/* Section 3 — Visual */}
-        <div className="w-full min-h-[420px] relative flex justify-center items-center rounded-3xl p-6 lg:p-8 border border-[#2dd4bf]/10 bg-[#0a2e2b]/20 backdrop-blur-sm">
+        {/* Visual — 40% */}
+        <div className="lg:col-span-4 relative flex justify-center lg:justify-end">
           <div className="relative w-full aspect-square max-w-md flex items-center justify-center">
             <div
               className="absolute w-full h-full border-[16px] sm:border-[20px] border-[#2dd4bf] opacity-10 rotate-45 rounded-3xl"
