@@ -64,7 +64,7 @@ export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
           return (
             <div
               key={`${logo.alt}-${i}`}
-              className="flex h-28 items-center justify-center px-2"
+              className="flex h-36 sm:h-40 items-center justify-center px-3"
             >
               {logo.href ? (
                 <a href={logo.href} target="_blank" rel="noopener noreferrer">
