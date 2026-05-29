@@ -4,16 +4,27 @@ import { ContainerScroll } from "./container-scroll-animation";
 import Logo3DCard from "./logo-3d-card";
 import { supabase } from "@/integrations/supabase/client";
 
-type HeroMedia = { media_type: "image" | "video" | "logo"; media_url: string };
+type HeroMedia = {
+  media_type: "image" | "video" | "logo";
+  media_url: string;
+  text1: string;
+  text2: string;
+};
 
+const defaults: HeroMedia = {
+  media_type: "logo",
+  media_url: "",
+  text1: "الإتقان ليس مجرد كلمة، بل هو فلسفتنا في كل بكسل، وكل سطر كود، وكل قصة نرويها.",
+  text2: "نؤمن أن الفرق بين الجيد والاستثنائي يكمن في التفاصيل التي لا يراها أحد — لكنها تُحسّ.",
+};
 
 export default function ArchitecturalHero() {
-  const [media, setMedia] = useState<HeroMedia>({ media_type: "logo", media_url: "" });
+  const [media, setMedia] = useState<HeroMedia>(defaults);
 
   useEffect(() => {
     (supabase.from as any)("site_pages").select("content").eq("page_key", "hero").maybeSingle()
       .then(({ data }: any) => {
-        if (data?.content) setMedia({ media_type: "logo", media_url: "", ...(data.content as HeroMedia) });
+        if (data?.content) setMedia({ ...defaults, ...(data.content as HeroMedia) });
       });
   }, []);
 
@@ -56,12 +67,7 @@ export default function ArchitecturalHero() {
             </span>
           </h1>
 
-          <p className="text-foreground/70 text-base md:text-lg max-w-xl mx-auto leading-relaxed font-light mb-3">
-            الإتقان ليس مجرد كلمة، بل هو فلسفتنا في كل بكسل، وكل سطر كود، وكل قصة نرويها.
-          </p>
-          <p className="text-foreground/50 text-sm md:text-base max-w-lg mx-auto leading-relaxed font-light mb-8">
-            نؤمن أن الفرق بين الجيد والاستثنائي يكمن في التفاصيل التي لا يراها أحد — لكنها تُحسّ.
-          </p>
+          <div className="mb-8" />
 
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-foreground/60 text-sm">
             <div className="flex items-center gap-2">
@@ -83,14 +89,30 @@ export default function ArchitecturalHero() {
 
         <div className="-mt-32 md:-mt-64">
           <ContainerScroll titleComponent={null}>
-            <div className="w-full h-full flex items-center justify-center p-6">
-              {media.media_type === "image" && media.media_url ? (
-                <img src={media.media_url} alt="" className="w-full h-full object-cover rounded-2xl" />
-              ) : media.media_type === "video" && media.media_url ? (
-                <video src={media.media_url} autoPlay muted loop playsInline className="w-full h-full object-cover rounded-2xl" />
-              ) : (
-                <Logo3DCard className="w-full max-w-lg" />
+            <div className="w-full h-full flex flex-col items-center justify-start gap-4 p-6 overflow-y-auto">
+              {(media.text1 || media.text2) && (
+                <div className="w-full max-w-2xl text-center pt-2 space-y-2">
+                  {media.text1 && (
+                    <p className="text-foreground/85 text-sm md:text-base lg:text-lg leading-relaxed font-light">
+                      {media.text1}
+                    </p>
+                  )}
+                  {media.text2 && (
+                    <p className="text-foreground/60 text-xs md:text-sm lg:text-base leading-relaxed font-light">
+                      {media.text2}
+                    </p>
+                  )}
+                </div>
               )}
+              <div className="flex-1 w-full flex items-center justify-center min-h-0">
+                {media.media_type === "image" && media.media_url ? (
+                  <img src={media.media_url} alt="" className="max-w-full max-h-full object-contain rounded-2xl" />
+                ) : media.media_type === "video" && media.media_url ? (
+                  <video src={media.media_url} autoPlay muted loop playsInline className="max-w-full max-h-full object-contain rounded-2xl" />
+                ) : (
+                  <Logo3DCard className="w-full max-w-lg" />
+                )}
+              </div>
             </div>
           </ContainerScroll>
         </div>
