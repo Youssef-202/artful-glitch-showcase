@@ -36,7 +36,7 @@ export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
               height={logo.height ?? 40}
               loading="lazy"
               className={cn(
-                "h-10 w-auto object-contain transition",
+                "h-16 sm:h-20 w-auto object-contain transition",
                 logo.cover
                   ? "opacity-100 drop-shadow-lg"
                   : "opacity-70 grayscale hover:opacity-100 hover:grayscale-0"
@@ -44,7 +44,7 @@ export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
             />
           ) : (
             <span className={cn(
-              "whitespace-nowrap text-xl sm:text-2xl font-black transition",
+              "whitespace-nowrap text-2xl sm:text-3xl font-black transition",
               logo.cover ? "text-white drop-shadow-lg" : "text-foreground/70 hover:text-foreground"
             )}>
               {logo.alt}
@@ -52,7 +52,7 @@ export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
           );
           const content = logo.cover ? (
             <div
-              className="relative h-24 w-48 rounded-2xl overflow-hidden bg-cover bg-center border border-border/40 shadow-elegant group"
+              className="relative h-32 w-60 rounded-2xl overflow-hidden bg-cover bg-center border border-border/40 shadow-elegant group"
               style={{ backgroundImage: `url(${logo.cover})` }}
             >
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10 group-hover:from-black/50 transition" />
@@ -64,7 +64,7 @@ export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
           return (
             <div
               key={`${logo.alt}-${i}`}
-              className="flex h-28 items-center justify-center px-2"
+              className="flex h-36 sm:h-40 items-center justify-center px-3"
             >
               {logo.href ? (
                 <a href={logo.href} target="_blank" rel="noopener noreferrer">
