@@ -41,10 +41,9 @@ export default function PortfolioStack() {
           </Link>
         </div>
 
-        {/* Stacked cards column — internal scroll only */}
+        {/* Stacked cards column — internal scroll, hidden scrollbar */}
         <div
-          className="relative h-[80vh] overflow-y-auto overscroll-contain rounded-3xl pr-2 [scrollbar-width:thin]"
-          style={{ scrollbarGutter: "stable" }}
+          className="portfolio-stack-scroll relative h-[80vh] overflow-y-auto overscroll-contain rounded-3xl"
         >
           <div className="flex flex-col gap-6 pb-[40vh]">
             {items.map((item, index) => (

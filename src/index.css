@@ -345,3 +345,12 @@
 :root:not(.dark) .shadow-elegant {
   box-shadow: none !important;
 }
+
+/* Hide scrollbar for portfolio stack */
+.portfolio-stack-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.portfolio-stack-scroll::-webkit-scrollbar {
+  display: none;
+}
