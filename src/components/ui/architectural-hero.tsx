@@ -1,8 +1,22 @@
+import { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { ContainerScroll } from "./container-scroll-animation";
 import Logo3DCard from "./logo-3d-card";
+import { supabase } from "@/integrations/supabase/client";
+
+type HeroMedia = { media_type: "image" | "video" | "logo"; media_url: string };
+
 
 export default function ArchitecturalHero() {
+  const [media, setMedia] = useState<HeroMedia>({ media_type: "logo", media_url: "" });
+
+  useEffect(() => {
+    (supabase.from as any)("site_pages").select("content").eq("page_key", "hero").maybeSingle()
+      .then(({ data }: any) => {
+        if (data?.content) setMedia({ media_type: "logo", media_url: "", ...(data.content as HeroMedia) });
+      });
+  }, []);
+
   return (
     <section
       dir="rtl"
@@ -67,10 +81,16 @@ export default function ArchitecturalHero() {
           </div>
         </div>
 
-        <div className="-mt-20 md:-mt-40">
+        <div className="-mt-32 md:-mt-64">
           <ContainerScroll titleComponent={null}>
             <div className="w-full h-full flex items-center justify-center p-6">
-              <Logo3DCard className="w-full max-w-lg" />
+              {media.media_type === "image" && media.media_url ? (
+                <img src={media.media_url} alt="" className="w-full h-full object-cover rounded-2xl" />
+              ) : media.media_type === "video" && media.media_url ? (
+                <video src={media.media_url} autoPlay muted loop playsInline className="w-full h-full object-cover rounded-2xl" />
+              ) : (
+                <Logo3DCard className="w-full max-w-lg" />
+              )}
             </div>
           </ContainerScroll>
         </div>
