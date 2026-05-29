@@ -67,12 +67,7 @@ export default function ArchitecturalHero() {
             </span>
           </h1>
 
-          <p className="text-foreground/70 text-base md:text-lg max-w-xl mx-auto leading-relaxed font-light mb-3">
-            الإتقان ليس مجرد كلمة، بل هو فلسفتنا في كل بكسل، وكل سطر كود، وكل قصة نرويها.
-          </p>
-          <p className="text-foreground/50 text-sm md:text-base max-w-lg mx-auto leading-relaxed font-light mb-8">
-            نؤمن أن الفرق بين الجيد والاستثنائي يكمن في التفاصيل التي لا يراها أحد — لكنها تُحسّ.
-          </p>
+          <div className="mb-8" />
 
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-foreground/60 text-sm">
             <div className="flex items-center gap-2">
