@@ -52,18 +52,9 @@ function TiltCard({
         onPointerMove={handleMove}
         onPointerLeave={handleLeave}
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="group relative h-full rounded-3xl glass overflow-hidden cursor-pointer"
+        className="group relative h-full rounded-3xl bg-card/60 backdrop-blur-xl border border-border/20 overflow-hidden cursor-pointer"
       >
         <Link to={`/portfolio/${item.id}`} className="block h-full" aria-label={lang === "ar" ? item.titleAr : item.titleEn}>
-        {/* glow ring */}
-        <div
-          className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-          style={{
-            background: `linear-gradient(135deg, ${item.color}, ${item.accent})`,
-            filter: "blur(20px)",
-            zIndex: -1,
-          }}
-        />
 
         {/* Cover */}
         <div
@@ -106,7 +97,7 @@ function TiltCard({
           {/* Floating arrow on hover */}
           <motion.div
             style={{ transform: "translateZ(80px)" }}
-            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-accent flex items-center justify-center text-primary-foreground shadow-glow opacity-0 group-hover:opacity-100 group-hover:rotate-0 -rotate-45 transition-all duration-500"
+            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-accent flex items-center justify-center text-primary-foreground opacity-0 group-hover:opacity-100 group-hover:rotate-0 -rotate-45 transition-all duration-500"
           >
             <ArrowUpRight className="w-5 h-5" />
           </motion.div>
@@ -116,7 +107,7 @@ function TiltCard({
             style={{ transform: "translateZ(70px)" }}
             className="absolute bottom-0 inset-x-0 p-5 translate-y-2 group-hover:translate-y-0 transition-transform duration-500"
           >
-            <h3 className="text-lg font-black text-white drop-shadow-lg line-clamp-1">
+            <h3 className="text-lg font-black text-white line-clamp-1">
               {lang === "ar" ? item.titleAr : item.titleEn}
             </h3>
             <p className="text-xs text-white/80 line-clamp-1 mt-0.5">
@@ -166,8 +157,8 @@ export default function Portfolio() {
             onClick={() => setFilter(c.id)}
             className={`px-4 py-2 rounded-full text-sm font-bold transition ${
               filter === c.id
-                ? "bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow"
-                : "glass hover:bg-foreground/5"
+                ? "bg-gradient-to-tr from-primary to-accent text-primary-foreground"
+                : "bg-card/60 backdrop-blur-xl border border-border/20 hover:bg-foreground/5"
             }`}
           >
             {c.label}
