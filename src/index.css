@@ -334,3 +334,14 @@
 }
 
 
+
+/* Light mode: remove decorative shadows for a flatter, cleaner look */
+:root:not(.dark) .btn-liquid-glass,
+:root:not(.dark) .glass,
+:root:not(.dark) .glass-strong,
+:root:not(.dark) .liquid-glass,
+:root:not(.dark) .liquid-glass-input,
+:root:not(.dark) .shadow-glow,
+:root:not(.dark) .shadow-elegant {
+  box-shadow: none !important;
+}
