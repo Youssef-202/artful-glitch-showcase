@@ -73,7 +73,7 @@ export default function ArchitecturalHero() {
           </div>
         </ContainerScroll>
 
-        <div className="flex flex-col items-center text-center px-4 pb-20 -mt-32 md:-mt-56 relative z-20">
+        <div className="flex flex-col items-center text-center px-4 pb-20 -mt-64 md:-mt-[28rem] relative z-20">
           <h2 className="text-[#f5f3ee] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light opacity-90 mb-6">
             في كل تفصيل رقمي
           </h2>
