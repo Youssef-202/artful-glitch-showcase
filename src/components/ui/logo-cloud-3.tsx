@@ -15,8 +15,8 @@ type LogoCloudProps = React.ComponentProps<"div"> & {
 };
 
 export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
-  const minCount = 12;
-  const repeats = Math.max(1, Math.ceil(minCount / Math.max(logos.length, 1)));
+  const minCount = 24;
+  const repeats = Math.max(2, Math.ceil(minCount / Math.max(logos.length, 1)));
   const logosLoop = Array.from({ length: repeats }, () => logos).flat();
   return (
     <div
