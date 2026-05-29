@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, NavLink, Route, Routes, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FileText, Image as ImageIcon, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft, Building2, Package, Wrench, MessageSquare, Info, Newspaper } from "lucide-react";
+import { FileText, Image as ImageIcon, LayoutDashboard, LogOut, Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft, Building2, Package, Wrench, MessageSquare, Info, Newspaper, Home as HomeIcon } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -16,6 +16,7 @@ import ServicesManager from "@/components/admin/ServicesManager";
 import TestimonialsManager from "@/components/admin/TestimonialsManager";
 import AboutManager from "@/components/admin/AboutManager";
 import BlogPageManager from "@/components/admin/BlogPageManager";
+import HeroManager from "@/components/admin/HeroManager";
 
 type Post = {
   id: string; title: string; excerpt: string | null; content: string;
@@ -46,6 +47,7 @@ function Sidebar() {
   const nav = useNavigate();
   const items = [
     { to: "/dashboard", icon: LayoutDashboard, label: t.dashboard.title, end: true },
+    { to: "/dashboard/hero", icon: HomeIcon, label: "الصفحة الرئيسية" },
     { to: "/dashboard/orders", icon: Package, label: "الطلبات" },
     { to: "/dashboard/services", icon: Wrench, label: "الخدمات" },
     { to: "/dashboard/posts", icon: FileText, label: t.dashboard.posts },
@@ -698,6 +700,7 @@ export default function Dashboard() {
       <div className="flex-1 min-w-0">
         <Routes>
           <Route index element={<Overview posts={posts} />} />
+          <Route path="hero" element={<HeroManager />} />
           <Route path="orders" element={<OrdersManager />} />
           <Route path="services" element={<ServicesManager />} />
           <Route path="posts" element={<PostsList posts={posts} onChange={() => setTick((t) => t + 1)} />} />
