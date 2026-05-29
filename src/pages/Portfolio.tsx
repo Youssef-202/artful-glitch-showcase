@@ -83,8 +83,6 @@ function TiltCard({
             }}
           />
 
-          {/* Bottom gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
 
           {/* Floating chip */}
           <motion.span
