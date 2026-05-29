@@ -116,12 +116,12 @@ export default function ArchitecturalHero() {
               {(media.text1 || media.text2) && media.media_type === "logo" && (
                 <div className="absolute inset-x-0 top-0 z-10 p-4 md:p-6 text-center pointer-events-none">
                   {media.text1 && (
-                    <p className="text-foreground/85 text-sm md:text-base lg:text-lg leading-relaxed font-light max-w-2xl mx-auto">
+                    <p className="text-white text-sm md:text-base lg:text-lg leading-relaxed font-light drop-shadow-md max-w-2xl mx-auto">
                       {media.text1}
                     </p>
                   )}
                   {media.text2 && (
-                    <p className="mt-2 text-foreground/60 text-xs md:text-sm lg:text-base leading-relaxed font-light max-w-2xl mx-auto">
+                    <p className="mt-2 text-white/80 text-xs md:text-sm lg:text-base leading-relaxed font-light drop-shadow-md max-w-2xl mx-auto">
                       {media.text2}
                     </p>
                   )}
