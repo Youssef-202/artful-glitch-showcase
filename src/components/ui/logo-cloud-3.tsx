@@ -44,7 +44,7 @@ export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
             />
           ) : (
             <span className={cn(
-              "whitespace-nowrap text-xl sm:text-2xl font-black transition",
+              "whitespace-nowrap text-2xl sm:text-3xl font-black transition",
               logo.cover ? "text-white drop-shadow-lg" : "text-foreground/70 hover:text-foreground"
             )}>
               {logo.alt}
