@@ -36,7 +36,7 @@ export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
               height={logo.height ?? 40}
               loading="lazy"
               className={cn(
-                "h-10 w-auto object-contain transition",
+                "h-16 sm:h-20 w-auto object-contain transition",
                 logo.cover
                   ? "opacity-100 drop-shadow-lg"
                   : "opacity-70 grayscale hover:opacity-100 hover:grayscale-0"
