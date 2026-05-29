@@ -52,18 +52,9 @@ function TiltCard({
         onPointerMove={handleMove}
         onPointerLeave={handleLeave}
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="group relative h-full rounded-3xl glass overflow-hidden cursor-pointer"
+        className="group relative h-full rounded-3xl bg-card/60 backdrop-blur-xl border border-border/20 overflow-hidden cursor-pointer"
       >
         <Link to={`/portfolio/${item.id}`} className="block h-full" aria-label={lang === "ar" ? item.titleAr : item.titleEn}>
-        {/* glow ring */}
-        <div
-          className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-          style={{
-            background: `linear-gradient(135deg, ${item.color}, ${item.accent})`,
-            filter: "blur(20px)",
-            zIndex: -1,
-          }}
-        />
 
         {/* Cover */}
         <div
