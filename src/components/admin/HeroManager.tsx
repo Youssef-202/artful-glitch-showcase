@@ -8,9 +8,16 @@ import { FileUpload } from "@/components/FileUpload";
 type HeroContent = {
   media_type: "image" | "video" | "logo";
   media_url: string;
+  text1: string;
+  text2: string;
 };
 
-const empty: HeroContent = { media_type: "logo", media_url: "" };
+const empty: HeroContent = {
+  media_type: "logo",
+  media_url: "",
+  text1: "الإتقان ليس مجرد كلمة، بل هو فلسفتنا في كل بكسل، وكل سطر كود، وكل قصة نرويها.",
+  text2: "نؤمن أن الفرق بين الجيد والاستثنائي يكمن في التفاصيل التي لا يراها أحد — لكنها تُحسّ.",
+};
 
 export default function HeroManager() {
   const { user } = useAuth();
@@ -52,9 +59,29 @@ export default function HeroManager() {
         </button>
       </div>
 
-      <section className="glass-strong rounded-3xl p-6 space-y-4">
+      <section className="glass-strong rounded-3xl p-6 space-y-5">
         <div>
-          <p className="text-sm font-bold mb-2">نوع المحتوى داخل البطاقة</p>
+          <p className="text-sm font-bold mb-2">النص الأول داخل البطاقة</p>
+          <textarea
+            value={content.text1}
+            onChange={(e) => setContent((c) => ({ ...c, text1: e.target.value }))}
+            rows={2}
+            className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary"
+          />
+        </div>
+
+        <div>
+          <p className="text-sm font-bold mb-2">النص الثاني داخل البطاقة</p>
+          <textarea
+            value={content.text2}
+            onChange={(e) => setContent((c) => ({ ...c, text2: e.target.value }))}
+            rows={2}
+            className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary"
+          />
+        </div>
+
+        <div>
+          <p className="text-sm font-bold mb-2">نوع المحتوى المرئي داخل البطاقة</p>
           <div className="inline-flex rounded-full bg-background/50 border border-border p-1">
             {(["logo", "image", "video"] as const).map((t) => (
               <button
