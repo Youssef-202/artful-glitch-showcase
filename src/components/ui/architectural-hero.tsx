@@ -67,13 +67,15 @@ export default function ArchitecturalHero() {
           </div>
         </div>
 
-        <ContainerScroll titleComponent={null}>
-          <div className="w-full h-full flex items-center justify-center p-6">
-            <Logo3DCard className="w-full max-w-lg" />
-          </div>
-        </ContainerScroll>
+        <div className="-mt-20 md:-mt-40">
+          <ContainerScroll titleComponent={null}>
+            <div className="w-full h-full flex items-center justify-center p-6">
+              <Logo3DCard className="w-full max-w-lg" />
+            </div>
+          </ContainerScroll>
+        </div>
 
-        <div className="flex flex-col items-center text-center px-4 pb-20 -mt-64 md:-mt-[28rem] relative z-20">
+        <div className="flex flex-col items-center text-center px-4 pb-20 pt-8 md:pt-12 relative z-20">
           <h2 className="text-[#f5f3ee] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light opacity-90 mb-6">
             في كل تفصيل رقمي
           </h2>
