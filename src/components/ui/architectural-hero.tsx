@@ -1,19 +1,8 @@
 import { ArrowLeft } from "lucide-react";
-import { useRef, useState } from "react";
-import logoWhite from "@/assets/logo-white.png";
+import Logo3DCard from "./logo-3d-card";
 
 export default function ArchitecturalHero() {
-  const logoRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
-  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = logoRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    const px = (e.clientX - rect.left) / rect.width - 0.5;
-    const py = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: py * -25, y: px * 25 });
-  };
-  const reset = () => setTilt({ x: 0, y: 0 });
 
   return (
     <section
