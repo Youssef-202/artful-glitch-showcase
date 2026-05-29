@@ -62,7 +62,7 @@ const LiquidLayers = () => (
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, children, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
-    const isLiquid = !variant || variant === "default";
+    const isLiquid = (!variant || variant === "default") && !asChild;
     const content = isLiquid ? (
       <>
         <LiquidLayers />
