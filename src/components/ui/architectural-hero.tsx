@@ -89,30 +89,44 @@ export default function ArchitecturalHero() {
 
         <div className="-mt-32 md:-mt-64">
           <ContainerScroll titleComponent={null}>
-            <div className="w-full h-full flex flex-col items-center justify-start gap-4 p-6 overflow-y-auto">
-              {(media.text1 || media.text2) && (
-                <div className="w-full max-w-2xl text-center pt-2 space-y-2">
+            <div className="relative w-full h-full flex items-center justify-center p-0 overflow-hidden">
+              {media.media_type === "image" && media.media_url ? (
+                <img src={media.media_url} alt="" className="absolute inset-0 w-full h-full object-cover" />
+              ) : media.media_type === "video" && media.media_url ? (
+                <video src={media.media_url} autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" />
+              ) : (
+                <Logo3DCard className="w-full max-w-lg" />
+              )}
+
+              {(media.text1 || media.text2) && (media.media_type !== "logo") && (
+                <div className="absolute inset-x-0 top-0 z-10 bg-gradient-to-b from-background/70 via-background/30 to-transparent p-4 md:p-6 text-center pointer-events-none">
                   {media.text1 && (
-                    <p className="text-foreground/85 text-sm md:text-base lg:text-lg leading-relaxed font-light">
+                    <p className="text-white text-sm md:text-base lg:text-lg leading-relaxed font-light drop-shadow-md max-w-2xl mx-auto">
                       {media.text1}
                     </p>
                   )}
                   {media.text2 && (
-                    <p className="text-foreground/60 text-xs md:text-sm lg:text-base leading-relaxed font-light">
+                    <p className="mt-2 text-white/80 text-xs md:text-sm lg:text-base leading-relaxed font-light drop-shadow-md max-w-2xl mx-auto">
                       {media.text2}
                     </p>
                   )}
                 </div>
               )}
-              <div className="flex-1 w-full flex items-center justify-center min-h-0">
-                {media.media_type === "image" && media.media_url ? (
-                  <img src={media.media_url} alt="" className="max-w-full max-h-full object-contain rounded-2xl" />
-                ) : media.media_type === "video" && media.media_url ? (
-                  <video src={media.media_url} autoPlay muted loop playsInline className="max-w-full max-h-full object-contain rounded-2xl" />
-                ) : (
-                  <Logo3DCard className="w-full max-w-lg" />
-                )}
-              </div>
+
+              {(media.text1 || media.text2) && media.media_type === "logo" && (
+                <div className="absolute inset-x-0 top-0 z-10 p-4 md:p-6 text-center pointer-events-none">
+                  {media.text1 && (
+                    <p className="text-foreground/85 text-sm md:text-base lg:text-lg leading-relaxed font-light max-w-2xl mx-auto">
+                      {media.text1}
+                    </p>
+                  )}
+                  {media.text2 && (
+                    <p className="mt-2 text-foreground/60 text-xs md:text-sm lg:text-base leading-relaxed font-light max-w-2xl mx-auto">
+                      {media.text2}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           </ContainerScroll>
         </div>
