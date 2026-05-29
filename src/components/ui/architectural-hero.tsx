@@ -4,18 +4,87 @@ import { ContainerScroll } from "./container-scroll-animation";
 import Logo3DCard from "./logo-3d-card";
 import { supabase } from "@/integrations/supabase/client";
 
+type TextBlock = {
+  enabled: boolean;
+  value: string;
+  color: string;
+  size: "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
+  weight: "light" | "normal" | "medium" | "semibold" | "bold";
+  align: "right" | "center" | "left";
+};
+
 type HeroMedia = {
   media_type: "image" | "video" | "logo";
   media_url: string;
-  text1: string;
-  text2: string;
+  media_fit: "cover" | "contain";
+  media_opacity: number;
+  text_position: "top" | "center" | "bottom";
+  overlay: "none" | "dark" | "light";
+  overlay_opacity: number;
+  text1: TextBlock;
+  text2: TextBlock;
+};
+
+const defaultText1: TextBlock = {
+  enabled: true,
+  value: "الإتقان ليس مجرد كلمة، بل هو فلسفتنا في كل بكسل، وكل سطر كود، وكل قصة نرويها.",
+  color: "#ffffff",
+  size: "lg",
+  weight: "light",
+  align: "center",
+};
+
+const defaultText2: TextBlock = {
+  enabled: true,
+  value: "نؤمن أن الفرق بين الجيد والاستثنائي يكمن في التفاصيل التي لا يراها أحد — لكنها تُحسّ.",
+  color: "#ffffffcc",
+  size: "md",
+  weight: "light",
+  align: "center",
 };
 
 const defaults: HeroMedia = {
   media_type: "logo",
   media_url: "",
-  text1: "الإتقان ليس مجرد كلمة، بل هو فلسفتنا في كل بكسل، وكل سطر كود، وكل قصة نرويها.",
-  text2: "نؤمن أن الفرق بين الجيد والاستثنائي يكمن في التفاصيل التي لا يراها أحد — لكنها تُحسّ.",
+  media_fit: "cover",
+  media_opacity: 100,
+  text_position: "top",
+  overlay: "dark",
+  overlay_opacity: 50,
+  text1: defaultText1,
+  text2: defaultText2,
+};
+
+function normalize(raw: any): HeroMedia {
+  if (!raw) return defaults;
+  const t1 = typeof raw.text1 === "string"
+    ? { ...defaultText1, value: raw.text1 }
+    : { ...defaultText1, ...(raw.text1 ?? {}) };
+  const t2 = typeof raw.text2 === "string"
+    ? { ...defaultText2, value: raw.text2 }
+    : { ...defaultText2, ...(raw.text2 ?? {}) };
+  return { ...defaults, ...raw, text1: t1, text2: t2 };
+}
+
+const sizeClass: Record<TextBlock["size"], string> = {
+  xs: "text-xs md:text-sm",
+  sm: "text-sm md:text-base",
+  md: "text-base md:text-lg",
+  lg: "text-lg md:text-xl",
+  xl: "text-xl md:text-2xl",
+  "2xl": "text-2xl md:text-3xl",
+};
+const weightClass: Record<TextBlock["weight"], string> = {
+  light: "font-light",
+  normal: "font-normal",
+  medium: "font-medium",
+  semibold: "font-semibold",
+  bold: "font-bold",
+};
+const alignClass: Record<TextBlock["align"], string> = {
+  right: "text-right",
+  center: "text-center",
+  left: "text-left",
 };
 
 export default function ArchitecturalHero() {
@@ -24,7 +93,7 @@ export default function ArchitecturalHero() {
   useEffect(() => {
     (supabase.from as any)("site_pages").select("content").eq("page_key", "hero").maybeSingle()
       .then(({ data }: any) => {
-        if (data?.content) setMedia({ ...defaults, ...(data.content as HeroMedia) });
+        setMedia(normalize(data?.content));
       });
   }, []);
 
