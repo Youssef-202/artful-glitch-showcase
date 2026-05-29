@@ -158,45 +158,63 @@ export default function ArchitecturalHero() {
 
         <div className="-mt-32 md:-mt-64">
           <ContainerScroll titleComponent={null}>
-            <div className="relative w-full h-full flex items-center justify-center p-0 overflow-hidden">
-              {media.media_type === "image" && media.media_url ? (
-                <img src={media.media_url} alt="" className="absolute inset-0 w-full h-full object-cover" />
-              ) : media.media_type === "video" && media.media_url ? (
-                <video src={media.media_url} autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" />
-              ) : (
-                <Logo3DCard className="w-full max-w-lg" />
-              )}
+            {(() => {
+              const fitClass = media.media_fit === "contain" ? "object-contain" : "object-cover";
+              const mediaStyle = { opacity: (media.media_opacity ?? 100) / 100 };
+              const positionClass =
+                media.text_position === "center"
+                  ? "inset-0 flex items-center"
+                  : media.text_position === "bottom"
+                  ? "inset-x-0 bottom-0"
+                  : "inset-x-0 top-0";
+              const overlayBg =
+                media.overlay === "dark"
+                  ? `linear-gradient(to bottom, hsl(var(--background) / ${(media.overlay_opacity ?? 50) / 100}), transparent)`
+                  : media.overlay === "light"
+                  ? `linear-gradient(to bottom, hsl(0 0% 100% / ${(media.overlay_opacity ?? 50) / 100}), transparent)`
+                  : "transparent";
+              const hasMediaOverlay = media.media_type !== "logo" && media.overlay !== "none";
+              const showText1 = media.text1.enabled && media.text1.value;
+              const showText2 = media.text2.enabled && media.text2.value;
 
-              {(media.text1 || media.text2) && (media.media_type !== "logo") && (
-                <div className="absolute inset-x-0 top-0 z-10 bg-gradient-to-b from-background/70 via-background/30 to-transparent p-4 md:p-6 text-center pointer-events-none">
-                  {media.text1 && (
-                    <p className="text-white text-sm md:text-base lg:text-lg leading-relaxed font-light drop-shadow-md max-w-2xl mx-auto">
-                      {media.text1}
-                    </p>
+              return (
+                <div className="relative w-full h-full flex items-center justify-center p-0 overflow-hidden">
+                  {media.media_type === "image" && media.media_url ? (
+                    <img src={media.media_url} alt="" style={mediaStyle} className={`absolute inset-0 w-full h-full ${fitClass}`} />
+                  ) : media.media_type === "video" && media.media_url ? (
+                    <video src={media.media_url} autoPlay muted loop playsInline style={mediaStyle} className={`absolute inset-0 w-full h-full ${fitClass}`} />
+                  ) : (
+                    <Logo3DCard className="w-full max-w-lg" />
                   )}
-                  {media.text2 && (
-                    <p className="mt-2 text-white/80 text-xs md:text-sm lg:text-base leading-relaxed font-light drop-shadow-md max-w-2xl mx-auto">
-                      {media.text2}
-                    </p>
+
+                  {(showText1 || showText2) && (
+                    <div
+                      className={`absolute ${positionClass} z-10 p-4 md:p-6 pointer-events-none`}
+                      style={hasMediaOverlay ? { backgroundImage: overlayBg } : undefined}
+                    >
+                      <div className="w-full flex flex-col items-stretch gap-2">
+                        {showText1 && (
+                          <p
+                            className={`${sizeClass[media.text1.size]} ${weightClass[media.text1.weight]} ${alignClass[media.text1.align]} leading-relaxed drop-shadow-md max-w-2xl mx-auto`}
+                            style={{ color: media.text1.color }}
+                          >
+                            {media.text1.value}
+                          </p>
+                        )}
+                        {showText2 && (
+                          <p
+                            className={`${sizeClass[media.text2.size]} ${weightClass[media.text2.weight]} ${alignClass[media.text2.align]} leading-relaxed drop-shadow-md max-w-2xl mx-auto`}
+                            style={{ color: media.text2.color }}
+                          >
+                            {media.text2.value}
+                          </p>
+                        )}
+                      </div>
+                    </div>
                   )}
                 </div>
-              )}
-
-              {(media.text1 || media.text2) && media.media_type === "logo" && (
-                <div className="absolute inset-x-0 top-0 z-10 p-4 md:p-6 text-center pointer-events-none">
-                  {media.text1 && (
-                    <p className="text-white text-sm md:text-base lg:text-lg leading-relaxed font-light drop-shadow-md max-w-2xl mx-auto">
-                      {media.text1}
-                    </p>
-                  )}
-                  {media.text2 && (
-                    <p className="mt-2 text-white/80 text-xs md:text-sm lg:text-base leading-relaxed font-light drop-shadow-md max-w-2xl mx-auto">
-                      {media.text2}
-                    </p>
-                  )}
-                </div>
-              )}
-            </div>
+              );
+            })()}
           </ContainerScroll>
         </div>
 
