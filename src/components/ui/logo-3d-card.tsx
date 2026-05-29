@@ -52,18 +52,6 @@ export default function Logo3DCard({ className = "" }: Logo3DCardProps) {
           </div>
         </div>
 
-        {/* Floating labels */}
-        <div className="absolute top-0 right-0 bg-[#115e59] p-3 sm:p-4 backdrop-blur-md border border-[#2dd4bf]/30 translate-x-2 -translate-y-2 sm:translate-x-4 sm:-translate-y-4 shadow-2xl">
-          <p
-            className="text-[#2dd4bf] text-xs sm:text-sm font-bold"
-            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-          >
-            Est. 2024
-          </p>
-        </div>
-        <div className="absolute z-30 -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 bg-[#f5f3ee] text-[#0a2e2b] px-4 sm:px-6 py-2 sm:py-3 font-bold shadow-2xl text-sm sm:text-base">
-          ١٠٠٪ دقة
-        </div>
       </div>
 
       <style>{`
