@@ -26,53 +26,12 @@ export default function ArchitecturalHero() {
         <ContainerScroll
           titleComponent={
             <div className="flex flex-col items-center text-center px-4">
-              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-[#2dd4bf]/30 bg-[#115e59]/20 mb-8">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2dd4bf] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2dd4bf]" />
-                </span>
-                <span
-                  className="text-[#2dd4bf] text-xs sm:text-sm font-medium tracking-widest uppercase"
-                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-                >
-                  Agency of Mastery
-                </span>
-              </div>
-
               <h1 className="text-[#f5f3ee] text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-6">
                 نصنع الـ{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#2dd4bf] to-[#115e59]">
                   إتقان
                 </span>
-                <br />
-                <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light opacity-90">
-                  في كل تفصيل رقمي
-                </span>
               </h1>
-
-              <p
-                className="text-[#f5f3ee] opacity-70 text-base md:text-lg max-w-2xl leading-relaxed mb-10 font-light"
-                style={{ fontFamily: "'DM Sans', sans-serif" }}
-              >
-                حيث تلتقي الرؤية بالإبداع. نحن وكالة تصميم تركز على بناء تجارب
-                رقمية تترك أثراً، مدمجين الفن بالتكنولوجيا لتحقيق الكمال.
-              </p>
-
-              <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mb-4">
-                <a
-                  href="/contact"
-                  className="btn-liquid-glass rounded-full px-8 sm:px-10 py-4 sm:py-5 font-bold text-base sm:text-lg text-[#f5f3ee] cursor-pointer"
-                >
-                  ابدأ مشروعك
-                </a>
-                <a
-                  href="/portfolio"
-                  className="btn-liquid-glass rounded-full px-8 sm:px-10 py-4 sm:py-5 font-medium text-base sm:text-lg text-[#f5f3ee] flex items-center gap-3 cursor-pointer"
-                >
-                  أعمالنا
-                  <ArrowLeft className="w-5 h-5" />
-                </a>
-              </div>
             </div>
           }
         >
@@ -80,6 +39,37 @@ export default function ArchitecturalHero() {
             <Logo3DCard className="w-full max-w-lg" />
           </div>
         </ContainerScroll>
+
+        <div className="flex flex-col items-center text-center px-4 pb-20 -mt-20 md:-mt-40 relative z-20">
+          <h2 className="text-[#f5f3ee] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light opacity-90 mb-6">
+            في كل تفصيل رقمي
+          </h2>
+
+          <p
+            className="text-[#f5f3ee] opacity-70 text-base md:text-lg max-w-2xl leading-relaxed mb-10 font-light"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
+          >
+            حيث تلتقي الرؤية بالإبداع. نحن وكالة تصميم تركز على بناء تجارب
+            رقمية تترك أثراً، مدمجين الفن بالتكنولوجيا لتحقيق الكمال.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+            <a
+              href="/contact"
+              className="btn-liquid-glass rounded-full px-8 sm:px-10 py-4 sm:py-5 font-bold text-base sm:text-lg text-[#f5f3ee] cursor-pointer"
+            >
+              ابدأ مشروعك
+            </a>
+            <a
+              href="/portfolio"
+              className="btn-liquid-glass rounded-full px-8 sm:px-10 py-4 sm:py-5 font-medium text-base sm:text-lg text-[#f5f3ee] flex items-center gap-3 cursor-pointer"
+            >
+              أعمالنا
+              <ArrowLeft className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
+
       </div>
 
       <style>{`
