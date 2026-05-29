@@ -23,7 +23,7 @@ export default function ArchitecturalHero() {
       </div>
 
       <div className="relative z-10 flex flex-col overflow-hidden">
-        <div className="flex flex-col items-center text-center px-4 pt-24 md:pt-28 pb-12 md:pb-20">
+        <div className="flex flex-col items-center text-center px-4 pt-24 md:pt-28 pb-0">
           <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full border border-[#2dd4bf]/30 bg-[#0a2e2b]/40 backdrop-blur-md">
             <span className="w-2 h-2 rounded-full bg-[#2dd4bf] animate-pulse" />
             <span className="text-[#2dd4bf] text-sm font-medium tracking-wide">
