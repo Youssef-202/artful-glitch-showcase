@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Calendar, User } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, Clock, Star, User } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useLang } from "@/i18n/LanguageProvider";
 
@@ -16,6 +16,8 @@ type Post = {
   author_name_en: string | null;
   category: string | null;
   category_en: string | null;
+  reading_time: number | null;
+  featured: boolean | null;
   created_at: string;
 };
 
@@ -30,12 +32,12 @@ export default function Blog() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase
-      .from("blog_posts")
-      .select("id,title,title_en,excerpt,excerpt_en,cover_url,author_name,author_name_en,category,category_en,created_at")
+    (supabase.from("blog_posts") as any)
+      .select("id,title,title_en,excerpt,excerpt_en,cover_url,author_name,author_name_en,category,category_en,reading_time,featured,created_at")
       .eq("published", true)
+      .order("sort_order", { ascending: true })
       .order("created_at", { ascending: false })
-      .then(({ data }) => {
+      .then(({ data }: any) => {
         setPosts((data as any) ?? []);
         setLoading(false);
       });
@@ -97,14 +99,22 @@ export default function Blog() {
                         </div>
                       )}
                       <div className="p-6">
-                        {category && (
-                          <span className="inline-block text-xs text-primary tracking-widest mb-2">{category}</span>
-                        )}
+                        <div className="flex items-center gap-2 mb-2">
+                          {category && (
+                            <span className="inline-block text-xs text-primary tracking-widest">{category}</span>
+                          )}
+                          {p.featured && (
+                            <span className="inline-flex items-center gap-1 text-[10px] font-bold bg-primary/15 text-primary px-2 py-0.5 rounded-full">
+                              <Star className="w-3 h-3 fill-primary" /> مميز
+                            </span>
+                          )}
+                        </div>
                         <h2 className="text-xl font-bold mb-2 line-clamp-2">{title}</h2>
                         {excerpt && <p className="text-sm text-muted-foreground line-clamp-3 mb-4">{excerpt}</p>}
-                        <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                        <div className="flex items-center gap-4 text-xs text-muted-foreground flex-wrap">
                           {author && <span className="flex items-center gap-1"><User className="w-3 h-3" />{author}</span>}
                           <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{new Date(p.created_at).toLocaleDateString()}</span>
+                          {p.reading_time ? <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{p.reading_time} د</span> : null}
                         </div>
                         <span className="inline-flex items-center gap-1 mt-4 text-primary text-sm font-bold opacity-0 group-hover:opacity-100 transition">
                           {t.blog.readMore} <Arrow className="w-3 h-3" />
