@@ -8,7 +8,7 @@ import { useLang } from "@/i18n/LanguageProvider";
 import ArchitecturalHero from "@/components/ui/architectural-hero";
 import PartnersLogoCloud from "@/components/PartnersLogoCloud";
 import ServicesShowcase3D from "@/components/ServicesShowcase3D";
-import PortfolioMarquee from "@/components/PortfolioMarquee";
+import PortfolioStack from "@/components/PortfolioStack";
 import Testimonials from "@/components/Testimonials";
 import { CinematicFooter } from "@/components/ui/motion-footer";
 import { services } from "@/lib/services";
@@ -41,7 +41,7 @@ export default function Home() {
       <ServicesShowcase3D />
 
       {/* Portfolio showcase */}
-      <PortfolioMarquee />
+      <PortfolioStack />
 
       {/* Testimonials */}
       <Testimonials />
