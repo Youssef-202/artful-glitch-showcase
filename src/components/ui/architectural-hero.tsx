@@ -26,12 +26,47 @@ export default function ArchitecturalHero() {
         <ContainerScroll
           titleComponent={
             <div className="flex flex-col items-center text-center px-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full border border-[#2dd4bf]/30 bg-[#0a2e2b]/40 backdrop-blur-md">
+                <span className="w-2 h-2 rounded-full bg-[#2dd4bf] animate-pulse" />
+                <span className="text-[#2dd4bf] text-sm font-medium tracking-wide">
+                  منذ ٢٠٢٤ — وكالة الإتقان الرقمي
+                </span>
+              </div>
+
+              <p className="text-[#2dd4bf]/80 text-xs md:text-sm font-medium tracking-[0.3em] uppercase mb-4">
+                Mastery · إتقان · Precision
+              </p>
+
               <h1 className="text-[#f5f3ee] text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-6">
                 نصنع الـ{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#2dd4bf] to-[#115e59]">
                   إتقان
                 </span>
               </h1>
+
+              <p className="text-[#f5f3ee]/70 text-base md:text-lg max-w-xl mx-auto leading-relaxed font-light mb-3">
+                الإتقان ليس مجرد كلمة، بل هو فلسفتنا في كل بكسل، وكل سطر كود، وكل قصة نرويها.
+              </p>
+              <p className="text-[#f5f3ee]/50 text-sm md:text-base max-w-lg mx-auto leading-relaxed font-light mb-8">
+                نؤمن أن الفرق بين الجيد والاستثنائي يكمن في التفاصيل التي لا يراها أحد — لكنها تُحسّ.
+              </p>
+
+              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[#f5f3ee]/60 text-sm">
+                <div className="flex items-center gap-2">
+                  <span className="text-[#2dd4bf] text-lg font-bold">+٥٠</span>
+                  <span>مشروع منجز</span>
+                </div>
+                <div className="w-px h-4 bg-[#2dd4bf]/20" />
+                <div className="flex items-center gap-2">
+                  <span className="text-[#2dd4bf] text-lg font-bold">٪١٠٠</span>
+                  <span>التزام بالجودة</span>
+                </div>
+                <div className="w-px h-4 bg-[#2dd4bf]/20" />
+                <div className="flex items-center gap-2">
+                  <span className="text-[#2dd4bf] text-lg font-bold">٢٤/٧</span>
+                  <span>دعم متواصل</span>
+                </div>
+              </div>
             </div>
           }
         >
