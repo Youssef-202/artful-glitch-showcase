@@ -20,40 +20,36 @@ export default function PortfolioStack() {
     lang === "ar" ? "معرض أعمال إتقان" : "Etqan Portfolio";
 
   return (
-    <section className="relative px-6 sm:px-12 py-24 max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="text-start mb-12 max-w-3xl">
-        <p className="text-xs sm:text-sm text-primary tracking-[0.3em] mb-3 font-bold uppercase">
-          {t.common.ourWork}
-        </p>
-        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-6">
-          <span className="text-gradient">{heading}</span>
-        </h2>
-        <p className="text-base sm:text-lg text-muted-foreground mb-8 leading-relaxed">
-          {intro}
-        </p>
-        <Link
-          to="/portfolio"
-          className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition text-sm"
-        >
-          {t.common.viewAll} <Arrow className="w-4 h-4" />
-        </Link>
-      </div>
+    <section className="relative px-6 sm:px-12 py-24">
+      <ContainerScroll className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-7xl mx-auto">
+        {/* Sticky text column */}
+        <div className="lg:sticky lg:top-24 lg:h-fit self-start text-start">
+          <p className="text-xs sm:text-sm text-primary tracking-[0.3em] mb-3 font-bold uppercase">
+            {t.common.ourWork}
+          </p>
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-6">
+            <span className="text-gradient">{heading}</span>
+          </h2>
+          <p className="text-base sm:text-lg text-muted-foreground mb-8 max-w-md leading-relaxed">
+            {intro}
+          </p>
+          <Link
+            to="/portfolio"
+            className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition text-sm"
+          >
+            {t.common.viewAll} <Arrow className="w-4 h-4" />
+          </Link>
+        </div>
 
-      {/* Stacked cards — full width internal scroll, hidden scrollbar */}
-      <ContainerScroll>
-        <div
-          className="portfolio-stack-scroll relative h-[80vh] overflow-y-auto overscroll-contain rounded-3xl"
-        >
-
-          <div className="flex flex-col gap-6 pb-[40vh]">
-            {items.map((item, index) => (
-              <CardSticky
-                key={item.id}
-                index={index}
-                incrementY={16}
-                incrementZ={1}
-              >
+        {/* Stacked cards column */}
+        <div className="flex flex-col gap-6">
+          {items.map((item, index) => (
+            <CardSticky
+              key={item.id}
+              index={index}
+              incrementY={16}
+              incrementZ={1}
+            >
               <Link
                 to={`/portfolio/${item.id}`}
                 className="group block rounded-3xl overflow-hidden border border-white/10 shadow-elegant hover:shadow-glow transition-shadow"
@@ -91,7 +87,6 @@ export default function PortfolioStack() {
               </Link>
             </CardSticky>
           ))}
-          </div>
         </div>
       </ContainerScroll>
     </section>
