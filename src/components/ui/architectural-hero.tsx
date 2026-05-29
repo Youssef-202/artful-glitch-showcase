@@ -89,14 +89,30 @@ export default function ArchitecturalHero() {
 
         <div className="-mt-32 md:-mt-64">
           <ContainerScroll titleComponent={null}>
-            <div className="w-full h-full flex items-center justify-center p-6">
-              {media.media_type === "image" && media.media_url ? (
-                <img src={media.media_url} alt="" className="w-full h-full object-cover rounded-2xl" />
-              ) : media.media_type === "video" && media.media_url ? (
-                <video src={media.media_url} autoPlay muted loop playsInline className="w-full h-full object-cover rounded-2xl" />
-              ) : (
-                <Logo3DCard className="w-full max-w-lg" />
+            <div className="w-full h-full flex flex-col items-center justify-start gap-4 p-6 overflow-y-auto">
+              {(media.text1 || media.text2) && (
+                <div className="w-full max-w-2xl text-center pt-2 space-y-2">
+                  {media.text1 && (
+                    <p className="text-foreground/85 text-sm md:text-base lg:text-lg leading-relaxed font-light">
+                      {media.text1}
+                    </p>
+                  )}
+                  {media.text2 && (
+                    <p className="text-foreground/60 text-xs md:text-sm lg:text-base leading-relaxed font-light">
+                      {media.text2}
+                    </p>
+                  )}
+                </div>
               )}
+              <div className="flex-1 w-full flex items-center justify-center min-h-0">
+                {media.media_type === "image" && media.media_url ? (
+                  <img src={media.media_url} alt="" className="max-w-full max-h-full object-contain rounded-2xl" />
+                ) : media.media_type === "video" && media.media_url ? (
+                  <video src={media.media_url} autoPlay muted loop playsInline className="max-w-full max-h-full object-contain rounded-2xl" />
+                ) : (
+                  <Logo3DCard className="w-full max-w-lg" />
+                )}
+              </div>
             </div>
           </ContainerScroll>
         </div>
