@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Calendar, User } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, Clock, Star, User } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useLang } from "@/i18n/LanguageProvider";
 
@@ -16,6 +16,8 @@ type Post = {
   author_name_en: string | null;
   category: string | null;
   category_en: string | null;
+  reading_time: number | null;
+  featured: boolean | null;
   created_at: string;
 };
 
@@ -30,12 +32,12 @@ export default function Blog() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase
-      .from("blog_posts")
-      .select("id,title,title_en,excerpt,excerpt_en,cover_url,author_name,author_name_en,category,category_en,created_at")
+    (supabase.from("blog_posts") as any)
+      .select("id,title,title_en,excerpt,excerpt_en,cover_url,author_name,author_name_en,category,category_en,reading_time,featured,created_at")
       .eq("published", true)
+      .order("sort_order", { ascending: true })
       .order("created_at", { ascending: false })
-      .then(({ data }) => {
+      .then(({ data }: any) => {
         setPosts((data as any) ?? []);
         setLoading(false);
       });
