@@ -41,15 +41,19 @@ export default function PortfolioStack() {
           </Link>
         </div>
 
-        {/* Stacked cards column */}
-        <div className="flex flex-col gap-6">
-          {items.map((item, index) => (
-            <CardSticky
-              key={item.id}
-              index={index}
-              incrementY={16}
-              incrementZ={1}
-            >
+        {/* Stacked cards column — internal scroll only */}
+        <div
+          className="relative h-[80vh] overflow-y-auto overscroll-contain rounded-3xl pr-2 [scrollbar-width:thin]"
+          style={{ scrollbarGutter: "stable" }}
+        >
+          <div className="flex flex-col gap-6 pb-[40vh]">
+            {items.map((item, index) => (
+              <CardSticky
+                key={item.id}
+                index={index}
+                incrementY={16}
+                incrementZ={1}
+              >
               <Link
                 to={`/portfolio/${item.id}`}
                 className="group block rounded-3xl overflow-hidden border border-white/10 shadow-elegant hover:shadow-glow transition-shadow"
