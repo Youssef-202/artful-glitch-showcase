@@ -52,7 +52,7 @@ export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
           );
           const content = logo.cover ? (
             <div
-              className="relative h-24 w-48 rounded-2xl overflow-hidden bg-cover bg-center border border-border/40 shadow-elegant group"
+              className="relative h-32 w-60 rounded-2xl overflow-hidden bg-cover bg-center border border-border/40 shadow-elegant group"
               style={{ backgroundImage: `url(${logo.cover})` }}
             >
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10 group-hover:from-black/50 transition" />
