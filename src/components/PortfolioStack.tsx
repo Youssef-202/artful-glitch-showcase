@@ -91,6 +91,7 @@ export default function PortfolioStack() {
               </Link>
             </CardSticky>
           ))}
+          </div>
         </div>
       </ContainerScroll>
     </section>
