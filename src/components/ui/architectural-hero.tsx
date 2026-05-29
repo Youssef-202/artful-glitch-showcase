@@ -4,16 +4,27 @@ import { ContainerScroll } from "./container-scroll-animation";
 import Logo3DCard from "./logo-3d-card";
 import { supabase } from "@/integrations/supabase/client";
 
-type HeroMedia = { media_type: "image" | "video" | "logo"; media_url: string };
+type HeroMedia = {
+  media_type: "image" | "video" | "logo";
+  media_url: string;
+  text1: string;
+  text2: string;
+};
 
+const defaults: HeroMedia = {
+  media_type: "logo",
+  media_url: "",
+  text1: "الإتقان ليس مجرد كلمة، بل هو فلسفتنا في كل بكسل، وكل سطر كود، وكل قصة نرويها.",
+  text2: "نؤمن أن الفرق بين الجيد والاستثنائي يكمن في التفاصيل التي لا يراها أحد — لكنها تُحسّ.",
+};
 
 export default function ArchitecturalHero() {
-  const [media, setMedia] = useState<HeroMedia>({ media_type: "logo", media_url: "" });
+  const [media, setMedia] = useState<HeroMedia>(defaults);
 
   useEffect(() => {
     (supabase.from as any)("site_pages").select("content").eq("page_key", "hero").maybeSingle()
       .then(({ data }: any) => {
-        if (data?.content) setMedia({ media_type: "logo", media_url: "", ...(data.content as HeroMedia) });
+        if (data?.content) setMedia({ ...defaults, ...(data.content as HeroMedia) });
       });
   }, []);
 
