@@ -36,23 +36,23 @@ export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
               height={logo.height ?? 40}
               loading="lazy"
               className={cn(
-                "h-16 sm:h-20 w-auto object-contain transition",
+                "h-24 sm:h-32 w-auto object-contain transition",
                 logo.cover
                   ? "opacity-100 drop-shadow-lg"
-                  : "opacity-70 grayscale hover:opacity-100 hover:grayscale-0"
+                  : "opacity-90 hover:opacity-100"
               )}
             />
           ) : (
             <span className={cn(
-              "whitespace-nowrap text-2xl sm:text-3xl font-black transition",
-              logo.cover ? "text-white drop-shadow-lg" : "text-foreground/70 hover:text-foreground"
+              "whitespace-nowrap text-3xl sm:text-4xl font-black transition",
+              logo.cover ? "text-white drop-shadow-lg" : "text-foreground/80 hover:text-foreground"
             )}>
               {logo.alt}
             </span>
           );
           const content = logo.cover ? (
             <div
-              className="relative h-32 w-60 rounded-2xl overflow-hidden bg-cover bg-center border border-border/40 shadow-elegant group"
+              className="relative h-40 w-72 rounded-2xl overflow-hidden bg-cover bg-center border-2 border-emerald-500/40 shadow-[0_0_30px_rgba(16,185,129,0.35)] hover:shadow-[0_0_45px_rgba(16,185,129,0.55)] hover:border-emerald-400/70 transition group"
               style={{ backgroundImage: `url(${logo.cover})` }}
             >
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10 group-hover:from-black/50 transition" />
@@ -60,11 +60,15 @@ export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
                 {inner}
               </div>
             </div>
-          ) : inner;
+          ) : (
+            <div className="relative h-40 w-72 rounded-2xl flex items-center justify-center px-6 bg-background/50 border-2 border-emerald-500/40 shadow-[0_0_30px_rgba(16,185,129,0.35)] hover:shadow-[0_0_45px_rgba(16,185,129,0.55)] hover:border-emerald-400/70 transition">
+              {inner}
+            </div>
+          );
           return (
             <div
               key={`${logo.alt}-${i}`}
-              className="flex h-36 sm:h-40 items-center justify-center px-3"
+              className="flex h-48 sm:h-52 items-center justify-center px-3"
             >
               {logo.href ? (
                 <a href={logo.href} target="_blank" rel="noopener noreferrer">
