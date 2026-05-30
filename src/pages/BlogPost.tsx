@@ -55,7 +55,7 @@ export default function BlogPost() {
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/30" />
 
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
+        <div className="relative z-10 h-full flex flex-col items-center justify-end text-center px-6 pb-16">
           <Link to="/blog" className="inline-flex items-center gap-2 text-primary text-sm font-bold mb-8">
             <Arrow className="w-4 h-4" /> {t.blog.backToBlog}
           </Link>
@@ -76,6 +76,7 @@ export default function BlogPost() {
             </div>
           </motion.div>
         </div>
+
 
         <motion.div
           initial={{ opacity: 0, y: -10 }}
