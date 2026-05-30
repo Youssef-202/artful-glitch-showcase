@@ -194,13 +194,43 @@ export default function ServiceDetail() {
         <div className="lg:col-span-2 space-y-6 lg:order-2">
           {/* Overview */}
           <section className="rounded-2xl border border-primary/40 bg-card/30 p-6">
-            <h2 className="font-black text-xl flex items-center gap-2 mb-3">
+            <h2 className="font-black text-xl flex items-center gap-2 mb-5">
               <span className="w-1 h-6 bg-accent rounded-full" />
               نظرة عامة
             </h2>
-            <p className="text-muted-foreground leading-loose whitespace-pre-wrap">
-              {service.long_description || service.description}
-            </p>
+            {(() => {
+              const raw = (service.long_description || service.description || "").trim();
+              const items = raw
+                .split(/\n+/)
+                .map((s) => s.replace(/^[\-\*\u2022\d\.\)\s]+/, "").trim())
+                .filter(Boolean);
+              if (items.length <= 1) {
+                return (
+                  <p className="text-muted-foreground leading-loose whitespace-pre-wrap">
+                    {raw}
+                  </p>
+                );
+              }
+              return (
+                <div className="space-y-3">
+                  {items.map((b, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: dir === "rtl" ? 20 : -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.05 + i * 0.05 }}
+                      className="flex items-start gap-4 rounded-xl border border-primary/30 bg-background/30 p-4"
+                    >
+                      <span className="shrink-0 w-9 h-9 rounded-lg bg-accent/20 text-accent font-black flex items-center justify-center">
+                        {i + 1}
+                      </span>
+                      <p className="text-foreground/90 leading-relaxed pt-1">{b}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              );
+            })()}
           </section>
 
           {/* Features */}
