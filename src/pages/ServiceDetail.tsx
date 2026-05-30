@@ -30,6 +30,7 @@ type ServiceRow = {
   features: string[];
   process_steps: string[];
   deliverables: string[];
+  reasons: string[];
   faqs: { q: string; a: string }[];
   price_from: number | null;
   currency: string;
