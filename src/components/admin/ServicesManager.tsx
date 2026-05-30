@@ -56,6 +56,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
   const [featuresText, setFeaturesText] = useState(toLines(item?.features ?? []));
   const [stepsText, setStepsText] = useState(toLines(item?.process_steps ?? []));
   const [delivText, setDelivText] = useState(toLines(item?.deliverables ?? []));
+  const [reasonsText, setReasonsText] = useState(toLines(item?.reasons ?? []));
   const [faqsText, setFaqsText] = useState(
     (item?.faqs ?? []).map((f) => `${f.q}|${f.a}`).join("\n")
   );
