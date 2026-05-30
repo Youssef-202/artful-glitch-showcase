@@ -54,7 +54,7 @@ export default function BlogPost() {
           {post.reading_time ? <span className="flex items-center gap-1"><Clock className="w-4 h-4" />{post.reading_time} {isEn ? "min read" : "دقيقة قراءة"}</span> : null}
         </div>
         {post.cover_url && (
-          <img src={post.cover_url} alt={title} className="w-full rounded-3xl mb-8" />
+          <img src={post.cover_url} alt={title} className="w-full mb-8 object-fill rounded-2xl" />
         )}
         <div
           className="prose-rich max-w-none text-lg leading-relaxed text-foreground/90"
