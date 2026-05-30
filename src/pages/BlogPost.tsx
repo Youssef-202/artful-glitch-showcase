@@ -55,7 +55,7 @@ export default function BlogPost() {
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/30" />
 
-        <div className="relative z-10 h-full flex flex-col items-center justify-end text-center px-6 pb-16">
+        <div className="relative z-10 h-full flex-col text-center px-6 pb-16 flex items-end justify-end">
           <Link to="/blog" className="inline-flex items-center gap-2 text-primary text-sm font-bold mb-8">
             <Arrow className="w-4 h-4" /> {t.blog.backToBlog}
           </Link>
@@ -67,9 +67,9 @@ export default function BlogPost() {
           >
             {category && <p className="text-sm text-primary tracking-widest mb-4">{category}</p>}
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black mb-6 leading-tight">
-              <span className="text-gradient">{title}</span>
+              <span className="text-gradient pb-[10px]">{title}</span>
             </h1>
-            <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground flex-wrap">
+            <div className="gap-4 text-sm text-muted-foreground flex-wrap flex-row flex items-end justify-center pb-[10px]">
               {author && <span className="flex items-center gap-1"><User className="w-4 h-4" />{author}</span>}
               <span className="flex items-center gap-1"><Calendar className="w-4 h-4" />{new Date(post.created_at).toLocaleDateString()}</span>
               {post.reading_time ? <span className="flex items-center gap-1"><Clock className="w-4 h-4" />{post.reading_time} {isEn ? "min read" : "دقيقة قراءة"}</span> : null}
