@@ -81,6 +81,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
       features: fromLines(featuresText),
       process_steps: fromLines(stepsText),
       deliverables: fromLines(delivText),
+      reasons: fromLines(reasonsText),
       faqs: faqsText
         .split("\n")
         .map((l) => l.trim())
