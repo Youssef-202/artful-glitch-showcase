@@ -220,9 +220,9 @@ export default function ServiceDetail() {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.05 + i * 0.05 }}
-                      className="flex items-start gap-4 rounded-xl border border-primary/30 bg-background/30 p-4"
+                      className="group flex items-start gap-4 rounded-xl border border-primary/30 bg-background/30 p-4 transition-all duration-300 hover:border-accent hover:bg-accent/5 hover:shadow-[0_0_30px_hsl(var(--accent)/0.35)]"
                     >
-                      <span className="shrink-0 w-9 h-9 rounded-lg bg-accent/20 text-accent font-black flex items-center justify-center">
+                      <span className="shrink-0 w-9 h-9 rounded-lg bg-accent/20 text-accent font-black flex items-center justify-center transition-all duration-300 group-hover:bg-accent group-hover:text-accent-foreground group-hover:shadow-[0_0_20px_hsl(var(--accent)/0.8)] group-hover:scale-110">
                         {i + 1}
                       </span>
                       <p className="text-foreground/90 leading-relaxed pt-1">{b}</p>
@@ -248,9 +248,9 @@ export default function ServiceDetail() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.05 + i * 0.05 }}
-                    className="flex items-start gap-4 rounded-xl border border-primary/30 bg-background/30 p-4"
+                    className="group flex items-start gap-4 rounded-xl border border-primary/30 bg-background/30 p-4 transition-all duration-300 hover:border-accent hover:bg-accent/5 hover:shadow-[0_0_30px_hsl(var(--accent)/0.35)]"
                   >
-                    <span className="shrink-0 w-9 h-9 rounded-lg bg-accent/20 text-accent font-black flex items-center justify-center">
+                    <span className="shrink-0 w-9 h-9 rounded-lg bg-accent/20 text-accent font-black flex items-center justify-center transition-all duration-300 group-hover:bg-accent group-hover:text-accent-foreground group-hover:shadow-[0_0_20px_hsl(var(--accent)/0.8)] group-hover:scale-110">
                       {i + 1}
                     </span>
                     <p className="text-foreground/90 leading-relaxed pt-1">{b}</p>
