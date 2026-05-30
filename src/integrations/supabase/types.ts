@@ -471,6 +471,7 @@ export type Database = {
           price_from: number | null
           process_steps: string[]
           published: boolean
+          reasons: string[]
           sort_order: number
           tagline: string | null
           title: string
@@ -492,6 +493,7 @@ export type Database = {
           price_from?: number | null
           process_steps?: string[]
           published?: boolean
+          reasons?: string[]
           sort_order?: number
           tagline?: string | null
           title: string
@@ -513,6 +515,7 @@ export type Database = {
           price_from?: number | null
           process_steps?: string[]
           published?: boolean
+          reasons?: string[]
           sort_order?: number
           tagline?: string | null
           title?: string
