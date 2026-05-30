@@ -90,7 +90,7 @@ export default function BlogPost() {
 
 
       {/* Article content split by separator lines (revealed on scroll) */}
-      <div className="px-6 max-w-3xl mx-auto py-16 space-y-12">
+      <div className="px-6 w-full py-16 space-y-12">
         {splitContentBySeparator(content).map((section, idx) => (
           <motion.div
             key={idx}
