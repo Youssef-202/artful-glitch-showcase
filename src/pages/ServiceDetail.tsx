@@ -200,17 +200,17 @@ export default function ServiceDetail() {
             </h2>
             {(() => {
               const raw = (service.long_description || service.description || "").trim();
-              const items = raw
+              let items = raw
                 .split(/\n+/)
                 .map((s) => s.replace(/^[\-\*\u2022\d\.\)\s]+/, "").trim())
                 .filter(Boolean);
-              if (items.length <= 1) {
-                return (
-                  <p className="text-muted-foreground leading-loose whitespace-pre-wrap">
-                    {raw}
-                  </p>
-                );
+              if (items.length <= 1 && raw) {
+                items = raw
+                  .split(/(?<=[\.\!\?\u061F])\s+/)
+                  .map((s) => s.trim())
+                  .filter(Boolean);
               }
+              if (items.length === 0) return null;
               return (
                 <div className="space-y-3">
                   {items.map((b, i) => (
