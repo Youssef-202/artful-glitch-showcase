@@ -16,6 +16,7 @@ type Service = {
   features: string[];
   process_steps: string[];
   deliverables: string[];
+  reasons: string[];
   faqs: { q: string; a: string }[];
   price_from: number | null;
   currency: string;
@@ -36,6 +37,7 @@ const empty: Service = {
   features: [],
   process_steps: [],
   deliverables: [],
+  reasons: [],
   faqs: [],
   price_from: null,
   currency: "EGP",
