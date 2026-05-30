@@ -43,7 +43,7 @@ export default function BlogPost() {
   return (
     <article dir={isEn ? "ltr" : "rtl"}>
       {/* Full-screen hero */}
-      <section className="relative w-screen h-screen overflow-hidden left-1/2 right-1/2 -translate-x-1/2 ml-[-50vw] mr-[-50vw]">
+      <section className="relative w-full h-screen overflow-hidden rounded-2xl">
         {post.cover_url ? (
           <img
             src={post.cover_url}
