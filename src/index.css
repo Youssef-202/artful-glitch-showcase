@@ -335,13 +335,13 @@
 
 
 
-/* Light mode: remove decorative shadows for a flatter, cleaner look */
-:root:not(.dark) .btn-liquid-glass,
-:root:not(.dark) .glass,
-:root:not(.dark) .glass-strong,
-:root:not(.dark) .liquid-glass,
-:root:not(.dark) .liquid-glass-input,
-:root:not(.dark) .shadow-glow,
-:root:not(.dark) .shadow-elegant {
+/* Light mode: remove ALL shadows for a flatter, cleaner look */
+:root:not(.dark) *,
+:root:not(.dark) *::before,
+:root:not(.dark) *::after {
   box-shadow: none !important;
+  text-shadow: none !important;
+  --tw-shadow: 0 0 transparent !important;
+  --tw-ring-shadow: 0 0 transparent !important;
+  --tw-drop-shadow: none !important;
 }
