@@ -43,7 +43,7 @@ export default function BlogPost() {
   return (
     <article dir={isEn ? "ltr" : "rtl"}>
       {/* Full-screen hero */}
-      <section className="relative w-screen h-screen -mt-[var(--nav-h,0px)] overflow-hidden left-1/2 right-1/2 -translate-x-1/2 ml-[-50vw] mr-[-50vw]">
+      <section className="relative w-screen h-screen overflow-hidden left-1/2 right-1/2 -translate-x-1/2 ml-[-50vw] mr-[-50vw]">
         {post.cover_url ? (
           <img
             src={post.cover_url}
@@ -53,18 +53,23 @@ export default function BlogPost() {
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-accent/30" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/30" />
 
-        <div className="relative z-10 h-full flex flex-col justify-end px-6 sm:px-12 lg:px-20 pb-20 max-w-6xl mx-auto">
-          <Link to="/blog" className="inline-flex items-center gap-2 text-primary text-sm font-bold mb-6 self-start">
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
+          <Link to="/blog" className="inline-flex items-center gap-2 text-primary text-sm font-bold mb-8">
             <Arrow className="w-4 h-4" /> {t.blog.backToBlog}
           </Link>
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            {category && <p className="text-sm text-primary tracking-widest mb-3">{category}</p>}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="max-w-4xl mx-auto"
+          >
+            {category && <p className="text-sm text-primary tracking-widest mb-4">{category}</p>}
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black mb-6 leading-tight">
               <span className="text-gradient">{title}</span>
             </h1>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground flex-wrap">
+            <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground flex-wrap">
               {author && <span className="flex items-center gap-1"><User className="w-4 h-4" />{author}</span>}
               <span className="flex items-center gap-1"><Calendar className="w-4 h-4" />{new Date(post.created_at).toLocaleDateString()}</span>
               {post.reading_time ? <span className="flex items-center gap-1"><Clock className="w-4 h-4" />{post.reading_time} {isEn ? "min read" : "دقيقة قراءة"}</span> : null}
@@ -81,6 +86,7 @@ export default function BlogPost() {
           <ChevronDown className="w-6 h-6" />
         </motion.div>
       </section>
+
 
       {/* Article content (revealed on scroll) */}
       <div className="px-6 max-w-3xl mx-auto py-16">
