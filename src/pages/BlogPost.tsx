@@ -90,17 +90,18 @@ export default function BlogPost() {
 
 
       {/* Article content split by separator lines (revealed on scroll) */}
-      <div className="px-6 w-full py-16 space-y-12">
+      <div className="px-6 w-full py-16 space-y-16">
         {splitContentBySeparator(content).map((section, idx) => (
           <motion.div
             key={idx}
             initial={{ opacity: 0, y: 80 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            exit={{ opacity: 0, y: -40 }}
+            viewport={{ margin: "-15% 0px -15% 0px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
             <div
-              className="prose-rich max-w-none text-lg leading-relaxed text-foreground/90"
+              className="prose-rich max-w-none text-lg leading-loose text-foreground/90 break-words whitespace-normal [overflow-wrap:anywhere]"
               dangerouslySetInnerHTML={{ __html: section }}
             />
           </motion.div>
@@ -110,7 +111,8 @@ export default function BlogPost() {
           <motion.div
             initial={{ opacity: 0, y: 80 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            exit={{ opacity: 0, y: -40 }}
+            viewport={{ margin: "-15% 0px -15% 0px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
             <h3 className="text-xl font-bold mb-4">{isEn ? "Gallery" : "معرض الصور"}</h3>
