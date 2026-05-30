@@ -13,7 +13,7 @@ import { MultiFileUpload } from "@/components/MultiFileUpload";
 import { RichTextEditor } from "@/components/RichTextEditor";
 import OrdersManager from "@/components/admin/OrdersManager";
 import ServicesManager from "@/components/admin/ServicesManager";
-import TestimonialsManager from "@/components/admin/TestimonialsManager";
+
 import AboutManager from "@/components/admin/AboutManager";
 import BlogPageManager from "@/components/admin/BlogPageManager";
 import HeroManager from "@/components/admin/HeroManager";
@@ -54,7 +54,7 @@ function Sidebar() {
     { to: "/dashboard/blog-page", icon: Newspaper, label: "صفحة المدونة" },
     { to: "/dashboard/portfolio", icon: ImageIcon, label: t.dashboard.portfolio },
     { to: "/dashboard/partners", icon: Building2, label: "الشركاء" },
-    { to: "/dashboard/testimonials", icon: MessageSquare, label: "شركاء النجاح" },
+    
     { to: "/dashboard/about", icon: Info, label: "من نحن" },
   ];
   return (
@@ -707,7 +707,7 @@ export default function Dashboard() {
           <Route path="blog-page" element={<BlogPageManager />} />
           <Route path="portfolio" element={<PortfolioManager items={portfolio} onChange={() => setTick((t) => t + 1)} />} />
           <Route path="partners" element={<PartnersManager items={partners} onChange={() => setTick((t) => t + 1)} />} />
-          <Route path="testimonials" element={<TestimonialsManager />} />
+          
           <Route path="about" element={<AboutManager />} />
         </Routes>
       </div>
