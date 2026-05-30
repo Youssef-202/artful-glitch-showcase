@@ -16,6 +16,7 @@ type Service = {
   features: string[];
   process_steps: string[];
   deliverables: string[];
+  reasons: string[];
   faqs: { q: string; a: string }[];
   price_from: number | null;
   currency: string;
@@ -36,6 +37,7 @@ const empty: Service = {
   features: [],
   process_steps: [],
   deliverables: [],
+  reasons: [],
   faqs: [],
   price_from: null,
   currency: "EGP",
@@ -54,6 +56,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
   const [featuresText, setFeaturesText] = useState(toLines(item?.features ?? []));
   const [stepsText, setStepsText] = useState(toLines(item?.process_steps ?? []));
   const [delivText, setDelivText] = useState(toLines(item?.deliverables ?? []));
+  const [reasonsText, setReasonsText] = useState(toLines(item?.reasons ?? []));
   const [faqsText, setFaqsText] = useState(
     (item?.faqs ?? []).map((f) => `${f.q}|${f.a}`).join("\n")
   );
@@ -78,6 +81,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
       features: fromLines(featuresText),
       process_steps: fromLines(stepsText),
       deliverables: fromLines(delivText),
+      reasons: fromLines(reasonsText),
       faqs: faqsText
         .split("\n")
         .map((l) => l.trim())
@@ -223,6 +227,14 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none text-sm"
         />
       </div>
+
+      <textarea
+        rows={5}
+        placeholder="لماذا تختار هذه الخدمة؟ (سطر لكل سبب) — يظهر في سيكشن &quot;لماذا تختار هذه الخدمة&quot;"
+        value={reasonsText}
+        onChange={(e) => setReasonsText(e.target.value)}
+        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none text-sm"
+      />
 
       <textarea
         rows={5}

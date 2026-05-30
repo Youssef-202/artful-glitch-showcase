@@ -30,6 +30,7 @@ type ServiceRow = {
   features: string[];
   process_steps: string[];
   deliverables: string[];
+  reasons: string[];
   faqs: { q: string; a: string }[];
   price_from: number | null;
   currency: string;
@@ -301,14 +302,14 @@ export default function ServiceDetail() {
           )}
 
           {/* Why choose */}
-          {sd?.reasons && (
+          {((service.reasons && service.reasons.length > 0) || sd?.reasons) && (
             <section className="rounded-2xl border border-primary/40 bg-card/30 p-6">
               <h2 className="font-black text-xl flex items-center gap-2 mb-5">
                 <span className="w-1 h-6 bg-accent rounded-full" />
-                {sd.whyChoose}
+                {sd?.whyChoose ?? "لماذا تختار هذه الخدمة؟"}
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {sd.reasons.map((r: string, i: number) => (
+                {((service.reasons && service.reasons.length > 0) ? service.reasons : sd.reasons).map((r: string, i: number) => (
                   <div
                     key={i}
                     className="flex items-center gap-3 rounded-xl border border-primary/30 bg-background/30 px-4 py-3"
