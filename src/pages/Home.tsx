@@ -9,7 +9,7 @@ import ArchitecturalHero from "@/components/ui/architectural-hero";
 import PartnersLogoCloud from "@/components/PartnersLogoCloud";
 import ServicesShowcase3D from "@/components/ServicesShowcase3D";
 import PortfolioStack from "@/components/PortfolioStack";
-import Testimonials from "@/components/Testimonials";
+
 import { CinematicFooter } from "@/components/ui/motion-footer";
 import { services } from "@/lib/services";
 import { supabase } from "@/integrations/supabase/client";
@@ -43,8 +43,6 @@ export default function Home() {
       {/* Portfolio showcase */}
       <PortfolioStack />
 
-      {/* Testimonials */}
-      <Testimonials />
 
 
 
