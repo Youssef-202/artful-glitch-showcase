@@ -25,12 +25,13 @@ export default function RequestServiceButton({ serviceKey, serviceNameAr, servic
       return;
     }
     setBusy(true);
+    const description = desc.trim().slice(0, 2000) || null;
     const { error } = await supabase.from("service_orders").insert({
       user_id: user.id,
       service_key: serviceKey,
       service_name_ar: serviceNameAr,
       service_name_en: serviceNameEn ?? null,
-      description: desc.trim().slice(0, 2000) || null,
+      description,
       status: "pending",
     });
     setBusy(false);
@@ -38,7 +39,19 @@ export default function RequestServiceButton({ serviceKey, serviceNameAr, servic
       toast.error(error.message);
       return;
     }
-    toast.success("تم استلام طلبك ✓ هنتواصل معاك لتأكيد التفاصيل والدفع");
+
+    // Build WhatsApp message and open it so the request is sent to the site's WhatsApp
+    const lines = [
+      "طلب خدمة جديد 🚀",
+      `الخدمة: ${serviceNameAr}${serviceNameEn ? ` (${serviceNameEn})` : ""}`,
+      `كود الخدمة: ${serviceKey}`,
+      `العميل: ${user.email ?? user.id}`,
+      description ? `التفاصيل:\n${description}` : "بدون تفاصيل إضافية",
+    ];
+    const waUrl = `https://wa.me/966573511722?text=${encodeURIComponent(lines.join("\n"))}`;
+    window.open(waUrl, "_blank", "noopener,noreferrer");
+
+    toast.success("تم استلام طلبك ✓ وتم تحويلك للواتساب لتأكيد التفاصيل");
     setOpen(false);
     setDesc("");
     nav("/account");
