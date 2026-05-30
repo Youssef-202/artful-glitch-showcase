@@ -230,6 +230,14 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
 
       <textarea
         rows={5}
+        placeholder="لماذا تختار هذه الخدمة؟ (سطر لكل سبب) — يظهر في سيكشن &quot;لماذا تختار هذه الخدمة&quot;"
+        value={reasonsText}
+        onChange={(e) => setReasonsText(e.target.value)}
+        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none text-sm"
+      />
+
+      <textarea
+        rows={5}
         placeholder="أسئلة شائعة — سطر لكل سؤال بصيغة:  السؤال | الإجابة"
         value={faqsText}
         onChange={(e) => setFaqsText(e.target.value)}
