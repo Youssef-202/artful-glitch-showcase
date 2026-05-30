@@ -89,32 +89,52 @@ export default function BlogPost() {
       </section>
 
 
-      {/* Article content (revealed on scroll) */}
-      <div className="px-6 max-w-3xl mx-auto py-16">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-        >
-          <div
-            className="prose-rich max-w-none text-lg leading-relaxed text-foreground/90"
-            dangerouslySetInnerHTML={{ __html: content }}
-          />
-          {gallery.length > 0 && (
-            <div className="mt-12">
-              <h3 className="text-xl font-bold mb-4">{isEn ? "Gallery" : "معرض الصور"}</h3>
-              <div className="grid sm:grid-cols-2 gap-4">
-                {gallery.map((url, i) => (
-                  <img key={url + i} src={url} alt="" loading="lazy"
-                    className="w-full rounded-2xl object-cover aspect-video hover:scale-[1.02] transition-transform" />
-                ))}
-              </div>
+      {/* Article content split by separator lines (revealed on scroll) */}
+      <div className="px-6 max-w-3xl mx-auto py-16 space-y-12">
+        {splitContentBySeparator(content).map((section, idx) => (
+          <motion.div
+            key={idx}
+            initial={{ opacity: 0, y: 80 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
+            <div
+              className="prose-rich max-w-none text-lg leading-relaxed text-foreground/90"
+              dangerouslySetInnerHTML={{ __html: section }}
+            />
+          </motion.div>
+        ))}
+
+        {gallery.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 80 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
+            <h3 className="text-xl font-bold mb-4">{isEn ? "Gallery" : "معرض الصور"}</h3>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {gallery.map((url, i) => (
+                <img key={url + i} src={url} alt="" loading="lazy"
+                  className="w-full rounded-2xl object-cover aspect-video hover:scale-[1.02] transition-transform" />
+              ))}
             </div>
-          )}
-        </motion.div>
+          </motion.div>
+        )}
         <div className="h-16" />
       </div>
     </article>
   );
 }
+
+// Split rich-text HTML into sections by separator lines (long sequences of ـ tatweel or dashes)
+function splitContentBySeparator(html: string): string[] {
+  if (!html) return [];
+  // Match any block (p/div/h*) whose text content is mostly tatweel/dash/underscore characters
+  const separatorBlock = /<(p|div|h[1-6])[^>]*>\s*(?:<[^>]+>\s*)*[ـ\-_–—\s]{8,}(?:\s*<[^>]+>)*\s*<\/\1>/gi;
+  const parts = html.split(separatorBlock).filter((s) => s && !/^(p|div|h[1-6])$/i.test(s));
+  const cleaned = parts.map((p) => p.trim()).filter((p) => p && p.replace(/<[^>]+>/g, "").trim().length > 0);
+  return cleaned.length ? cleaned : [html];
+}
+
