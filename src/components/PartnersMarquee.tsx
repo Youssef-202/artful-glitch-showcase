@@ -33,12 +33,12 @@ export default function PartnersMarquee() {
     <section className="relative py-20 overflow-hidden" dir={dir}>
       <div className="px-6 max-w-7xl mx-auto text-center mb-10">
         <p className="text-xs sm:text-sm text-primary tracking-[0.3em] mb-3 font-bold">
-          PARTNERS
+          {"\n"}
         </p>
-        <h2 className="text-3xl sm:text-5xl font-black">
-          <span className="text-gradient">شركاؤنا</span>
+        <h2 className="text-3xl font-black leading-tight sm:text-5xl">
+          <span className="text-gradient text-6xl font-mono font-extrabold text-center text-slate-50 bg-slate-800">شركاؤنا</span>
         </h2>
-        <p className="mt-3 text-muted-foreground text-sm sm:text-base">
+        <p className="mt-3 text-muted-foreground sm:text-base text-2xl font-mono my-px border-0">
           نفخر بالعمل مع نخبة من الشركات والعلامات التجارية
         </p>
       </div>
