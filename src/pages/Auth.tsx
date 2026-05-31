@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { Float, Sparkles } from "@react-three/drei";
+import * as THREE from "three";
 import { Eye, EyeOff } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
@@ -12,6 +15,61 @@ import { useTheme } from "@/theme/ThemeProvider";
 import logoLight from "@/assets/logo.png";
 import logoDark from "@/assets/logo-white.png";
 import logo3d from "@/assets/etqan-logo-3d.png";
+
+function LogoMesh() {
+  const texture = useLoader(THREE.TextureLoader, logo3d);
+  const groupRef = useRef<THREE.Group>(null);
+  const mouse = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    texture.anisotropy = 16;
+    const onMove = (e: MouseEvent) => {
+      mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [texture]);
+
+  const aspect = (texture.image?.width ?? 1) / (texture.image?.height ?? 1);
+  const w = 3.6;
+  const h = w / aspect;
+
+  useFrame((state) => {
+    if (!groupRef.current) return;
+    const t = state.clock.elapsedTime;
+    const targetY = mouse.current.x * 0.8;
+    const targetX = -mouse.current.y * 0.5;
+    groupRef.current.rotation.y += (targetY - groupRef.current.rotation.y) * 0.06;
+    groupRef.current.rotation.x += (targetX - groupRef.current.rotation.x) * 0.06;
+    groupRef.current.position.y = Math.sin(t * 0.8) * 0.15;
+  });
+
+  return (
+    <Float speed={1.4} rotationIntensity={0.25} floatIntensity={0.6}>
+      <group ref={groupRef}>
+        <mesh position={[0, 0, -0.05]} scale={1.18}>
+          <planeGeometry args={[w, h]} />
+          <meshBasicMaterial map={texture} transparent opacity={0.35} color="#5fd9cf" depthWrite={false} />
+        </mesh>
+        <mesh>
+          <planeGeometry args={[w, h]} />
+          <meshStandardMaterial
+            map={texture}
+            transparent
+            alphaTest={0.02}
+            side={THREE.DoubleSide}
+            metalness={0.6}
+            roughness={0.25}
+            emissive={new THREE.Color("#5fd9cf")}
+            emissiveMap={texture}
+            emissiveIntensity={0.4}
+          />
+        </mesh>
+      </group>
+    </Float>
+  );
+}
 
 const schema = z.object({
   email: z.string().trim().email().max(255),
