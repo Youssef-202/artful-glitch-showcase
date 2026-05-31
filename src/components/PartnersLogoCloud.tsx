@@ -30,14 +30,14 @@ export default function PartnersLogoCloud() {
     <section className="relative px-6 py-20 max-w-7xl mx-auto" dir={dir}>
       <div className="text-center mb-10">
         <p className="text-xs sm:text-sm text-primary tracking-[0.3em] mb-3 font-bold">
-          PARTNERS
+          {"\n"}
         </p>
-        <h2 className="text-3xl sm:text-5xl font-black leading-tight">
-          <span className="text-gradient">موثوق به من قِبل الخبراء.</span>
+        <h2 className="text-3xl font-black leading-tight sm:text-5xl">
+          <span className="text-gradient text-6xl font-mono font-extrabold text-center text-slate-50 bg-slate-800">​شـــــركـــــــاء الــــــنـــــجــــاح</span>
           <br />
-          <span className="text-foreground/80">يستخدمه الرواد.</span>
+          <span className="text-foreground/80">​</span>
         </h2>
-        <p className="mt-3 text-muted-foreground text-sm sm:text-base">
+        <p className="mt-3 text-muted-foreground sm:text-base text-2xl font-mono my-px border-0">
           نفخر بشراكتنا مع نخبة من العلامات التجارية الرائدة
         </p>
       </div>
