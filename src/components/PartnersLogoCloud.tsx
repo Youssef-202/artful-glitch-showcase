@@ -68,7 +68,7 @@ export default function PartnersLogoCloud() {
                 <div
                   key={`${p?.id ?? "ph"}-${i}`}
                   className="shrink-0"
-                  style={{ width: "301.667px", marginLeft: "30px" }}
+                  style={{ width: "260px", marginLeft: "24px" }}
                 >
                   {p?.website_url ? (
                     <a href={p.website_url} target="_blank" rel="noopener noreferrer">
