@@ -6,7 +6,6 @@ type Partner = {
   id: string;
   name: string;
   logo_url: string | null;
-  cover_url: string | null;
   website_url: string | null;
 };
 
@@ -17,7 +16,7 @@ export default function PartnersLogoCloud() {
   useEffect(() => {
     supabase
       .from("partners")
-      .select("id,name,logo_url,cover_url,website_url")
+      .select("id,name,logo_url,website_url")
       .eq("published", true)
       .order("sort_order", { ascending: true })
       .then(({ data }) => setItems((data as any) ?? []));
@@ -30,59 +29,58 @@ export default function PartnersLogoCloud() {
   const loop = Array.from({ length: repeats }, () => display).flat();
 
   return (
-    <section className="relative py-20 overflow-hidden" dir={dir}>
-      <div className="px-6 max-w-7xl mx-auto text-center mb-10">
-        <p className="text-xs sm:text-sm text-primary tracking-[0.3em] mb-3 font-bold">
-          {"\n"}
-        </p>
-        <h2 className="text-3xl font-black leading-tight sm:text-5xl">
-          <span className="text-gradient text-6xl font-mono font-extrabold text-center text-slate-50 bg-slate-800">​شـــــركـــــــاء الــــــنـــــجــــاح</span>
+    <section
+      className="bg-gradient-to-br from-teal-800 to-teal-900 py-20 overflow-hidden"
+      dir={dir}
+    >
+      <div className="max-w-7xl mx-auto px-4">
+        <h2 className="text-4xl text-white font-bold text-center mb-12 flex items-center justify-center gap-3">
+          شركاؤنا
         </h2>
-        <p className="mt-3 text-muted-foreground sm:text-base text-2xl font-mono my-px border-0">
-          نفخر بشراكتنا مع نخبة من العلامات التجارية الرائدة
-        </p>
-      </div>
 
-      <div className={`group relative ${dir === "rtl" ? "swiper-rtl" : ""}`}>
-        {/* Edge fade masks */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-background to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-gradient-to-l from-background to-transparent" />
+        <div className="group relative" dir="rtl">
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-teal-900 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-gradient-to-l from-teal-800 to-transparent" />
 
-        <div
-          className={`flex gap-6 w-max ${dir === "rtl" ? "animate-marquee-rtl" : "animate-marquee"} group-hover:[animation-play-state:paused]`}
-        >
-          {loop.map((p, i) => {
-            const card = (
-              <div className="shrink-0 h-32 w-56 rounded-2xl bg-white border-2 border-emerald-500/40 shadow-[0_0_30px_rgba(16,185,129,0.35)] hover:shadow-[0_0_45px_rgba(16,185,129,0.55)] hover:border-emerald-400/70 transition flex items-center justify-center p-5">
-                {p?.logo_url ? (
-                  <img
-                    src={p.logo_url}
-                    alt={p.name}
-                    loading="lazy"
-                    className="max-h-20 max-w-full object-contain"
-                  />
-                ) : p ? (
-                  <span className="font-bold text-lg text-slate-900 whitespace-nowrap text-center">
-                    {p.name}
-                  </span>
-                ) : (
-                  <span className="text-xs text-slate-400 tracking-widest">LOGO</span>
-                )}
-              </div>
-            );
-            return p?.website_url ? (
-              <a
-                key={`${p?.id ?? "ph"}-${i}`}
-                href={p.website_url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {card}
-              </a>
-            ) : (
-              <div key={`${p?.id ?? "ph"}-${i}`}>{card}</div>
-            );
-          })}
+          <div className="flex w-max animate-marquee-rtl group-hover:[animation-play-state:paused]">
+            {loop.map((p, i) => {
+              const card = (
+                <div className="bg-white rounded-2xl h-40 w-full flex items-center justify-center p-6 shadow-lg hover:shadow-xl transition">
+                  {p?.logo_url ? (
+                    <img
+                      src={p.logo_url}
+                      alt={p.name}
+                      loading="lazy"
+                      className="max-h-24 max-w-full object-contain"
+                    />
+                  ) : p ? (
+                    <span className="font-bold text-xl text-slate-900 text-center">
+                      {p.name}
+                    </span>
+                  ) : (
+                    <span className="text-xs text-slate-400 tracking-widest">
+                      LOGO
+                    </span>
+                  )}
+                </div>
+              );
+              return (
+                <div
+                  key={`${p?.id ?? "ph"}-${i}`}
+                  className="shrink-0"
+                  style={{ width: "301.667px", marginLeft: "30px" }}
+                >
+                  {p?.website_url ? (
+                    <a href={p.website_url} target="_blank" rel="noopener noreferrer">
+                      {card}
+                    </a>
+                  ) : (
+                    card
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
