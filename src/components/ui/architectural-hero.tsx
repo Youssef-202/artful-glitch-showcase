@@ -187,20 +187,8 @@ export default function ArchitecturalHero() {
                     <Logo3DCard className="w-full max-w-lg" />
                   )}
 
-                  {/* Floating CTA buttons inside the hero card (absolute, no layout space) */}
-                  <a
-                    href="/contact"
-                    className="btn-liquid-glass absolute bottom-6 right-6 md:bottom-10 md:right-10 z-30 rounded-full px-6 sm:px-8 py-3 sm:py-4 font-bold text-sm sm:text-base text-foreground cursor-pointer"
-                  >
-                    ابدأ مشروعك
-                  </a>
-                  <a
-                    href="/portfolio"
-                    className="btn-liquid-glass absolute bottom-6 left-6 md:bottom-10 md:left-10 z-30 rounded-full px-6 sm:px-8 py-3 sm:py-4 font-medium text-sm sm:text-base text-foreground flex items-center gap-2 cursor-pointer"
-                  >
-                    أعمالنا
-                    <ArrowLeft className="w-4 h-4" />
-                  </a>
+
+
 
                   {(showText1 || showText2) && (
                     <div
