@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { Float, Sparkles } from "@react-three/drei";
+import * as THREE from "three";
 import { Eye, EyeOff } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
@@ -12,6 +15,61 @@ import { useTheme } from "@/theme/ThemeProvider";
 import logoLight from "@/assets/logo.png";
 import logoDark from "@/assets/logo-white.png";
 import logo3d from "@/assets/etqan-logo-3d.png";
+
+function LogoMesh() {
+  const texture = useLoader(THREE.TextureLoader, logo3d);
+  const groupRef = useRef<THREE.Group>(null);
+  const mouse = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    texture.anisotropy = 16;
+    const onMove = (e: MouseEvent) => {
+      mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [texture]);
+
+  const aspect = (texture.image?.width ?? 1) / (texture.image?.height ?? 1);
+  const w = 3.6;
+  const h = w / aspect;
+
+  useFrame((state) => {
+    if (!groupRef.current) return;
+    const t = state.clock.elapsedTime;
+    const targetY = mouse.current.x * 0.8;
+    const targetX = -mouse.current.y * 0.5;
+    groupRef.current.rotation.y += (targetY - groupRef.current.rotation.y) * 0.06;
+    groupRef.current.rotation.x += (targetX - groupRef.current.rotation.x) * 0.06;
+    groupRef.current.position.y = Math.sin(t * 0.8) * 0.15;
+  });
+
+  return (
+    <Float speed={1.4} rotationIntensity={0.25} floatIntensity={0.6}>
+      <group ref={groupRef}>
+        <mesh position={[0, 0, -0.05]} scale={1.18}>
+          <planeGeometry args={[w, h]} />
+          <meshBasicMaterial map={texture} transparent opacity={0.35} color="#5fd9cf" depthWrite={false} />
+        </mesh>
+        <mesh>
+          <planeGeometry args={[w, h]} />
+          <meshStandardMaterial
+            map={texture}
+            transparent
+            alphaTest={0.02}
+            side={THREE.DoubleSide}
+            metalness={0.6}
+            roughness={0.25}
+            emissive={new THREE.Color("#5fd9cf")}
+            emissiveMap={texture}
+            emissiveIntensity={0.4}
+          />
+        </mesh>
+      </group>
+    </Float>
+  );
+}
 
 const schema = z.object({
   email: z.string().trim().email().max(255),
@@ -198,16 +256,15 @@ export default function AuthPage() {
           <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-accent/30 blur-3xl" />
 
           <div className="relative h-full flex flex-col items-center justify-center p-6 sm:p-10 text-center">
-            <motion.img
-              src={logo3d}
-              alt={t.common.brand}
-              initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ scale: 1.04, rotate: 2 }}
-              className="w-auto h-auto max-w-[80%] max-h-[60%] object-contain mb-6 drop-shadow-[0_0_40px_hsl(var(--primary)/0.55)]"
-            />
-            <h2 className="text-4xl font-black mb-3">
+            <div className="relative w-full flex-1 min-h-[280px] sm:min-h-[360px]">
+              <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
+                <ambientLight intensity={0.6} />
+                <pointLight position={[5, 5, 5]} intensity={1.2} color="#5fd9cf" />
+                <Sparkles count={60} scale={6} size={2} speed={0.4} color="#5fd9cf" />
+                <LogoMesh />
+              </Canvas>
+            </div>
+            <h2 className="text-4xl font-black mb-3 mt-4">
               <span className="text-gradient">{t.common.brand}</span>
             </h2>
             <p className="text-muted-foreground max-w-sm">
