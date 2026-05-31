@@ -30,7 +30,7 @@ export default function PartnersLogoCloud() {
 
   return (
     <section
-      className="bg-background py-20 overflow-hidden"
+      className="py-20 overflow-hidden"
       dir={dir}
     >
       <div className="max-w-7xl mx-auto px-4">
