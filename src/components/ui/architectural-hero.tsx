@@ -190,13 +190,13 @@ export default function ArchitecturalHero() {
                   {/* CTA buttons inside the hero card (bottom corners) */}
                   <a
                     href="/contact"
-                    className="absolute bottom-4 right-4 md:bottom-8 md:right-8 z-30 rounded-full px-5 sm:px-7 py-2.5 sm:py-3 bg-primary/90 hover:bg-primary text-primary-foreground font-bold text-sm sm:text-base backdrop-blur-md shadow-lg transition"
+                    className="absolute bottom-4 right-4 md:bottom-8 md:right-8 z-30 rounded-full px-5 sm:px-7 py-2.5 sm:py-3 text-primary-foreground font-bold text-sm sm:text-base btn-liquid-glass"
                   >
                     ابدأ مشروعك
                   </a>
                   <a
                     href="/portfolio"
-                    className="absolute bottom-4 left-4 md:bottom-8 md:left-8 z-30 rounded-full px-5 sm:px-7 py-2.5 sm:py-3 bg-primary/90 hover:bg-primary text-primary-foreground font-medium text-sm sm:text-base backdrop-blur-md shadow-lg transition"
+                    className="absolute bottom-4 left-4 md:bottom-8 md:left-8 z-30 rounded-full px-5 sm:px-7 py-2.5 sm:py-3 text-primary-foreground font-medium text-sm sm:text-base btn-liquid-glass"
                   >
                     أعمالنا
                   </a>
