@@ -110,7 +110,6 @@ export default function BlogPost() {
           <motion.div
             initial={{ opacity: 0, y: 80 }}
             whileInView={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -40 }}
             viewport={{ margin: "-15% 0px -15% 0px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
