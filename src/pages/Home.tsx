@@ -74,10 +74,10 @@ export default function Home() {
                   )}
                   <div className="p-5">
                     {p.category && <span className="inline-block text-xs text-primary tracking-widest mb-2">{p.category}</span>}
-                    <h3 className="text-lg font-bold mb-2 line-clamp-2">{p.title}</h3>
+                    <h3 className="text-lg font-bold mb-2 line-clamp-2 pb-0">{p.title}</h3>
                     {p.excerpt && <p className="text-sm text-muted-foreground line-clamp-2">{p.excerpt}</p>}
                     <div className="flex items-center gap-1 mt-3 text-xs text-muted-foreground">
-                      <Calendar className="w-3 h-3" />{new Date(p.created_at).toLocaleDateString()}
+                      {/* Date hidden as requested */}
                     </div>
                   </div>
                 </Link>
