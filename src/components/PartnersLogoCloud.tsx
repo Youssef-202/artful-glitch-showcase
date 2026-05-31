@@ -30,17 +30,20 @@ export default function PartnersLogoCloud() {
 
   return (
     <section
-      className="bg-gradient-to-br from-teal-800 to-teal-900 py-20 overflow-hidden"
+      className="bg-background py-20 overflow-hidden"
       dir={dir}
     >
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-4xl text-white font-bold text-center mb-12 flex items-center justify-center gap-3">
-          شركاؤنا
+        <h2 className="text-5xl sm:text-6xl font-black text-center mb-4 text-gradient leading-tight">
+          شركاء النجاح
         </h2>
+        <p className="text-center text-muted-foreground mb-12 text-base sm:text-lg">
+          نفخر بشراكتنا مع نخبة من العلامات التجارية الرائدة
+        </p>
 
         <div className="group relative" dir="rtl">
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-teal-900 to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-gradient-to-l from-teal-800 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-background to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-gradient-to-l from-background to-transparent" />
 
           <div className="flex w-max animate-marquee-rtl group-hover:[animation-play-state:paused]">
             {loop.map((p, i) => {
