@@ -41,10 +41,7 @@ export default function PartnersLogoCloud() {
           نفخر بشراكتنا مع نخبة من العلامات التجارية الرائدة
         </p>
 
-        <div className="group relative" dir="rtl">
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-background to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-gradient-to-l from-background to-transparent" />
-
+        <div className="group" dir="rtl">
           <div className="flex w-max animate-marquee-rtl group-hover:[animation-play-state:paused]">
             {loop.map((p, i) => {
               const card = (
