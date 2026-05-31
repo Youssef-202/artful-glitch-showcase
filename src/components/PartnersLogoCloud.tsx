@@ -34,10 +34,10 @@ export default function PartnersLogoCloud() {
       dir={dir}
     >
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-5xl sm:text-6xl font-black text-center mb-4 text-gradient leading-tight">
-          شركاء النجاح
+        <h2 className="text-5xl text-center mb-4 text-gradient leading-tight sm:text-8xl font-mono bg-slate-800 font-bold">
+          شـــــــركـــــــاء الـــــــنـــــجـــــاح
         </h2>
-        <p className="text-center text-muted-foreground mb-12 text-base sm:text-lg">
+        <p className="text-center text-muted-foreground mb-12 sm:text-lg text-2xl font-sans font-bold">
           نفخر بشراكتنا مع نخبة من العلامات التجارية الرائدة
         </p>
 
