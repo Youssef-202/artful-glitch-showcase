@@ -45,7 +45,7 @@ export default function PartnersLogoCloud() {
           <div className="flex w-max animate-marquee-rtl group-hover:[animation-play-state:paused]">
             {loop.map((p, i) => {
               const card = (
-                <div className="bg-white rounded-2xl h-40 w-full flex items-center justify-center p-6 shadow-lg hover:shadow-xl transition">
+                <div className="bg-white rounded-2xl h-32 w-full flex items-center justify-center p-4 shadow-lg hover:shadow-xl transition">
                   {p?.logo_url ? (
                     <img
                       src={p.logo_url}
@@ -68,7 +68,7 @@ export default function PartnersLogoCloud() {
                 <div
                   key={`${p?.id ?? "ph"}-${i}`}
                   className="shrink-0"
-                  style={{ width: "301.667px", marginLeft: "30px" }}
+                  style={{ width: "260px", marginLeft: "24px" }}
                 >
                   {p?.website_url ? (
                     <a href={p.website_url} target="_blank" rel="noopener noreferrer">
