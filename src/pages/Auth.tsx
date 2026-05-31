@@ -11,6 +11,7 @@ import { useLang } from "@/i18n/LanguageProvider";
 import { useTheme } from "@/theme/ThemeProvider";
 import logoLight from "@/assets/logo.png";
 import logoDark from "@/assets/logo-white.png";
+import logo3d from "@/assets/etqan-logo-3d.png";
 
 const schema = z.object({
   email: z.string().trim().email().max(255),
