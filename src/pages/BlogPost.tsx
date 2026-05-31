@@ -71,7 +71,7 @@ export default function BlogPost() {
             </h1>
             <div className="gap-4 text-sm text-muted-foreground flex-wrap flex-row flex items-end justify-center pb-[10px]">
               {author && <span className="flex items-center gap-1"><User className="w-4 h-4" />{author}</span>}
-              <span className="flex items-center gap-1"><Calendar className="w-4 h-4" />{new Date(post.created_at).toLocaleDateString()}</span>
+              {/* Date hidden as requested */}
               {post.reading_time ? <span className="flex items-center gap-1"><Clock className="w-4 h-4" />{post.reading_time} {isEn ? "min read" : "دقيقة قراءة"}</span> : null}
             </div>
           </motion.div>
