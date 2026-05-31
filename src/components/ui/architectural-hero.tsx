@@ -187,6 +187,21 @@ export default function ArchitecturalHero() {
                     <Logo3DCard className="w-full max-w-lg" />
                   )}
 
+                  {/* Floating CTA buttons inside the hero card (absolute, no layout space) */}
+                  <a
+                    href="/contact"
+                    className="btn-liquid-glass absolute bottom-4 right-4 md:bottom-8 md:right-8 z-20 rounded-full px-5 sm:px-7 py-2.5 sm:py-3.5 font-bold text-sm sm:text-base text-foreground cursor-pointer"
+                  >
+                    ابدأ مشروعك
+                  </a>
+                  <a
+                    href="/portfolio"
+                    className="btn-liquid-glass absolute bottom-4 left-4 md:bottom-8 md:left-8 z-20 rounded-full px-5 sm:px-7 py-2.5 sm:py-3.5 font-medium text-sm sm:text-base text-foreground flex items-center gap-2 cursor-pointer"
+                  >
+                    أعمالنا
+                    <ArrowLeft className="w-4 h-4" />
+                  </a>
+
                   {(showText1 || showText2) && (
                     <div
                       className={`absolute ${positionClass} z-10 p-4 md:p-6 pointer-events-none`}
@@ -219,34 +234,32 @@ export default function ArchitecturalHero() {
         </div>
 
         <div className="flex flex-col items-center text-center px-4 pb-20 -mt-24 md:-mt-48 relative z-20">
-          <h2 className="text-foreground text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light opacity-90 mb-6">
-            في كل تفصيل رقمي
+          <h2 className="text-foreground text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light opacity-90 mb-10">
+            قصص نجاحنا تبدأ من هنا
           </h2>
 
-          <p
-            className="text-foreground opacity-70 text-base md:text-lg max-w-2xl leading-relaxed mb-10 font-light"
-            style={{ fontFamily: "'DM Sans', sans-serif" }}
-          >
-            حيث تلتقي الرؤية بالإبداع. نحن وكالة تصميم تركز على بناء تجارب
-            رقمية تترك أثراً، مدمجين الفن بالتكنولوجيا لتحقيق الكمال.
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
-            <a
-              href="/contact"
-              className="btn-liquid-glass rounded-full px-8 sm:px-10 py-4 sm:py-5 font-bold text-base sm:text-lg text-foreground cursor-pointer"
-            >
-              ابدأ مشروعك
-            </a>
-            <a
-              href="/portfolio"
-              className="btn-liquid-glass rounded-full px-8 sm:px-10 py-4 sm:py-5 font-medium text-base sm:text-lg text-foreground flex items-center gap-3 cursor-pointer"
-            >
-              أعمالنا
-              <ArrowLeft className="w-5 h-5" />
-            </a>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-full max-w-6xl">
+            {[
+              { value: "+2000", label: "علامة تجارية" },
+              { value: "+7000", label: "عميل" },
+              { value: "+7", label: "سنوات خبرة" },
+              { value: "+70", label: "ادارة الحسابات" },
+            ].map((s) => (
+              <div
+                key={s.label}
+                className="rounded-2xl border border-primary/20 bg-card/30 backdrop-blur-sm px-4 py-8 sm:py-12 flex flex-col items-center justify-center gap-3"
+              >
+                <span className="text-4xl sm:text-5xl md:text-6xl font-light text-foreground">
+                  {s.value}
+                </span>
+                <span className="text-sm sm:text-base text-foreground/70">
+                  {s.label}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
+
 
       </div>
 
