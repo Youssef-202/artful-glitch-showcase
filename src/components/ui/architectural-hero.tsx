@@ -187,8 +187,19 @@ export default function ArchitecturalHero() {
                     <Logo3DCard className="w-full max-w-lg" />
                   )}
 
-
-
+                  {/* CTA buttons inside the hero card (bottom corners) */}
+                  <a
+                    href="/contact"
+                    className="absolute bottom-4 right-4 md:bottom-8 md:right-8 z-30 rounded-full px-5 sm:px-7 py-2.5 sm:py-3 bg-primary/90 hover:bg-primary text-primary-foreground font-bold text-sm sm:text-base backdrop-blur-md shadow-lg transition"
+                  >
+                    ابدأ مشروعك
+                  </a>
+                  <a
+                    href="/portfolio"
+                    className="absolute bottom-4 left-4 md:bottom-8 md:left-8 z-30 rounded-full px-5 sm:px-7 py-2.5 sm:py-3 bg-primary/90 hover:bg-primary text-primary-foreground font-medium text-sm sm:text-base backdrop-blur-md shadow-lg transition"
+                  >
+                    أعمالنا
+                  </a>
 
                   {(showText1 || showText2) && (
                     <div
@@ -221,22 +232,8 @@ export default function ArchitecturalHero() {
           </ContainerScroll>
         </div>
 
-        {/* CTA buttons under the card */}
-        <div className="flex flex-wrap justify-between items-center gap-4 px-6 sm:px-12 max-w-5xl mx-auto w-full -mt-16 md:-mt-32 relative z-20">
-          <a
-            href="/portfolio"
-            className="btn-liquid-glass rounded-full px-6 sm:px-8 py-3 sm:py-4 font-medium text-sm sm:text-base text-foreground flex items-center gap-2 cursor-pointer"
-          >
-            أعمالنا
-            <ArrowLeft className="w-4 h-4" />
-          </a>
-          <a
-            href="/contact"
-            className="btn-liquid-glass rounded-full px-6 sm:px-8 py-3 sm:py-4 font-bold text-sm sm:text-base text-foreground cursor-pointer"
-          >
-            ابدأ مشروعك
-          </a>
-        </div>
+
+
 
 
         <div className="flex flex-col items-center text-center px-4 pb-20 -mt-24 md:-mt-48 relative z-20">
