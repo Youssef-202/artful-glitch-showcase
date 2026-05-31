@@ -221,6 +221,24 @@ export default function ArchitecturalHero() {
           </ContainerScroll>
         </div>
 
+        {/* CTA buttons under the card */}
+        <div className="flex flex-wrap justify-between items-center gap-4 px-6 sm:px-12 max-w-5xl mx-auto w-full -mt-16 md:-mt-32 relative z-20">
+          <a
+            href="/portfolio"
+            className="btn-liquid-glass rounded-full px-6 sm:px-8 py-3 sm:py-4 font-medium text-sm sm:text-base text-foreground flex items-center gap-2 cursor-pointer"
+          >
+            أعمالنا
+            <ArrowLeft className="w-4 h-4" />
+          </a>
+          <a
+            href="/contact"
+            className="btn-liquid-glass rounded-full px-6 sm:px-8 py-3 sm:py-4 font-bold text-sm sm:text-base text-foreground cursor-pointer"
+          >
+            ابدأ مشروعك
+          </a>
+        </div>
+
+
         <div className="flex flex-col items-center text-center px-4 pb-20 -mt-24 md:-mt-48 relative z-20">
           <h2 className="text-foreground text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light opacity-90 mb-10">
             قصص نجاحنا تبدأ من هنا
