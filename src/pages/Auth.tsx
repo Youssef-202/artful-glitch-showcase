@@ -11,6 +11,7 @@ import { useLang } from "@/i18n/LanguageProvider";
 import { useTheme } from "@/theme/ThemeProvider";
 import logoLight from "@/assets/logo.png";
 import logoDark from "@/assets/logo-white.png";
+import logo3d from "@/assets/etqan-logo-3d.png";
 
 const schema = z.object({
   email: z.string().trim().email().max(255),
@@ -196,9 +197,17 @@ export default function AuthPage() {
           <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-primary/30 blur-3xl" />
           <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-accent/30 blur-3xl" />
 
-          <div className="relative h-full flex flex-col items-center justify-center p-10 text-center">
-            <img src={logoSrc} alt={t.common.brand} className="h-24 w-auto object-contain mb-8 drop-shadow-2xl" />
-            <h2 className="text-4xl font-black mb-4">
+          <div className="relative h-full flex flex-col items-center justify-center p-6 sm:p-10 text-center">
+            <motion.img
+              src={logo3d}
+              alt={t.common.brand}
+              initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ scale: 1.04, rotate: 2 }}
+              className="w-auto h-auto max-w-[80%] max-h-[60%] object-contain mb-6 drop-shadow-[0_0_40px_hsl(var(--primary)/0.55)]"
+            />
+            <h2 className="text-4xl font-black mb-3">
               <span className="text-gradient">{t.common.brand}</span>
             </h2>
             <p className="text-muted-foreground max-w-sm">
