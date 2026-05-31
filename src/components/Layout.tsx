@@ -17,7 +17,7 @@ export default function Layout() {
   return (
     <>
       <PersistentCanvas />
-      <Navbar />
+      {!location.pathname.startsWith("/dashboard") && <Navbar />}
       {!location.pathname.startsWith("/dashboard") && <FloatingCTA />}
       <AnimatePresence mode="wait">
         <motion.main
