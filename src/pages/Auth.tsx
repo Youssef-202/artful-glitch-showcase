@@ -256,16 +256,15 @@ export default function AuthPage() {
           <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-accent/30 blur-3xl" />
 
           <div className="relative h-full flex flex-col items-center justify-center p-6 sm:p-10 text-center">
-            <motion.img
-              src={logo3d}
-              alt={t.common.brand}
-              initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ scale: 1.04, rotate: 2 }}
-              className="w-auto h-auto max-w-[80%] max-h-[60%] object-contain mb-6 drop-shadow-[0_0_40px_hsl(var(--primary)/0.55)]"
-            />
-            <h2 className="text-4xl font-black mb-3">
+            <div className="relative w-full flex-1 min-h-[280px] sm:min-h-[360px]">
+              <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 2]}>
+                <ambientLight intensity={0.6} />
+                <pointLight position={[5, 5, 5]} intensity={1.2} color="#5fd9cf" />
+                <Sparkles count={60} scale={6} size={2} speed={0.4} color="#5fd9cf" />
+                <LogoMesh />
+              </Canvas>
+            </div>
+            <h2 className="text-4xl font-black mb-3 mt-4">
               <span className="text-gradient">{t.common.brand}</span>
             </h2>
             <p className="text-muted-foreground max-w-sm">
