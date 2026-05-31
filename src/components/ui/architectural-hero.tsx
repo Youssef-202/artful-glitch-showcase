@@ -190,13 +190,13 @@ export default function ArchitecturalHero() {
                   {/* Floating CTA buttons inside the hero card (absolute, no layout space) */}
                   <a
                     href="/contact"
-                    className="btn-liquid-glass absolute bottom-4 right-4 md:bottom-8 md:right-8 z-20 rounded-full px-5 sm:px-7 py-2.5 sm:py-3.5 font-bold text-sm sm:text-base text-foreground cursor-pointer"
+                    className="btn-liquid-glass absolute bottom-6 right-6 md:bottom-10 md:right-10 z-30 rounded-full px-6 sm:px-8 py-3 sm:py-4 font-bold text-sm sm:text-base text-foreground cursor-pointer"
                   >
                     ابدأ مشروعك
                   </a>
                   <a
                     href="/portfolio"
-                    className="btn-liquid-glass absolute bottom-4 left-4 md:bottom-8 md:left-8 z-20 rounded-full px-5 sm:px-7 py-2.5 sm:py-3.5 font-medium text-sm sm:text-base text-foreground flex items-center gap-2 cursor-pointer"
+                    className="btn-liquid-glass absolute bottom-6 left-6 md:bottom-10 md:left-10 z-30 rounded-full px-6 sm:px-8 py-3 sm:py-4 font-medium text-sm sm:text-base text-foreground flex items-center gap-2 cursor-pointer"
                   >
                     أعمالنا
                     <ArrowLeft className="w-4 h-4" />
