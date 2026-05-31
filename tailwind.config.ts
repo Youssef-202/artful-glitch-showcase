@@ -17,8 +17,8 @@ export default {
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       fontFamily: {
-        sans: ['AlJazeera', 'Al-Jazeera-Arabic', 'system-ui', 'sans-serif'],
-        display: ['AlJazeera', 'Al-Jazeera-Arabic', 'system-ui', 'sans-serif'],
+        sans: ['Almarai', 'AlJazeera', 'Al-Jazeera-Arabic', 'system-ui', 'sans-serif'],
+        display: ['Almarai', 'AlJazeera', 'Al-Jazeera-Arabic', 'system-ui', 'sans-serif'],
         arabic: ['Almarai', 'AlJazeera', 'system-ui', 'sans-serif'],
       },
       colors: {
