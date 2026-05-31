@@ -188,18 +188,20 @@ export default function ArchitecturalHero() {
                   )}
 
                   {/* CTA buttons inside the hero card (bottom corners) */}
-                  <a
-                    href="/contact"
-                    className="absolute bottom-4 right-4 md:bottom-8 md:right-8 z-30 rounded-full px-5 sm:px-7 py-2.5 sm:py-3 text-primary-foreground font-bold text-sm sm:text-base btn-liquid-glass"
-                  >
-                    ابدأ مشروعك
-                  </a>
-                  <a
-                    href="/portfolio"
-                    className="absolute bottom-4 left-4 md:bottom-8 md:left-8 z-30 rounded-full px-5 sm:px-7 py-2.5 sm:py-3 text-primary-foreground font-medium text-sm sm:text-base btn-liquid-glass"
-                  >
-                    أعمالنا
-                  </a>
+                  <div className="absolute inset-x-0 bottom-4 md:bottom-8 z-30 flex justify-between items-center px-4 md:px-8 pointer-events-none">
+                    <a
+                      href="/portfolio"
+                      className="pointer-events-auto rounded-full px-5 sm:px-7 py-2.5 sm:py-3 text-primary-foreground font-medium text-sm sm:text-base btn-liquid-glass"
+                    >
+                      أعمالنا
+                    </a>
+                    <a
+                      href="/contact"
+                      className="pointer-events-auto rounded-full px-5 sm:px-7 py-2.5 sm:py-3 text-primary-foreground font-bold text-sm sm:text-base btn-liquid-glass"
+                    >
+                      ابدأ مشروعك
+                    </a>
+                  </div>
 
                   {(showText1 || showText2) && (
                     <div
