@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import FloatingCTA from "./FloatingCTA";
 import PersistentCanvas from "./PersistentCanvas";
+import { cn } from "@/lib/utils";
 import { useEffect } from "react";
 
 export default function Layout() {
