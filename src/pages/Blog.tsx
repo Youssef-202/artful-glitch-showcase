@@ -109,11 +109,11 @@ export default function Blog() {
                             </span>
                           )}
                         </div>
-                        <h2 className="text-xl font-bold mb-2 line-clamp-2">{title}</h2>
+                        <h2 className="text-xl font-bold mb-2 line-clamp-2 pb-0">{title}</h2>
                         {excerpt && <p className="text-sm text-muted-foreground line-clamp-3 mb-4">{excerpt}</p>}
                         <div className="flex items-center gap-4 text-xs text-muted-foreground flex-wrap">
                           {author && <span className="flex items-center gap-1"><User className="w-3 h-3" />{author}</span>}
-                          <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{new Date(p.created_at).toLocaleDateString()}</span>
+                          {/* Date hidden as requested */}
                           {p.reading_time ? <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{p.reading_time} د</span> : null}
                         </div>
                         <span className="inline-flex items-center gap-1 mt-4 text-primary text-sm font-bold opacity-0 group-hover:opacity-100 transition">
