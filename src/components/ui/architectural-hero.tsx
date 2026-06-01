@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { ContainerScroll } from "./container-scroll-animation";
 import Logo3DCard from "./logo-3d-card";
+import TypewriterLoop from "./TypewriterLoop";
 import { supabase } from "@/integrations/supabase/client";
 
 type TextBlock = {
