@@ -8,7 +8,7 @@ import { useAuth } from "@/auth/AuthProvider";
 import { supabase } from "@/integrations/supabase/client";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import NavLogo3D from "@/components/NavLogo3D";
+import logoMark from "@/assets/etqan-mark.png.asset.json";
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
