@@ -120,7 +120,7 @@ export default function ArchitecturalHero() {
       <div className="relative z-10 flex flex-col overflow-hidden">
         <div className="flex flex-col items-center text-center px-4 pt-24 md:pt-28 pb-0">
           <div className="mb-6 inline-flex items-center justify-center px-5 py-2 rounded-full border border-primary/20 bg-card/30 backdrop-blur-md">
-            <span className="typewriter text-foreground/80 md:text-base font-medium text-3xl whitespace-nowrap flex items-center">
+            <span className="typewriter text-foreground/80 md:text-base font-medium whitespace-nowrap flex items-center text-3xl text-[#7ce4e4]">
               <span>في إتقان،&nbsp;</span>
               <TypewriterLoop
                 phrases={[
@@ -138,7 +138,7 @@ export default function ArchitecturalHero() {
             Mastery · إتقان · Precision
           </p>
 
-          <h1 className="text-foreground text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-6">
+          <h1 className="text-foreground font-bold leading-[1.1] mb-6 text-5xl text-slate-50 bg-slate-50">
             نصنع الـ{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-accent">
               إتقان
