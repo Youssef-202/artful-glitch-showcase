@@ -138,7 +138,7 @@ export default function ArchitecturalHero() {
             Mastery · إتقان · Precision
           </p>
 
-          <h1 className="text-foreground text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-6">
+          <h1 className="text-foreground font-bold leading-[1.1] mb-6 text-5xl text-slate-50 bg-slate-50">
             نصنع الـ{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-accent">
               إتقان
