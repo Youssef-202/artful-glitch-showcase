@@ -8,7 +8,7 @@ import { useAuth } from "@/auth/AuthProvider";
 import { supabase } from "@/integrations/supabase/client";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import NavLogo3D from "@/components/NavLogo3D";
+import logoMark from "@/assets/etqan-mark.png.asset.json";
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
@@ -65,18 +65,23 @@ export default function Navbar() {
         )}
       >
         <Link to="/" className="flex items-center gap-2" aria-label={t.common.brand}>
-          <NavLogo3D size={scrolled ? 32 : 44} />
-          {!scrolled && (
-            <motion.span
-              initial={{ opacity: 0, x: -8 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="font-extrabold tracking-tight whitespace-nowrap text-foreground text-xl"
-            >
-              وكالة إتقان
-            </motion.span>
-          )}
+          <motion.img
+            src={logoMark.url}
+            alt="وكالة إتقان"
+            className={cn(
+              "transition-all duration-300",
+              theme === "dark" ? "" : "invert"
+            )}
+            style={{ height: scrolled ? 32 : 44 }}
+          />
+          <motion.span
+            initial={{ opacity: 0, x: -8 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.25 }}
+            className="font-extrabold tracking-tight whitespace-nowrap text-foreground text-xl"
+          >
+            وكالة إتقان
+          </motion.span>
         </Link>
 
         <ul className="hidden lg:flex items-center gap-1 relative">
