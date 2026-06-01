@@ -118,12 +118,6 @@ export default function ArchitecturalHero() {
 
       <div className="relative z-10 flex flex-col overflow-hidden">
         <div className="flex flex-col items-center text-center px-4 pt-24 md:pt-28 pb-0">
-          <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full border border-primary/30 bg-card/40 backdrop-blur-md">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-primary text-sm font-medium tracking-wide">
-              منذ ٢٠٢٤ — وكالة الإتقان الرقمي
-            </span>
-          </div>
 
           <p className="text-primary/80 text-xs md:text-sm font-medium tracking-[0.3em] uppercase mb-4">
             Mastery · إتقان · Precision
