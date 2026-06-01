@@ -118,6 +118,12 @@ export default function ArchitecturalHero() {
 
       <div className="relative z-10 flex flex-col overflow-hidden">
         <div className="flex flex-col items-center text-center px-4 pt-24 md:pt-28 pb-0">
+          <div className="mb-6 inline-flex items-center justify-center px-5 py-2 rounded-full border border-primary/20 bg-card/30 backdrop-blur-md">
+            <span className="typewriter text-foreground/80 text-sm md:text-base font-medium">
+              في إتقان، نحوّل الأفكار إلى تجارب رقمية استثنائية
+            </span>
+          </div>
+
 
           <p className="text-primary/80 text-xs md:text-sm font-medium tracking-[0.3em] uppercase mb-4">
             Mastery · إتقان · Precision
