@@ -293,21 +293,21 @@ export default function ArchitecturalHero() {
             قصص نجاحنا تبدأ من هنا
           </h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-full max-w-6xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 w-full max-w-6xl">
             {[
-              { value: "+2000", label: "علامة تجارية" },
-              { value: "+7000", label: "عميل" },
-              { value: "+7", label: "سنوات خبرة" },
-              { value: "+70", label: "ادارة الحسابات" },
+              { value: 2000, label: "علامة تجارية" },
+              { value: 7000, label: "عميل" },
+              { value: 7, label: "سنوات خبرة" },
+              { value: 70, label: "ادارة الحسابات" },
             ].map((s) => (
               <div
                 key={s.label}
-                className="rounded-2xl border border-primary/20 bg-card/30 backdrop-blur-sm px-4 py-8 sm:py-12 flex flex-col items-center justify-center gap-3"
+                className="rounded-2xl border border-primary/20 bg-card/30 backdrop-blur-sm px-2 py-5 sm:px-4 sm:py-12 flex flex-col items-center justify-center gap-2 sm:gap-3"
               >
-                <span className="text-4xl sm:text-5xl md:text-6xl font-light text-foreground">
-                  {s.value}
+                <span className="text-2xl sm:text-5xl md:text-6xl font-light text-foreground" dir="ltr">
+                  <CountUp end={s.value} />
                 </span>
-                <span className="text-sm sm:text-base text-foreground/70">
+                <span className="text-xs sm:text-base text-foreground/70 text-center">
                   {s.label}
                 </span>
               </div>
