@@ -190,13 +190,18 @@ export default function ArchitecturalHero() {
 
               return (
                 <div className="relative w-full h-full flex items-center justify-center p-0 overflow-hidden">
-                  {media.media_type === "image" && media.media_url ? (
-                    <img src={media.media_url} alt="" style={mediaStyle} className={`absolute inset-0 w-full h-full ${fitClass}`} />
-                  ) : media.media_type === "video" && media.media_url ? (
-                    <video src={media.media_url} autoPlay muted loop playsInline style={mediaStyle} className={`absolute inset-0 w-full h-full ${fitClass}`} />
-                  ) : (
-                    <Logo3DCard className="w-full max-w-lg" />
+                  {media.media_url && (media.media_type === "image" || media.media_type === "video") && (
+                    media.media_type === "image" ? (
+                      <img src={media.media_url} alt="" style={mediaStyle} className={`absolute inset-0 w-full h-full ${fitClass} z-0`} />
+                    ) : (
+                      <video src={media.media_url} autoPlay muted loop playsInline style={mediaStyle} className={`absolute inset-0 w-full h-full ${fitClass} z-0`} />
+                    )
                   )}
+
+                  {(media.media_type === "logo" || !media.media_url) && (
+                    <Logo3DCard className="relative z-10 w-full max-w-lg" />
+                  )}
+
 
                   {/* CTA buttons inside the hero card (bottom corners) */}
                   <div className="absolute inset-x-0 bottom-4 md:bottom-8 z-30 flex justify-between items-center px-4 md:px-8 pointer-events-none">
@@ -216,7 +221,7 @@ export default function ArchitecturalHero() {
 
                   {(showText1 || showText2) && (
                     <div
-                      className={`absolute ${positionClass} z-10 p-4 md:p-6 pointer-events-none`}
+                      className={`absolute ${positionClass} z-20 p-4 md:p-6 pointer-events-none`}
                       style={hasMediaOverlay ? { backgroundImage: overlayBg } : undefined}
                     >
                       <div className="w-full flex flex-col items-stretch gap-2">
