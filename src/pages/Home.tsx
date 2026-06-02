@@ -9,6 +9,7 @@ import ArchitecturalHero from "@/components/ui/architectural-hero";
 import PartnersLogoCloud from "@/components/PartnersLogoCloud";
 import ServicesShowcase3D from "@/components/ServicesShowcase3D";
 import PortfolioStack from "@/components/PortfolioStack";
+import Reveal from "@/components/ui/reveal";
 
 import { CinematicFooter } from "@/components/ui/motion-footer";
 import { services } from "@/lib/services";
