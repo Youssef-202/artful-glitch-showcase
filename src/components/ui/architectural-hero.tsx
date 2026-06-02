@@ -304,7 +304,7 @@ export default function ArchitecturalHero() {
                 key={s.label}
                 className="rounded-2xl border border-primary/20 bg-card/30 backdrop-blur-sm px-2 py-5 sm:px-4 sm:py-12 flex flex-col items-center justify-center gap-2 sm:gap-3"
               >
-                <span className="text-2xl sm:text-5xl md:text-6xl font-light text-foreground" dir="ltr">
+                <span className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-light text-foreground whitespace-nowrap" dir="ltr">
                   <CountUp end={s.value} />
                 </span>
                 <span className="text-xs sm:text-base text-foreground/70 text-center">
