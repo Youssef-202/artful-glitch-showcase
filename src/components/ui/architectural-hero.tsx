@@ -235,7 +235,7 @@ export default function ArchitecturalHero() {
                         )}
                         {showText2 && (
                           <p
-                            className={`${sizeClass[media.text2.size]} ${weightClass[media.text2.weight]} ${alignClass[media.text2.align]} leading-relaxed drop-shadow-md max-w-2xl mx-auto`}
+                            className={`hidden md:block ${sizeClass[media.text2.size]} ${weightClass[media.text2.weight]} ${alignClass[media.text2.align]} leading-relaxed drop-shadow-md max-w-2xl mx-auto`}
                             style={{ color: media.text2.color }}
                           >
                             {media.text2.value}
