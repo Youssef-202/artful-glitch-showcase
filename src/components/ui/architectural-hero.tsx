@@ -221,7 +221,7 @@ export default function ArchitecturalHero() {
 
                   {(showText1 || showText2) && (
                     <div
-                      className={`absolute ${positionClass} z-10 p-4 md:p-6 pointer-events-none`}
+                      className={`absolute ${positionClass} z-20 p-4 md:p-6 pointer-events-none`}
                       style={hasMediaOverlay ? { backgroundImage: overlayBg } : undefined}
                     >
                       <div className="w-full flex flex-col items-stretch gap-2">
