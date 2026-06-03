@@ -50,8 +50,11 @@ function RotatingWord() {
   const tr = transitions[i % transitions.length];
   const longest = "احتراف";
   return (
-    <span className="relative inline-block align-baseline" style={{ perspective: 800, minWidth: "fit-content" }}>
-      <span className="invisible">{longest}</span>
+    <span
+      className="relative inline-block align-baseline leading-[1.6]"
+      style={{ perspective: 800, minWidth: "fit-content", paddingTop: "0.25em", paddingBottom: "0.1em" }}
+    >
+      <span className="invisible leading-[1.6]">{longest}</span>
       <AnimatePresence mode="wait">
         <motion.span
           key={i}
@@ -59,7 +62,7 @@ function RotatingWord() {
           animate={tr.animate}
           exit={tr.exit}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute inset-0 flex items-center justify-center text-transparent bg-clip-text bg-gradient-to-l from-primary to-accent"
+          className="absolute inset-0 flex items-center justify-center leading-[1.6] text-transparent bg-clip-text bg-gradient-to-l from-primary to-accent"
         >
           {word}
         </motion.span>
