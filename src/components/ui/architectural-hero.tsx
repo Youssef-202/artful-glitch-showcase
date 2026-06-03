@@ -325,16 +325,16 @@ export default function ArchitecturalHero() {
                       <div className="w-full flex flex-col items-stretch gap-2">
                         {showText1 && (
                           <p
-                            className={`${sizeClass[media.text1.size]} ${weightClass[media.text1.weight]} ${alignClass[media.text1.align]} leading-relaxed drop-shadow-md max-w-2xl mx-auto text-foreground dark:[color:var(--hero-text1)]`}
-                            style={{ ["--hero-text1" as any]: media.text1.color }}
+                            className={`${sizeClass[media.text1.size]} ${weightClass[media.text1.weight]} ${alignClass[media.text1.align]} leading-relaxed drop-shadow-md max-w-2xl mx-auto`}
+                            style={{ color: media.text1.color }}
                           >
                             {media.text1.value}
                           </p>
                         )}
                         {showText2 && (
                           <p
-                            className={`hidden md:block ${sizeClass[media.text2.size]} ${weightClass[media.text2.weight]} ${alignClass[media.text2.align]} leading-relaxed drop-shadow-md max-w-2xl mx-auto text-foreground/80 dark:[color:var(--hero-text2)]`}
-                            style={{ ["--hero-text2" as any]: media.text2.color }}
+                            className={`hidden md:block ${sizeClass[media.text2.size]} ${weightClass[media.text2.weight]} ${alignClass[media.text2.align]} leading-relaxed drop-shadow-md max-w-2xl mx-auto`}
+                            style={{ color: media.text2.color }}
                           >
                             {media.text2.value}
                           </p>

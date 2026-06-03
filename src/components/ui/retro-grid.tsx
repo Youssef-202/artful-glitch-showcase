@@ -104,9 +104,8 @@ function RetroGrid({
 
     const drawScanlines = () => {
       if (!showScanlines) return;
-      const isLight = !document.documentElement.classList.contains("dark");
-      ctx.globalAlpha = isLight ? 0.04 : 0.1;
-      ctx.fillStyle = isLight ? "#ffffff" : "#000000";
+      ctx.globalAlpha = 0.1;
+      ctx.fillStyle = "#000000";
       for (let y = 0; y < canvas.height; y += 4) {
         ctx.fillRect(0, y, canvas.width, 2);
       }
@@ -116,38 +115,21 @@ function RetroGrid({
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const rgb = hexToRgb(gridColor);
-      const isLight = !document.documentElement.classList.contains("dark");
 
       const skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height * 0.55);
-      if (isLight) {
-        // Light mode: soft pale gradient (mint/teal-tinted whites)
-        skyGradient.addColorStop(0, "#f5fbfa");
-        skyGradient.addColorStop(0.3, "#eaf6f4");
-        skyGradient.addColorStop(0.5, "#dff1ee");
-        skyGradient.addColorStop(0.7, "#d4ece8");
-        skyGradient.addColorStop(0.85, "#cbe7e2");
-        skyGradient.addColorStop(1, "#c3e2dc");
-      } else {
-        skyGradient.addColorStop(0, `rgba(${rgb.r * 0.05}, ${rgb.g * 0.05}, ${rgb.b * 0.15}, 1)`);
-        skyGradient.addColorStop(0.3, `rgba(${rgb.r * 0.1}, ${rgb.g * 0.08}, ${rgb.b * 0.2}, 1)`);
-        skyGradient.addColorStop(0.5, `rgba(${rgb.r * 0.2}, ${rgb.g * 0.15}, ${rgb.b * 0.3}, 1)`);
-        skyGradient.addColorStop(0.7, `rgba(${rgb.r * 0.35}, ${rgb.g * 0.25}, ${rgb.b * 0.4}, 1)`);
-        skyGradient.addColorStop(0.85, `rgba(${rgb.r * 0.55}, ${rgb.g * 0.4}, ${rgb.b * 0.6}, 1)`);
-        skyGradient.addColorStop(1, `rgba(${rgb.r * 0.7}, ${rgb.g * 0.5}, ${rgb.b * 0.75}, 1)`);
-      }
+      skyGradient.addColorStop(0, `rgba(${rgb.r * 0.05}, ${rgb.g * 0.05}, ${rgb.b * 0.15}, 1)`);
+      skyGradient.addColorStop(0.3, `rgba(${rgb.r * 0.1}, ${rgb.g * 0.08}, ${rgb.b * 0.2}, 1)`);
+      skyGradient.addColorStop(0.5, `rgba(${rgb.r * 0.2}, ${rgb.g * 0.15}, ${rgb.b * 0.3}, 1)`);
+      skyGradient.addColorStop(0.7, `rgba(${rgb.r * 0.35}, ${rgb.g * 0.25}, ${rgb.b * 0.4}, 1)`);
+      skyGradient.addColorStop(0.85, `rgba(${rgb.r * 0.55}, ${rgb.g * 0.4}, ${rgb.b * 0.6}, 1)`);
+      skyGradient.addColorStop(1, `rgba(${rgb.r * 0.7}, ${rgb.g * 0.5}, ${rgb.b * 0.75}, 1)`);
       ctx.fillStyle = skyGradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height * 0.55);
 
       const groundGradient = ctx.createLinearGradient(0, canvas.height * 0.55, 0, canvas.height);
-      if (isLight) {
-        groundGradient.addColorStop(0, "#c3e2dc");
-        groundGradient.addColorStop(0.3, "#d4ece8");
-        groundGradient.addColorStop(1, "#f5fbfa");
-      } else {
-        groundGradient.addColorStop(0, `rgba(${rgb.r * 0.1}, ${rgb.g * 0.08}, ${rgb.b * 0.15}, 1)`);
-        groundGradient.addColorStop(0.3, `rgba(${rgb.r * 0.05}, ${rgb.g * 0.03}, ${rgb.b * 0.08}, 1)`);
-        groundGradient.addColorStop(1, "#000000");
-      }
+      groundGradient.addColorStop(0, `rgba(${rgb.r * 0.1}, ${rgb.g * 0.08}, ${rgb.b * 0.15}, 1)`);
+      groundGradient.addColorStop(0.3, `rgba(${rgb.r * 0.05}, ${rgb.g * 0.03}, ${rgb.b * 0.08}, 1)`);
+      groundGradient.addColorStop(1, "#000000");
       ctx.fillStyle = groundGradient;
       ctx.fillRect(0, canvas.height * 0.55, canvas.width, canvas.height * 0.45);
 
@@ -173,7 +155,7 @@ function RetroGrid({
         canvas.height * 0.8
       );
       vignette.addColorStop(0, "rgba(0,0,0,0)");
-      vignette.addColorStop(1, isLight ? "rgba(195,226,220,0.45)" : "rgba(0,0,0,0.5)");
+      vignette.addColorStop(1, "rgba(0,0,0,0.5)");
       ctx.fillStyle = vignette;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
