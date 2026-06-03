@@ -219,10 +219,10 @@ export default function ArchitecturalHero() {
 
       <div className="relative z-10 flex flex-col overflow-hidden">
         <div className="flex flex-col items-center text-center px-4 pt-24 md:pt-28 pb-0">
-          <div className="mb-6 inline-flex items-center justify-center px-10 h-16 md:h-20 rounded-full border border-primary/20 bg-card/30 backdrop-blur-md">
-            <span className="typewriter text-foreground/80 font-medium whitespace-nowrap flex items-center gap-2 text-[#7ce4e4]">
-              <span className="text-3xl md:text-4xl font-bold">في إتقان،&nbsp;</span>
-              <span className="text-2xl md:text-3xl whitespace-nowrap">
+          <div className="mb-6 inline-flex max-w-[95vw] items-center justify-center px-5 sm:px-10 h-14 sm:h-16 md:h-20 rounded-full border border-primary/20 bg-card/30 backdrop-blur-md overflow-hidden">
+            <span className="typewriter text-foreground/80 font-medium whitespace-nowrap flex items-center gap-1 sm:gap-2 text-[#7ce4e4] min-w-0">
+              <span className="text-base sm:text-3xl md:text-4xl font-bold shrink-0">في إتقان،&nbsp;</span>
+              <span className="text-sm sm:text-2xl md:text-3xl whitespace-nowrap overflow-hidden text-ellipsis min-w-0">
                 <TypewriterLoop
                   phrases={[
                     "نحوّل الأفكار إلى تجارب رقمية استثنائية",
