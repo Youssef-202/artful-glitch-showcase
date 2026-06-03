@@ -220,7 +220,7 @@ export default function ArchitecturalHero() {
       <div className="relative z-10 flex flex-col overflow-hidden">
         <div className="flex flex-col items-center text-center px-4 pt-24 md:pt-28 pb-0">
           <div className="mb-6 inline-flex items-center justify-center px-10 h-16 md:h-20 rounded-full border border-primary/20 bg-card/30 backdrop-blur-md">
-            <span className="typewriter font-medium whitespace-nowrap flex items-center gap-2 text-accent">
+            <span className="typewriter text-foreground/80 font-medium whitespace-nowrap flex items-center gap-2 text-[#7ce4e4]">
               <span className="text-3xl md:text-4xl font-bold">في إتقان،&nbsp;</span>
               <span className="text-2xl md:text-3xl whitespace-nowrap">
                 <TypewriterLoop
