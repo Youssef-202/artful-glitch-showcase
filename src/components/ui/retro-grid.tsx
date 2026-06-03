@@ -172,7 +172,7 @@ function RetroGrid({
         canvas.height * 0.8
       );
       vignette.addColorStop(0, "rgba(0,0,0,0)");
-      vignette.addColorStop(1, "rgba(0,0,0,0.5)");
+      vignette.addColorStop(1, isLight ? "rgba(195,226,220,0.45)" : "rgba(0,0,0,0.5)");
       ctx.fillStyle = vignette;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
