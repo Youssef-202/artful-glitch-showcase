@@ -52,7 +52,7 @@ export default function Home() {
         <section className="px-6 py-24 max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-sm text-primary tracking-widest mb-3">{t.blog.kicker}</p>
-            <h2 className="text-3xl sm:text-5xl font-black"><span className="text-gradient">{t.blog.title}</span></h2>
+            <h2 className="text-3xl sm:text-5xl font-black"><span className="text-gradient text-slate-50">{t.blog.title}</span></h2>
           </div>
           {posts.length > 0 && (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
