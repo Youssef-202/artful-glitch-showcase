@@ -440,7 +440,12 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
     else { toast.success("✓"); onClose(); }
   };
 
-  const cats = ["branding", "web", "design", "photo"];
+  const cats: { value: string; label: string }[] = [
+    { value: "branding", label: "هويات" },
+    { value: "web", label: "مواقع" },
+    { value: "design", label: "تصاميم" },
+    { value: "photo", label: "تصوير" },
+  ];
 
   return (
     <form onSubmit={save} className="glass-strong rounded-3xl p-8 space-y-4">
@@ -460,10 +465,25 @@ function PortfolioForm({ item, onClose }: { item: PItem | null; onClose: () => v
         <input maxLength={200} placeholder={t.dashboard.itemClientEn} value={form.client_en} onChange={(e) => setForm({ ...form, client_en: e.target.value })}
           className="bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary" />
       </div>
-      <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}
-        className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary">
-        {cats.map((c) => <option key={c} value={c}>{c}</option>)}
-      </select>
+      <div className="space-y-2">
+        <label className="block text-sm font-bold text-primary">نوع العمل / التصنيف</label>
+        <div className="flex flex-wrap gap-2">
+          {cats.map((c) => (
+            <button
+              key={c.value}
+              type="button"
+              onClick={() => setForm({ ...form, category: c.value })}
+              className={`px-5 py-2.5 rounded-full text-sm font-bold transition ${
+                form.category === c.value
+                  ? "bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow"
+                  : "bg-background/50 border border-border hover:border-primary"
+              }`}
+            >
+              {c.label}
+            </button>
+          ))}
+        </div>
+      </div>
       <FileUpload value={form.cover_url} onChange={(url) => setForm({ ...form, cover_url: url ?? "" })} folder="portfolio" accept="image/*,video/*" label="صورة/فيديو العمل" />
       <input type="url" placeholder={t.dashboard.cover + " (أو رابط مباشر)"} value={form.cover_url} onChange={(e) => setForm({ ...form, cover_url: e.target.value })}
         className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary text-xs" />
