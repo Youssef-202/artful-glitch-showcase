@@ -45,7 +45,7 @@ export default function PartnersLogoCloud() {
           <div className="flex w-max animate-marquee-rtl group-hover:[animation-play-state:paused]">
             {loop.map((p, i) => {
               const card = (
-                <div className="bg-teal-900 text-white dark:bg-white dark:text-slate-900 rounded-2xl h-32 w-full flex items-center justify-center p-4 shadow-lg hover:shadow-xl transition">
+                <div className="bg-card/80 text-foreground border border-primary/20 rounded-2xl h-32 w-full flex items-center justify-center p-4 shadow-lg hover:shadow-xl transition">
                   {p?.logo_url ? (
                     <img
                       src={p.logo_url}
