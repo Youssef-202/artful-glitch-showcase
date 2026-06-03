@@ -238,9 +238,7 @@ export default function ArchitecturalHero() {
 
           <h1 className="text-foreground font-bold leading-[1.1] mb-6 text-5xl">
             نصنع الـ{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-accent">
-              إتقان
-            </span>
+            <RotatingWord />
           </h1>
 
           <div className="mb-8" />
