@@ -6,48 +6,48 @@
 
 @layer base {
   :root {
-    /* Cyberpunk theme — dark blue base, neon cyan grid, neon pink CTA */
+    /* Cyberpunk theme — dark blue base, neon cyan grid, green brand identity */
     --background: 222 60% 6%;
-    --foreground: 210 40% 96%;
+    --foreground: 0 0% 100%;
 
     --card: 222 50% 9%;
-    --card-foreground: 210 40% 96%;
+    --card-foreground: 0 0% 100%;
 
     --popover: 222 50% 9%;
-    --popover-foreground: 210 40% 96%;
+    --popover-foreground: 0 0% 100%;
 
-    /* Primary = Neon Cyan #00F0FF */
-    --primary: 184 100% 50%;
+    /* Primary = Electric Lime #CCFF00 for CTAs and interactive elements */
+    --primary: 72 100% 50%;
     --primary-foreground: 222 60% 6%;
-    --primary-glow: 184 100% 65%;
+    --primary-glow: 72 100% 65%;
 
     --secondary: 222 40% 14%;
-    --secondary-foreground: 210 40% 96%;
+    --secondary-foreground: 0 0% 100%;
 
     --muted: 222 35% 14%;
     --muted-foreground: 210 25% 80%;
 
-    /* Accent = Neon Pink/Fuchsia #FF007F for CTAs */
-    --accent: 330 100% 50%;
+    /* Accent = Neon Green #00FF66 for headings and brand highlights */
+    --accent: 147 100% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 184 80% 35%;
+    --border: 147 70% 40%;
     --input: 222 40% 14%;
-    --ring: 184 100% 50%;
+    --ring: 72 100% 50%;
 
     --radius: 1rem;
 
-    --gradient-primary: linear-gradient(135deg, hsl(184 100% 50%), hsl(220 100% 55%) 50%, hsl(330 100% 50%));
-    --gradient-radial: radial-gradient(1200px 600px at 50% -10%, hsl(184 100% 50% / 0.25), transparent 60%);
-    --shadow-glow: 0 0 24px hsl(184 100% 50% / 0.45);
+    --gradient-primary: linear-gradient(135deg, hsl(147 100% 50%), hsl(120 100% 45%) 50%, hsl(72 100% 50%));
+    --gradient-radial: radial-gradient(1200px 600px at 50% -10%, hsl(147 100% 50% / 0.25), transparent 60%);
+    --shadow-glow: 0 0 24px hsl(72 100% 50% / 0.45);
     --shadow-elegant: 0 20px 40px -20px hsl(222 60% 2% / 0.7);
 
     --glass-bg: 8 16 32;
     --glass-bg-alpha: 0.45;
-    --glass-border: 0 240 255;
+    --glass-border: 0 255 102;
     --glass-border-alpha: 0.25;
   }
 
