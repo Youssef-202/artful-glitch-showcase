@@ -4,7 +4,7 @@ export const translations = {
   ar: {
     nav: {
       home: "الرئيسية",
-      services: "الخدمات",
+      services: "الــخــدمـــات",
       portfolio: "معرض الأعمال",
       blog: "المدونة",
       about: "من نحن",
