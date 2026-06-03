@@ -34,7 +34,7 @@ export default function PartnersLogoCloud() {
       dir={dir}
     >
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-5xl text-center mb-4 text-gradient leading-tight font-mono bg-slate-800 font-bold sm:text-5xl pb-[11px]">
+        <h2 className="text-5xl text-center mb-4 text-gradient leading-tight font-mono font-bold sm:text-5xl pb-[11px]">
           شـــــــركـــــــاء الـــــــنـــــجـــــاح
         </h2>
         <p className="text-center text-muted-foreground mb-12 sm:text-lg text-2xl font-sans font-bold">
@@ -45,7 +45,7 @@ export default function PartnersLogoCloud() {
           <div className="flex w-max animate-marquee-rtl group-hover:[animation-play-state:paused]">
             {loop.map((p, i) => {
               const card = (
-                <div className="bg-teal-900 text-white dark:bg-white dark:text-slate-900 rounded-2xl h-32 w-full flex items-center justify-center p-4 shadow-lg hover:shadow-xl transition">
+                <div className="bg-card/80 text-foreground border border-primary/20 rounded-2xl h-32 w-full flex items-center justify-center p-4 shadow-lg hover:shadow-xl transition">
                   {p?.logo_url ? (
                     <img
                       src={p.logo_url}
