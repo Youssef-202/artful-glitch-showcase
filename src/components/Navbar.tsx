@@ -79,7 +79,7 @@ export default function Navbar() {
               initial={{ opacity: 0, x: -8 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.25 }}
-              className="font-extrabold tracking-tight whitespace-nowrap text-foreground text-xl"
+              className="hidden sm:inline font-extrabold tracking-tight whitespace-nowrap text-foreground text-xl"
             >
               وكالة إتقان
             </motion.span>
