@@ -1,9 +1,71 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import { ContainerScroll } from "./container-scroll-animation";
 import Logo3DCard from "./logo-3d-card";
 import TypewriterLoop from "./TypewriterLoop";
 import { supabase } from "@/integrations/supabase/client";
+
+const rotatingWords = ["إتقان", "إبداع", "تميّز", "احتراف", "شغف", "أثر"];
+const transitions = [
+  // fade + scale
+  {
+    initial: { opacity: 0, scale: 0.6, filter: "blur(8px)" },
+    animate: { opacity: 1, scale: 1, filter: "blur(0px)" },
+    exit: { opacity: 0, scale: 1.3, filter: "blur(8px)" },
+  },
+  // slide up
+  {
+    initial: { opacity: 0, y: 40 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -40 },
+  },
+  // slide from right (RTL natural)
+  {
+    initial: { opacity: 0, x: -60, rotate: -8 },
+    animate: { opacity: 1, x: 0, rotate: 0 },
+    exit: { opacity: 0, x: 60, rotate: 8 },
+  },
+  // flip
+  {
+    initial: { opacity: 0, rotateX: 90 },
+    animate: { opacity: 1, rotateX: 0 },
+    exit: { opacity: 0, rotateX: -90 },
+  },
+  // skew slide
+  {
+    initial: { opacity: 0, x: 50, skewX: 12 },
+    animate: { opacity: 1, x: 0, skewX: 0 },
+    exit: { opacity: 0, x: -50, skewX: -12 },
+  },
+];
+
+function RotatingWord() {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setI((p) => p + 1), 2400);
+    return () => clearInterval(id);
+  }, []);
+  const word = rotatingWords[i % rotatingWords.length];
+  const tr = transitions[i % transitions.length];
+  return (
+    <span className="relative inline-block align-baseline" style={{ perspective: 800 }}>
+      <span className="invisible">{word}</span>
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={i}
+          initial={tr.initial}
+          animate={tr.animate}
+          exit={tr.exit}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute inset-0 text-transparent bg-clip-text bg-gradient-to-l from-primary to-accent"
+        >
+          {word}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+}
 
 function CountUp({ end, duration = 2000 }: { end: number; duration?: number }) {
   const [value, setValue] = useState(0);
@@ -176,9 +238,7 @@ export default function ArchitecturalHero() {
 
           <h1 className="text-foreground font-bold leading-[1.1] mb-6 text-5xl">
             نصنع الـ{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-accent">
-              إتقان
-            </span>
+            <RotatingWord />
           </h1>
 
           <div className="mb-8" />
