@@ -358,13 +358,15 @@
 
 
 
-/* Light mode: remove ALL shadows for a flatter, cleaner look */
-:root:not(.dark) *,
-:root:not(.dark) *::before,
-:root:not(.dark) *::after {
-  box-shadow: none !important;
-  text-shadow: none !important;
-  --tw-shadow: 0 0 transparent !important;
-  --tw-ring-shadow: 0 0 transparent !important;
-  --tw-drop-shadow: none !important;
+/* Cyberpunk holographic headings — neon cyan with glow */
+h1, h2, h3 {
+  color: hsl(184 100% 60%);
+  text-shadow:
+    0 0 6px hsl(184 100% 50% / 0.7),
+    0 0 18px hsl(184 100% 50% / 0.45),
+    0 0 36px hsl(184 100% 50% / 0.25);
+}
+h4, h5, h6 {
+  color: hsl(184 100% 70%);
+  text-shadow: 0 0 8px hsl(184 100% 50% / 0.4);
 }
