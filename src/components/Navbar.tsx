@@ -72,7 +72,7 @@ export default function Navbar() {
               "transition-all duration-300",
               theme === "dark" ? "" : "invert"
             )}
-            style={{ height: scrolled ? 32 : 44 }}
+            style={{ height: scrolled ? 28 : 36 }}
           />
           {!scrolled && (
             <motion.span
