@@ -104,8 +104,9 @@ function RetroGrid({
 
     const drawScanlines = () => {
       if (!showScanlines) return;
-      ctx.globalAlpha = 0.1;
-      ctx.fillStyle = "#000000";
+      const isLight = !document.documentElement.classList.contains("dark");
+      ctx.globalAlpha = isLight ? 0.04 : 0.1;
+      ctx.fillStyle = isLight ? "#ffffff" : "#000000";
       for (let y = 0; y < canvas.height; y += 4) {
         ctx.fillRect(0, y, canvas.width, 2);
       }
