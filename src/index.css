@@ -358,15 +358,15 @@
 
 
 
-/* Cyberpunk holographic headings — neon cyan with glow */
+/* Cyberpunk holographic headings — neon green with glow */
 h1, h2, h3 {
-  color: hsl(184 100% 60%);
+  color: hsl(147 100% 50%);
   text-shadow:
-    0 0 6px hsl(184 100% 50% / 0.7),
-    0 0 18px hsl(184 100% 50% / 0.45),
-    0 0 36px hsl(184 100% 50% / 0.25);
+    0 0 6px hsl(147 100% 50% / 0.7),
+    0 0 18px hsl(147 100% 50% / 0.45),
+    0 0 36px hsl(147 100% 50% / 0.25);
 }
 h4, h5, h6 {
-  color: hsl(184 100% 70%);
-  text-shadow: 0 0 8px hsl(184 100% 50% / 0.4);
+  color: hsl(147 100% 55%);
+  text-shadow: 0 0 8px hsl(147 100% 50% / 0.4);
 }
