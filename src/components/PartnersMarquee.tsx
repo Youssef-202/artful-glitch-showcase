@@ -35,8 +35,8 @@ export default function PartnersMarquee() {
         <p className="text-xs sm:text-sm text-primary tracking-[0.3em] mb-3 font-bold">
           {"\n"}
         </p>
-        <h2 className="text-3xl font-black leading-tight sm:text-5xl">
-          <span className="text-gradient text-6xl font-mono font-extrabold text-center text-slate-50 bg-slate-800">شركاؤنا</span>
+        <h2 className="font-black leading-[1.4] py-2">
+          <span className="text-gradient text-4xl sm:text-6xl font-mono font-extrabold text-center text-slate-50 bg-slate-800 px-4 py-2 inline-block leading-[1.4]">شركاؤنا</span>
         </h2>
         <p className="mt-3 text-muted-foreground sm:text-base text-2xl font-mono my-px border-0">
           نفخر بالعمل مع نخبة من الشركات والعلامات التجارية
