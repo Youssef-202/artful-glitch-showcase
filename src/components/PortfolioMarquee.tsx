@@ -78,7 +78,7 @@ export default function PortfolioMarquee() {
         <div className={dir === "rtl" ? "text-right" : "text-left"}>
           <p className="text-xs sm:text-sm text-primary tracking-[0.3em] mb-3 font-bold">{t.common.ourWork}</p>
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
-            <span className="text-gradient font-serif font-bold">{t.portfolio.title}</span>
+            <span className="text-gradient font-sans font-extrabold">{t.portfolio.title}</span>
           </h2>
         </div>
         <Link
