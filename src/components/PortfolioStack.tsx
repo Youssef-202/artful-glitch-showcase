@@ -28,7 +28,7 @@ export default function PortfolioStack() {
             {t.common.ourWork}
           </p>
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-6">
-            <span className="text-gradient text-slate-50">{heading}</span>
+            <span className="text-gradient font-serif font-bold text-slate-50">{heading}</span>
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground mb-8 max-w-md leading-relaxed">
             {intro}
