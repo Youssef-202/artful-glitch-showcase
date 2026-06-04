@@ -33,7 +33,7 @@ export default function Testimonials() {
           TESTIMONIALS
         </p>
         <h2 className="text-3xl sm:text-5xl font-black">
-          <span className="text-gradient">شركاء النجاح</span>
+          <span className="text-gradient font-serif font-bold">شركاء النجاح</span>
         </h2>
         <p className="mt-3 text-muted-foreground text-sm sm:text-base">
           آراء عملائنا تعكس شغفنا بالتميّز
