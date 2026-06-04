@@ -406,7 +406,7 @@ export const HorizonHero = () => {
           ref={titleRef}
           className="font-black leading-[0.9] text-[clamp(3.5rem,11vw,9rem)] tracking-tight"
         >
-          <span className="text-gradient font-serif font-bold block">{splitTitle("إتقان")}</span>
+          <span className="text-gradient font-sans font-extrabold block">{splitTitle("إتقان")}</span>
         </h1>
 
         <div ref={subtitleRef} className="mt-6 space-y-1 max-w-2xl">
