@@ -89,6 +89,12 @@ export default function AuthPage() {
   const [busy, setBusy] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  useEffect(() => {
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = original; };
+  }, []);
+
   if (user) return <Navigate to="/account" replace />;
 
   const submit = async (e: React.FormEvent) => {
