@@ -147,7 +147,7 @@ export default function AuthPage() {
           animate={{ opacity: 1, y: 0 }}
           className="glass-strong rounded-3xl p-5 sm:p-8 lg:p-10 w-full max-w-md"
         >
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mb-3 sm:mb-6">
             <img src={logoSrc} alt={t.common.brand} className="h-14 w-auto object-contain" />
           </div>
 
@@ -156,11 +156,11 @@ export default function AuthPage() {
               {mode === "signin" ? t.auth.title : t.auth.signupTitle}
             </span>
           </h1>
-          <p className="text-center text-sm text-muted-foreground mt-2 mb-8">
+          <p className="text-center text-sm text-muted-foreground mt-2 mb-4 sm:mb-8">
             ادخل إلى حسابك وتابع رحلتك معنا
           </p>
 
-          <form onSubmit={submit} className="space-y-4">
+          <form onSubmit={submit} className="space-y-3 sm:space-y-4">
             <div>
               <label className="block text-xs font-bold text-muted-foreground mb-2 px-1">
                 {t.auth.email}
@@ -171,7 +171,7 @@ export default function AuthPage() {
                 placeholder="you@example.com"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full bg-background/50 border border-border rounded-2xl px-4 py-3 outline-none focus:border-primary transition"
+                className="w-full bg-background/50 border border-border rounded-2xl px-4 py-2 sm:py-3 outline-none focus:border-primary transition"
               />
             </div>
 
@@ -187,7 +187,7 @@ export default function AuthPage() {
                   placeholder="••••••••"
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
-                  className="w-full bg-background/50 border border-border rounded-2xl px-4 py-3 pr-12 outline-none focus:border-primary transition"
+                  className="w-full bg-background/50 border border-border rounded-2xl px-4 py-2 sm:py-3 pr-12 outline-none focus:border-primary transition"
                 />
                 <button
                   type="button"
@@ -203,13 +203,13 @@ export default function AuthPage() {
             <button
               type="submit"
               disabled={busy}
-              className="w-full rounded-full px-7 py-4 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-[1.02] transition disabled:opacity-50"
+              className="w-full rounded-full px-5 py-3 sm:px-7 sm:py-4 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-[1.02] transition disabled:opacity-50"
             >
               {mode === "signin" ? t.auth.signIn : t.auth.signUp}
             </button>
           </form>
 
-          <div className="flex items-center gap-3 my-5">
+          <div className="flex items-center gap-3 my-3 sm:my-5">
             <div className="h-px flex-1 bg-border" />
             <span className="text-xs text-muted-foreground">أو تابع باستخدام</span>
             <div className="h-px flex-1 bg-border" />
@@ -219,7 +219,7 @@ export default function AuthPage() {
             type="button"
             onClick={signInWithGoogle}
             disabled={busy}
-            className="w-full rounded-2xl px-6 py-3 font-bold bg-background border border-border hover:bg-foreground/5 transition flex items-center justify-center gap-3 disabled:opacity-50"
+            className="w-full rounded-2xl px-4 py-2 sm:px-6 sm:py-3 font-bold bg-background border border-border hover:bg-foreground/5 transition flex items-center justify-center gap-3 disabled:opacity-50"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -230,7 +230,7 @@ export default function AuthPage() {
             الدخول باستخدام Google
           </button>
 
-          <p className="mt-6 text-center text-sm text-muted-foreground">
+          <p className="mt-3 sm:mt-6 text-center text-sm text-muted-foreground">
             {mode === "signin" ? "جديد على المنصة؟ " : "لديك حساب بالفعل؟ "}
             <button
               type="button"
