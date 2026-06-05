@@ -139,13 +139,13 @@ export default function AuthPage() {
   const logoSrc = theme === "dark" ? logoDark : logoLight;
 
   return (
-    <div className="min-h-[calc(100vh-6rem)] w-full grid lg:grid-cols-2 gap-0 px-4 sm:px-6">
+    <div className="h-[calc(100dvh-6rem)] max-h-[calc(100dvh-6rem)] overflow-hidden w-full grid lg:grid-cols-2 gap-0 px-4 sm:px-6">
       {/* Left: form */}
-      <div className="flex items-center justify-center py-10">
+      <div className="flex items-center justify-center py-4 sm:py-6 lg:py-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glass-strong rounded-3xl p-8 sm:p-10 w-full max-w-md"
+          className="glass-strong rounded-3xl p-5 sm:p-8 lg:p-10 w-full max-w-md"
         >
           <div className="flex justify-center mb-6">
             <img src={logoSrc} alt={t.common.brand} className="h-14 w-auto object-contain" />
