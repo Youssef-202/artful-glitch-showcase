@@ -7,7 +7,7 @@ import RetroGrid from "@/components/ui/retro-grid";
 export default function PersistentCanvas() {
   return (
     <div className="fixed inset-0 -z-20 pointer-events-none">
-      <RetroGrid gridColor="#22d3ee" showScanlines glowEffect />
+      <RetroGrid gridColor="#10b981" showScanlines glowEffect showBuildings />
     </div>
   );
 }
