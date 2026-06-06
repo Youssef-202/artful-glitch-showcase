@@ -149,7 +149,7 @@ function RetroGrid({
 
 
     let offset = 0;
-    const speed = 1.5;
+    const speed = 0.6;
     let rafId = 0;
     let frame = 0;
 
