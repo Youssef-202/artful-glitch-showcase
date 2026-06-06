@@ -62,7 +62,14 @@ function RotatingWord() {
           animate={tr.animate}
           exit={tr.exit}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute inset-0 flex items-center justify-center leading-[1.6] text-transparent bg-clip-text bg-gradient-to-l from-primary to-accent"
+          className="absolute inset-0 flex items-center justify-center leading-[1.6] text-transparent bg-clip-text shine-text"
+          style={{
+            backgroundImage:
+              "linear-gradient(110deg, #6ee7b7 0%, #a7f3d0 25%, #ffffff 50%, #a7f3d0 75%, #6ee7b7 100%)",
+            backgroundSize: "200% 100%",
+            WebkitBackgroundClip: "text",
+            filter: "drop-shadow(0 0 12px rgba(110, 231, 183, 0.6))",
+          }}
         >
           {word}
         </motion.span>
@@ -386,6 +393,13 @@ export default function ArchitecturalHero() {
         @keyframes spin {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
+        }
+        @keyframes shine-move {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+        .shine-text {
+          animation: shine-move 3s linear infinite;
         }
       `}</style>
     </section>
