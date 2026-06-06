@@ -4,13 +4,15 @@ interface RetroGridProps {
   gridColor?: string;
   showScanlines?: boolean;
   glowEffect?: boolean;
+  showBuildings?: boolean;
   className?: string;
 }
 
 function RetroGrid({
-  gridColor = "#22d3ee",
+  gridColor = "#10b981",
   showScanlines = true,
   glowEffect = true,
+  showBuildings = true,
   className = "",
 }: RetroGridProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -25,9 +27,8 @@ function RetroGrid({
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      buildBuildings();
     };
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
 
     const hexToRgb = (hex: string) => {
       const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -37,8 +38,59 @@ function RetroGrid({
             g: parseInt(result[2], 16),
             b: parseInt(result[3], 16),
           }
-        : { r: 34, g: 211, b: 238 };
+        : { r: 16, g: 185, b: 129 };
     };
+
+    // Deterministic pseudo-random for stable buildings between frames
+    const seeded = (i: number) => {
+      const x = Math.sin(i * 12.9898) * 43758.5453;
+      return x - Math.floor(x);
+    };
+
+    type Building = {
+      x: number;
+      w: number;
+      h: number;
+      layer: number; // 0 far, 1 mid, 2 near
+      windowCols: number;
+      windowRows: number;
+      antenna: boolean;
+      futuristic: number; // 0..1 style variation
+    };
+
+    let buildings: Building[] = [];
+
+    const buildBuildings = () => {
+      buildings = [];
+      const horizonY = canvas.height * 0.55;
+      const maxH = horizonY * 0.95;
+      // 3 layers for parallax depth
+      for (let layer = 0; layer < 3; layer++) {
+        const scale = 0.6 + layer * 0.35; // farther = smaller
+        const minW = 30 * scale;
+        const maxW = 90 * scale;
+        let x = -50;
+        let i = layer * 1000;
+        while (x < canvas.width + 50) {
+          const w = minW + seeded(i++) * (maxW - minW);
+          const h = (0.25 + seeded(i++) * 0.75) * maxH * (0.5 + layer * 0.25);
+          buildings.push({
+            x,
+            w,
+            h,
+            layer,
+            windowCols: Math.max(2, Math.floor(w / (8 + (2 - layer) * 2))),
+            windowRows: Math.max(3, Math.floor(h / (10 + (2 - layer) * 2))),
+            antenna: seeded(i++) > 0.55,
+            futuristic: seeded(i++),
+          });
+          x += w + 2;
+        }
+      }
+    };
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
 
     const cellWidth = 120;
     const cellDepth = 80;
@@ -53,6 +105,7 @@ function RetroGrid({
     let offset = 0;
     const speed = 1.5;
     let rafId = 0;
+    let frame = 0;
 
     const project3DTo2D = (x: number, y: number, z: number) => {
       const relX = x - cameraX;
@@ -102,6 +155,96 @@ function RetroGrid({
       ctx.globalAlpha = 1;
     };
 
+    const drawBuildings = (rgb: { r: number; g: number; b: number }) => {
+      if (!showBuildings) return;
+      const horizonY = canvas.height * 0.55;
+      // Sort by layer (far first)
+      const layers = [0, 1, 2];
+      for (const layer of layers) {
+        const layerBuildings = buildings.filter((b) => b.layer === layer);
+        const depthAlpha = 0.35 + layer * 0.25;
+        const fillBase = `rgba(${Math.round(rgb.r * (0.04 + layer * 0.03))}, ${Math.round(
+          rgb.g * (0.08 + layer * 0.06)
+        )}, ${Math.round(rgb.b * (0.06 + layer * 0.04))}, ${depthAlpha + 0.45})`;
+        const edge = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${0.35 + layer * 0.2})`;
+
+        for (const b of layerBuildings) {
+          const top = horizonY - b.h;
+          // Body
+          ctx.fillStyle = fillBase;
+          ctx.fillRect(b.x, top, b.w, b.h);
+
+          // Futuristic roof shapes
+          if (b.futuristic > 0.7) {
+            // Stepped pyramid
+            ctx.fillStyle = fillBase;
+            ctx.fillRect(b.x + b.w * 0.15, top - b.h * 0.08, b.w * 0.7, b.h * 0.08);
+            ctx.fillRect(b.x + b.w * 0.3, top - b.h * 0.14, b.w * 0.4, b.h * 0.06);
+          } else if (b.futuristic > 0.4) {
+            // Slanted top
+            ctx.beginPath();
+            ctx.moveTo(b.x, top);
+            ctx.lineTo(b.x + b.w, top - b.h * 0.08);
+            ctx.lineTo(b.x + b.w, top);
+            ctx.closePath();
+            ctx.fill();
+          }
+
+          // Antenna / spire
+          if (b.antenna) {
+            ctx.strokeStyle = edge;
+            ctx.lineWidth = 1;
+            const ax = b.x + b.w * 0.5;
+            ctx.beginPath();
+            ctx.moveTo(ax, top - b.h * 0.05);
+            ctx.lineTo(ax, top - b.h * 0.05 - 18 - layer * 6);
+            ctx.stroke();
+            // Blinking tip light
+            const blink = (Math.sin(frame * 0.05 + b.x) + 1) * 0.5;
+            ctx.fillStyle = `rgba(${rgb.r}, ${rgb.g + 30}, ${rgb.b}, ${0.4 + blink * 0.6})`;
+            ctx.beginPath();
+            ctx.arc(ax, top - b.h * 0.05 - 18 - layer * 6, 1.6, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          // Edge highlight
+          ctx.strokeStyle = edge;
+          ctx.lineWidth = 1;
+          ctx.strokeRect(b.x + 0.5, top + 0.5, b.w - 1, b.h - 1);
+
+          // Windows (lit) — denser/brighter for closer layers
+          const winAlphaBase = 0.25 + layer * 0.3;
+          const padX = b.w * 0.12;
+          const padY = b.h * 0.08;
+          const gridW = b.w - padX * 2;
+          const gridH = b.h - padY * 2;
+          const cw = gridW / b.windowCols;
+          const ch = gridH / b.windowRows;
+          const winW = Math.max(1, cw * 0.55);
+          const winH = Math.max(1, ch * 0.5);
+          for (let wr = 0; wr < b.windowRows; wr++) {
+            for (let wc = 0; wc < b.windowCols; wc++) {
+              const s = seeded(b.x * 13 + wr * 7 + wc * 31 + layer * 101);
+              if (s < 0.35) continue; // dark window
+              const flicker = (Math.sin(frame * 0.04 + s * 50) + 1) * 0.5;
+              const a = winAlphaBase + flicker * 0.35;
+              ctx.fillStyle = `rgba(${Math.min(255, rgb.r + 60)}, ${Math.min(
+                255,
+                rgb.g + 80
+              )}, ${Math.min(255, rgb.b + 40)}, ${a})`;
+              const wx = b.x + padX + wc * cw + (cw - winW) / 2;
+              const wy = top + padY + wr * ch + (ch - winH) / 2;
+              ctx.fillRect(wx, wy, winW, winH);
+            }
+          }
+        }
+
+        // Atmospheric haze between layers
+        ctx.fillStyle = `rgba(${rgb.r * 0.1}, ${rgb.g * 0.15}, ${rgb.b * 0.1}, ${0.18 - layer * 0.05})`;
+        ctx.fillRect(0, horizonY - 200, canvas.width, 200);
+      }
+    };
+
     const drawScanlines = () => {
       if (!showScanlines) return;
       ctx.globalAlpha = 0.1;
@@ -113,22 +256,27 @@ function RetroGrid({
     };
 
     const animate = () => {
+      frame++;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const rgb = hexToRgb(gridColor);
 
+      // Green-tinted sky
       const skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height * 0.55);
-      skyGradient.addColorStop(0, `rgba(${rgb.r * 0.05}, ${rgb.g * 0.05}, ${rgb.b * 0.15}, 1)`);
-      skyGradient.addColorStop(0.3, `rgba(${rgb.r * 0.1}, ${rgb.g * 0.08}, ${rgb.b * 0.2}, 1)`);
-      skyGradient.addColorStop(0.5, `rgba(${rgb.r * 0.2}, ${rgb.g * 0.15}, ${rgb.b * 0.3}, 1)`);
-      skyGradient.addColorStop(0.7, `rgba(${rgb.r * 0.35}, ${rgb.g * 0.25}, ${rgb.b * 0.4}, 1)`);
-      skyGradient.addColorStop(0.85, `rgba(${rgb.r * 0.55}, ${rgb.g * 0.4}, ${rgb.b * 0.6}, 1)`);
-      skyGradient.addColorStop(1, `rgba(${rgb.r * 0.7}, ${rgb.g * 0.5}, ${rgb.b * 0.75}, 1)`);
+      skyGradient.addColorStop(0, `rgba(${rgb.r * 0.03}, ${rgb.g * 0.08}, ${rgb.b * 0.05}, 1)`);
+      skyGradient.addColorStop(0.3, `rgba(${rgb.r * 0.05}, ${rgb.g * 0.15}, ${rgb.b * 0.08}, 1)`);
+      skyGradient.addColorStop(0.5, `rgba(${rgb.r * 0.1}, ${rgb.g * 0.25}, ${rgb.b * 0.15}, 1)`);
+      skyGradient.addColorStop(0.7, `rgba(${rgb.r * 0.15}, ${rgb.g * 0.35}, ${rgb.b * 0.2}, 1)`);
+      skyGradient.addColorStop(0.85, `rgba(${rgb.r * 0.25}, ${rgb.g * 0.5}, ${rgb.b * 0.3}, 1)`);
+      skyGradient.addColorStop(1, `rgba(${rgb.r * 0.35}, ${rgb.g * 0.65}, ${rgb.b * 0.4}, 1)`);
       ctx.fillStyle = skyGradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height * 0.55);
 
+      // Draw buildings on horizon (before ground/grid for layering)
+      drawBuildings(rgb);
+
       const groundGradient = ctx.createLinearGradient(0, canvas.height * 0.55, 0, canvas.height);
-      groundGradient.addColorStop(0, `rgba(${rgb.r * 0.1}, ${rgb.g * 0.08}, ${rgb.b * 0.15}, 1)`);
-      groundGradient.addColorStop(0.3, `rgba(${rgb.r * 0.05}, ${rgb.g * 0.03}, ${rgb.b * 0.08}, 1)`);
+      groundGradient.addColorStop(0, `rgba(${rgb.r * 0.08}, ${rgb.g * 0.18}, ${rgb.b * 0.1}, 1)`);
+      groundGradient.addColorStop(0.3, `rgba(${rgb.r * 0.03}, ${rgb.g * 0.08}, ${rgb.b * 0.04}, 1)`);
       groundGradient.addColorStop(1, "#000000");
       ctx.fillStyle = groundGradient;
       ctx.fillRect(0, canvas.height * 0.55, canvas.width, canvas.height * 0.45);
@@ -168,7 +316,7 @@ function RetroGrid({
       window.removeEventListener("resize", resizeCanvas);
       cancelAnimationFrame(rafId);
     };
-  }, [gridColor, showScanlines, glowEffect]);
+  }, [gridColor, showScanlines, glowEffect, showBuildings]);
 
   return <canvas ref={canvasRef} className={`block w-full h-full ${className}`} />;
 }
