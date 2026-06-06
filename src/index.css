@@ -103,6 +103,24 @@
     font-family: 'Almarai', 'AlJazeera', 'Al-Jazeera-Arabic', system-ui, -apple-system, sans-serif;
   }
   ::selection { background: hsl(var(--primary) / 0.4); color: hsl(var(--foreground)); }
+
+  /* Arabic / RTL: ensure diacritics (hamza, dots) and descenders are never clipped */
+  html[lang="ar"] h1,
+  html[lang="ar"] h2,
+  html[lang="ar"] h3,
+  html[lang="ar"] h4,
+  html[lang="ar"] h5,
+  html[lang="ar"] h6,
+  [dir="rtl"] h1,
+  [dir="rtl"] h2,
+  [dir="rtl"] h3,
+  [dir="rtl"] h4,
+  [dir="rtl"] h5,
+  [dir="rtl"] h6 {
+    line-height: 1.5 !important;
+    padding-block: 0.1em;
+    overflow: visible;
+  }
 }
 
 @layer utilities {
