@@ -83,9 +83,10 @@ export default function AuthPage() {
   const nav = useNavigate();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [form, setForm] = useState({
-    email: typeof window !== "undefined" ? localStorage.getItem("etqan_last_email") ?? "" : "",
+    email: "",
     password: "",
   });
+
   const [busy, setBusy] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
