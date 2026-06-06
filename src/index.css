@@ -8,7 +8,7 @@
   :root {
     /* LIGHT (default) */
     --background: 150 40% 97%;
-    --foreground: 150 70% 22%;
+    --foreground: 176 60% 8%;
 
     --card: 0 0% 100%;
     --card-foreground: 176 60% 8%;
@@ -51,7 +51,7 @@
 
   .dark {
     --background: 150 50% 6%;
-    --foreground: 145 70% 75%;
+    --foreground: 176 30% 96%;
 
     --card: 176 45% 9%;
     --card-foreground: 176 30% 96%;
