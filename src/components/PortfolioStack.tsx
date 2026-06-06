@@ -21,6 +21,11 @@ export default function PortfolioStack() {
 
   return (
     <section className="relative px-6 sm:px-12 py-24">
+      {/* ambient backdrop - matches services section */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute top-1/4 -left-20 w-96 h-96 rounded-full bg-primary/10 blur-3xl animate-float-slow" />
+        <div className="absolute bottom-1/4 -right-20 w-96 h-96 rounded-full bg-accent/10 blur-3xl animate-float-slow" style={{ animationDelay: "2s" }} />
+      </div>
       <ContainerScroll className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-7xl mx-auto">
         {/* Sticky text column */}
         <div className="lg:sticky lg:top-24 lg:h-fit self-start text-start">
