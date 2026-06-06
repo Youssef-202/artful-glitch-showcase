@@ -48,12 +48,12 @@ function ServiceCard3D({ s, i, dir }: { s: typeof services[number]; i: number; d
         <motion.div
           style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
-          className="relative h-full rounded-3xl overflow-hidden border border-emerald-400/30 shadow-[0_10px_40px_-10px_rgba(16,185,129,0.4)] transition-shadow duration-500 group-hover:shadow-[0_20px_60px_-10px_rgba(16,185,129,0.7)]"
+          className="relative h-full rounded-3xl overflow-hidden border border-emerald-900/60 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] transition-shadow duration-500 group-hover:shadow-[0_20px_60px_-10px_rgba(6,78,59,0.9)]"
         >
           {/* aurora gradient ring */}
           <div className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-               style={{ background: "conic-gradient(from 180deg at 50% 50%, rgba(16,185,129,0), rgba(16,185,129,0.5), rgba(52,211,153,0.6), rgba(16,185,129,0))" }} />
-          <div className="relative h-full rounded-3xl bg-gradient-to-br from-emerald-950/80 via-green-900/70 to-emerald-800/60 backdrop-blur-xl overflow-hidden">
+               style={{ background: "conic-gradient(from 180deg at 50% 50%, rgba(6,78,59,0), rgba(6,95,70,0.6), rgba(4,120,87,0.7), rgba(6,78,59,0))" }} />
+          <div className="relative h-full rounded-3xl bg-gradient-to-br from-[#022c1f] via-[#03301f] to-[#011a13] backdrop-blur-xl overflow-hidden">
             {/* Image */}
             <div className="relative aspect-square overflow-hidden" style={{ transform: "translateZ(30px)" }}>
               <motion.img
