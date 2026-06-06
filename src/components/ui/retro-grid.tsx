@@ -569,6 +569,8 @@ function RetroGrid({
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseleave", onMouseLeave);
       cancelAnimationFrame(rafId);
     };
   }, [gridColor, showScanlines, glowEffect, showBuildings]);
