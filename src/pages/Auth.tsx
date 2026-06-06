@@ -83,9 +83,10 @@ export default function AuthPage() {
   const nav = useNavigate();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [form, setForm] = useState({
-    email: typeof window !== "undefined" ? localStorage.getItem("etqan_last_email") ?? "" : "",
+    email: "",
     password: "",
   });
+
   const [busy, setBusy] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -169,6 +170,7 @@ export default function AuthPage() {
                 type="email"
                 required
                 placeholder="you@example.com"
+                autoComplete="off"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="w-full bg-background/50 border border-border rounded-2xl px-4 py-3 outline-none focus:border-primary transition"
@@ -185,6 +187,7 @@ export default function AuthPage() {
                   required
                   minLength={6}
                   placeholder="••••••••"
+                  autoComplete="new-password"
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
                   className="w-full bg-background/50 border border-border rounded-2xl px-4 py-3 pr-12 outline-none focus:border-primary transition"
