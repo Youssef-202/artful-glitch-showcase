@@ -226,6 +226,13 @@ function RetroGrid({
         )}, ${Math.round(rgb.b * (0.1 + layer * 0.05))}, ${depthMul + 0.55})`;
         const edge = `rgba(${rgb.r}, ${Math.min(255, rgb.g + 40)}, ${rgb.b}, ${0.4 + layer * 0.25})`;
 
+        // Parallax shift per layer — closer layers move more
+        const parallaxX = -mouse.x * (10 + layer * 22);
+        const parallaxY = -mouse.y * (4 + layer * 8);
+        ctx.save();
+        ctx.translate(parallaxX, parallaxY);
+
+
         // Sort within layer for cleaner overlap (rear-first by x)
         for (const b of layerBuildings) {
           const top = horizonY - b.h;
