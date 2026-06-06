@@ -243,7 +243,7 @@ export default function ArchitecturalHero() {
           </div>
 
 
-          <p className="text-primary/80 text-xs md:text-sm font-medium tracking-[0.3em] uppercase mb-4">
+          <p className="text-white text-xs md:text-sm font-medium tracking-[0.3em] uppercase mb-4">
             Mastery · إتقان · Precision
           </p>
 
