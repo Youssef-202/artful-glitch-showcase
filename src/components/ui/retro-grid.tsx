@@ -476,6 +476,13 @@ function RetroGrid({
 
     const animate = () => {
       frame++;
+      // Smooth mouse lerp
+      mouse.x += (mouse.tx - mouse.x) * 0.06;
+      mouse.y += (mouse.ty - mouse.y) * 0.06;
+      // Camera follows mouse subtly for a living parallax
+      cameraX = mouse.x * 80;
+      cameraY = 60 - mouse.y * 30;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const rgb = hexToRgb(gridColor);
 
@@ -492,6 +499,7 @@ function RetroGrid({
 
       // Draw buildings on horizon (before ground/grid for layering)
       drawBuildings(rgb);
+
 
       const groundGradient = ctx.createLinearGradient(0, canvas.height * 0.55, 0, canvas.height);
       groundGradient.addColorStop(0, `rgba(${rgb.r * 0.08}, ${rgb.g * 0.18}, ${rgb.b * 0.1}, 1)`);
