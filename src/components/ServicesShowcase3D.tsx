@@ -138,7 +138,7 @@ export default function ServicesShowcase3D() {
           <p className="text-xs text-primary tracking-[0.3em] font-bold">{t.common.ourServices}</p>
         </div>
         <h2 className="text-center mb-4 text-gradient font-sans font-extrabold leading-tight font-mono bg-slate-800 font-bold sm:text-5xl pb-[11px] text-2xl">
-          <span className="text-gradient font-sans font-extrabold text-slate-50 text-7xl font-semibold">{t.nav.services}</span>
+          <span className="text-gradient font-sans font-extrabold text-white text-7xl font-semibold">{t.nav.services}</span>
         </h2>
       </motion.div>
 
