@@ -247,7 +247,7 @@ export default function ArchitecturalHero() {
             Mastery · إتقان · Precision
           </p>
 
-          <h1 className="text-foreground font-bold leading-[1.1] mb-6 text-5xl">
+          <h1 className="text-foreground font-extrabold leading-[1.1] mb-6 text-6xl md:text-7xl">
             نصنع الـ{" "}
             <RotatingWord />
           </h1>
