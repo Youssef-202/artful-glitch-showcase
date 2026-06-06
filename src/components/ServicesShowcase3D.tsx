@@ -48,12 +48,12 @@ function ServiceCard3D({ s, i, dir }: { s: typeof services[number]; i: number; d
         <motion.div
           style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
-          className="relative h-full rounded-3xl glass overflow-hidden border border-white/10 shadow-elegant transition-shadow duration-500 group-hover:shadow-glow"
+          className="relative h-full rounded-3xl overflow-hidden border border-emerald-400/30 shadow-[0_10px_40px_-10px_rgba(16,185,129,0.4)] transition-shadow duration-500 group-hover:shadow-[0_20px_60px_-10px_rgba(16,185,129,0.7)]"
         >
           {/* aurora gradient ring */}
           <div className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-               style={{ background: "conic-gradient(from 180deg at 50% 50%, hsl(var(--primary)/0.0), hsl(var(--primary)/0.4), hsl(var(--accent)/0.5), hsl(var(--primary)/0.0))" }} />
-          <div className="relative h-full rounded-3xl bg-card/60 backdrop-blur-xl overflow-hidden">
+               style={{ background: "conic-gradient(from 180deg at 50% 50%, rgba(16,185,129,0), rgba(16,185,129,0.5), rgba(52,211,153,0.6), rgba(16,185,129,0))" }} />
+          <div className="relative h-full rounded-3xl bg-gradient-to-br from-emerald-950/80 via-green-900/70 to-emerald-800/60 backdrop-blur-xl overflow-hidden">
             {/* Image */}
             <div className="relative aspect-square overflow-hidden" style={{ transform: "translateZ(30px)" }}>
               <motion.img
@@ -64,20 +64,20 @@ function ServiceCard3D({ s, i, dir }: { s: typeof services[number]; i: number; d
                 whileHover={{ scale: 1.12 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-emerald-950 via-emerald-950/40 to-transparent" />
               {/* Number badge */}
               <div
                 className="absolute top-4 left-4 flex items-center gap-2"
                 style={{ transform: "translateZ(60px)" }}
               >
-                <span className="relative inline-flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-br from-primary to-accent text-primary-foreground font-black text-base shadow-glow">
+                <span className="relative inline-flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-400 to-green-600 text-white font-black text-base shadow-[0_0_20px_rgba(16,185,129,0.6)]">
                   {s.number}
-                  <span className="absolute inset-0 rounded-2xl ring-2 ring-primary/40 animate-pulse-ring" />
+                  <span className="absolute inset-0 rounded-2xl ring-2 ring-emerald-400/50 animate-pulse-ring" />
                 </span>
               </div>
               {/* Sparkle */}
               <Sparkles
-                className="absolute top-4 right-4 w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:rotate-180"
+                className="absolute top-4 right-4 w-4 h-4 text-emerald-300 opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:rotate-180"
                 style={{ transform: "translateZ(50px)" }}
               />
             </div>
@@ -87,16 +87,16 @@ function ServiceCard3D({ s, i, dir }: { s: typeof services[number]; i: number; d
               className="relative p-5 pt-4"
               style={{ transform: "translateZ(40px)" }}
             >
-              <h3 className="text-lg font-black mb-1 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+              <h3 className="text-lg font-black mb-1 text-white">
                 {tr.title}
               </h3>
-              <p className="text-sm text-muted-foreground line-clamp-2 mb-3">{tr.tagline}</p>
-              <span className="inline-flex items-center gap-1.5 text-primary text-sm font-bold transition-all duration-300 group-hover:gap-3">
+              <p className="text-sm text-emerald-100/80 line-clamp-2 mb-3">{tr.tagline}</p>
+              <span className="inline-flex items-center gap-1.5 text-emerald-300 text-sm font-bold transition-all duration-300 group-hover:gap-3">
                 {t.common.learnMore}
                 <Arrow className="w-3.5 h-3.5" />
               </span>
               {/* underline accent */}
-              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
+              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-400 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
             </div>
 
             {/* Glare */}
@@ -105,7 +105,7 @@ function ServiceCard3D({ s, i, dir }: { s: typeof services[number]; i: number; d
               style={{
                 background: useTransform(
                   [glareX, glareY] as any,
-                  ([x, y]: any) => `radial-gradient(400px circle at ${x} ${y}, hsl(var(--primary-glow) / 0.35), transparent 50%)`
+                  ([x, y]: any) => `radial-gradient(400px circle at ${x} ${y}, rgba(52,211,153,0.45), transparent 50%)`
                 ),
               }}
             />
