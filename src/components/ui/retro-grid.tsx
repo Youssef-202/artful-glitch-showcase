@@ -438,16 +438,19 @@ function RetroGrid({
             ctx.fillRect(b.x - 2, horizonY - 2, b.w + 4, 18 + layer * 6);
           }
         }
+        ctx.restore();
 
         // Atmospheric haze between layers (cooler, greener)
         ctx.fillStyle = `rgba(${rgb.r * 0.08}, ${rgb.g * 0.18}, ${rgb.b * 0.1}, ${0.22 - layer * 0.07})`;
         ctx.fillRect(0, horizonY - 220, canvas.width, 220);
       }
 
-      // --- Drones / hover-traffic ---
+      // --- Drones / hover-traffic (slight attraction toward mouse Y) ---
       for (const d of drones) {
         d.x += d.speed;
         if (d.x > canvas.width + 20) d.x = -20;
+        const targetY = canvas.height * (0.18 + 0.32 * ((mouse.y + 1) / 2));
+        d.y += (targetY - d.y) * 0.005 * (d.layer + 1);
         const trail = 18 + d.layer * 8;
         const tg = ctx.createLinearGradient(d.x - trail, d.y, d.x, d.y);
         tg.addColorStop(0, cyanNeon(0));
@@ -468,7 +471,25 @@ function RetroGrid({
         ctx.fill();
         ctx.shadowBlur = 0;
       }
+
+      // --- Interactive cursor glow ---
+      if (mouse.active) {
+        const glow = ctx.createRadialGradient(
+          mouse.px,
+          mouse.py,
+          0,
+          mouse.px,
+          mouse.py,
+          240
+        );
+        glow.addColorStop(0, cyanNeon(0.35));
+        glow.addColorStop(0.4, cyanNeon(0.1));
+        glow.addColorStop(1, cyanNeon(0));
+        ctx.fillStyle = glow;
+        ctx.fillRect(mouse.px - 240, mouse.py - 240, 480, 480);
+      }
     };
+
 
 
     const drawScanlines = () => {
