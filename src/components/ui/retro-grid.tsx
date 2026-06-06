@@ -119,15 +119,34 @@ function RetroGrid({
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
+    // --- Mouse interactivity ---
+    const mouse = { x: 0, y: 0, tx: 0, ty: 0, active: false, px: 0, py: 0 };
+    const onMouseMove = (e: MouseEvent) => {
+      // Normalize to -1..1 (center = 0)
+      mouse.tx = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.ty = (e.clientY / window.innerHeight) * 2 - 1;
+      mouse.px = e.clientX;
+      mouse.py = e.clientY;
+      mouse.active = true;
+    };
+    const onMouseLeave = () => {
+      mouse.tx = 0;
+      mouse.ty = 0;
+      mouse.active = false;
+    };
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseleave", onMouseLeave);
+
     const cellWidth = 120;
     const cellDepth = 80;
     const numCellsWide = 16;
     const numCellsDeep = 20;
 
-    const cameraX = 0;
-    const cameraY = 60;
+    let cameraX = 0;
+    let cameraY = 60;
     const cameraZ = 400;
     const focalLength = 500;
+
 
     let offset = 0;
     const speed = 1.5;
@@ -206,6 +225,13 @@ function RetroGrid({
           rgb.g * (0.14 + layer * 0.08)
         )}, ${Math.round(rgb.b * (0.1 + layer * 0.05))}, ${depthMul + 0.55})`;
         const edge = `rgba(${rgb.r}, ${Math.min(255, rgb.g + 40)}, ${rgb.b}, ${0.4 + layer * 0.25})`;
+
+        // Parallax shift per layer — closer layers move more
+        const parallaxX = -mouse.x * (10 + layer * 22);
+        const parallaxY = -mouse.y * (4 + layer * 8);
+        ctx.save();
+        ctx.translate(parallaxX, parallaxY);
+
 
         // Sort within layer for cleaner overlap (rear-first by x)
         for (const b of layerBuildings) {
@@ -412,16 +438,19 @@ function RetroGrid({
             ctx.fillRect(b.x - 2, horizonY - 2, b.w + 4, 18 + layer * 6);
           }
         }
+        ctx.restore();
 
         // Atmospheric haze between layers (cooler, greener)
         ctx.fillStyle = `rgba(${rgb.r * 0.08}, ${rgb.g * 0.18}, ${rgb.b * 0.1}, ${0.22 - layer * 0.07})`;
         ctx.fillRect(0, horizonY - 220, canvas.width, 220);
       }
 
-      // --- Drones / hover-traffic ---
+      // --- Drones / hover-traffic (slight attraction toward mouse Y) ---
       for (const d of drones) {
         d.x += d.speed;
         if (d.x > canvas.width + 20) d.x = -20;
+        const targetY = canvas.height * (0.18 + 0.32 * ((mouse.y + 1) / 2));
+        d.y += (targetY - d.y) * 0.005 * (d.layer + 1);
         const trail = 18 + d.layer * 8;
         const tg = ctx.createLinearGradient(d.x - trail, d.y, d.x, d.y);
         tg.addColorStop(0, cyanNeon(0));
@@ -442,7 +471,25 @@ function RetroGrid({
         ctx.fill();
         ctx.shadowBlur = 0;
       }
+
+      // --- Interactive cursor glow ---
+      if (mouse.active) {
+        const glow = ctx.createRadialGradient(
+          mouse.px,
+          mouse.py,
+          0,
+          mouse.px,
+          mouse.py,
+          240
+        );
+        glow.addColorStop(0, cyanNeon(0.35));
+        glow.addColorStop(0.4, cyanNeon(0.1));
+        glow.addColorStop(1, cyanNeon(0));
+        ctx.fillStyle = glow;
+        ctx.fillRect(mouse.px - 240, mouse.py - 240, 480, 480);
+      }
     };
+
 
 
     const drawScanlines = () => {
@@ -457,6 +504,13 @@ function RetroGrid({
 
     const animate = () => {
       frame++;
+      // Smooth mouse lerp
+      mouse.x += (mouse.tx - mouse.x) * 0.06;
+      mouse.y += (mouse.ty - mouse.y) * 0.06;
+      // Camera follows mouse subtly for a living parallax
+      cameraX = mouse.x * 80;
+      cameraY = 60 - mouse.y * 30;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const rgb = hexToRgb(gridColor);
 
@@ -473,6 +527,7 @@ function RetroGrid({
 
       // Draw buildings on horizon (before ground/grid for layering)
       drawBuildings(rgb);
+
 
       const groundGradient = ctx.createLinearGradient(0, canvas.height * 0.55, 0, canvas.height);
       groundGradient.addColorStop(0, `rgba(${rgb.r * 0.08}, ${rgb.g * 0.18}, ${rgb.b * 0.1}, 1)`);
@@ -514,6 +569,8 @@ function RetroGrid({
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseleave", onMouseLeave);
       cancelAnimationFrame(rafId);
     };
   }, [gridColor, showScanlines, glowEffect, showBuildings]);
