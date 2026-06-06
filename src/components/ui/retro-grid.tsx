@@ -47,6 +47,8 @@ function RetroGrid({
       return x - Math.floor(x);
     };
 
+    type ShapeKind = "tower" | "tapered" | "twin" | "dome" | "pyramid" | "obelisk" | "arc";
+
     type Building = {
       x: number;
       w: number;
@@ -55,39 +57,64 @@ function RetroGrid({
       windowCols: number;
       windowRows: number;
       antenna: boolean;
-      futuristic: number; // 0..1 style variation
+      spire: boolean;
+      beam: boolean; // holographic light beam from roof
+      shape: ShapeKind;
+      seed: number;
     };
+
+    type Drone = { x: number; y: number; speed: number; size: number; layer: number };
+    let drones: Drone[] = [];
 
     let buildings: Building[] = [];
 
     const buildBuildings = () => {
       buildings = [];
+      drones = [];
       const horizonY = canvas.height * 0.55;
       const maxH = horizonY * 0.95;
+      const shapes: ShapeKind[] = ["tower", "tapered", "twin", "dome", "pyramid", "obelisk", "arc"];
       // 3 layers for parallax depth
       for (let layer = 0; layer < 3; layer++) {
-        const scale = 0.6 + layer * 0.35; // farther = smaller
-        const minW = 30 * scale;
-        const maxW = 90 * scale;
-        let x = -50;
-        let i = layer * 1000;
-        while (x < canvas.width + 50) {
+        const scale = 0.55 + layer * 0.4;
+        const minW = 28 * scale;
+        const maxW = 95 * scale;
+        let x = -60;
+        let i = layer * 1000 + 17;
+        while (x < canvas.width + 60) {
           const w = minW + seeded(i++) * (maxW - minW);
-          const h = (0.25 + seeded(i++) * 0.75) * maxH * (0.5 + layer * 0.25);
+          const h = (0.3 + seeded(i++) * 0.7) * maxH * (0.45 + layer * 0.3);
+          const shape = shapes[Math.floor(seeded(i++) * shapes.length)];
           buildings.push({
             x,
             w,
             h,
             layer,
-            windowCols: Math.max(2, Math.floor(w / (8 + (2 - layer) * 2))),
-            windowRows: Math.max(3, Math.floor(h / (10 + (2 - layer) * 2))),
-            antenna: seeded(i++) > 0.55,
-            futuristic: seeded(i++),
+            windowCols: Math.max(2, Math.floor(w / (7 + (2 - layer) * 2))),
+            windowRows: Math.max(4, Math.floor(h / (8 + (2 - layer) * 2))),
+            antenna: seeded(i++) > 0.45,
+            spire: seeded(i++) > 0.7,
+            beam: seeded(i++) > 0.82,
+            shape,
+            seed: i,
           });
-          x += w + 2;
+          x += w + (layer === 2 ? 6 : 2);
         }
       }
+      // Drones / flying vehicles
+      const droneCount = 14;
+      for (let d = 0; d < droneCount; d++) {
+        const layer = d % 3;
+        drones.push({
+          x: seeded(d * 37) * canvas.width,
+          y: canvas.height * (0.18 + seeded(d * 53) * 0.32),
+          speed: (0.3 + seeded(d * 71) * 0.7) * (layer === 0 ? 0.3 : layer === 1 ? 0.6 : 1.1),
+          size: 1 + layer * 0.6,
+          layer,
+        });
+      }
     };
+
 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
