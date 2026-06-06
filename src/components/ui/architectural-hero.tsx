@@ -229,7 +229,7 @@ export default function ArchitecturalHero() {
           <div className="mb-6 inline-flex max-w-[95vw] items-center justify-center px-5 sm:px-10 h-14 sm:h-16 md:h-20 rounded-full border border-primary/20 bg-card/30 backdrop-blur-md overflow-hidden">
             <span className="typewriter text-foreground/80 font-medium whitespace-nowrap flex items-center gap-1 sm:gap-2 text-[#7ce4e4] min-w-0">
               <span className="text-base sm:text-3xl md:text-4xl font-bold shrink-0">في إتقان،&nbsp;</span>
-              <span className="text-sm sm:text-2xl md:text-3xl whitespace-nowrap overflow-hidden text-ellipsis min-w-0 text-[#115e59]">
+              <span className="text-sm sm:text-2xl md:text-3xl whitespace-nowrap overflow-hidden text-ellipsis min-w-0 text-white">
                 <TypewriterLoop
                   phrases={[
                     "نحوّل الأفكار إلى تجارب رقمية استثنائية",
