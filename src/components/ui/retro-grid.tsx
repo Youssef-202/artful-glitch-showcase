@@ -185,92 +185,265 @@ function RetroGrid({
     const drawBuildings = (rgb: { r: number; g: number; b: number }) => {
       if (!showBuildings) return;
       const horizonY = canvas.height * 0.55;
-      // Sort by layer (far first)
-      const layers = [0, 1, 2];
-      for (const layer of layers) {
-        const layerBuildings = buildings.filter((b) => b.layer === layer);
-        const depthAlpha = 0.35 + layer * 0.25;
-        const fillBase = `rgba(${Math.round(rgb.r * (0.04 + layer * 0.03))}, ${Math.round(
-          rgb.g * (0.08 + layer * 0.06)
-        )}, ${Math.round(rgb.b * (0.06 + layer * 0.04))}, ${depthAlpha + 0.45})`;
-        const edge = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${0.35 + layer * 0.2})`;
+      const neon = (a: number) =>
+        `rgba(${Math.min(255, rgb.r + 80)}, ${Math.min(255, rgb.g + 60)}, ${Math.min(
+          255,
+          rgb.b + 100
+        )}, ${a})`;
+      const cyanNeon = (a: number) =>
+        `rgba(${Math.min(255, rgb.r + 60)}, ${Math.min(255, rgb.g + 100)}, ${Math.min(
+          255,
+          rgb.b + 120
+        )}, ${a})`;
 
+      for (const layer of [0, 1, 2]) {
+        const layerBuildings = buildings.filter((b) => b.layer === layer);
+        const depthMul = 0.4 + layer * 0.3;
+        const fillBase = `rgba(${Math.round(rgb.r * (0.03 + layer * 0.02))}, ${Math.round(
+          rgb.g * (0.06 + layer * 0.04)
+        )}, ${Math.round(rgb.b * (0.05 + layer * 0.03))}, ${depthMul + 0.5})`;
+        const fillTop = `rgba(${Math.round(rgb.r * (0.06 + layer * 0.04))}, ${Math.round(
+          rgb.g * (0.14 + layer * 0.08)
+        )}, ${Math.round(rgb.b * (0.1 + layer * 0.05))}, ${depthMul + 0.55})`;
+        const edge = `rgba(${rgb.r}, ${Math.min(255, rgb.g + 40)}, ${rgb.b}, ${0.4 + layer * 0.25})`;
+
+        // Sort within layer for cleaner overlap (rear-first by x)
         for (const b of layerBuildings) {
           const top = horizonY - b.h;
-          // Body
-          ctx.fillStyle = fillBase;
-          ctx.fillRect(b.x, top, b.w, b.h);
+          const cx = b.x + b.w / 2;
 
-          // Futuristic roof shapes
-          if (b.futuristic > 0.7) {
-            // Stepped pyramid
-            ctx.fillStyle = fillBase;
-            ctx.fillRect(b.x + b.w * 0.15, top - b.h * 0.08, b.w * 0.7, b.h * 0.08);
-            ctx.fillRect(b.x + b.w * 0.3, top - b.h * 0.14, b.w * 0.4, b.h * 0.06);
-          } else if (b.futuristic > 0.4) {
-            // Slanted top
+          // Vertical body gradient (darker bottom, lit top edge)
+          const grad = ctx.createLinearGradient(0, top, 0, horizonY);
+          grad.addColorStop(0, fillTop);
+          grad.addColorStop(1, fillBase);
+          ctx.fillStyle = grad;
+
+          // --- Shape body ---
+          ctx.beginPath();
+          switch (b.shape) {
+            case "tapered": {
+              const inset = b.w * 0.15;
+              ctx.moveTo(b.x, horizonY);
+              ctx.lineTo(b.x + inset, top);
+              ctx.lineTo(b.x + b.w - inset, top);
+              ctx.lineTo(b.x + b.w, horizonY);
+              break;
+            }
+            case "obelisk": {
+              const inset = b.w * 0.35;
+              ctx.moveTo(b.x, horizonY);
+              ctx.lineTo(b.x + inset, top);
+              ctx.lineTo(b.x + b.w - inset, top);
+              ctx.lineTo(b.x + b.w, horizonY);
+              break;
+            }
+            case "pyramid": {
+              // Stepped silhouette
+              const steps = 4;
+              const sw = b.w / 2;
+              for (let s = 0; s < steps; s++) {
+                const t = s / steps;
+                const sx = b.x + sw * t * 0.6;
+                const sy = top + (b.h * t) / 1.5;
+                const sxw = b.w - sw * t * 1.2;
+                const sh = b.h - (b.h * t) / 1.5;
+                ctx.rect(sx, sy, sxw, sh);
+              }
+              break;
+            }
+            case "dome": {
+              const r = b.w / 2;
+              ctx.moveTo(b.x, horizonY);
+              ctx.lineTo(b.x, top + r);
+              ctx.arc(cx, top + r, r, Math.PI, 0, false);
+              ctx.lineTo(b.x + b.w, horizonY);
+              break;
+            }
+            case "twin": {
+              const gap = b.w * 0.18;
+              const tw = (b.w - gap) / 2;
+              ctx.rect(b.x, top, tw, b.h);
+              ctx.rect(b.x + tw + gap, top + b.h * 0.05, tw, b.h - b.h * 0.05);
+              // Skybridge
+              ctx.rect(b.x + tw, top + b.h * 0.55, gap, b.h * 0.06);
+              ctx.rect(b.x + tw, top + b.h * 0.25, gap, b.h * 0.04);
+              break;
+            }
+            case "arc": {
+              // Curved-top building
+              ctx.moveTo(b.x, horizonY);
+              ctx.lineTo(b.x, top + b.h * 0.15);
+              ctx.quadraticCurveTo(cx, top - b.h * 0.05, b.x + b.w, top + b.h * 0.15);
+              ctx.lineTo(b.x + b.w, horizonY);
+              break;
+            }
+            case "tower":
+            default: {
+              ctx.rect(b.x, top, b.w, b.h);
+            }
+          }
+          ctx.fill();
+
+          // --- Neon edge accents ---
+          ctx.strokeStyle = edge;
+          ctx.lineWidth = layer === 2 ? 1.25 : 1;
+          // Left vertical neon strip
+          if (glowEffect) {
+            ctx.shadowBlur = 6 + layer * 4;
+            ctx.shadowColor = edge;
+          }
+          ctx.beginPath();
+          ctx.moveTo(b.x + 1, horizonY);
+          ctx.lineTo(b.x + 1, top + b.h * 0.1);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(b.x + b.w - 1, horizonY);
+          ctx.lineTo(b.x + b.w - 1, top + b.h * 0.1);
+          ctx.stroke();
+          ctx.shadowBlur = 0;
+
+          // Mechanical floor bands (horizontal stripes)
+          ctx.strokeStyle = `rgba(${rgb.r}, ${rgb.g + 30}, ${rgb.b}, ${0.18 + layer * 0.1})`;
+          ctx.lineWidth = 0.5;
+          const bandCount = Math.max(2, Math.floor(b.h / 22));
+          for (let k = 1; k < bandCount; k++) {
+            const by = top + (b.h * k) / bandCount;
             ctx.beginPath();
-            ctx.moveTo(b.x, top);
-            ctx.lineTo(b.x + b.w, top - b.h * 0.08);
-            ctx.lineTo(b.x + b.w, top);
+            ctx.moveTo(b.x + 2, by);
+            ctx.lineTo(b.x + b.w - 2, by);
+            ctx.stroke();
+          }
+
+          // --- Spire / antenna ---
+          if (b.spire || b.antenna) {
+            const ax = cx;
+            const spireH = (b.spire ? 28 : 14) + layer * 8;
+            ctx.strokeStyle = edge;
+            ctx.lineWidth = b.spire ? 1.5 : 1;
+            ctx.beginPath();
+            ctx.moveTo(ax, top + (b.shape === "dome" ? -b.w / 2 + 2 : 2));
+            ctx.lineTo(ax, top - spireH);
+            ctx.stroke();
+            // Tip blink
+            const blink = (Math.sin(frame * 0.06 + b.seed) + 1) * 0.5;
+            ctx.fillStyle = cyanNeon(0.45 + blink * 0.55);
+            if (glowEffect) {
+              ctx.shadowBlur = 8;
+              ctx.shadowColor = cyanNeon(1);
+            }
+            ctx.beginPath();
+            ctx.arc(ax, top - spireH, 1.8 + layer * 0.4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+          }
+
+          // --- Holographic beam from roof ---
+          if (b.beam) {
+            const bx = cx;
+            const beamH = horizonY * 0.6;
+            const beamGrad = ctx.createLinearGradient(0, top - beamH, 0, top);
+            beamGrad.addColorStop(0, neon(0));
+            beamGrad.addColorStop(0.7, neon(0.18));
+            beamGrad.addColorStop(1, neon(0.35));
+            ctx.fillStyle = beamGrad;
+            const bw = 6 + layer * 4;
+            ctx.beginPath();
+            ctx.moveTo(bx - bw / 2, top);
+            ctx.lineTo(bx + bw / 2, top);
+            ctx.lineTo(bx + bw * 1.4, top - beamH);
+            ctx.lineTo(bx - bw * 1.4, top - beamH);
             ctx.closePath();
             ctx.fill();
           }
 
-          // Antenna / spire
-          if (b.antenna) {
-            ctx.strokeStyle = edge;
-            ctx.lineWidth = 1;
-            const ax = b.x + b.w * 0.5;
-            ctx.beginPath();
-            ctx.moveTo(ax, top - b.h * 0.05);
-            ctx.lineTo(ax, top - b.h * 0.05 - 18 - layer * 6);
-            ctx.stroke();
-            // Blinking tip light
-            const blink = (Math.sin(frame * 0.05 + b.x) + 1) * 0.5;
-            ctx.fillStyle = `rgba(${rgb.r}, ${rgb.g + 30}, ${rgb.b}, ${0.4 + blink * 0.6})`;
-            ctx.beginPath();
-            ctx.arc(ax, top - b.h * 0.05 - 18 - layer * 6, 1.6, 0, Math.PI * 2);
-            ctx.fill();
-          }
-
-          // Edge highlight
-          ctx.strokeStyle = edge;
-          ctx.lineWidth = 1;
-          ctx.strokeRect(b.x + 0.5, top + 0.5, b.w - 1, b.h - 1);
-
-          // Windows (lit) — denser/brighter for closer layers
-          const winAlphaBase = 0.25 + layer * 0.3;
-          const padX = b.w * 0.12;
+          // --- Windows: vertical light strips for tall towers, grid for others ---
+          const padX = b.w * 0.14;
           const padY = b.h * 0.08;
           const gridW = b.w - padX * 2;
           const gridH = b.h - padY * 2;
+
+          if (b.shape === "tower" || b.shape === "tapered" || b.shape === "obelisk") {
+            // Vertical neon light strips (more futuristic than window grid)
+            const stripCount = Math.max(2, Math.floor(b.w / 9));
+            for (let s = 0; s < stripCount; s++) {
+              const sv = seeded(b.seed + s * 19);
+              if (sv < 0.25) continue;
+              const sx = b.x + padX + (gridW * (s + 0.5)) / stripCount;
+              const stripTop = top + padY + b.h * 0.05 * sv;
+              const stripBot = top + b.h - padY * 0.5;
+              const flicker = (Math.sin(frame * 0.03 + sv * 40 + s) + 1) * 0.5;
+              const a = 0.2 + layer * 0.15 + flicker * 0.25;
+              ctx.strokeStyle = cyanNeon(a);
+              ctx.lineWidth = 0.8 + layer * 0.3;
+              ctx.beginPath();
+              ctx.moveTo(sx, stripTop);
+              ctx.lineTo(sx, stripBot);
+              ctx.stroke();
+            }
+          }
+
+          // Window grid (sparse, on top of strips for depth)
           const cw = gridW / b.windowCols;
           const ch = gridH / b.windowRows;
-          const winW = Math.max(1, cw * 0.55);
-          const winH = Math.max(1, ch * 0.5);
+          const winW = Math.max(1, cw * 0.45);
+          const winH = Math.max(1, ch * 0.4);
           for (let wr = 0; wr < b.windowRows; wr++) {
             for (let wc = 0; wc < b.windowCols; wc++) {
               const s = seeded(b.x * 13 + wr * 7 + wc * 31 + layer * 101);
-              if (s < 0.35) continue; // dark window
+              if (s < 0.55) continue;
               const flicker = (Math.sin(frame * 0.04 + s * 50) + 1) * 0.5;
-              const a = winAlphaBase + flicker * 0.35;
-              ctx.fillStyle = `rgba(${Math.min(255, rgb.r + 60)}, ${Math.min(
+              const a = 0.25 + layer * 0.25 + flicker * 0.3;
+              ctx.fillStyle = `rgba(${Math.min(255, rgb.r + 80)}, ${Math.min(
                 255,
-                rgb.g + 80
-              )}, ${Math.min(255, rgb.b + 40)}, ${a})`;
+                rgb.g + 120
+              )}, ${Math.min(255, rgb.b + 60)}, ${a})`;
               const wx = b.x + padX + wc * cw + (cw - winW) / 2;
               const wy = top + padY + wr * ch + (ch - winH) / 2;
               ctx.fillRect(wx, wy, winW, winH);
             }
           }
+
+          // Base glow / reflection on ground
+          if (layer >= 1) {
+            const baseGrad = ctx.createLinearGradient(0, horizonY - 4, 0, horizonY + 18 + layer * 6);
+            baseGrad.addColorStop(0, neon(0.18 + layer * 0.08));
+            baseGrad.addColorStop(1, neon(0));
+            ctx.fillStyle = baseGrad;
+            ctx.fillRect(b.x - 2, horizonY - 2, b.w + 4, 18 + layer * 6);
+          }
         }
 
-        // Atmospheric haze between layers
-        ctx.fillStyle = `rgba(${rgb.r * 0.1}, ${rgb.g * 0.15}, ${rgb.b * 0.1}, ${0.18 - layer * 0.05})`;
-        ctx.fillRect(0, horizonY - 200, canvas.width, 200);
+        // Atmospheric haze between layers (cooler, greener)
+        ctx.fillStyle = `rgba(${rgb.r * 0.08}, ${rgb.g * 0.18}, ${rgb.b * 0.1}, ${0.22 - layer * 0.07})`;
+        ctx.fillRect(0, horizonY - 220, canvas.width, 220);
+      }
+
+      // --- Drones / hover-traffic ---
+      for (const d of drones) {
+        d.x += d.speed;
+        if (d.x > canvas.width + 20) d.x = -20;
+        const trail = 18 + d.layer * 8;
+        const tg = ctx.createLinearGradient(d.x - trail, d.y, d.x, d.y);
+        tg.addColorStop(0, cyanNeon(0));
+        tg.addColorStop(1, cyanNeon(0.6));
+        ctx.strokeStyle = tg;
+        ctx.lineWidth = d.size;
+        ctx.beginPath();
+        ctx.moveTo(d.x - trail, d.y);
+        ctx.lineTo(d.x, d.y);
+        ctx.stroke();
+        if (glowEffect) {
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = cyanNeon(1);
+        }
+        ctx.fillStyle = cyanNeon(0.9);
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
       }
     };
+
 
     const drawScanlines = () => {
       if (!showScanlines) return;
