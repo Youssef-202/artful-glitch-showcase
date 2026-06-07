@@ -85,9 +85,14 @@ export const Card = ({
       className="max-w-none lg:max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-black p-2 md:p-6 bg-black backdrop-blur-xl rounded-[30px] shadow-2xl"
     >
       <div className="relative h-full w-full overflow-hidden rounded-2xl bg-[#0a1a18] md:rounded-2xl flex items-center justify-center">
-        <div className="absolute inset-0 pointer-events-none">
-          <RetroGrid gridColor="#10b981" showScanlines={false} glowEffect showBuildings showGrid={false} />
-        </div>
+        <img
+          src={cityBg}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+          draggable={false}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50 pointer-events-none" />
         <div className="relative z-10 w-full h-full flex items-center justify-center">
           {children}
         </div>
