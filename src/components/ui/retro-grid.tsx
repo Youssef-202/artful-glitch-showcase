@@ -541,11 +541,13 @@ function RetroGrid({
       offset += speed;
       if (offset >= cellDepth) offset = 0;
 
-      for (let row = -5; row < numCellsDeep + 5; row++) {
-        const z = row * cellDepth;
-        for (let col = -Math.floor(numCellsWide / 2); col <= Math.floor(numCellsWide / 2); col++) {
-          const x = col * cellWidth;
-          drawCell(x, z, offset);
+      if (showGrid) {
+        for (let row = -5; row < numCellsDeep + 5; row++) {
+          const z = row * cellDepth;
+          for (let col = -Math.floor(numCellsWide / 2); col <= Math.floor(numCellsWide / 2); col++) {
+            const x = col * cellWidth;
+            drawCell(x, z, offset);
+          }
         }
       }
 
