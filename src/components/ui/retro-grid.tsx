@@ -121,23 +121,8 @@ function RetroGrid({
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // --- Mouse interactivity ---
+    // Mouse interactivity disabled — background no longer reacts to cursor
     const mouse = { x: 0, y: 0, tx: 0, ty: 0, active: false, px: 0, py: 0 };
-    const onMouseMove = (e: MouseEvent) => {
-      // Normalize to -1..1 (center = 0)
-      mouse.tx = (e.clientX / window.innerWidth) * 2 - 1;
-      mouse.ty = (e.clientY / window.innerHeight) * 2 - 1;
-      mouse.px = e.clientX;
-      mouse.py = e.clientY;
-      mouse.active = true;
-    };
-    const onMouseLeave = () => {
-      mouse.tx = 0;
-      mouse.ty = 0;
-      mouse.active = false;
-    };
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseleave", onMouseLeave);
 
     const cellWidth = 120;
     const cellDepth = 80;
