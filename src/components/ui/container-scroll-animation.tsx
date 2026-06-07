@@ -86,7 +86,7 @@ export const Card = ({
     >
       <div className="relative h-full w-full overflow-hidden rounded-2xl bg-[#0a1a18] md:rounded-2xl flex items-center justify-center">
         <div className="absolute inset-0 pointer-events-none">
-          <RetroGrid gridColor="#10b981" showScanlines glowEffect showBuildings />
+          <RetroGrid gridColor="#10b981" showScanlines={false} glowEffect showBuildings showGrid={false} />
         </div>
         <div className="relative z-10 w-full h-full flex items-center justify-center">
           {children}
