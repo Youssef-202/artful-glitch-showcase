@@ -6,42 +6,42 @@
 
 @layer base {
   :root {
-    /* LIGHT (default) — emerald family matching brand image */
-    --background: 160 40% 97%;
-    --foreground: 160 70% 7%;
+    /* LIGHT (default) — brand teal #036c5f */
+    --background: 172 40% 97%;
+    --foreground: 172 80% 7%;
 
     --card: 0 0% 100%;
-    --card-foreground: 160 70% 7%;
+    --card-foreground: 172 80% 7%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 160 70% 7%;
+    --popover-foreground: 172 80% 7%;
 
-    --primary: 160 80% 20%;
-    --primary-foreground: 160 30% 98%;
-    --primary-glow: 160 70% 45%;
+    --primary: 172 95% 22%;
+    --primary-foreground: 172 30% 98%;
+    --primary-glow: 172 80% 40%;
 
-    --secondary: 160 30% 92%;
-    --secondary-foreground: 160 70% 12%;
+    --secondary: 172 30% 92%;
+    --secondary-foreground: 172 80% 12%;
 
-    --muted: 160 25% 92%;
-    --muted-foreground: 160 25% 28%;
+    --muted: 172 25% 92%;
+    --muted-foreground: 172 25% 28%;
 
-    --accent: 160 70% 38%;
-    --accent-foreground: 160 30% 98%;
+    --accent: 172 85% 30%;
+    --accent-foreground: 172 30% 98%;
 
     --destructive: 0 84% 55%;
-    --destructive-foreground: 160 30% 98%;
+    --destructive-foreground: 172 30% 98%;
 
-    --border: 160 25% 86%;
-    --input: 160 25% 86%;
-    --ring: 160 80% 30%;
+    --border: 172 25% 86%;
+    --input: 172 25% 86%;
+    --ring: 172 95% 25%;
 
     --radius: 1rem;
 
-    --gradient-primary: linear-gradient(135deg, hsl(160 80% 18%), hsl(160 70% 38%) 50%, hsl(160 65% 55%));
-    --gradient-radial: radial-gradient(1200px 600px at 50% -10%, hsl(160 75% 35% / 0.18), transparent 60%);
-    --shadow-glow: 0 0 18px hsl(160 75% 25% / 0.08);
-    --shadow-elegant: 0 8px 20px -18px hsl(160 75% 12% / 0.08);
+    --gradient-primary: linear-gradient(135deg, hsl(172 95% 18%), hsl(172 85% 30%) 50%, hsl(172 75% 45%));
+    --gradient-radial: radial-gradient(1200px 600px at 50% -10%, hsl(172 90% 25% / 0.22), transparent 60%);
+    --shadow-glow: 0 0 18px hsl(172 90% 22% / 0.10);
+    --shadow-elegant: 0 8px 20px -18px hsl(172 90% 10% / 0.10);
 
     --glass-bg: 255 255 255;
     --glass-bg-alpha: 0.7;
@@ -50,46 +50,47 @@
   }
 
   .dark {
-    /* DARK — deep emerald/black like the reference image */
-    --background: 165 60% 5%;
-    --foreground: 160 30% 96%;
+    /* DARK — deep brand teal */
+    --background: 172 90% 6%;
+    --foreground: 172 30% 96%;
 
-    --card: 165 50% 8%;
-    --card-foreground: 160 30% 96%;
+    --card: 172 80% 9%;
+    --card-foreground: 172 30% 96%;
 
-    --popover: 165 50% 8%;
-    --popover-foreground: 160 30% 96%;
+    --popover: 172 80% 9%;
+    --popover-foreground: 172 30% 96%;
 
-    --primary: 160 70% 45%;
-    --primary-foreground: 165 60% 6%;
-    --primary-glow: 160 75% 60%;
+    --primary: 172 95% 22%;
+    --primary-foreground: 172 30% 98%;
+    --primary-glow: 172 80% 45%;
 
-    --secondary: 160 40% 12%;
-    --secondary-foreground: 160 30% 96%;
+    --secondary: 172 50% 12%;
+    --secondary-foreground: 172 30% 96%;
 
-    --muted: 160 30% 11%;
-    --muted-foreground: 160 18% 78%;
+    --muted: 172 40% 11%;
+    --muted-foreground: 172 18% 78%;
 
-    --accent: 160 70% 50%;
-    --accent-foreground: 165 60% 6%;
+    --accent: 172 85% 32%;
+    --accent-foreground: 172 30% 98%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 160 30% 98%;
+    --destructive-foreground: 172 30% 98%;
 
-    --border: 160 30% 16%;
-    --input: 160 30% 16%;
-    --ring: 160 70% 50%;
+    --border: 172 40% 16%;
+    --input: 172 40% 16%;
+    --ring: 172 85% 40%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(160 70% 38%), hsl(160 75% 55%) 50%, hsl(155 75% 65%));
-    --gradient-radial: radial-gradient(1200px 600px at 50% -10%, hsl(160 75% 28% / 0.45), transparent 60%);
-    --shadow-glow: 0 0 40px hsl(160 70% 45% / 0.30);
-    --shadow-elegant: 0 20px 40px -20px hsl(160 60% 4% / 0.5);
+    --gradient-primary: linear-gradient(135deg, hsl(172 95% 18%), hsl(172 85% 30%) 50%, hsl(172 75% 45%));
+    --gradient-radial: radial-gradient(1200px 600px at 50% -10%, hsl(172 90% 22% / 0.5), transparent 60%);
+    --shadow-glow: 0 0 40px hsl(172 85% 30% / 0.35);
+    --shadow-elegant: 0 20px 40px -20px hsl(172 80% 4% / 0.55);
 
-    --glass-bg: 10 30 24;
+    --glass-bg: 6 40 34;
     --glass-bg-alpha: 0.55;
     --glass-border: 255 255 255;
     --glass-border-alpha: 0.10;
   }
+
 }
 
 @layer base {
