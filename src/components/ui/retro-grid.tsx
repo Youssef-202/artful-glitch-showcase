@@ -577,7 +577,7 @@ function RetroGrid({
       window.removeEventListener("mouseleave", onMouseLeave);
       cancelAnimationFrame(rafId);
     };
-  }, [gridColor, showScanlines, glowEffect, showBuildings]);
+  }, [gridColor, showScanlines, glowEffect, showBuildings, showGrid]);
 
   return <canvas ref={canvasRef} className={`block w-full h-full ${className}`} />;
 }
