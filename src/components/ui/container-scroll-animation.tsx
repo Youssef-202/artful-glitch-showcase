@@ -79,11 +79,18 @@ export const Card = ({
       style={{
         rotateX: rotate,
         scale,
+        boxShadow:
+          "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003",
       }}
-      className="max-w-none lg:max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full p-2 md:p-6 bg-transparent rounded-[30px]"
+      className="max-w-none lg:max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-black p-2 md:p-6 bg-black backdrop-blur-xl rounded-[30px] shadow-2xl"
     >
-      <div className="h-full w-full overflow-hidden rounded-2xl bg-transparent md:rounded-2xl flex items-center justify-center">
-        {children}
+      <div className="relative h-full w-full overflow-hidden rounded-2xl bg-[#0a1a18] md:rounded-2xl flex items-center justify-center">
+        <div className="absolute inset-0 pointer-events-none">
+          <RetroGrid gridColor="#10b981" showScanlines glowEffect showBuildings />
+        </div>
+        <div className="relative z-10 w-full h-full flex items-center justify-center">
+          {children}
+        </div>
       </div>
     </motion.div>
   );
