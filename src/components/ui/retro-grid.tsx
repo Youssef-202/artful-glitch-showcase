@@ -5,6 +5,7 @@ interface RetroGridProps {
   showScanlines?: boolean;
   glowEffect?: boolean;
   showBuildings?: boolean;
+  showGrid?: boolean;
   className?: string;
 }
 
@@ -13,6 +14,7 @@ function RetroGrid({
   showScanlines = true,
   glowEffect = true,
   showBuildings = true,
+  showGrid = true,
   className = "",
 }: RetroGridProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
