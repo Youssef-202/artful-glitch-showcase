@@ -57,9 +57,9 @@ export default function PortfolioStack() {
             >
               <Link
                 to={`/portfolio/${item.id}`}
-                className="group block rounded-3xl overflow-hidden border border-emerald-900/60 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] hover:shadow-[0_20px_60px_-10px_rgba(6,78,59,0.9)] transition-shadow"
+                className="group block rounded-3xl overflow-hidden border border-teal-900/60 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] hover:shadow-[0_20px_60px_-10px_rgba(3,108,95,0.9)] transition-shadow"
                 style={{
-                  background: "linear-gradient(135deg, #022c1f, #03301f, #011a13)",
+                  background: "linear-gradient(135deg, #022e29, #03332d, #01211d)",
                 }}
               >
                 <div className="relative aspect-[4/5] sm:aspect-[5/4] w-full overflow-hidden">
@@ -71,7 +71,7 @@ export default function PortfolioStack() {
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#011a13] via-[#022c1f]/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#01211d] via-[#022e29]/40 to-transparent" />
                   <div className="absolute top-5 left-5 right-5 flex items-center justify-between">
                     <span className="text-[10px] sm:text-xs px-3 py-1 rounded-full bg-background/70 backdrop-blur-md text-primary font-bold tracking-[0.2em] uppercase">
                       {t.portfolio.categories[item.category]}
