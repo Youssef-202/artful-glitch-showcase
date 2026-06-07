@@ -64,7 +64,7 @@ export default function Home() {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.06 }}
                 >
-                  <Link to={`/blog/${p.id}`} className="group block rounded-2xl overflow-hidden h-full border border-emerald-900/60 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] hover:shadow-[0_20px_60px_-10px_rgba(6,78,59,0.9)] hover:-translate-y-1 transition-all bg-gradient-to-br from-[#022c1f] via-[#03301f] to-[#011a13]">
+                  <Link to={`/blog/${p.id}`} className="group block rounded-2xl overflow-hidden h-full border border-teal-900/60 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] hover:shadow-[0_20px_60px_-10px_rgba(3,108,95,0.9)] hover:-translate-y-1 transition-all bg-gradient-to-br from-[#022e29] via-[#03332d] to-[#01211d]">
                     {p.cover_url ? (
                       <div className="aspect-video overflow-hidden bg-background/40">
                         <img src={p.cover_url} alt={p.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
