@@ -88,6 +88,14 @@ export default {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(50%)" },
         },
+        "city-flicker": {
+          "0%, 100%": { opacity: "0.35", transform: "scale(1)" },
+          "50%": { opacity: "1", transform: "scale(1.15)" },
+        },
+        "city-sweep": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(400%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
