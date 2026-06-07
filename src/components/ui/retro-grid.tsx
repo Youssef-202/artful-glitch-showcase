@@ -5,6 +5,7 @@ interface RetroGridProps {
   showScanlines?: boolean;
   glowEffect?: boolean;
   showBuildings?: boolean;
+  showGrid?: boolean;
   className?: string;
 }
 
@@ -13,6 +14,7 @@ function RetroGrid({
   showScanlines = true,
   glowEffect = true,
   showBuildings = true,
+  showGrid = true,
   className = "",
 }: RetroGridProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -539,11 +541,13 @@ function RetroGrid({
       offset += speed;
       if (offset >= cellDepth) offset = 0;
 
-      for (let row = -5; row < numCellsDeep + 5; row++) {
-        const z = row * cellDepth;
-        for (let col = -Math.floor(numCellsWide / 2); col <= Math.floor(numCellsWide / 2); col++) {
-          const x = col * cellWidth;
-          drawCell(x, z, offset);
+      if (showGrid) {
+        for (let row = -5; row < numCellsDeep + 5; row++) {
+          const z = row * cellDepth;
+          for (let col = -Math.floor(numCellsWide / 2); col <= Math.floor(numCellsWide / 2); col++) {
+            const x = col * cellWidth;
+            drawCell(x, z, offset);
+          }
         }
       }
 
@@ -573,7 +577,7 @@ function RetroGrid({
       window.removeEventListener("mouseleave", onMouseLeave);
       cancelAnimationFrame(rafId);
     };
-  }, [gridColor, showScanlines, glowEffect, showBuildings]);
+  }, [gridColor, showScanlines, glowEffect, showBuildings, showGrid]);
 
   return <canvas ref={canvasRef} className={`block w-full h-full ${className}`} />;
 }
