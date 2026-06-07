@@ -33,7 +33,7 @@ export default function PersistentCanvas() {
           top: "48%",
           height: "14%",
           background:
-            "radial-gradient(ellipse at 50% 100%, rgba(16,185,129,0.28), rgba(13,155,108,0.10) 50%, transparent 75%)",
+            "radial-gradient(ellipse at 50% 100%, rgba(3,108,95,0.40), rgba(3,108,95,0.15) 50%, transparent 75%)",
           filter: "blur(2px)",
         }}
       />
@@ -41,7 +41,8 @@ export default function PersistentCanvas() {
       {/* Buildings layer */}
       <div className="absolute inset-0 opacity-65">
         <RetroGrid
-          gridColor="#0d9b6c"
+          gridColor="#036c5f"
+
           showScanlines={false}
           glowEffect
           showBuildings
