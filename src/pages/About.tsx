@@ -69,7 +69,7 @@ export default function About() {
           <h2 className="text-3xl sm:text-5xl font-black mb-4 leading-tight">
             <span className="text-gradient">{c.who_title}</span>
           </h2>
-          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed whitespace-pre-line">
+          <p className="text-base sm:text-lg text-foreground/90 leading-relaxed whitespace-pre-line">
             {c.who_body}
           </p>
           <Link to="/contact" className="inline-flex items-center gap-2 mt-6 text-primary font-bold hover:gap-3 transition-all">
@@ -97,7 +97,7 @@ export default function About() {
           <h2 className="text-3xl sm:text-5xl font-black mb-4 leading-tight">
             <span className="text-gradient">{c.vision_title}</span>
           </h2>
-          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed whitespace-pre-line">
+          <p className="text-base sm:text-lg text-foreground/90 leading-relaxed whitespace-pre-line">
             {c.vision_body}
           </p>
           <Link to="/contact" className="inline-flex items-center gap-2 mt-6 text-primary font-bold hover:gap-3 transition-all">
@@ -129,7 +129,7 @@ export default function About() {
                   <Sparkles className="w-6 h-6 text-primary-foreground" />
                 </div>
                 <h3 className="text-xl font-black mb-3 text-foreground">{r.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{r.body}</p>
+                <p className="text-sm text-foreground/85 leading-relaxed whitespace-pre-line">{r.body}</p>
               </motion.div>
             ))}
           </div>
