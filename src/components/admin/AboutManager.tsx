@@ -13,10 +13,14 @@ type AboutContent = {
   who_title: string;
   who_body: string;
   who_image: string;
+  who_image_fit: "cover" | "contain";
+  who_image_height: number;
   vision_kicker: string;
   vision_title: string;
   vision_body: string;
   vision_image: string;
+  vision_image_fit: "cover" | "contain";
+  vision_image_height: number;
   reasons_kicker: string;
   reasons_title: string;
   reasons: Reason[];
@@ -24,8 +28,8 @@ type AboutContent = {
 
 const empty: AboutContent = {
   header_kicker: "", header_title: "",
-  who_kicker: "", who_title: "", who_body: "", who_image: "",
-  vision_kicker: "", vision_title: "", vision_body: "", vision_image: "",
+  who_kicker: "", who_title: "", who_body: "", who_image: "", who_image_fit: "cover", who_image_height: 420,
+  vision_kicker: "", vision_title: "", vision_body: "", vision_image: "", vision_image_fit: "cover", vision_image_height: 420,
   reasons_kicker: "", reasons_title: "", reasons: [],
 };
 
@@ -89,6 +93,19 @@ export default function AboutManager() {
         <input className={inp + " text-lg font-bold"} placeholder="العنوان" value={content.who_title} onChange={(e) => set("who_title", e.target.value)} />
         <textarea rows={6} className={inp + " resize-none"} placeholder="النص" value={content.who_body} onChange={(e) => set("who_body", e.target.value)} />
         <FileUpload value={content.who_image} onChange={(u) => set("who_image", u ?? "")} folder="about" accept="image/*" label="صورة القسم" />
+        <div className="grid sm:grid-cols-2 gap-3 pt-2">
+          <label className="text-sm">
+            <span className="block mb-1 text-muted-foreground">طريقة عرض الصورة</span>
+            <select className={inp} value={content.who_image_fit} onChange={(e) => set("who_image_fit", e.target.value as "cover" | "contain")}>
+              <option value="cover">ملء الإطار (قد يُقص)</option>
+              <option value="contain">إظهار الصورة كاملة</option>
+            </select>
+          </label>
+          <label className="text-sm">
+            <span className="block mb-1 text-muted-foreground">ارتفاع الصورة (px): {content.who_image_height}</span>
+            <input type="range" min={200} max={800} step={10} value={content.who_image_height} onChange={(e) => set("who_image_height", Number(e.target.value))} className="w-full" />
+          </label>
+        </div>
       </section>
 
       <section className="glass-strong rounded-3xl p-6 space-y-3">
@@ -97,6 +114,19 @@ export default function AboutManager() {
         <input className={inp + " text-lg font-bold"} placeholder="العنوان" value={content.vision_title} onChange={(e) => set("vision_title", e.target.value)} />
         <textarea rows={6} className={inp + " resize-none"} placeholder="النص" value={content.vision_body} onChange={(e) => set("vision_body", e.target.value)} />
         <FileUpload value={content.vision_image} onChange={(u) => set("vision_image", u ?? "")} folder="about" accept="image/*" label="صورة القسم" />
+        <div className="grid sm:grid-cols-2 gap-3 pt-2">
+          <label className="text-sm">
+            <span className="block mb-1 text-muted-foreground">طريقة عرض الصورة</span>
+            <select className={inp} value={content.vision_image_fit} onChange={(e) => set("vision_image_fit", e.target.value as "cover" | "contain")}>
+              <option value="cover">ملء الإطار (قد يُقص)</option>
+              <option value="contain">إظهار الصورة كاملة</option>
+            </select>
+          </label>
+          <label className="text-sm">
+            <span className="block mb-1 text-muted-foreground">ارتفاع الصورة (px): {content.vision_image_height}</span>
+            <input type="range" min={200} max={800} step={10} value={content.vision_image_height} onChange={(e) => set("vision_image_height", Number(e.target.value))} className="w-full" />
+          </label>
+        </div>
       </section>
 
       <section className="glass-strong rounded-3xl p-6 space-y-3">
