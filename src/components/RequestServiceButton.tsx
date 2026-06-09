@@ -66,7 +66,7 @@ export default function RequestServiceButton({ serviceKey, serviceNameAr, servic
         onClick={() => setOpen(true)}
         className="rounded-full px-6 py-3 font-bold bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition inline-flex items-center gap-2"
       >
-        <Sparkles className="w-4 h-4" /> اطلب الخدمة الآن
+        <Sparkles className="w-4 h-4" /> {label || "اطلب الخدمة الآن"}
       </button>
 
       {open && (
