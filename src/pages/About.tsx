@@ -86,14 +86,13 @@ export default function About() {
         </div>
         <div
           className="order-1 lg:order-2 w-full rounded-2xl overflow-hidden bg-background/30"
-          style={{ height: `${c.who_image_height ?? 420}px` }}
+          style={(c.who_image_fit ?? "cover") === "cover" ? { height: `${c.who_image_height ?? 420}px` } : { maxHeight: `${c.who_image_height ?? 420}px` }}
         >
           <img
             src={c.who_image || aboutWho}
             alt={c.who_title}
             loading="lazy"
-            className="w-full h-full"
-            style={{ objectFit: c.who_image_fit ?? "cover" }}
+            className={(c.who_image_fit ?? "cover") === "cover" ? "w-full h-full object-cover" : "w-full h-auto max-h-full object-contain mx-auto"}
           />
         </div>
       </motion.div>
@@ -108,14 +107,13 @@ export default function About() {
       >
         <div
           className="w-full rounded-2xl overflow-hidden bg-background/30"
-          style={{ height: `${c.vision_image_height ?? 420}px` }}
+          style={(c.vision_image_fit ?? "cover") === "cover" ? { height: `${c.vision_image_height ?? 420}px` } : { maxHeight: `${c.vision_image_height ?? 420}px` }}
         >
           <img
             src={c.vision_image || aboutVision}
             alt={c.vision_title}
             loading="lazy"
-            className="w-full h-full"
-            style={{ objectFit: c.vision_image_fit ?? "cover" }}
+            className={(c.vision_image_fit ?? "cover") === "cover" ? "w-full h-full object-cover" : "w-full h-auto max-h-full object-contain mx-auto"}
           />
         </div>
         <div className="text-right">
