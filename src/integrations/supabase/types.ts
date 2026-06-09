@@ -456,67 +456,124 @@ export type Database = {
       }
       services: {
         Row: {
+          availability_badge: string | null
           bullets: string[]
           created_at: string
+          cta_section_description: string | null
+          cta_section_title: string | null
+          cta_text: string | null
           currency: string
           deliverables: string[]
+          deliverables_title: string | null
           description: string | null
           duration: string | null
           faqs: Json
+          faqs_title: string | null
           features: string[]
+          features_title: string | null
+          gallery: Json
+          hero_subtitle: string | null
           id: string
+          image_alt: string | null
+          image_caption: string | null
+          image_fit: string
+          image_height: number
           image_url: string | null
           long_description: string | null
           number: string
+          overview_title: string | null
           price_from: number | null
           process_steps: string[]
+          process_title: string | null
           published: boolean
           reasons: string[]
+          reasons_title: string | null
+          seo_description: string | null
+          seo_title: string | null
           sort_order: number
+          summary_title: string | null
           tagline: string | null
           title: string
           updated_at: string
         }
         Insert: {
+          availability_badge?: string | null
           bullets?: string[]
           created_at?: string
+          cta_section_description?: string | null
+          cta_section_title?: string | null
+          cta_text?: string | null
           currency?: string
           deliverables?: string[]
+          deliverables_title?: string | null
           description?: string | null
           duration?: string | null
           faqs?: Json
+          faqs_title?: string | null
           features?: string[]
+          features_title?: string | null
+          gallery?: Json
+          hero_subtitle?: string | null
           id: string
+          image_alt?: string | null
+          image_caption?: string | null
+          image_fit?: string
+          image_height?: number
           image_url?: string | null
           long_description?: string | null
           number?: string
+          overview_title?: string | null
           price_from?: number | null
           process_steps?: string[]
+          process_title?: string | null
           published?: boolean
           reasons?: string[]
+          reasons_title?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
           sort_order?: number
+          summary_title?: string | null
           tagline?: string | null
           title: string
           updated_at?: string
         }
         Update: {
+          availability_badge?: string | null
           bullets?: string[]
           created_at?: string
+          cta_section_description?: string | null
+          cta_section_title?: string | null
+          cta_text?: string | null
           currency?: string
           deliverables?: string[]
+          deliverables_title?: string | null
           description?: string | null
           duration?: string | null
           faqs?: Json
+          faqs_title?: string | null
           features?: string[]
+          features_title?: string | null
+          gallery?: Json
+          hero_subtitle?: string | null
           id?: string
+          image_alt?: string | null
+          image_caption?: string | null
+          image_fit?: string
+          image_height?: number
           image_url?: string | null
           long_description?: string | null
           number?: string
+          overview_title?: string | null
           price_from?: number | null
           process_steps?: string[]
+          process_title?: string | null
           published?: boolean
           reasons?: string[]
+          reasons_title?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
           sort_order?: number
+          summary_title?: string | null
           tagline?: string | null
           title?: string
           updated_at?: string

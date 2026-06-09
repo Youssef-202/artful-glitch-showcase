@@ -1,0 +1,21 @@
+
+ALTER TABLE public.services
+  ADD COLUMN IF NOT EXISTS image_alt text,
+  ADD COLUMN IF NOT EXISTS image_caption text,
+  ADD COLUMN IF NOT EXISTS image_height integer NOT NULL DEFAULT 420,
+  ADD COLUMN IF NOT EXISTS image_fit text NOT NULL DEFAULT 'cover',
+  ADD COLUMN IF NOT EXISTS gallery jsonb NOT NULL DEFAULT '[]'::jsonb,
+  ADD COLUMN IF NOT EXISTS hero_subtitle text,
+  ADD COLUMN IF NOT EXISTS seo_title text,
+  ADD COLUMN IF NOT EXISTS seo_description text,
+  ADD COLUMN IF NOT EXISTS cta_text text,
+  ADD COLUMN IF NOT EXISTS availability_badge text,
+  ADD COLUMN IF NOT EXISTS summary_title text,
+  ADD COLUMN IF NOT EXISTS overview_title text,
+  ADD COLUMN IF NOT EXISTS features_title text,
+  ADD COLUMN IF NOT EXISTS process_title text,
+  ADD COLUMN IF NOT EXISTS deliverables_title text,
+  ADD COLUMN IF NOT EXISTS faqs_title text,
+  ADD COLUMN IF NOT EXISTS reasons_title text,
+  ADD COLUMN IF NOT EXISTS cta_section_title text,
+  ADD COLUMN IF NOT EXISTS cta_section_description text;
