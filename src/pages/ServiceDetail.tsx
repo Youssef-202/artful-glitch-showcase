@@ -104,9 +104,6 @@ export default function ServiceDetail() {
           <div className="absolute inset-0 bg-gradient-to-tr from-background/95 via-background/70 to-transparent" />
           <div className="absolute inset-0 flex items-center justify-end p-6 sm:p-12">
             <div className="text-right max-w-2xl space-y-4">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-tr from-primary to-accent shadow-glow">
-                <Sparkles className="w-8 h-8 text-primary-foreground" />
-              </div>
               <p className="text-accent font-black text-lg">{service.number}</p>
               <h1 className="text-4xl sm:text-6xl font-black text-foreground leading-tight">
                 {service.title}
