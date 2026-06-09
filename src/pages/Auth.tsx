@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Float, Sparkles } from "@react-three/drei";
 import * as THREE from "three";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Home } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
