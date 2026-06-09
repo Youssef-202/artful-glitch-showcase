@@ -13,10 +13,14 @@ type AboutContent = {
   who_title: string;
   who_body: string;
   who_image: string;
+  who_image_fit: "cover" | "contain";
+  who_image_height: number;
   vision_kicker: string;
   vision_title: string;
   vision_body: string;
   vision_image: string;
+  vision_image_fit: "cover" | "contain";
+  vision_image_height: number;
   reasons_kicker: string;
   reasons_title: string;
   reasons: Reason[];
@@ -24,8 +28,8 @@ type AboutContent = {
 
 const empty: AboutContent = {
   header_kicker: "", header_title: "",
-  who_kicker: "", who_title: "", who_body: "", who_image: "",
-  vision_kicker: "", vision_title: "", vision_body: "", vision_image: "",
+  who_kicker: "", who_title: "", who_body: "", who_image: "", who_image_fit: "cover", who_image_height: 420,
+  vision_kicker: "", vision_title: "", vision_body: "", vision_image: "", vision_image_fit: "cover", vision_image_height: 420,
   reasons_kicker: "", reasons_title: "", reasons: [],
 };
 
