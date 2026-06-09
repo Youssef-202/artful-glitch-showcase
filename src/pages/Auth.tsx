@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Float, Sparkles } from "@react-three/drei";
 import * as THREE from "three";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Home } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -140,7 +140,15 @@ export default function AuthPage() {
   const logoSrc = theme === "dark" ? logoDark : logoLight;
 
   return (
-    <div className="min-h-[calc(100vh-6rem)] w-full grid lg:grid-cols-2 gap-0 px-4 sm:px-6">
+    <div className="relative min-h-[calc(100vh-6rem)] w-full grid lg:grid-cols-2 gap-0 px-4 sm:px-6">
+      <button
+        onClick={() => nav("/")}
+        className="absolute top-4 left-4 z-50 glass rounded-full p-2.5 hover:scale-105 transition flex items-center gap-2 text-sm font-bold"
+      >
+        <Home className="w-4 h-4" />
+        <span className="hidden sm:inline">الرئيسية</span>
+      </button>
+
       {/* Left: form */}
       <div className="flex items-center justify-center py-10">
         <motion.div

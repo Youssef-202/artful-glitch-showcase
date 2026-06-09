@@ -18,8 +18,8 @@ export default function Layout() {
   return (
     <>
       <PersistentCanvas />
-      {!location.pathname.startsWith("/dashboard") && <Navbar />}
-      {!location.pathname.startsWith("/dashboard") && <FloatingCTA />}
+      {!location.pathname.startsWith("/dashboard") && location.pathname !== "/auth" && <Navbar />}
+      {!location.pathname.startsWith("/dashboard") && location.pathname !== "/auth" && <FloatingCTA />}
       <AnimatePresence mode="wait">
         <motion.main
           key={location.pathname}
@@ -27,7 +27,7 @@ export default function Layout() {
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           exit={{ opacity: 0, y: -24, filter: "blur(8px)" }}
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          className={cn("relative", !location.pathname.startsWith("/dashboard") ? "pt-24" : "mt-[30px]")}
+          className={cn("relative", location.pathname === "/auth" ? "pt-0" : !location.pathname.startsWith("/dashboard") ? "pt-24" : "mt-[30px]")}
         >
           <Outlet />
         </motion.main>
