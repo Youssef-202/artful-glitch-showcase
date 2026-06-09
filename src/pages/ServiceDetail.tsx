@@ -427,6 +427,7 @@ export default function ServiceDetail() {
               serviceKey={service.id}
               serviceNameAr={service.title}
               serviceNameEn={service.title}
+              label={service.cta_text || undefined}
             />
             <Link
               to="/contact"
