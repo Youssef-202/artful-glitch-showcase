@@ -18,8 +18,8 @@ export default function Layout() {
   return (
     <>
       <PersistentCanvas />
-      {!location.pathname.startsWith("/dashboard") && <Navbar />}
-      {!location.pathname.startsWith("/dashboard") && <FloatingCTA />}
+      {!location.pathname.startsWith("/dashboard") && location.pathname !== "/auth" && <Navbar />}
+      {!location.pathname.startsWith("/dashboard") && location.pathname !== "/auth" && <FloatingCTA />}
       <AnimatePresence mode="wait">
         <motion.main
           key={location.pathname}
