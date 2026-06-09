@@ -9,9 +9,10 @@ type Props = {
   serviceKey: string;
   serviceNameAr: string;
   serviceNameEn?: string;
+  label?: string;
 };
 
-export default function RequestServiceButton({ serviceKey, serviceNameAr, serviceNameEn }: Props) {
+export default function RequestServiceButton({ serviceKey, serviceNameAr, serviceNameEn, label }: Props) {
   const { user } = useAuth();
   const nav = useNavigate();
   const [open, setOpen] = useState(false);
