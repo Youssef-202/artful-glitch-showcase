@@ -18,6 +18,8 @@ import { useLang } from "@/i18n/LanguageProvider";
 import { supabase } from "@/integrations/supabase/client";
 import RequestServiceButton from "@/components/RequestServiceButton";
 
+type GalleryItem = { url: string; alt?: string; caption?: string };
+
 type ServiceRow = {
   id: string;
   number: string;
@@ -26,6 +28,25 @@ type ServiceRow = {
   description: string | null;
   long_description: string | null;
   image_url: string | null;
+  image_alt: string | null;
+  image_caption: string | null;
+  image_height: number | null;
+  image_fit: "cover" | "contain" | null;
+  gallery: GalleryItem[] | null;
+  hero_subtitle: string | null;
+  seo_title: string | null;
+  seo_description: string | null;
+  cta_text: string | null;
+  availability_badge: string | null;
+  summary_title: string | null;
+  overview_title: string | null;
+  features_title: string | null;
+  process_title: string | null;
+  deliverables_title: string | null;
+  faqs_title: string | null;
+  reasons_title: string | null;
+  cta_section_title: string | null;
+  cta_section_description: string | null;
   bullets: string[];
   features: string[];
   process_steps: string[];
