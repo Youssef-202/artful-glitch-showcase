@@ -14,10 +14,14 @@ type AboutContent = {
   who_title: string;
   who_body: string;
   who_image: string;
+  who_image_fit?: "cover" | "contain";
+  who_image_height?: number;
   vision_kicker: string;
   vision_title: string;
   vision_body: string;
   vision_image: string;
+  vision_image_fit?: "cover" | "contain";
+  vision_image_height?: number;
   reasons_kicker: string;
   reasons_title: string;
   reasons: Reason[];
@@ -30,10 +34,14 @@ const fallback: AboutContent = {
   who_title: "من نحن",
   who_body: "وكالة إتقان هي وكالة دعاية وإعلان متخصّصة في تقديم خدمات الإعلان والتصميم والتسويق الرقمي بأعلى مستوى من الدقة والاحترافية.",
   who_image: "",
+  who_image_fit: "cover",
+  who_image_height: 420,
   vision_kicker: "إلى أين نتجه",
   vision_title: "رؤيتنا",
   vision_body: "تسعى وكالة إتقان لأن تكون الشريك الأول للمؤسسات والشركات في رحلة نموّها.",
   vision_image: "",
+  vision_image_fit: "cover",
+  vision_image_height: 420,
   reasons_kicker: "ما يميّزنا",
   reasons_title: "لماذا تختارنا ؟",
   reasons: [],
@@ -76,8 +84,17 @@ export default function About() {
             تواصل معنا <ArrowLeft className="w-4 h-4" />
           </Link>
         </div>
-        <div className="order-1 lg:order-2 h-full min-h-[300px] lg:min-h-[420px]">
-          <img src={c.who_image || aboutWho} alt={c.who_title} loading="lazy" className="w-full h-full rounded-2xl object-cover" />
+        <div
+          className="order-1 lg:order-2 w-full rounded-2xl overflow-hidden bg-background/30"
+          style={{ height: `${c.who_image_height ?? 420}px` }}
+        >
+          <img
+            src={c.who_image || aboutWho}
+            alt={c.who_title}
+            loading="lazy"
+            className="w-full h-full"
+            style={{ objectFit: c.who_image_fit ?? "cover" }}
+          />
         </div>
       </motion.div>
 
@@ -89,8 +106,17 @@ export default function About() {
         transition={{ duration: 0.7 }}
         className="grid lg:grid-cols-2 gap-10 items-center glass-strong rounded-3xl p-8 lg:p-12"
       >
-        <div className="h-full min-h-[300px] lg:min-h-[420px]">
-          <img src={c.vision_image || aboutVision} alt={c.vision_title} loading="lazy" className="w-full h-full rounded-2xl object-cover" />
+        <div
+          className="w-full rounded-2xl overflow-hidden bg-background/30"
+          style={{ height: `${c.vision_image_height ?? 420}px` }}
+        >
+          <img
+            src={c.vision_image || aboutVision}
+            alt={c.vision_title}
+            loading="lazy"
+            className="w-full h-full"
+            style={{ objectFit: c.vision_image_fit ?? "cover" }}
+          />
         </div>
         <div className="text-right">
           <p className="text-sm text-primary tracking-widest mb-4">{c.vision_kicker}</p>
