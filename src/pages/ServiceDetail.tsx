@@ -273,12 +273,39 @@ export default function ServiceDetail() {
             })()}
           </section>
 
+          {/* Gallery */}
+          {service.gallery && service.gallery.length > 0 && (
+            <section className="rounded-2xl border border-primary/40 bg-card/30 p-6">
+              <h2 className="font-black text-xl flex items-center gap-2 mb-5">
+                <span className="w-1 h-6 bg-accent rounded-full" />
+                معرض الصور
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {service.gallery.map((g, i) => (
+                  <figure key={i} className="rounded-xl overflow-hidden border border-primary/30 bg-background/30">
+                    <img
+                      src={g.url}
+                      alt={g.alt || `${service.title} - ${i + 1}`}
+                      className="w-full h-56 object-cover"
+                      loading="lazy"
+                    />
+                    {g.caption && (
+                      <figcaption className="px-3 py-2 text-xs text-muted-foreground text-center italic">
+                        {g.caption}
+                      </figcaption>
+                    )}
+                  </figure>
+                ))}
+              </div>
+            </section>
+          )}
+
           {/* Features */}
           {service.features.length > 0 && (
             <section className="rounded-2xl border border-primary/40 bg-card/30 p-6">
               <h2 className="font-black text-xl flex items-center gap-2 mb-5">
                 <ListChecks className="w-5 h-5 text-accent" />
-                المزايا
+                {service.features_title || "المزايا"}
               </h2>
               <div className="space-y-3">
                 {service.features.map((b, i) => (
@@ -305,7 +332,7 @@ export default function ServiceDetail() {
             <section className="rounded-2xl border border-primary/40 bg-card/30 p-6">
               <h2 className="font-black text-xl flex items-center gap-2 mb-5">
                 <Workflow className="w-5 h-5 text-accent" />
-                خطوات التنفيذ
+                {service.process_title || "خطوات التنفيذ"}
               </h2>
               <ol className="relative border-s border-primary/30 ps-6 space-y-5">
                 {service.process_steps.map((s, i) => (
@@ -325,7 +352,7 @@ export default function ServiceDetail() {
             <section className="rounded-2xl border border-primary/40 bg-card/30 p-6">
               <h2 className="font-black text-xl flex items-center gap-2 mb-5">
                 <Gift className="w-5 h-5 text-accent" />
-                هتحصل على
+                {service.deliverables_title || "هتحصل على"}
               </h2>
               <div className="grid sm:grid-cols-2 gap-3">
                 {service.deliverables.map((d, i) => (
@@ -348,7 +375,7 @@ export default function ServiceDetail() {
             <section className="rounded-2xl border border-primary/40 bg-card/30 p-6">
               <h2 className="font-black text-xl flex items-center gap-2 mb-5">
                 <HelpCircle className="w-5 h-5 text-accent" />
-                أسئلة شائعة
+                {service.faqs_title || "أسئلة شائعة"}
               </h2>
               <div className="space-y-2">
                 {service.faqs.map((f, i) => (
@@ -376,7 +403,7 @@ export default function ServiceDetail() {
             <section className="rounded-2xl border border-primary/40 bg-card/30 p-6">
               <h2 className="font-black text-xl flex items-center gap-2 mb-5">
                 <span className="w-1 h-6 bg-accent rounded-full" />
-                {sd?.whyChoose ?? "لماذا تختار هذه الخدمة؟"}
+                {service.reasons_title || sd?.whyChoose || "لماذا تختار هذه الخدمة؟"}
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {((service.reasons && service.reasons.length > 0) ? service.reasons : sd.reasons).map((r: string, i: number) => (
