@@ -107,6 +107,14 @@ export default function ServiceDetail() {
         <Arrow className="w-4 h-4 rotate-180" /> {t.nav.services}
       </Link>
 
+      {/* SEO Meta */}
+      {(service.seo_title || service.seo_description) && (
+        <>
+          {service.seo_title && <title>{service.seo_title}</title>}
+          {service.seo_description && <meta name="description" content={service.seo_description} />}
+        </>
+      )}
+
       {/* HERO */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -114,15 +122,22 @@ export default function ServiceDetail() {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="relative rounded-3xl overflow-hidden border border-primary/40 shadow-elegant"
       >
-        <div className="relative aspect-[16/6] min-h-[260px]">
+        <div
+          className="relative w-full"
+          style={{
+            height: `${service.image_height ?? 420}px`,
+            minHeight: 260,
+          }}
+        >
           {service.image_url && (
             <img
               src={service.image_url}
-              alt={service.title}
-              className="absolute inset-0 w-full h-full object-cover"
+              alt={service.image_alt || service.title}
+              className="absolute inset-0 w-full h-full"
+              style={{ objectFit: service.image_fit ?? "cover" }}
             />
           )}
-          <div className="absolute inset-0 bg-gradient-to-tr from-background/95 via-background/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-background/95 via-background/70 to-transparent pointer-events-none" />
           <div className="absolute inset-0 flex items-center justify-end p-6 sm:p-12">
             <div className="text-right max-w-2xl space-y-4">
               <p className="text-accent font-black text-lg">{service.number}</p>
@@ -132,10 +147,16 @@ export default function ServiceDetail() {
               {service.tagline && (
                 <p className="text-xl text-foreground/80">{service.tagline}</p>
               )}
+              {service.hero_subtitle && (
+                <p className="text-base text-foreground/70 leading-relaxed">{service.hero_subtitle}</p>
+              )}
             </div>
           </div>
         </div>
       </motion.div>
+      {service.image_caption && (
+        <p className="text-center text-xs text-muted-foreground mt-3 italic">{service.image_caption}</p>
+      )}
 
       {/* MAIN GRID */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8" dir={dir}>
@@ -147,14 +168,14 @@ export default function ServiceDetail() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
             </span>
-            <span className="font-bold text-foreground">متاحة الآن للطلب</span>
+            <span className="font-bold text-foreground">{service.availability_badge || "متاحة الآن للطلب"}</span>
           </div>
 
           {/* Service info card */}
           <div className="rounded-2xl border border-primary/40 bg-card/30 p-6 space-y-4">
             <h3 className="font-black text-lg flex items-center gap-2">
               <span className="w-1 h-5 bg-accent rounded-full" />
-              ملخص الخدمة
+              {service.summary_title || "ملخص الخدمة"}
             </h3>
             {service.duration && (
               <div className="flex items-center justify-between text-sm">
@@ -188,14 +209,15 @@ export default function ServiceDetail() {
 
           {/* CTA */}
           <div className="rounded-2xl border border-primary/40 bg-card/30 p-6 space-y-3">
-            <h3 className="font-black text-lg">جاهز نبدأ معاك؟</h3>
+            <h3 className="font-black text-lg">{service.cta_section_title || "جاهز نبدأ معاك؟"}</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              اطلب الخدمة دلوقتي وفريقنا هيتواصل معاك في خلال 24 ساعة.
+              {service.cta_section_description || "اطلب الخدمة دلوقتي وفريقنا هيتواصل معاك في خلال 24 ساعة."}
             </p>
             <RequestServiceButton
               serviceKey={service.id}
               serviceNameAr={service.title}
               serviceNameEn={service.title}
+              label={service.cta_text || undefined}
             />
             <a
               href={whatsappLink}
@@ -214,7 +236,7 @@ export default function ServiceDetail() {
           <section className="rounded-2xl border border-primary/40 bg-card/30 p-6">
             <h2 className="font-black text-xl flex items-center gap-2 mb-5">
               <span className="w-1 h-6 bg-accent rounded-full" />
-              نظرة عامة
+              {service.overview_title || "نظرة عامة"}
             </h2>
             {(() => {
               const raw = (service.long_description || service.description || "").trim();
