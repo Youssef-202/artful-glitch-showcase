@@ -76,8 +76,8 @@ export default function About() {
             تواصل معنا <ArrowLeft className="w-4 h-4" />
           </Link>
         </div>
-        <div className="flex items-center justify-center order-1 lg:order-2">
-          <img src={c.who_image || aboutWho} alt={c.who_title} loading="lazy" className="w-full max-w-md rounded-2xl object-cover" />
+        <div className="order-1 lg:order-2 h-full min-h-[300px] lg:min-h-[420px]">
+          <img src={c.who_image || aboutWho} alt={c.who_title} loading="lazy" className="w-full h-full rounded-2xl object-cover" />
         </div>
       </motion.div>
 
@@ -89,8 +89,8 @@ export default function About() {
         transition={{ duration: 0.7 }}
         className="grid lg:grid-cols-2 gap-10 items-center glass-strong rounded-3xl p-8 lg:p-12"
       >
-        <div className="flex items-center justify-center">
-          <img src={c.vision_image || aboutVision} alt={c.vision_title} loading="lazy" className="w-full max-w-md rounded-2xl object-cover" />
+        <div className="h-full min-h-[300px] lg:min-h-[420px]">
+          <img src={c.vision_image || aboutVision} alt={c.vision_title} loading="lazy" className="w-full h-full rounded-2xl object-cover" />
         </div>
         <div className="text-right">
           <p className="text-sm text-primary tracking-widest mb-4">{c.vision_kicker}</p>
