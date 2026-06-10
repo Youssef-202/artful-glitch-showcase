@@ -459,24 +459,25 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
       <Section title="عناوين الأقسام (اتركها فارغة لاستخدام الافتراضي)">
         <div className="grid sm:grid-cols-2 gap-3">
           <input title="استبدل عنوان قسم 'ملخص الخدمة' بنص من اختيارك" placeholder='عنوان قسم "ملخص الخدمة"' value={form.summary_title ?? ""} onChange={(e) => setForm({ ...form, summary_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
-          <input placeholder='عنوان قسم "نظرة عامة"' value={form.overview_title ?? ""} onChange={(e) => setForm({ ...form, overview_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
-          <input placeholder='عنوان قسم "المزايا"' value={form.features_title ?? ""} onChange={(e) => setForm({ ...form, features_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
-          <input placeholder='عنوان قسم "خطوات التنفيذ"' value={form.process_title ?? ""} onChange={(e) => setForm({ ...form, process_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
-          <input placeholder='عنوان قسم "هتحصل على"' value={form.deliverables_title ?? ""} onChange={(e) => setForm({ ...form, deliverables_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
-          <input placeholder='عنوان قسم "أسئلة شائعة"' value={form.faqs_title ?? ""} onChange={(e) => setForm({ ...form, faqs_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
-          <input placeholder='عنوان قسم "لماذا تختار هذه الخدمة"' value={form.reasons_title ?? ""} onChange={(e) => setForm({ ...form, reasons_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
-          <input placeholder='عنوان قسم "جاهز نبدأ معاك"' value={form.cta_section_title ?? ""} onChange={(e) => setForm({ ...form, cta_section_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="استبدل عنوان قسم 'نظرة عامة' بنص من اختيارك" placeholder='عنوان قسم "نظرة عامة"' value={form.overview_title ?? ""} onChange={(e) => setForm({ ...form, overview_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="استبدل عنوان قسم 'المزايا' بنص من اختيارك" placeholder='عنوان قسم "المزايا"' value={form.features_title ?? ""} onChange={(e) => setForm({ ...form, features_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="استبدل عنوان قسم 'خطوات التنفيذ' بنص من اختيارك" placeholder='عنوان قسم "خطوات التنفيذ"' value={form.process_title ?? ""} onChange={(e) => setForm({ ...form, process_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="استبدل عنوان قسم 'هتحصل على' بنص من اختيارك" placeholder='عنوان قسم "هتحصل على"' value={form.deliverables_title ?? ""} onChange={(e) => setForm({ ...form, deliverables_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="استبدل عنوان قسم 'أسئلة شائعة' بنص من اختيارك" placeholder='عنوان قسم "أسئلة شائعة"' value={form.faqs_title ?? ""} onChange={(e) => setForm({ ...form, faqs_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="استبدل عنوان قسم 'لماذا تختار هذه الخدمة' بنص من اختيارك" placeholder='عنوان قسم "لماذا تختار هذه الخدمة"' value={form.reasons_title ?? ""} onChange={(e) => setForm({ ...form, reasons_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="استبدل عنوان قسم الدعوة للإجراء النهائي" placeholder='عنوان قسم "جاهز نبدأ معاك"' value={form.cta_section_title ?? ""} onChange={(e) => setForm({ ...form, cta_section_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
         </div>
         <textarea
           rows={2}
+          title="نص تشجيعي قصير يظهر تحت عنوان قسم الـ CTA"
           placeholder='نص وصفي لقسم الـ CTA'
           value={form.cta_section_description ?? ""}
           onChange={(e) => setForm({ ...form, cta_section_description: e.target.value })}
           className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none text-sm"
         />
         <div className="grid sm:grid-cols-2 gap-3">
-          <input placeholder='نص شارة "متاحة الآن للطلب"' value={form.availability_badge ?? ""} onChange={(e) => setForm({ ...form, availability_badge: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
-          <input placeholder='نص زر CTA الرئيسي' value={form.cta_text ?? ""} onChange={(e) => setForm({ ...form, cta_text: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="نص شارة التوفر التي تظهر بجوار العنوان" placeholder='نص شارة "متاحة الآن للطلب"' value={form.availability_badge ?? ""} onChange={(e) => setForm({ ...form, availability_badge: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="النص الظاهر على زر طلب الخدمة الرئيسي" placeholder='نص زر CTA الرئيسي' value={form.cta_text ?? ""} onChange={(e) => setForm({ ...form, cta_text: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
         </div>
       </Section>
 
@@ -484,6 +485,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
       <Section title="SEO (تحسين محركات البحث)">
         <input
           maxLength={200}
+          title="العنوان الذي يظهر في تبويب المتصفح ونتائج جوجل. يفضّل أقل من 60 حرفًا"
           placeholder="عنوان الصفحة في محركات البحث (Meta Title)"
           value={form.seo_title ?? ""}
           onChange={(e) => setForm({ ...form, seo_title: e.target.value })}
@@ -492,6 +494,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         <textarea
           rows={3}
           maxLength={300}
+          title="الوصف الذي يظهر تحت العنوان في نتائج جوجل. يفضّل أقل من 160 حرفًا"
           placeholder="وصف الصفحة في محركات البحث (Meta Description)"
           value={form.seo_description ?? ""}
           onChange={(e) => setForm({ ...form, seo_description: e.target.value })}
@@ -504,6 +507,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         <div className="grid sm:grid-cols-3 gap-4">
           <input
             type="number"
+            title="أقل سعر للخدمة (رقم فقط). اتركه فارغًا لإخفاء السعر"
             placeholder="السعر يبدأ من"
             value={form.price_from ?? ""}
             onChange={(e) => setForm({ ...form, price_from: e.target.value === "" ? null : Number(e.target.value) })}
@@ -511,6 +515,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           />
           <input
             maxLength={10}
+            title="رمز العملة. مثال: EGP أو USD أو SAR"
             placeholder="العملة"
             value={form.currency}
             onChange={(e) => setForm({ ...form, currency: e.target.value })}
@@ -518,6 +523,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           />
           <input
             maxLength={50}
+            title="المدة التقديرية لتنفيذ الخدمة. مثال: 4 أسابيع"
             placeholder="المدة (مثال: 4 أسابيع)"
             value={form.duration ?? ""}
             onChange={(e) => setForm({ ...form, duration: e.target.value })}
