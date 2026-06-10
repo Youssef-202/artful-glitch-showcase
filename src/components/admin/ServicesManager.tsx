@@ -323,6 +323,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         />
         <input
           type="url"
+          title="رابط مباشر لصورة من الإنترنت كبديل عن الرفع"
           placeholder="أو رابط صورة مباشر"
           value={form.image_url ?? ""}
           onChange={(e) => setForm({ ...form, image_url: e.target.value })}
@@ -330,6 +331,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         />
         <input
           maxLength={200}
+          title="نص يصف الصورة لمحركات البحث وقارئات الشاشة (مهم جدًا للـ SEO)"
           placeholder="النص البديل (alt) للصورة — مهم للـ SEO"
           value={form.image_alt ?? ""}
           onChange={(e) => setForm({ ...form, image_alt: e.target.value })}
@@ -337,6 +339,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         />
         <input
           maxLength={300}
+          title="تعليق قصير يظهر تحت الصورة في الصفحة"
           placeholder="تعليق يظهر تحت الصورة (caption)"
           value={form.image_caption ?? ""}
           onChange={(e) => setForm({ ...form, image_caption: e.target.value })}
@@ -346,6 +349,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           <label className="space-y-2 text-sm">
             <span className="text-muted-foreground">طريقة عرض الصورة</span>
             <select
+              title="تغطية = الصورة تملأ المساحة وقد يُقص جزء منها. إظهار كامل = الصورة تظهر كاملة بدون قص"
               value={form.image_fit}
               onChange={(e) => setForm({ ...form, image_fit: e.target.value as "cover" | "contain" })}
               className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary"
@@ -358,6 +362,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
             <span className="text-muted-foreground">ارتفاع الصورة: {form.image_height}px</span>
             <input
               type="range"
+              title="تحكّم في ارتفاع إطار الصورة بالبكسل (من 200 إلى 800)"
               min={200}
               max={800}
               step={10}
