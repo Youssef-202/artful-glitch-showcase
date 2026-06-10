@@ -388,6 +388,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         <textarea
           rows={3}
           maxLength={1000}
+          title="وصف موجز (سطرين أو ثلاثة) يظهر في قائمة الخدمات وكروت العرض"
           placeholder="وصف قصير (يظهر في قائمة الخدمات)"
           value={form.description ?? ""}
           onChange={(e) => setForm({ ...form, description: e.target.value })}
@@ -396,6 +397,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         <textarea
           rows={8}
           maxLength={10000}
+          title="شرح كامل للخدمة يظهر داخل صفحتها. يمكن كتابة عدة فقرات"
           placeholder="وصف تفصيلي يظهر في صفحة الخدمة (يمكن كتابة عدة فقرات)"
           value={form.long_description ?? ""}
           onChange={(e) => setForm({ ...form, long_description: e.target.value })}
@@ -404,6 +406,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         <div className="grid sm:grid-cols-2 gap-4">
           <textarea
             rows={5}
+            title="نقاط سريعة تظهر كقائمة مختصرة. اكتب كل نقطة في سطر منفصل"
             placeholder="نقاط مختصرة (سطر لكل نقطة)"
             value={bulletsText}
             onChange={(e) => setBulletsText(e.target.value)}
@@ -411,6 +414,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           />
           <textarea
             rows={5}
+            title="ميزات تفصيلية للخدمة، سطر لكل ميزة"
             placeholder="المزايا التفصيلية (سطر لكل ميزة)"
             value={featuresText}
             onChange={(e) => setFeaturesText(e.target.value)}
@@ -418,6 +422,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           />
           <textarea
             rows={5}
+            title="مراحل تنفيذ الخدمة بالترتيب، سطر لكل خطوة"
             placeholder="خطوات التنفيذ (سطر لكل خطوة)"
             value={stepsText}
             onChange={(e) => setStepsText(e.target.value)}
@@ -425,6 +430,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           />
           <textarea
             rows={5}
+            title="ما الذي سيحصل عليه العميل عند نهاية الخدمة، سطر لكل عنصر"
             placeholder="هتحصل على (deliverables) — سطر لكل عنصر"
             value={delivText}
             onChange={(e) => setDelivText(e.target.value)}
@@ -433,6 +439,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         </div>
         <textarea
           rows={5}
+          title="أسباب اختيار العميل لهذه الخدمة بالذات، سطر لكل سبب"
           placeholder='لماذا تختار هذه الخدمة؟ (سطر لكل سبب)'
           value={reasonsText}
           onChange={(e) => setReasonsText(e.target.value)}
@@ -440,6 +447,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         />
         <textarea
           rows={5}
+          title="كل سطر يحتوي على سؤال ثم رمز | ثم الإجابة. مثال: كم تستغرق؟ | حوالي أسبوعين"
           placeholder="أسئلة شائعة — سطر لكل سؤال: السؤال | الإجابة"
           value={faqsText}
           onChange={(e) => setFaqsText(e.target.value)}
@@ -450,7 +458,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
       {/* عناوين الأقسام (تخصيص) */}
       <Section title="عناوين الأقسام (اتركها فارغة لاستخدام الافتراضي)">
         <div className="grid sm:grid-cols-2 gap-3">
-          <input placeholder='عنوان قسم "ملخص الخدمة"' value={form.summary_title ?? ""} onChange={(e) => setForm({ ...form, summary_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="استبدل عنوان قسم 'ملخص الخدمة' بنص من اختيارك" placeholder='عنوان قسم "ملخص الخدمة"' value={form.summary_title ?? ""} onChange={(e) => setForm({ ...form, summary_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
           <input placeholder='عنوان قسم "نظرة عامة"' value={form.overview_title ?? ""} onChange={(e) => setForm({ ...form, overview_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
           <input placeholder='عنوان قسم "المزايا"' value={form.features_title ?? ""} onChange={(e) => setForm({ ...form, features_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
           <input placeholder='عنوان قسم "خطوات التنفيذ"' value={form.process_title ?? ""} onChange={(e) => setForm({ ...form, process_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
