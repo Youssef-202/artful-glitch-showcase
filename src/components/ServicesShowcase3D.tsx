@@ -133,10 +133,6 @@ export default function ServicesShowcase3D() {
         transition={{ duration: 0.7 }}
         className="text-center mb-16"
       >
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass mb-4">
-          <Sparkles className="w-3.5 h-3.5 text-primary" />
-          <p className="text-xs text-primary tracking-[0.3em] font-bold">{t.common.ourServices}</p>
-        </div>
         <h2 className="text-center mb-4 text-gradient font-sans font-extrabold leading-tight font-mono bg-slate-800 font-bold sm:text-5xl pb-[11px] text-2xl">
           <span className="text-gradient font-sans font-extrabold text-white text-7xl font-semibold">{t.nav.services}</span>
         </h2>
