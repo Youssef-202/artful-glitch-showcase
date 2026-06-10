@@ -261,6 +261,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           <input
             required
             maxLength={50}
+            title="معرّف فريد يستخدم في رابط الصفحة. أحرف إنجليزية صغيرة وأرقام و - فقط. مثال: web-design"
             placeholder="المعرّف (slug)"
             value={form.id}
             disabled={!isNew}
@@ -269,6 +270,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           />
           <input
             maxLength={5}
+            title="رقم الخدمة كما يظهر في الواجهة. مثال: 01 أو 02"
             placeholder="الرقم (مثال: 01)"
             value={form.number}
             onChange={(e) => setForm({ ...form, number: e.target.value })}
@@ -276,6 +278,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           />
           <input
             type="number"
+            title="ترتيب ظهور الخدمة في القائمة. الأرقام الأقل تظهر أولاً"
             placeholder="الترتيب"
             value={form.sort_order}
             onChange={(e) => setForm({ ...form, sort_order: Number(e.target.value) })}
@@ -285,6 +288,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         <input
           required
           maxLength={200}
+          title="العنوان الرئيسي للخدمة كما يظهر في الصفحة والقوائم"
           placeholder="عنوان الخدمة"
           value={form.title}
           onChange={(e) => setForm({ ...form, title: e.target.value })}
@@ -292,6 +296,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         />
         <input
           maxLength={200}
+          title="جملة قصيرة جذابة تلخص قيمة الخدمة. مثال: نصمم لك هويتك بأسلوب مميز"
           placeholder="عبارة جذابة (tagline)"
           value={form.tagline ?? ""}
           onChange={(e) => setForm({ ...form, tagline: e.target.value })}
@@ -299,6 +304,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         />
         <input
           maxLength={300}
+          title="عنوان فرعي يظهر تحت العنوان الرئيسي في الهيرو لإعطاء تفاصيل إضافية"
           placeholder="عنوان فرعي إضافي في الهيرو (اختياري)"
           value={form.hero_subtitle ?? ""}
           onChange={(e) => setForm({ ...form, hero_subtitle: e.target.value })}
