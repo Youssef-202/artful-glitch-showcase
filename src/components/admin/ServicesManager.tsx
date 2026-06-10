@@ -129,18 +129,21 @@ function GalleryEditor({ gallery, onChange }: { gallery: GalleryItem[]; onChange
           />
           <input
             type="url"
+            title="ضع رابط الصورة مباشرة من الإنترنت (https://...) كبديل عن الرفع"
             placeholder="أو رابط مباشر"
             value={g.url}
             onChange={(e) => update(i, { url: e.target.value })}
             className="w-full bg-background/50 border border-border rounded-lg px-3 py-2 outline-none focus:border-primary text-xs"
           />
           <input
+            title="نص يصف الصورة لمحركات البحث وقارئات الشاشة. مثال: فريق العمل أثناء جلسة تخطيط"
             placeholder="نص بديل (alt) — للـ SEO وقارئات الشاشة"
             value={g.alt ?? ""}
             onChange={(e) => update(i, { alt: e.target.value })}
             className="w-full bg-background/50 border border-border rounded-lg px-3 py-2 outline-none focus:border-primary text-sm"
           />
           <input
+            title="تعليق قصير يظهر تحت الصورة في الصفحة لزوار الموقع"
             placeholder="تعليق يظهر تحت الصورة (caption)"
             value={g.caption ?? ""}
             onChange={(e) => update(i, { caption: e.target.value })}
