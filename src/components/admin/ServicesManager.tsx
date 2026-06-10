@@ -129,18 +129,21 @@ function GalleryEditor({ gallery, onChange }: { gallery: GalleryItem[]; onChange
           />
           <input
             type="url"
+            title="ضع رابط الصورة مباشرة من الإنترنت (https://...) كبديل عن الرفع"
             placeholder="أو رابط مباشر"
             value={g.url}
             onChange={(e) => update(i, { url: e.target.value })}
             className="w-full bg-background/50 border border-border rounded-lg px-3 py-2 outline-none focus:border-primary text-xs"
           />
           <input
+            title="نص يصف الصورة لمحركات البحث وقارئات الشاشة. مثال: فريق العمل أثناء جلسة تخطيط"
             placeholder="نص بديل (alt) — للـ SEO وقارئات الشاشة"
             value={g.alt ?? ""}
             onChange={(e) => update(i, { alt: e.target.value })}
             className="w-full bg-background/50 border border-border rounded-lg px-3 py-2 outline-none focus:border-primary text-sm"
           />
           <input
+            title="تعليق قصير يظهر تحت الصورة في الصفحة لزوار الموقع"
             placeholder="تعليق يظهر تحت الصورة (caption)"
             value={g.caption ?? ""}
             onChange={(e) => update(i, { caption: e.target.value })}
@@ -258,6 +261,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           <input
             required
             maxLength={50}
+            title="معرّف فريد يستخدم في رابط الصفحة. أحرف إنجليزية صغيرة وأرقام و - فقط. مثال: web-design"
             placeholder="المعرّف (slug)"
             value={form.id}
             disabled={!isNew}
@@ -266,6 +270,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           />
           <input
             maxLength={5}
+            title="رقم الخدمة كما يظهر في الواجهة. مثال: 01 أو 02"
             placeholder="الرقم (مثال: 01)"
             value={form.number}
             onChange={(e) => setForm({ ...form, number: e.target.value })}
@@ -273,6 +278,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           />
           <input
             type="number"
+            title="ترتيب ظهور الخدمة في القائمة. الأرقام الأقل تظهر أولاً"
             placeholder="الترتيب"
             value={form.sort_order}
             onChange={(e) => setForm({ ...form, sort_order: Number(e.target.value) })}
@@ -282,6 +288,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         <input
           required
           maxLength={200}
+          title="العنوان الرئيسي للخدمة كما يظهر في الصفحة والقوائم"
           placeholder="عنوان الخدمة"
           value={form.title}
           onChange={(e) => setForm({ ...form, title: e.target.value })}
@@ -289,6 +296,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         />
         <input
           maxLength={200}
+          title="جملة قصيرة جذابة تلخص قيمة الخدمة. مثال: نصمم لك هويتك بأسلوب مميز"
           placeholder="عبارة جذابة (tagline)"
           value={form.tagline ?? ""}
           onChange={(e) => setForm({ ...form, tagline: e.target.value })}
@@ -296,6 +304,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         />
         <input
           maxLength={300}
+          title="عنوان فرعي يظهر تحت العنوان الرئيسي في الهيرو لإعطاء تفاصيل إضافية"
           placeholder="عنوان فرعي إضافي في الهيرو (اختياري)"
           value={form.hero_subtitle ?? ""}
           onChange={(e) => setForm({ ...form, hero_subtitle: e.target.value })}
@@ -314,6 +323,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         />
         <input
           type="url"
+          title="رابط مباشر لصورة من الإنترنت كبديل عن الرفع"
           placeholder="أو رابط صورة مباشر"
           value={form.image_url ?? ""}
           onChange={(e) => setForm({ ...form, image_url: e.target.value })}
@@ -321,6 +331,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         />
         <input
           maxLength={200}
+          title="نص يصف الصورة لمحركات البحث وقارئات الشاشة (مهم جدًا للـ SEO)"
           placeholder="النص البديل (alt) للصورة — مهم للـ SEO"
           value={form.image_alt ?? ""}
           onChange={(e) => setForm({ ...form, image_alt: e.target.value })}
@@ -328,6 +339,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         />
         <input
           maxLength={300}
+          title="تعليق قصير يظهر تحت الصورة في الصفحة"
           placeholder="تعليق يظهر تحت الصورة (caption)"
           value={form.image_caption ?? ""}
           onChange={(e) => setForm({ ...form, image_caption: e.target.value })}
@@ -337,6 +349,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           <label className="space-y-2 text-sm">
             <span className="text-muted-foreground">طريقة عرض الصورة</span>
             <select
+              title="تغطية = الصورة تملأ المساحة وقد يُقص جزء منها. إظهار كامل = الصورة تظهر كاملة بدون قص"
               value={form.image_fit}
               onChange={(e) => setForm({ ...form, image_fit: e.target.value as "cover" | "contain" })}
               className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary"
@@ -349,6 +362,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
             <span className="text-muted-foreground">ارتفاع الصورة: {form.image_height}px</span>
             <input
               type="range"
+              title="تحكّم في ارتفاع إطار الصورة بالبكسل (من 200 إلى 800)"
               min={200}
               max={800}
               step={10}
@@ -374,6 +388,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         <textarea
           rows={3}
           maxLength={1000}
+          title="وصف موجز (سطرين أو ثلاثة) يظهر في قائمة الخدمات وكروت العرض"
           placeholder="وصف قصير (يظهر في قائمة الخدمات)"
           value={form.description ?? ""}
           onChange={(e) => setForm({ ...form, description: e.target.value })}
@@ -382,6 +397,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         <textarea
           rows={8}
           maxLength={10000}
+          title="شرح كامل للخدمة يظهر داخل صفحتها. يمكن كتابة عدة فقرات"
           placeholder="وصف تفصيلي يظهر في صفحة الخدمة (يمكن كتابة عدة فقرات)"
           value={form.long_description ?? ""}
           onChange={(e) => setForm({ ...form, long_description: e.target.value })}
@@ -390,6 +406,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         <div className="grid sm:grid-cols-2 gap-4">
           <textarea
             rows={5}
+            title="نقاط سريعة تظهر كقائمة مختصرة. اكتب كل نقطة في سطر منفصل"
             placeholder="نقاط مختصرة (سطر لكل نقطة)"
             value={bulletsText}
             onChange={(e) => setBulletsText(e.target.value)}
@@ -397,6 +414,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           />
           <textarea
             rows={5}
+            title="ميزات تفصيلية للخدمة، سطر لكل ميزة"
             placeholder="المزايا التفصيلية (سطر لكل ميزة)"
             value={featuresText}
             onChange={(e) => setFeaturesText(e.target.value)}
@@ -404,6 +422,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           />
           <textarea
             rows={5}
+            title="مراحل تنفيذ الخدمة بالترتيب، سطر لكل خطوة"
             placeholder="خطوات التنفيذ (سطر لكل خطوة)"
             value={stepsText}
             onChange={(e) => setStepsText(e.target.value)}
@@ -411,6 +430,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           />
           <textarea
             rows={5}
+            title="ما الذي سيحصل عليه العميل عند نهاية الخدمة، سطر لكل عنصر"
             placeholder="هتحصل على (deliverables) — سطر لكل عنصر"
             value={delivText}
             onChange={(e) => setDelivText(e.target.value)}
@@ -419,6 +439,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         </div>
         <textarea
           rows={5}
+          title="أسباب اختيار العميل لهذه الخدمة بالذات، سطر لكل سبب"
           placeholder='لماذا تختار هذه الخدمة؟ (سطر لكل سبب)'
           value={reasonsText}
           onChange={(e) => setReasonsText(e.target.value)}
@@ -426,6 +447,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         />
         <textarea
           rows={5}
+          title="كل سطر يحتوي على سؤال ثم رمز | ثم الإجابة. مثال: كم تستغرق؟ | حوالي أسبوعين"
           placeholder="أسئلة شائعة — سطر لكل سؤال: السؤال | الإجابة"
           value={faqsText}
           onChange={(e) => setFaqsText(e.target.value)}
@@ -436,25 +458,26 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
       {/* عناوين الأقسام (تخصيص) */}
       <Section title="عناوين الأقسام (اتركها فارغة لاستخدام الافتراضي)">
         <div className="grid sm:grid-cols-2 gap-3">
-          <input placeholder='عنوان قسم "ملخص الخدمة"' value={form.summary_title ?? ""} onChange={(e) => setForm({ ...form, summary_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
-          <input placeholder='عنوان قسم "نظرة عامة"' value={form.overview_title ?? ""} onChange={(e) => setForm({ ...form, overview_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
-          <input placeholder='عنوان قسم "المزايا"' value={form.features_title ?? ""} onChange={(e) => setForm({ ...form, features_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
-          <input placeholder='عنوان قسم "خطوات التنفيذ"' value={form.process_title ?? ""} onChange={(e) => setForm({ ...form, process_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
-          <input placeholder='عنوان قسم "هتحصل على"' value={form.deliverables_title ?? ""} onChange={(e) => setForm({ ...form, deliverables_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
-          <input placeholder='عنوان قسم "أسئلة شائعة"' value={form.faqs_title ?? ""} onChange={(e) => setForm({ ...form, faqs_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
-          <input placeholder='عنوان قسم "لماذا تختار هذه الخدمة"' value={form.reasons_title ?? ""} onChange={(e) => setForm({ ...form, reasons_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
-          <input placeholder='عنوان قسم "جاهز نبدأ معاك"' value={form.cta_section_title ?? ""} onChange={(e) => setForm({ ...form, cta_section_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="استبدل عنوان قسم 'ملخص الخدمة' بنص من اختيارك" placeholder='عنوان قسم "ملخص الخدمة"' value={form.summary_title ?? ""} onChange={(e) => setForm({ ...form, summary_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="استبدل عنوان قسم 'نظرة عامة' بنص من اختيارك" placeholder='عنوان قسم "نظرة عامة"' value={form.overview_title ?? ""} onChange={(e) => setForm({ ...form, overview_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="استبدل عنوان قسم 'المزايا' بنص من اختيارك" placeholder='عنوان قسم "المزايا"' value={form.features_title ?? ""} onChange={(e) => setForm({ ...form, features_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="استبدل عنوان قسم 'خطوات التنفيذ' بنص من اختيارك" placeholder='عنوان قسم "خطوات التنفيذ"' value={form.process_title ?? ""} onChange={(e) => setForm({ ...form, process_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="استبدل عنوان قسم 'هتحصل على' بنص من اختيارك" placeholder='عنوان قسم "هتحصل على"' value={form.deliverables_title ?? ""} onChange={(e) => setForm({ ...form, deliverables_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="استبدل عنوان قسم 'أسئلة شائعة' بنص من اختيارك" placeholder='عنوان قسم "أسئلة شائعة"' value={form.faqs_title ?? ""} onChange={(e) => setForm({ ...form, faqs_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="استبدل عنوان قسم 'لماذا تختار هذه الخدمة' بنص من اختيارك" placeholder='عنوان قسم "لماذا تختار هذه الخدمة"' value={form.reasons_title ?? ""} onChange={(e) => setForm({ ...form, reasons_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="استبدل عنوان قسم الدعوة للإجراء النهائي" placeholder='عنوان قسم "جاهز نبدأ معاك"' value={form.cta_section_title ?? ""} onChange={(e) => setForm({ ...form, cta_section_title: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
         </div>
         <textarea
           rows={2}
+          title="نص تشجيعي قصير يظهر تحت عنوان قسم الـ CTA"
           placeholder='نص وصفي لقسم الـ CTA'
           value={form.cta_section_description ?? ""}
           onChange={(e) => setForm({ ...form, cta_section_description: e.target.value })}
           className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:border-primary resize-none text-sm"
         />
         <div className="grid sm:grid-cols-2 gap-3">
-          <input placeholder='نص شارة "متاحة الآن للطلب"' value={form.availability_badge ?? ""} onChange={(e) => setForm({ ...form, availability_badge: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
-          <input placeholder='نص زر CTA الرئيسي' value={form.cta_text ?? ""} onChange={(e) => setForm({ ...form, cta_text: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="نص شارة التوفر التي تظهر بجوار العنوان" placeholder='نص شارة "متاحة الآن للطلب"' value={form.availability_badge ?? ""} onChange={(e) => setForm({ ...form, availability_badge: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
+          <input title="النص الظاهر على زر طلب الخدمة الرئيسي" placeholder='نص زر CTA الرئيسي' value={form.cta_text ?? ""} onChange={(e) => setForm({ ...form, cta_text: e.target.value })} className="bg-background/50 border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary" />
         </div>
       </Section>
 
@@ -462,6 +485,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
       <Section title="SEO (تحسين محركات البحث)">
         <input
           maxLength={200}
+          title="العنوان الذي يظهر في تبويب المتصفح ونتائج جوجل. يفضّل أقل من 60 حرفًا"
           placeholder="عنوان الصفحة في محركات البحث (Meta Title)"
           value={form.seo_title ?? ""}
           onChange={(e) => setForm({ ...form, seo_title: e.target.value })}
@@ -470,6 +494,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         <textarea
           rows={3}
           maxLength={300}
+          title="الوصف الذي يظهر تحت العنوان في نتائج جوجل. يفضّل أقل من 160 حرفًا"
           placeholder="وصف الصفحة في محركات البحث (Meta Description)"
           value={form.seo_description ?? ""}
           onChange={(e) => setForm({ ...form, seo_description: e.target.value })}
@@ -482,6 +507,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
         <div className="grid sm:grid-cols-3 gap-4">
           <input
             type="number"
+            title="أقل سعر للخدمة (رقم فقط). اتركه فارغًا لإخفاء السعر"
             placeholder="السعر يبدأ من"
             value={form.price_from ?? ""}
             onChange={(e) => setForm({ ...form, price_from: e.target.value === "" ? null : Number(e.target.value) })}
@@ -489,6 +515,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           />
           <input
             maxLength={10}
+            title="رمز العملة. مثال: EGP أو USD أو SAR"
             placeholder="العملة"
             value={form.currency}
             onChange={(e) => setForm({ ...form, currency: e.target.value })}
@@ -496,6 +523,7 @@ function ServiceForm({ item, onClose }: { item: Service | null; onClose: () => v
           />
           <input
             maxLength={50}
+            title="المدة التقديرية لتنفيذ الخدمة. مثال: 4 أسابيع"
             placeholder="المدة (مثال: 4 أسابيع)"
             value={form.duration ?? ""}
             onChange={(e) => setForm({ ...form, duration: e.target.value })}
