@@ -3,7 +3,7 @@ import { MessageCircle } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { useState } from "react";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { supabaseExternal as supabase } from "@/integrations/supabase/external";
 import { z } from "zod";
 
 const messageSchema = z.object({
