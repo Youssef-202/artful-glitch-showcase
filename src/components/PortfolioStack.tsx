@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { usePortfolio } from "@/lib/usePortfolio";
-import { ContainerScroll, CardSticky } from "@/components/ui/cards-stack";
 
 export default function PortfolioStack() {
   const { t, lang, dir } = useLang();
