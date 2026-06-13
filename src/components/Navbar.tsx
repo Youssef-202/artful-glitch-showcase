@@ -17,7 +17,6 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
-  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -47,55 +46,39 @@ export default function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={cn(
-        "fixed top-0 inset-x-0 z-50 px-4 sm:px-6 transition-all duration-500 ease-out",
-        scrolled ? "pt-2" : "pt-4"
+        "fixed top-0 inset-x-0 z-50 transition-all duration-300",
+        scrolled
+          ? "bg-background/80 backdrop-blur-xl border-b border-border/60"
+          : "bg-transparent border-b border-transparent"
       )}
     >
-      <motion.nav
-        animate={{
-          maxWidth: scrolled ? 880 : 1280,
-          paddingTop: scrolled ? 6 : 12,
-          paddingBottom: scrolled ? 6 : 12,
-          borderRadius: scrolled ? 999 : 16,
-        }}
-        transition={{ type: "spring", stiffness: 220, damping: 28 }}
-        className={cn(
-          "glass-strong px-4 sm:px-6 flex items-center justify-between mx-auto",
-          scrolled && "shadow-elegant backdrop-blur-2xl"
-        )}
-      >
-        <Link to="/" className="flex items-center gap-2" aria-label={t.common.brand}>
-          <motion.img
+      <nav className="max-w-7xl mx-auto px-6 sm:px-8 h-20 flex items-center justify-between">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-2 shrink-0" aria-label={t.common.brand}>
+          <img
             src={logoMark.url}
             alt="وكالة إتقان"
-            className={cn(
-              "transition-all duration-300",
-              theme === "dark" ? "" : "invert"
-            )}
-            style={{ height: scrolled ? 28 : 36 }}
+            className={cn("h-9 w-auto transition", theme === "dark" ? "" : "invert")}
           />
-          {!scrolled && (
-            <motion.span
-              initial={{ opacity: 0, x: -8 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.25 }}
-              className="hidden sm:inline font-extrabold tracking-tight whitespace-nowrap text-foreground text-xl"
-            >
-              وكالة إتقان
-            </motion.span>
-          )}
+          <span className="hidden sm:inline font-extrabold tracking-tight whitespace-nowrap text-foreground text-xl">
+            وكالة إتقان
+          </span>
         </Link>
 
-        <ul className="hidden lg:flex items-center gap-1 relative">
+        {/* Centered text links */}
+        <ul className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
           {links.map((l) => (
-            <li key={l.to} className="relative">
+            <li key={l.to}>
               <NavLink
                 to={l.to}
                 end={l.to === "/"}
                 className={({ isActive }) =>
                   cn(
-                    "nav-link-glass relative px-4 py-2 text-sm font-semibold block tracking-normal whitespace-nowrap rounded-full",
-                    isActive ? "is-active" : "text-foreground/85"
+                    "relative text-[15px] font-semibold transition-colors whitespace-nowrap",
+                    "after:content-[''] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:bg-primary after:transition-all",
+                    isActive
+                      ? "text-foreground after:w-full"
+                      : "text-foreground/70 hover:text-foreground after:w-0 hover:after:w-full"
                   )
                 }
               >
@@ -105,14 +88,13 @@ export default function Navbar() {
           ))}
         </ul>
 
-
-
-        <div className="flex items-center gap-2">
+        {/* Right actions */}
+        <div className="flex items-center gap-2 shrink-0">
           {user ? (
             <Link
               to="/account"
               aria-label="My account"
-              className="glass rounded-full p-1 hover:scale-105 transition flex items-center justify-center overflow-hidden w-10 h-10 border border-border"
+              className="rounded-full p-1 hover:scale-105 transition flex items-center justify-center overflow-hidden w-10 h-10 border border-border bg-background/50"
             >
               {avatarUrl ? (
                 <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover rounded-full" />
@@ -124,7 +106,7 @@ export default function Navbar() {
             <Link
               to="/auth"
               aria-label="Login"
-              className="glass rounded-full px-3 py-2 text-xs font-bold flex items-center gap-1.5 hover:scale-105 transition"
+              className="inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-sm font-bold bg-primary text-primary-foreground hover:opacity-90 transition shadow-elegant"
             >
               <LogIn className="w-4 h-4" />
               <span className="hidden sm:inline">{t.auth.signIn}</span>
@@ -135,8 +117,8 @@ export default function Navbar() {
             <Link
               to="/dashboard"
               aria-label="Admin Dashboard"
-              className="glass rounded-full px-3 py-2 text-xs font-bold flex items-center gap-1.5 hover:scale-105 transition"
               title={t.dashboard.title}
+              className="rounded-full p-2.5 hover:bg-foreground/5 transition text-foreground/80 hover:text-foreground"
             >
               <LayoutDashboard className="w-4 h-4" />
             </Link>
@@ -146,7 +128,7 @@ export default function Navbar() {
             <PopoverTrigger asChild>
               <button
                 aria-label="Settings"
-                className="glass rounded-full p-2 hover:scale-105 transition"
+                className="rounded-full p-2.5 hover:bg-foreground/5 transition text-foreground/80 hover:text-foreground"
               >
                 <SettingsIcon className="w-4 h-4" />
               </button>
@@ -180,19 +162,19 @@ export default function Navbar() {
           <button
             onClick={() => setOpen((p) => !p)}
             aria-label="Menu"
-            className="lg:hidden glass rounded-full p-2"
+            className="lg:hidden rounded-full p-2.5 hover:bg-foreground/5 transition"
           >
             {open ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
-      </motion.nav>
+      </nav>
 
       {/* Mobile menu */}
       {open && (
         <motion.ul
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="lg:hidden glass-strong rounded-2xl mt-2 p-2 max-w-7xl mx-auto flex flex-col gap-1"
+          className="lg:hidden bg-background/95 backdrop-blur-xl border-t border-border mx-0 p-2 flex flex-col gap-1"
         >
           {links.map((l) => (
             <li key={l.to}>
