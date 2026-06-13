@@ -1,9 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Sparkles, Send } from "lucide-react";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/auth/AuthProvider";
 
 type Props = {
   serviceKey: string;
@@ -13,49 +10,22 @@ type Props = {
 };
 
 export default function RequestServiceButton({ serviceKey, serviceNameAr, serviceNameEn, label }: Props) {
-  const { user } = useAuth();
-  const nav = useNavigate();
   const [open, setOpen] = useState(false);
-  const [busy, setBusy] = useState(false);
   const [desc, setDesc] = useState("");
 
-  const submit = async () => {
-    if (!user) {
-      toast.info("سجّل دخول أولاً علشان تقدر تطلب الخدمة");
-      nav("/auth");
-      return;
-    }
-    setBusy(true);
-    const description = desc.trim().slice(0, 2000) || null;
-    const { error } = await supabase.from("service_orders").insert({
-      user_id: user.id,
-      service_key: serviceKey,
-      service_name_ar: serviceNameAr,
-      service_name_en: serviceNameEn ?? null,
-      description,
-      status: "pending",
-    });
-    setBusy(false);
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-
-    // Build WhatsApp message and open it so the request is sent to the site's WhatsApp
+  const submit = () => {
+    const description = desc.trim().slice(0, 2000);
     const lines = [
       "طلب خدمة جديد 🚀",
       `الخدمة: ${serviceNameAr}${serviceNameEn ? ` (${serviceNameEn})` : ""}`,
       `كود الخدمة: ${serviceKey}`,
-      `العميل: ${user.email ?? user.id}`,
       description ? `التفاصيل:\n${description}` : "بدون تفاصيل إضافية",
     ];
     const waUrl = `https://wa.me/966573511722?text=${encodeURIComponent(lines.join("\n"))}`;
     window.open(waUrl, "_blank", "noopener,noreferrer");
-
-    toast.success("تم استلام طلبك ✓ وتم تحويلك للواتساب لتأكيد التفاصيل");
+    toast.success("تم تحويلك للواتساب لتأكيد التفاصيل ✓");
     setOpen(false);
     setDesc("");
-    nav("/account");
   };
 
   const close = () => setOpen(false);
@@ -71,13 +41,10 @@ export default function RequestServiceButton({ serviceKey, serviceNameAr, servic
 
       {open && (
         <div className="fixed inset-0 z-[60] bg-background/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto" onClick={close}>
-          <div
-            className="glass-strong rounded-3xl p-6 w-full max-w-2xl space-y-4 my-8"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="glass-strong rounded-3xl p-6 w-full max-w-2xl space-y-4 my-8" onClick={(e) => e.stopPropagation()}>
             <h3 className="text-xl font-black">طلب: {serviceNameAr}</h3>
             <p className="text-sm text-muted-foreground">
-              احكيلنا تفاصيل مشروعك وهيتواصل معاك فريقنا لتأكيد التفاصيل وطريقة الدفع.
+              احكيلنا تفاصيل مشروعك وهيتواصل معاك فريقنا عبر الواتساب.
             </p>
             <textarea
               value={desc}
@@ -93,10 +60,9 @@ export default function RequestServiceButton({ serviceKey, serviceNameAr, servic
               </button>
               <button
                 onClick={submit}
-                disabled={busy}
-                className="px-6 py-2.5 rounded-full font-bold text-sm bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition inline-flex items-center gap-2 disabled:opacity-60"
+                className="px-6 py-2.5 rounded-full font-bold text-sm bg-gradient-to-tr from-primary to-accent text-primary-foreground shadow-glow hover:scale-105 transition inline-flex items-center gap-2"
               >
-                <Send className="w-4 h-4" /> {busy ? "جارِ الإرسال..." : "إرسال الطلب"}
+                <Send className="w-4 h-4" /> إرسال الطلب
               </button>
             </div>
           </div>
