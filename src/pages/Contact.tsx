@@ -3,6 +3,14 @@ import { MessageCircle } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { useState } from "react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+
+const messageSchema = z.object({
+  name: z.string().trim().min(1).max(100),
+  email: z.string().trim().email().max(255),
+  message: z.string().trim().min(1).max(2000),
+});
 
 export default function Contact() {
   const { t } = useLang();
@@ -45,8 +53,18 @@ export default function Contact() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
+          const parsed = messageSchema.safeParse(form);
+          if (!parsed.success) {
+            toast.error(parsed.error.issues[0]?.message ?? "Invalid input");
+            return;
+          }
+          const { error } = await supabase.from("messages" as any).insert(parsed.data);
+          if (error) {
+            toast.error(error.message);
+            return;
+          }
           toast.success(t.contact.formSend + " ✓");
           setForm({ name: "", email: "", message: "" });
         }}
