@@ -20,6 +20,11 @@ const Contact = lazy(() => import("./pages/Contact"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 
+const AdminLayout = lazy(() => import("./pages/admin/AdminLayout"));
+const AdminOverview = lazy(() => import("./pages/admin/AdminOverview"));
+const AdminServices = lazy(() => import("./pages/admin/AdminServices"));
+const AdminMessages = lazy(() => import("./pages/admin/AdminMessages"));
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -33,6 +38,11 @@ const App = () => (
           <BrowserRouter>
             <Suspense fallback={<div className="min-h-screen" />}>
               <Routes>
+                <Route path="/admin-dashboard" element={<AdminLayout />}>
+                  <Route index element={<AdminOverview />} />
+                  <Route path="services" element={<AdminServices />} />
+                  <Route path="messages" element={<AdminMessages />} />
+                </Route>
                 <Route element={<Layout />}>
                   <Route path="/" element={<Home />} />
                   <Route path="/services" element={<ServicesIndex />} />
