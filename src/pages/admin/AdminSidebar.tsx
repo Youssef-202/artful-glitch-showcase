@@ -1,10 +1,11 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, Wrench, Mail, Radio, Database, ExternalLink } from "lucide-react";
+import { LayoutDashboard, Wrench, Mail, Radio, Database, ExternalLink, BookOpen } from "lucide-react";
 
 const items = [
   { to: "/admin-dashboard", label: "نظرة عامة", icon: LayoutDashboard, end: true },
   { to: "/admin-dashboard/services", label: "الخدمات", icon: Wrench },
   { to: "/admin-dashboard/messages", label: "الرسائل", icon: Mail },
+  { to: "/admin-dashboard/guide", label: "دليل الداشبورد", icon: BookOpen },
 ];
 
 export default function AdminSidebar() {

@@ -5,6 +5,7 @@ const titles: Record<string, { t: string; s: string }> = {
   "/admin-dashboard": { t: "لوحة التحكم", s: "نظرة عامة على الخدمات والرسائل الواردة" },
   "/admin-dashboard/services": { t: "إدارة الخدمات", s: "إضافة وتعديل وحذف الخدمات المعروضة في الموقع" },
   "/admin-dashboard/messages": { t: "الرسائل الواردة", s: "إدارة رسائل الزوار من نموذج التواصل" },
+  "/admin-dashboard/guide": { t: "دليل الداشبورد", s: "مرجع كامل لبنية اللوحة وكل الأقسام والأكشنز" },
 };
 
 export default function AdminLayout() {
