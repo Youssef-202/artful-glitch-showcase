@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>برومت وكالة إتقان الكامل</title>
+<style>
+  body{font-family:'Almarai',system-ui,sans-serif;max-width:920px;margin:2rem auto;padding:1rem 1.5rem;background:#0a1f1c;color:#e6fffa;line-height:1.9}
+  pre{white-space:pre-wrap;word-wrap:break-word;background:#06302a;padding:1.5rem;border-radius:12px;border:1px solid #115e59;font-family:inherit;font-size:15px}
+  .bar{position:sticky;top:0;background:#0a1f1c;padding:.75rem 0;display:flex;gap:.5rem;border-bottom:1px solid #115e59;margin-bottom:1rem;z-index:10}
+  button,a.btn{background:#115e59;color:#fff;border:0;padding:.6rem 1.1rem;border-radius:8px;cursor:pointer;font-weight:bold;text-decoration:none;font-family:inherit}
+  button:hover,a.btn:hover{background:#0f8a7e}
+  h1{color:#5fd9cf;margin:0 0 1rem}
+</style>
+</head>
+<body>
+<h1>📄 برومت وكالة إتقان الكامل</h1>
+<div class="bar">
+  <button onclick="navigator.clipboard.writeText(document.getElementById('p').innerText).then(()=>this.textContent='✓ تم النسخ')">📋 نسخ البرومت كاملاً</button>
+  <a class="btn" href="/etqan-full-prompt.md" download>⬇️ تنزيل .md</a>
+</div>
+<pre id="p"></pre>
+<script>
+fetch('/etqan-full-prompt.md').then(r=>r.text()).then(t=>{
+  document.getElementById('p').textContent = t.replace(/^\uFEFF/,'');
+});
+</script>
+</body>
+</html>
