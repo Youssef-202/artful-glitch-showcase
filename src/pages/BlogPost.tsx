@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Calendar, Clock, ChevronDown, User } from "lucide-react";
 import { motion } from "framer-motion";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/external";
 import { useLang } from "@/i18n/LanguageProvider";
 import "@/components/rich-text-editor.css";
 

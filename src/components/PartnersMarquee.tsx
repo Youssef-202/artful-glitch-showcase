@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/external";
 import { useLang } from "@/i18n/LanguageProvider";
 
 type Partner = {

@@ -4,7 +4,7 @@ import { ArrowLeft, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 import aboutWho from "@/assets/about-who.png";
 import aboutVision from "@/assets/about-vision.png";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/external";
 
 type Reason = { title: string; body: string };
 type AboutContent = {
