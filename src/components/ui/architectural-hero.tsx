@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ContainerScroll } from "./container-scroll-animation";
 import Logo3DCard from "./logo-3d-card";
 import TypewriterLoop from "./TypewriterLoop";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/external";
 
 const rotatingWords = ["إتقان", "إبداع", "تميّز", "احتراف", "شغف", "أثر"];
 const transitions = [

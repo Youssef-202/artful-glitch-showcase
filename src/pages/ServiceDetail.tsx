@@ -15,7 +15,7 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/external";
 import RequestServiceButton from "@/components/RequestServiceButton";
 
 type GalleryItem = { url: string; alt?: string; caption?: string };

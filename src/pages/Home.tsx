@@ -13,7 +13,7 @@ import Reveal from "@/components/ui/reveal";
 
 import { CinematicFooter } from "@/components/ui/motion-footer";
 import { services } from "@/lib/services";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/external";
 import { usePortfolio } from "@/lib/usePortfolio";
 
 export default function Home() {

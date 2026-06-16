@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Upload, Loader2, X, GripVertical } from "lucide-react";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/external";
 import { cn } from "@/lib/utils";
 
 type Props = {
