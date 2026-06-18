@@ -1,18 +1,32 @@
 import { NavLink, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Moon, Sun, Languages, Menu, X, Settings as SettingsIcon } from "lucide-react";
+import { Moon, Sun, Languages, Menu, X, Settings as SettingsIcon, LogIn, LayoutDashboard } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/theme/ThemeProvider";
 import { useLang } from "@/i18n/LanguageProvider";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { supabaseExternal } from "@/integrations/supabase/external";
 import logoMark from "@/assets/etqan-mark.png.asset.json";
+
+const ADMIN_EMAIL = "youssf582022@gmail.com";
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const { lang, t, toggleLang } = useLang();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    supabaseExternal.auth.getSession().then(({ data }) => {
+      setIsAdmin(data.session?.user?.email === ADMIN_EMAIL);
+    });
+    const { data: sub } = supabaseExternal.auth.onAuthStateChange((_e, session) => {
+      setIsAdmin(session?.user?.email === ADMIN_EMAIL);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -99,6 +113,15 @@ export default function Navbar() {
 
         <div className="flex items-center gap-2">
 
+
+          <Link
+            to={isAdmin ? "/admin-dashboard" : "/admin-login"}
+            aria-label={isAdmin ? "Dashboard" : "Login"}
+            className="glass rounded-full p-2 hover:scale-105 transition"
+            title={isAdmin ? "لوحة التحكم" : "تسجيل الدخول"}
+          >
+            {isAdmin ? <LayoutDashboard className="w-4 h-4" /> : <LogIn className="w-4 h-4" />}
+          </Link>
 
           <Popover>
             <PopoverTrigger asChild>

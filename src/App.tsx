@@ -25,6 +25,7 @@ const AdminOverview = lazy(() => import("./pages/admin/AdminOverview"));
 const AdminServices = lazy(() => import("./pages/admin/AdminServices"));
 const AdminMessages = lazy(() => import("./pages/admin/AdminMessages"));
 const AdminGuide = lazy(() => import("./pages/admin/AdminGuide"));
+const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () => (
           <BrowserRouter>
             <Suspense fallback={<div className="min-h-screen" />}>
               <Routes>
+                <Route path="/admin-login" element={<AdminLogin />} />
                 <Route path="/admin-dashboard" element={<AdminLayout />}>
                   <Route index element={<AdminOverview />} />
                   <Route path="services" element={<AdminServices />} />
