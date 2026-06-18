@@ -6,7 +6,7 @@ import RetroGrid from "@/components/ui/retro-grid";
  */
 export default function PersistentCanvas() {
   return (
-    <div className="fixed inset-0 -z-20 pointer-events-none overflow-hidden">
+    <div className="fixed inset-0 -z-20 pointer-events-none overflow-hidden hidden dark:block">
       {/* Twinkling starfield (above horizon ~55%) */}
       <div
         className="absolute inset-x-0 top-0 h-[55%] opacity-70"
