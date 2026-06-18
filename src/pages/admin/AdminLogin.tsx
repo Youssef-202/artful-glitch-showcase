@@ -116,7 +116,7 @@ export default function AdminLogin() {
         </button>
 
         <p className="text-[10px] text-slate-500 text-center">
-          محمي بـ Supabase Auth — جلسة الدخول تُحفظ في المتصفح
+          جلسة الدخول محفوظة في المتصفح بشكل آمن
         </p>
       </form>
     </div>
