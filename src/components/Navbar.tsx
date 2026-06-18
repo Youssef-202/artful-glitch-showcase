@@ -1,6 +1,6 @@
 import { NavLink, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Moon, Sun, Languages, Menu, X, Settings as SettingsIcon } from "lucide-react";
+import { Moon, Sun, Languages, Menu, X, Settings as SettingsIcon, LogIn, LayoutDashboard } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/theme/ThemeProvider";
 import { useLang } from "@/i18n/LanguageProvider";
