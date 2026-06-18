@@ -16,6 +16,17 @@ export default function Navbar() {
   const { lang, t, toggleLang } = useLang();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    supabaseExternal.auth.getSession().then(({ data }) => {
+      setIsAdmin(data.session?.user?.email === ADMIN_EMAIL);
+    });
+    const { data: sub } = supabaseExternal.auth.onAuthStateChange((_e, session) => {
+      setIsAdmin(session?.user?.email === ADMIN_EMAIL);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
