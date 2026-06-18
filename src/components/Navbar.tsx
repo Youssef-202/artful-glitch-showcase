@@ -114,15 +114,6 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
 
 
-          <Link
-            to={isAdmin ? "/admin-dashboard" : "/admin-login"}
-            aria-label={isAdmin ? "Dashboard" : "Login"}
-            className="glass rounded-full p-2 hover:scale-105 transition"
-            title={isAdmin ? "لوحة التحكم" : "تسجيل الدخول"}
-          >
-            {isAdmin ? <LayoutDashboard className="w-4 h-4" /> : <LogIn className="w-4 h-4" />}
-          </Link>
-
           <Popover>
             <PopoverTrigger asChild>
               <button
