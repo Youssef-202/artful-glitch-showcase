@@ -1,5 +1,9 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import AdminSidebar from "./AdminSidebar";
+import { supabaseExternal } from "@/integrations/supabase/external";
+import { ADMIN_EMAIL } from "./AdminLogin";
+import { Loader2 } from "lucide-react";
 
 const titles: Record<string, { t: string; s: string }> = {
   "/admin-dashboard": { t: "لوحة التحكم", s: "نظرة عامة على الخدمات والرسائل الواردة" },
@@ -10,7 +14,38 @@ const titles: Record<string, { t: string; s: string }> = {
 
 export default function AdminLayout() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const meta = titles[pathname] ?? titles["/admin-dashboard"];
+  const [checking, setChecking] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+    const check = async () => {
+      const { data } = await supabaseExternal.auth.getSession();
+      if (!mounted) return;
+      if (data.session?.user?.email !== ADMIN_EMAIL) {
+        navigate("/admin-login", { replace: true });
+      } else {
+        setChecking(false);
+      }
+    };
+    check();
+    const { data: sub } = supabaseExternal.auth.onAuthStateChange((_e, session) => {
+      if (session?.user?.email !== ADMIN_EMAIL) navigate("/admin-login", { replace: true });
+    });
+    return () => {
+      mounted = false;
+      sub.subscription.unsubscribe();
+    };
+  }, [navigate]);
+
+  if (checking) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#05050a] text-cyan-400">
+        <Loader2 className="w-6 h-6 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#05050a] text-slate-100 cyber-grid relative" dir="rtl">
@@ -28,8 +63,19 @@ export default function AdminLayout() {
             </h1>
             <p className="text-[10px] text-slate-400 mt-0.5">{meta.s}</p>
           </div>
-          <div className="px-3 py-1 rounded border border-cyan-500/20 bg-cyan-500/5 text-[10px] text-cyan-400 font-mono">
-            {new Date().toLocaleDateString("ar-EG", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={async () => {
+                await supabaseExternal.auth.signOut();
+                navigate("/admin-login", { replace: true });
+              }}
+              className="px-3 py-1.5 rounded border border-pink-500/30 bg-pink-500/10 text-[11px] text-pink-300 hover:bg-pink-500/20 transition"
+            >
+              تسجيل الخروج
+            </button>
+            <div className="px-3 py-1 rounded border border-cyan-500/20 bg-cyan-500/5 text-[10px] text-cyan-400 font-mono">
+              {new Date().toLocaleDateString("ar-EG", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+            </div>
           </div>
         </header>
 
