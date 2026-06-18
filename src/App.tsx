@@ -26,6 +26,14 @@ const AdminServices = lazy(() => import("./pages/admin/AdminServices"));
 const AdminMessages = lazy(() => import("./pages/admin/AdminMessages"));
 const AdminGuide = lazy(() => import("./pages/admin/AdminGuide"));
 const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
+const AdminBlog = lazy(() => import("./pages/admin/AdminBlog"));
+const AdminPortfolio = lazy(() => import("./pages/admin/AdminPortfolio"));
+const AdminPages = lazy(() => import("./pages/admin/AdminPages"));
+const AdminTestimonials = lazy(() => import("./pages/admin/AdminTestimonials"));
+const AdminPartners = lazy(() => import("./pages/admin/AdminPartners"));
+const AdminOrders = lazy(() => import("./pages/admin/AdminOrders"));
+const AdminPayments = lazy(() => import("./pages/admin/AdminPayments"));
+const AdminUsers = lazy(() => import("./pages/admin/AdminUsers"));
 
 const queryClient = new QueryClient();
 
@@ -44,6 +52,14 @@ const App = () => (
                 <Route path="/admin-dashboard" element={<AdminLayout />}>
                   <Route index element={<AdminOverview />} />
                   <Route path="services" element={<AdminServices />} />
+                  <Route path="blog" element={<AdminBlog />} />
+                  <Route path="portfolio" element={<AdminPortfolio />} />
+                  <Route path="pages" element={<AdminPages />} />
+                  <Route path="testimonials" element={<AdminTestimonials />} />
+                  <Route path="partners" element={<AdminPartners />} />
+                  <Route path="orders" element={<AdminOrders />} />
+                  <Route path="payments" element={<AdminPayments />} />
+                  <Route path="users" element={<AdminUsers />} />
                   <Route path="messages" element={<AdminMessages />} />
                   <Route path="guide" element={<AdminGuide />} />
                 </Route>

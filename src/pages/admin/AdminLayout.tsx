@@ -6,10 +6,18 @@ import { ADMIN_EMAIL } from "./AdminLogin";
 import { Loader2 } from "lucide-react";
 
 const titles: Record<string, { t: string; s: string }> = {
-  "/admin-dashboard": { t: "لوحة التحكم", s: "نظرة عامة على الخدمات والرسائل الواردة" },
-  "/admin-dashboard/services": { t: "إدارة الخدمات", s: "إضافة وتعديل وحذف الخدمات المعروضة في الموقع" },
-  "/admin-dashboard/messages": { t: "الرسائل الواردة", s: "إدارة رسائل الزوار من نموذج التواصل" },
-  "/admin-dashboard/guide": { t: "دليل الداشبورد", s: "مرجع كامل لبنية اللوحة وكل الأقسام والأكشنز" },
+  "/admin-dashboard": { t: "لوحة التحكم", s: "نظرة عامة على المحتوى والطلبات" },
+  "/admin-dashboard/services": { t: "إدارة الخدمات", s: "أضف وعدّل خدمات الموقع بكامل التفاصيل والصور" },
+  "/admin-dashboard/blog": { t: "المدونة", s: "إدارة مقالات المدونة بمحتوى ثنائي اللغة ومعرض صور" },
+  "/admin-dashboard/portfolio": { t: "الأعمال", s: "إدارة معرض الأعمال والمشاريع بكافة التفاصيل" },
+  "/admin-dashboard/pages": { t: "صفحات الموقع", s: "تعديل محتوى الصفحات الثابتة عبر JSON" },
+  "/admin-dashboard/testimonials": { t: "آراء العملاء", s: "إدارة شهادات وآراء العملاء" },
+  "/admin-dashboard/partners": { t: "الشركاء", s: "إدارة شعارات وبيانات الشركاء" },
+  "/admin-dashboard/orders": { t: "الطلبات", s: "متابعة طلبات الخدمات ومراحلها" },
+  "/admin-dashboard/payments": { t: "المدفوعات", s: "تسجيل ومتابعة عمليات الدفع" },
+  "/admin-dashboard/users": { t: "المستخدمون", s: "إدارة حسابات وملفات المستخدمين" },
+  "/admin-dashboard/messages": { t: "الرسائل الواردة", s: "رسائل الزوار من نموذج التواصل" },
+  "/admin-dashboard/guide": { t: "دليل الداشبورد", s: "مرجع كامل لبنية اللوحة وكل الأقسام" },
 };
 
 export default function AdminLayout() {
