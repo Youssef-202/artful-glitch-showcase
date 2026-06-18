@@ -40,6 +40,7 @@ const App = () => (
           <BrowserRouter>
             <Suspense fallback={<div className="min-h-screen" />}>
               <Routes>
+                <Route path="/admin-login" element={<AdminLogin />} />
                 <Route path="/admin-dashboard" element={<AdminLayout />}>
                   <Route index element={<AdminOverview />} />
                   <Route path="services" element={<AdminServices />} />
