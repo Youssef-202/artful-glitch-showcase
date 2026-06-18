@@ -511,6 +511,4 @@ function ListField({
     </div>
   );
 }
-    </div>
-  );
-}
+
