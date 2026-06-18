@@ -6,7 +6,10 @@ import { useTheme } from "@/theme/ThemeProvider";
 import { useLang } from "@/i18n/LanguageProvider";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { supabaseExternal } from "@/integrations/supabase/external";
 import logoMark from "@/assets/etqan-mark.png.asset.json";
+
+const ADMIN_EMAIL = "youssf582022@gmail.com";
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
