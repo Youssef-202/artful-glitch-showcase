@@ -128,9 +128,9 @@ export default function AdminServices() {
       </div>
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center p-4 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
-          <div className="cyber-panel max-w-4xl w-full rounded-2xl my-4">
-            <div className="p-5 border-b border-slate-800 flex items-center justify-between sticky top-0 bg-slate-950/90 backdrop-blur z-10">
+        <div className="fixed inset-0 z-[100] flex items-start justify-center p-4 bg-slate-950/85 backdrop-blur-sm overflow-y-auto">
+          <div className="cyber-panel w-full max-w-5xl rounded-2xl my-4 mx-auto">
+            <div className="p-5 border-b border-slate-800 flex items-center justify-between sticky top-0 bg-slate-950/95 backdrop-blur z-10 rounded-t-2xl">
               <h4 className="font-bold text-base text-white">{editingId ? "تعديل خدمة" : "إضافة خدمة"}</h4>
               <button onClick={() => setOpen(false)} className="p-1 text-slate-400 hover:text-white"><X className="w-5 h-5" /></button>
             </div>

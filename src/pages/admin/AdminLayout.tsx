@@ -62,7 +62,7 @@ export default function AdminLayout() {
 
       <AdminSidebar />
 
-      <div className="pr-64 min-h-screen flex flex-col z-10 relative">
+      <div className="pr-64 min-h-screen flex flex-col">
         <header className="h-16 border-b border-cyan-500/10 px-8 flex items-center justify-between bg-slate-950/20 backdrop-blur-sm">
           <div>
             <h1 className="text-base font-bold tracking-tight text-white flex items-center gap-2">
