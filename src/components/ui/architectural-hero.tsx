@@ -153,6 +153,9 @@ export default function ArchitecturalHero() {
             }}
           >
             <div className="relative aspect-[9/18] sm:aspect-[16/10] w-full overflow-hidden rounded-[2.1rem] sm:rounded-[1.25rem] md:rounded-[1.5rem] bg-[#0a1a18]">
+              {/* iPhone-style Dynamic Island + status bar (mobile only) */}
+              <PhoneStatusBar />
+
 
 
               <img
