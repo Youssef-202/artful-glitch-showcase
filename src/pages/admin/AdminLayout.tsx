@@ -6,24 +6,24 @@ import { ADMIN_EMAIL } from "./AdminLogin";
 import { Loader2 } from "lucide-react";
 
 const titles: Record<string, { t: string; s: string }> = {
-  "/admin-dashboard": { t: "لوحة التحكم", s: "نظرة عامة على المحتوى والطلبات" },
-  "/admin-dashboard/services": { t: "إدارة الخدمات", s: "أضف وعدّل خدمات الموقع بكامل التفاصيل والصور" },
-  "/admin-dashboard/blog": { t: "المدونة", s: "إدارة مقالات المدونة بمحتوى ثنائي اللغة ومعرض صور" },
-  "/admin-dashboard/portfolio": { t: "الأعمال", s: "إدارة معرض الأعمال والمشاريع بكافة التفاصيل" },
-  "/admin-dashboard/pages": { t: "صفحات الموقع", s: "تعديل محتوى الصفحات الثابتة عبر JSON" },
-  "/admin-dashboard/testimonials": { t: "آراء العملاء", s: "إدارة شهادات وآراء العملاء" },
-  "/admin-dashboard/partners": { t: "الشركاء", s: "إدارة شعارات وبيانات الشركاء" },
-  "/admin-dashboard/orders": { t: "الطلبات", s: "متابعة طلبات الخدمات ومراحلها" },
-  "/admin-dashboard/payments": { t: "المدفوعات", s: "تسجيل ومتابعة عمليات الدفع" },
-  "/admin-dashboard/users": { t: "المستخدمون", s: "إدارة حسابات وملفات المستخدمين" },
-  "/admin-dashboard/messages": { t: "الرسائل الواردة", s: "رسائل الزوار من نموذج التواصل" },
-  "/admin-dashboard/guide": { t: "دليل الداشبورد", s: "مرجع كامل لبنية اللوحة وكل الأقسام" },
+  "/admin-dashboard010": { t: "لوحة التحكم", s: "نظرة عامة على المحتوى والطلبات" },
+  "/admin-dashboard010/services": { t: "إدارة الخدمات", s: "أضف وعدّل خدمات الموقع بكامل التفاصيل والصور" },
+  "/admin-dashboard010/blog": { t: "المدونة", s: "إدارة مقالات المدونة بمحتوى ثنائي اللغة ومعرض صور" },
+  "/admin-dashboard010/portfolio": { t: "الأعمال", s: "إدارة معرض الأعمال والمشاريع بكافة التفاصيل" },
+  "/admin-dashboard010/pages": { t: "صفحات الموقع", s: "تعديل محتوى الصفحات الثابتة عبر JSON" },
+  "/admin-dashboard010/testimonials": { t: "آراء العملاء", s: "إدارة شهادات وآراء العملاء" },
+  "/admin-dashboard010/partners": { t: "الشركاء", s: "إدارة شعارات وبيانات الشركاء" },
+  "/admin-dashboard010/orders": { t: "الطلبات", s: "متابعة طلبات الخدمات ومراحلها" },
+  "/admin-dashboard010/payments": { t: "المدفوعات", s: "تسجيل ومتابعة عمليات الدفع" },
+  "/admin-dashboard010/users": { t: "المستخدمون", s: "إدارة حسابات وملفات المستخدمين" },
+  "/admin-dashboard010/messages": { t: "الرسائل الواردة", s: "رسائل الزوار من نموذج التواصل" },
+  "/admin-dashboard010/guide": { t: "دليل الداشبورد", s: "مرجع كامل لبنية اللوحة وكل الأقسام" },
 };
 
 export default function AdminLayout() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const meta = titles[pathname] ?? titles["/admin-dashboard"];
+  const meta = titles[pathname] ?? titles["/admin-dashboard010"];
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {

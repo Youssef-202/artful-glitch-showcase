@@ -49,7 +49,7 @@ const App = () => (
             <Suspense fallback={<div className="min-h-screen" />}>
               <Routes>
                 <Route path="/admin-login" element={<AdminLogin />} />
-                <Route path="/admin-dashboard" element={<AdminLayout />}>
+                <Route path="/admin-dashboard010" element={<AdminLayout />}>
                   <Route index element={<AdminOverview />} />
                   <Route path="services" element={<AdminServices />} />
                   <Route path="blog" element={<AdminBlog />} />
