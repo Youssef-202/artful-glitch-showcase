@@ -69,13 +69,89 @@ function normalize(raw: any): HeroContent {
 }
 
 function StaticHeadline({ text }: { text: string }) {
+  const glowStyle = {
+    fontFamily: '"Amiri", "Instrument Serif", serif',
+    fontSize: "clamp(2rem, 6.5vw, 5rem)",
+    fontWeight: 700,
+    lineHeight: 1,
+    textAlign: "center" as const,
+    letterSpacing: "-0.02em",
+  };
   return (
-    <div className="relative w-full flex items-center justify-center">
+    <div className="relative w-full flex items-center justify-center overflow-visible">
+      {/* Deep glow layer — solid bright teal, heavily blurred */}
+      <motion.span
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
+        style={{
+          ...glowStyle,
+          color: "hsl(var(--primary-glow))",
+          filter: "blur(22px) brightness(1.6)",
+          zIndex: 0,
+        }}
+        aria-hidden
+      >
+        {text}
+      </motion.span>
+
+      {/* Outer halo layer */}
+      <motion.span
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
+        style={{
+          ...glowStyle,
+          color: "hsl(var(--accent))",
+          filter: "blur(55px) brightness(2)",
+          zIndex: -1,
+        }}
+        aria-hidden
+      >
+        {text}
+      </motion.span>
+
+      {/* Futuristic scanlines overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none select-none z-20"
+        style={{
+          backgroundImage:
+            "linear-gradient(transparent 50%, hsl(var(--primary) / 0.08) 50%)",
+          backgroundSize: "100% 4px",
+          mixBlendMode: "overlay",
+        }}
+        aria-hidden
+      />
+
+      {/* Sweeping shine animation */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none z-30"
+        style={{
+          background:
+            "linear-gradient(105deg, transparent 40%, hsl(var(--primary-glow) / 0.35) 48%, hsl(0 0% 100% / 0.55) 50%, hsl(var(--primary-glow) / 0.35) 52%, transparent 60%)",
+          WebkitBackgroundClip: "text",
+          backgroundClip: "text",
+          mixBlendMode: "overlay",
+        }}
+        initial={{ x: "-120%" }}
+        animate={{ x: "120%" }}
+        transition={{
+          duration: 3.5,
+          repeat: Infinity,
+          repeatDelay: 2,
+          ease: "easeInOut",
+        }}
+        aria-hidden
+      />
+
+      {/* Gradient text on top */}
       <motion.h1
         initial={{ opacity: 0, y: 30, filter: "blur(14px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        className="leading-[1] text-center tracking-tight"
+        className="relative z-10 leading-[1] text-center tracking-tight"
         style={{
           fontFamily: '"Amiri", "Instrument Serif", serif',
           fontSize: "clamp(2rem, 6.5vw, 5rem)",
@@ -84,8 +160,7 @@ function StaticHeadline({ text }: { text: string }) {
           WebkitBackgroundClip: "text",
           backgroundClip: "text",
           color: "transparent",
-          textShadow: "0 0 40px hsl(var(--primary) / 0.45), 0 0 80px hsl(var(--accent) / 0.25)",
-          filter: "drop-shadow(0 0 20px hsl(var(--primary) / 0.3))",
+          filter: "drop-shadow(0 0 12px hsl(var(--primary) / 0.6)) drop-shadow(0 0 36px hsl(var(--accent) / 0.45))",
         }}
       >
         {text}
