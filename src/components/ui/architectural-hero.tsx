@@ -139,8 +139,8 @@ export default function ArchitecturalHero() {
               left: "50%",
               transform: "translateX(-50%)",
               background:
-                "linear-gradient(160deg, hsl(var(--primary) / 0.45), hsl(var(--accent) / 0.30) 60%, hsl(var(--primary) / 0.18))",
-              boxShadow: "0 80px 120px -40px hsl(var(--primary) / 0.55)",
+                "linear-gradient(160deg, hsl(var(--primary) / 0.75), hsl(var(--accent) / 0.55) 60%, hsl(var(--primary) / 0.35))",
+              boxShadow: "0 80px 120px -40px hsl(var(--primary) / 0.65)",
             }}
           />
 
