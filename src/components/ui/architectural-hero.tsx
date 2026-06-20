@@ -46,7 +46,7 @@ type HeroContent = {
 const defaults: HeroContent = {
   eyebrow: "PRECISION · إتقان · MASTERY",
   headlines: [
-    "نصنع الـاحتراف.",
+    "نضع الإتقان في قلب كل تفصيل",
     "نصنع الـإبداع.",
     "نصنع الـتميّز.",
     "نصنع الـأثر.",
@@ -75,12 +75,17 @@ function StaticHeadline({ text }: { text: string }) {
         initial={{ opacity: 0, y: 30, filter: "blur(14px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        className="text-foreground leading-[1] text-center tracking-tight"
+        className="leading-[1] text-center tracking-tight"
         style={{
           fontFamily: '"Amiri", "Instrument Serif", serif',
-          fontSize: "clamp(2.6rem, 10vw, 8rem)",
+          fontSize: "clamp(2rem, 6.5vw, 5rem)",
           fontWeight: 700,
-          textShadow: "0 0 60px hsl(var(--primary) / 0.25)",
+          background: "linear-gradient(135deg, hsl(var(--primary-glow)) 0%, hsl(var(--primary)) 40%, hsl(var(--accent)) 100%)",
+          WebkitBackgroundClip: "text",
+          backgroundClip: "text",
+          color: "transparent",
+          textShadow: "0 0 40px hsl(var(--primary) / 0.45), 0 0 80px hsl(var(--accent) / 0.25)",
+          filter: "drop-shadow(0 0 20px hsl(var(--primary) / 0.3))",
         }}
       >
         {text}
