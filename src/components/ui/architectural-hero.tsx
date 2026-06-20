@@ -78,7 +78,7 @@ function StaticHeadline({ text }: { text: string }) {
     letterSpacing: "-0.02em",
   };
   return (
-    <div className="relative w-full flex items-center justify-center">
+    <div className="relative w-full flex items-center justify-center overflow-visible">
       {/* Deep glow layer — solid bright teal, heavily blurred */}
       <motion.span
         initial={{ opacity: 0, y: 30 }}
@@ -88,7 +88,7 @@ function StaticHeadline({ text }: { text: string }) {
         style={{
           ...glowStyle,
           color: "hsl(var(--primary-glow))",
-          filter: "blur(18px) brightness(1.4)",
+          filter: "blur(22px) brightness(1.6)",
           zIndex: 0,
         }}
         aria-hidden
@@ -105,13 +105,46 @@ function StaticHeadline({ text }: { text: string }) {
         style={{
           ...glowStyle,
           color: "hsl(var(--accent))",
-          filter: "blur(40px) brightness(1.6)",
+          filter: "blur(55px) brightness(2)",
           zIndex: -1,
         }}
         aria-hidden
       >
         {text}
       </motion.span>
+
+      {/* Futuristic scanlines overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none select-none z-20"
+        style={{
+          backgroundImage:
+            "linear-gradient(transparent 50%, hsl(var(--primary) / 0.08) 50%)",
+          backgroundSize: "100% 4px",
+          mixBlendMode: "overlay",
+        }}
+        aria-hidden
+      />
+
+      {/* Sweeping shine animation */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none z-30"
+        style={{
+          background:
+            "linear-gradient(105deg, transparent 40%, hsl(var(--primary-glow) / 0.35) 48%, hsl(0 0% 100% / 0.55) 50%, hsl(var(--primary-glow) / 0.35) 52%, transparent 60%)",
+          WebkitBackgroundClip: "text",
+          backgroundClip: "text",
+          mixBlendMode: "overlay",
+        }}
+        initial={{ x: "-120%" }}
+        animate={{ x: "120%" }}
+        transition={{
+          duration: 3.5,
+          repeat: Infinity,
+          repeatDelay: 2,
+          ease: "easeInOut",
+        }}
+        aria-hidden
+      />
 
       {/* Gradient text on top */}
       <motion.h1
@@ -127,7 +160,7 @@ function StaticHeadline({ text }: { text: string }) {
           WebkitBackgroundClip: "text",
           backgroundClip: "text",
           color: "transparent",
-          filter: "drop-shadow(0 0 10px hsl(var(--primary) / 0.5)) drop-shadow(0 0 30px hsl(var(--accent) / 0.35))",
+          filter: "drop-shadow(0 0 12px hsl(var(--primary) / 0.6)) drop-shadow(0 0 36px hsl(var(--accent) / 0.45))",
         }}
       >
         {text}
