@@ -128,19 +128,17 @@ export default function ArchitecturalHero() {
           transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
           className="relative w-full mt-10 md:mt-14 flex justify-center"
         >
-          {/* Soft sage backplate — sits behind lower half of device, wider than it, extending below */}
+          {/* Soft sage backplate — sits behind lower half of device, slightly wider, extending below */}
           <div
             aria-hidden
-            className="absolute left-0 right-0 top-[42%] sm:top-[55%] md:top-[60%] bottom-[-3rem] sm:bottom-[-4rem] md:bottom-[-5rem] mx-auto rounded-[2rem] md:rounded-[2.5rem] -z-10"
+            className="absolute top-[55%] sm:top-[60%] md:top-[62%] bottom-[-2rem] sm:bottom-[-2.5rem] md:bottom-[-3rem] rounded-[2rem] md:rounded-[2.5rem] -z-10"
             style={{
-              width: "min(112%, 100vw)",
-              marginLeft: "auto",
-              marginRight: "auto",
+              width: "min(108%, 1180px)",
               left: "50%",
               transform: "translateX(-50%)",
               background:
                 "linear-gradient(160deg, hsl(var(--primary) / 0.75), hsl(var(--accent) / 0.55) 60%, hsl(var(--primary) / 0.35))",
-              boxShadow: "0 80px 120px -40px hsl(var(--primary) / 0.65)",
+              boxShadow: "0 60px 100px -40px hsl(var(--primary) / 0.55)",
             }}
           />
 
