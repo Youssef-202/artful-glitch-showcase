@@ -18,18 +18,18 @@ import {
 } from "lucide-react";
 
 const items = [
-  { to: "/admin-dashboard", label: "نظرة عامة", icon: LayoutDashboard, end: true },
-  { to: "/admin-dashboard/services", label: "الخدمات", icon: Wrench },
-  { to: "/admin-dashboard/blog", label: "المدونة", icon: FileText },
-  { to: "/admin-dashboard/portfolio", label: "الأعمال", icon: ImageIcon },
-  { to: "/admin-dashboard/pages", label: "صفحات الموقع", icon: Globe },
-  { to: "/admin-dashboard/testimonials", label: "آراء العملاء", icon: MessageSquare },
-  { to: "/admin-dashboard/partners", label: "الشركاء", icon: Handshake },
-  { to: "/admin-dashboard/orders", label: "الطلبات", icon: ShoppingBag },
-  { to: "/admin-dashboard/payments", label: "المدفوعات", icon: CreditCard },
-  { to: "/admin-dashboard/users", label: "المستخدمون", icon: Users },
-  { to: "/admin-dashboard/messages", label: "الرسائل", icon: Mail },
-  { to: "/admin-dashboard/guide", label: "دليل الداشبورد", icon: BookOpen },
+  { to: "/admin-dashboard010", label: "نظرة عامة", icon: LayoutDashboard, end: true },
+  { to: "/admin-dashboard010/services", label: "الخدمات", icon: Wrench },
+  { to: "/admin-dashboard010/blog", label: "المدونة", icon: FileText },
+  { to: "/admin-dashboard010/portfolio", label: "الأعمال", icon: ImageIcon },
+  { to: "/admin-dashboard010/pages", label: "صفحات الموقع", icon: Globe },
+  { to: "/admin-dashboard010/testimonials", label: "آراء العملاء", icon: MessageSquare },
+  { to: "/admin-dashboard010/partners", label: "الشركاء", icon: Handshake },
+  { to: "/admin-dashboard010/orders", label: "الطلبات", icon: ShoppingBag },
+  { to: "/admin-dashboard010/payments", label: "المدفوعات", icon: CreditCard },
+  { to: "/admin-dashboard010/users", label: "المستخدمون", icon: Users },
+  { to: "/admin-dashboard010/messages", label: "الرسائل", icon: Mail },
+  { to: "/admin-dashboard010/guide", label: "دليل الداشبورد", icon: BookOpen },
 ];
 
 export default function AdminSidebar() {

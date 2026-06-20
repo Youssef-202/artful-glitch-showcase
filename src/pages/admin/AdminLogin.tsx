@@ -14,7 +14,7 @@ export default function AdminLogin() {
 
   useEffect(() => {
     supabaseExternal.auth.getSession().then(({ data }) => {
-      if (data.session?.user?.email === ADMIN_EMAIL) navigate("/admin-dashboard", { replace: true });
+      if (data.session?.user?.email === ADMIN_EMAIL) navigate("/admin-dashboard010", { replace: true });
     });
   }, [navigate]);
 
@@ -28,13 +28,13 @@ export default function AdminLogin() {
         const { error: suErr } = await supabaseExternal.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: `${window.location.origin}/admin-dashboard` },
+          options: { emailRedirectTo: `${window.location.origin}/admin-dashboard010` },
         });
         if (!suErr) {
           const { data: d2, error: e2 } = await supabaseExternal.auth.signInWithPassword({ email, password });
           if (!e2 && d2.session) {
             toast.success("تم تسجيل الدخول");
-            navigate("/admin-dashboard", { replace: true });
+            navigate("/admin-dashboard010", { replace: true });
             setLoading(false);
             return;
           }
@@ -51,7 +51,7 @@ export default function AdminLogin() {
       return;
     }
     toast.success("تم تسجيل الدخول");
-    navigate("/admin-dashboard", { replace: true });
+    navigate("/admin-dashboard010", { replace: true });
     setLoading(false);
   };
 
