@@ -32,6 +32,75 @@ function CountUp({ end, duration = 2000 }: { end: number; duration?: number }) {
   return <span ref={ref}>{value.toLocaleString("en-US")}+</span>;
 }
 
+function PhoneStatusBar() {
+  const [now, setNow] = useState(new Date());
+  const [battery, setBattery] = useState<{ level: number; charging: boolean } | null>(null);
+
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 1000 * 15);
+    return () => clearInterval(t);
+  }, []);
+
+  useEffect(() => {
+    let bat: any;
+    const nav: any = navigator;
+    if (nav.getBattery) {
+      nav.getBattery().then((b: any) => {
+        bat = b;
+        const update = () =>
+          setBattery({ level: Math.round(b.level * 100), charging: b.charging });
+        update();
+        b.addEventListener("levelchange", update);
+        b.addEventListener("chargingchange", update);
+      });
+    }
+    return () => {
+      if (bat) {
+        bat.onlevelchange = null;
+        bat.onchargingchange = null;
+      }
+    };
+  }, []);
+
+  const time = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: false });
+  const pct = battery?.level ?? 87;
+
+  return (
+    <div className="sm:hidden absolute top-0 inset-x-0 z-30 pointer-events-none">
+      {/* Dynamic Island */}
+      <div className="absolute top-2 left-1/2 -translate-x-1/2 h-[22px] w-[90px] rounded-full bg-black shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)]" />
+      {/* Status row */}
+      <div className="flex items-center justify-between px-5 pt-[10px]" dir="ltr">
+        <span className="text-white text-[12px] font-semibold tracking-wide" style={{ fontFamily: "-apple-system, SF Pro Text, system-ui, sans-serif" }}>
+          {time}
+        </span>
+        <div className="flex items-center gap-1.5">
+          {/* signal */}
+          <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
+            <rect x="0" y="7" width="2.5" height="3" rx="0.5" fill="white"/>
+            <rect x="4" y="5" width="2.5" height="5" rx="0.5" fill="white"/>
+            <rect x="8" y="3" width="2.5" height="7" rx="0.5" fill="white"/>
+            <rect x="12" y="0" width="2.5" height="10" rx="0.5" fill="white" fillOpacity="0.55"/>
+          </svg>
+          {/* battery */}
+          <div className="flex items-center">
+            <div className="relative w-[22px] h-[11px] rounded-[3px] border border-white/70 p-[1.5px]">
+              <div
+                className="h-full rounded-[1.5px]"
+                style={{
+                  width: `${Math.max(6, pct)}%`,
+                  background: battery?.charging ? "#34d058" : "white",
+                }}
+              />
+            </div>
+            <div className="w-[1.5px] h-[5px] bg-white/70 rounded-r-sm ml-[1px]" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 type HeroContent = {
   eyebrow: string;
   headlines: string[];
@@ -153,6 +222,9 @@ export default function ArchitecturalHero() {
             }}
           >
             <div className="relative aspect-[9/18] sm:aspect-[16/10] w-full overflow-hidden rounded-[2.1rem] sm:rounded-[1.25rem] md:rounded-[1.5rem] bg-[#0a1a18]">
+              {/* iPhone-style Dynamic Island + status bar (mobile only) */}
+              <PhoneStatusBar />
+
 
 
               <img
