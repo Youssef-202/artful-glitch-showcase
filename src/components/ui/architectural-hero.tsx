@@ -1,216 +1,117 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ContainerScroll } from "./container-scroll-animation";
 import Logo3DCard from "./logo-3d-card";
-import TypewriterLoop from "./TypewriterLoop";
 import { supabase } from "@/integrations/supabase/external";
-
-const rotatingWords = ["إتقان", "إبداع", "تميّز", "احتراف", "شغف", "أثر"];
-const transitions = [
-  // fade + scale
-  {
-    initial: { opacity: 0, scale: 0.6, filter: "blur(8px)" },
-    animate: { opacity: 1, scale: 1, filter: "blur(0px)" },
-    exit: { opacity: 0, scale: 1.3, filter: "blur(8px)" },
-  },
-  // slide up
-  {
-    initial: { opacity: 0, y: 40 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -40 },
-  },
-  // slide from right (RTL natural)
-  {
-    initial: { opacity: 0, x: -60, rotate: -8 },
-    animate: { opacity: 1, x: 0, rotate: 0 },
-    exit: { opacity: 0, x: 60, rotate: 8 },
-  },
-  // flip
-  {
-    initial: { opacity: 0, rotateX: 90 },
-    animate: { opacity: 1, rotateX: 0 },
-    exit: { opacity: 0, rotateX: -90 },
-  },
-  // skew slide
-  {
-    initial: { opacity: 0, x: 50, skewX: 12 },
-    animate: { opacity: 1, x: 0, skewX: 0 },
-    exit: { opacity: 0, x: -50, skewX: -12 },
-  },
-];
-
-function RotatingWord() {
-  const [i, setI] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => setI((p) => p + 1), 2400);
-    return () => clearInterval(id);
-  }, []);
-  const word = rotatingWords[i % rotatingWords.length];
-  const tr = transitions[i % transitions.length];
-  const longest = "احتراف";
-  return (
-    <span
-      className="relative inline-block align-baseline leading-[1.6]"
-      style={{ perspective: 800, minWidth: "fit-content", paddingTop: "0.25em", paddingBottom: "0.1em" }}
-    >
-      <span className="invisible leading-[1.6]">{longest}</span>
-      <AnimatePresence mode="wait">
-        <motion.span
-          key={i}
-          initial={tr.initial}
-          animate={tr.animate}
-          exit={tr.exit}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute inset-0 flex items-center justify-center leading-[1.6] text-transparent bg-clip-text shine-text"
-          style={{
-            backgroundImage:
-              "linear-gradient(110deg, #6ee7b7 0%, #a7f3d0 25%, #ffffff 50%, #a7f3d0 75%, #6ee7b7 100%)",
-            backgroundSize: "200% 100%",
-            WebkitBackgroundClip: "text",
-            filter: "drop-shadow(0 0 12px rgba(110, 231, 183, 0.6))",
-          }}
-        >
-          {word}
-        </motion.span>
-      </AnimatePresence>
-    </span>
-  );
-}
+import cityBg from "@/assets/futuristic-city-bg.jpg";
 
 function CountUp({ end, duration = 2000 }: { end: number; duration?: number }) {
   const [value, setValue] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const started = useRef(false);
-
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting && !started.current) {
-            started.current = true;
-            const start = performance.now();
-            const tick = (now: number) => {
-              const p = Math.min((now - start) / duration, 1);
-              const eased = 1 - Math.pow(1 - p, 3);
-              setValue(Math.round(end * eased));
-              if (p < 1) requestAnimationFrame(tick);
-            };
-            requestAnimationFrame(tick);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting && !started.current) {
+          started.current = true;
+          const start = performance.now();
+          const tick = (now: number) => {
+            const p = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            setValue(Math.round(end * eased));
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }
+      });
+    }, { threshold: 0.3 });
     obs.observe(el);
     return () => obs.disconnect();
   }, [end, duration]);
-
   return <span ref={ref}>{value.toLocaleString("en-US")}+</span>;
 }
 
-
-type TextBlock = {
-  enabled: boolean;
-  value: string;
-  color: string;
-  size: "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
-  weight: "light" | "normal" | "medium" | "semibold" | "bold";
-  align: "right" | "center" | "left";
+type HeroContent = {
+  eyebrow: string;
+  headlines: string[];
+  cta_primary_label: string;
+  cta_primary_href: string;
+  cta_secondary_label: string;
+  cta_secondary_href: string;
+  card_title: string;
+  card_subtitle: string;
 };
 
-type HeroMedia = {
-  media_type: "image" | "video" | "logo";
-  media_url: string;
-  media_fit: "cover" | "contain";
-  media_opacity: number;
-  text_position: "top" | "center" | "bottom";
-  overlay: "none" | "dark" | "light";
-  overlay_opacity: number;
-  text1: TextBlock;
-  text2: TextBlock;
+const defaults: HeroContent = {
+  eyebrow: "PRECISION · إتقان · MASTERY",
+  headlines: [
+    "نصنع الـاحتراف.",
+    "نصنع الـإبداع.",
+    "نصنع الـتميّز.",
+    "نصنع الـأثر.",
+  ],
+  cta_primary_label: "ابدأ مشروعك",
+  cta_primary_href: "/contact",
+  cta_secondary_label: "أعمالنا",
+  cta_secondary_href: "/portfolio",
+  card_title: "وكالة إتقان",
+  card_subtitle: "للخدمات التسويقية",
 };
 
-const defaultText1: TextBlock = {
-  enabled: true,
-  value: "الإتقان ليس مجرد كلمة، بل هو فلسفتنا في كل بكسل، وكل سطر كود، وكل قصة نرويها.",
-  color: "#ffffff",
-  size: "lg",
-  weight: "light",
-  align: "center",
-};
-
-const defaultText2: TextBlock = {
-  enabled: true,
-  value: "نؤمن أن الفرق بين الجيد والاستثنائي يكمن في التفاصيل التي لا يراها أحد — لكنها تُحسّ.",
-  color: "#ffffffcc",
-  size: "md",
-  weight: "light",
-  align: "center",
-};
-
-const defaults: HeroMedia = {
-  media_type: "logo",
-  media_url: "",
-  media_fit: "cover",
-  media_opacity: 100,
-  text_position: "top",
-  overlay: "dark",
-  overlay_opacity: 50,
-  text1: defaultText1,
-  text2: defaultText2,
-};
-
-function normalize(raw: any): HeroMedia {
+function normalize(raw: any): HeroContent {
   if (!raw) return defaults;
-  const t1 = typeof raw.text1 === "string"
-    ? { ...defaultText1, value: raw.text1 }
-    : { ...defaultText1, ...(raw.text1 ?? {}) };
-  const t2 = typeof raw.text2 === "string"
-    ? { ...defaultText2, value: raw.text2 }
-    : { ...defaultText2, ...(raw.text2 ?? {}) };
-  return { ...defaults, ...raw, text1: t1, text2: t2 };
+  return {
+    ...defaults,
+    ...raw,
+    headlines: Array.isArray(raw.headlines) && raw.headlines.length > 0 ? raw.headlines : defaults.headlines,
+  };
 }
 
-const sizeClass: Record<TextBlock["size"], string> = {
-  xs: "text-xs md:text-sm",
-  sm: "text-sm md:text-base",
-  md: "text-base md:text-lg",
-  lg: "text-lg md:text-xl",
-  xl: "text-xl md:text-2xl",
-  "2xl": "text-2xl md:text-3xl",
-};
-const weightClass: Record<TextBlock["weight"], string> = {
-  light: "font-light",
-  normal: "font-normal",
-  medium: "font-medium",
-  semibold: "font-semibold",
-  bold: "font-bold",
-};
-const alignClass: Record<TextBlock["align"], string> = {
-  right: "text-right",
-  center: "text-center",
-  left: "text-left",
-};
+function RotatingHeadline({ phrases }: { phrases: string[] }) {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setI((p) => (p + 1) % phrases.length), 3200);
+    return () => clearInterval(id);
+  }, [phrases.length]);
+  return (
+    <div className="relative w-full flex items-center justify-center min-h-[1.2em]" style={{ perspective: 1200 }}>
+      <AnimatePresence mode="wait">
+        <motion.h1
+          key={i}
+          initial={{ opacity: 0, y: 40, filter: "blur(14px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          exit={{ opacity: 0, y: -30, filter: "blur(14px)" }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="text-foreground font-normal leading-[1] text-center tracking-tight"
+          style={{
+            fontFamily: '"Amiri", "Instrument Serif", serif',
+            fontSize: "clamp(2.6rem, 10vw, 8rem)",
+            fontWeight: 700,
+            textShadow: "0 0 60px hsl(var(--primary) / 0.25)",
+          }}
+        >
+          {phrases[i]}
+        </motion.h1>
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export default function ArchitecturalHero() {
-  const [media, setMedia] = useState<HeroMedia>(defaults);
+  const [content, setContent] = useState<HeroContent>(defaults);
 
   useEffect(() => {
     (supabase.from as any)("site_pages").select("content").eq("page_key", "hero").maybeSingle()
-      .then(({ data }: any) => {
-        setMedia(normalize(data?.content));
-      });
+      .then(({ data }: any) => setContent(normalize(data?.content)));
   }, []);
 
   return (
     <section
       dir="rtl"
-      className="relative w-full overflow-hidden selection:bg-primary selection:text-primary-foreground"
+      className="relative w-full overflow-hidden selection:bg-primary selection:text-primary-foreground pt-12 md:pt-20 pb-24"
     >
-      {/* Ambient glow layers */}
+      {/* Ambient glow layers — kept from current site */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary rounded-full blur-[120px] animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-accent rounded-full blur-[100px]" />
@@ -224,147 +125,124 @@ export default function ArchitecturalHero() {
         />
       </div>
 
-      <div className="relative z-10 flex flex-col overflow-hidden">
-        <div className="flex flex-col items-center text-center px-4 pt-8 md:pt-12 pb-0">
-          <div className="mb-6 inline-flex max-w-[95vw] items-center justify-center px-5 sm:px-10 h-14 sm:h-16 md:h-20 rounded-full border border-primary/20 bg-card/30 backdrop-blur-md">
-            <span className="typewriter text-foreground/80 font-medium whitespace-nowrap flex items-center gap-1 sm:gap-2 text-[#7ce4e4] min-w-0">
-              <span className="text-sm sm:text-2xl md:text-3xl font-bold shrink-0">في إتقان،&nbsp;</span>
-              <span className="text-xs sm:text-xl md:text-2xl whitespace-nowrap text-white">
-                <TypewriterLoop
-                  phrases={[
-                    "نحوّل الأفكار إلى تجارب رقمية استثنائية",
-                    "نصنع هويات بصرية تترك أثرًا",
-                    "نكتب الأكواد كما تُكتب القصائد",
-                    "كل تفصيلة تُحسّ قبل أن تُرى",
-                  ]}
-                />
-              </span>
-            </span>
-          </div>
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-8 flex flex-col items-center">
+        {/* Eyebrow */}
+        <motion.p
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="text-foreground/80 text-[10px] sm:text-xs md:text-sm font-medium tracking-[0.45em] uppercase mb-7 md:mb-10"
+        >
+          {content.eyebrow}
+        </motion.p>
 
+        {/* Editorial rotating headline (replaces "Browse everything.") */}
+        <RotatingHeadline phrases={content.headlines} />
 
-          <p className="text-white text-xs md:text-sm font-medium tracking-[0.3em] uppercase mb-4">
-            Mastery · إتقان · Precision
-          </p>
+        {/* Device-style hero card — same background & buttons, just unified into one composition */}
+        <motion.div
+          initial={{ opacity: 0, y: 40, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+          className="relative w-full mt-10 md:mt-14"
+        >
+          {/* Soft sage backplate (like the reference's green rectangle) */}
+          <div
+            aria-hidden
+            className="absolute -inset-x-4 sm:-inset-x-8 md:-inset-x-16 top-12 md:top-20 bottom-[-2rem] md:bottom-[-3rem] rounded-[2.5rem] -z-10"
+            style={{
+              background:
+                "linear-gradient(160deg, hsl(var(--primary) / 0.18), hsl(var(--accent) / 0.10) 60%, transparent)",
+              boxShadow: "0 80px 120px -40px hsl(var(--primary) / 0.35)",
+            }}
+          />
 
-          <h1 className="text-foreground font-extrabold leading-[1.1] mb-6 text-6xl md:text-7xl">
-            نصنع الـ{" "}
-            <RotatingWord />
-          </h1>
+          {/* The "device" frame */}
+          <div
+            className="relative mx-auto w-full max-w-5xl rounded-[2rem] md:rounded-[2.25rem] border border-foreground/10 bg-[#cfd3d8]/30 p-1.5 md:p-2 backdrop-blur-xl"
+            style={{
+              boxShadow:
+                "0 30px 60px -30px hsl(var(--primary) / 0.4), 0 60px 120px -60px hsl(220 60% 5% / 0.6), inset 0 1px 0 hsl(0 0% 100% / 0.18)",
+            }}
+          >
+            <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-[1.4rem] md:rounded-[1.6rem] bg-[#0a1a18]">
+              <img
+                src={cityBg}
+                alt=""
+                aria-hidden
+                className="absolute inset-0 w-full h-full object-cover"
+                draggable={false}
+              />
+              {/* Cinematic overlays */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/70" />
+              <div
+                className="absolute inset-0 opacity-50 mix-blend-screen pointer-events-none"
+                style={{
+                  background:
+                    "radial-gradient(60% 60% at 50% 30%, hsl(var(--primary) / 0.35), transparent 70%)",
+                }}
+              />
+              <div
+                className="absolute inset-0 pointer-events-none opacity-[0.06]"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(hsl(0 0% 100%) 1px, transparent 1px), linear-gradient(90deg, hsl(0 0% 100%) 1px, transparent 1px)",
+                  backgroundSize: "44px 44px",
+                  maskImage: "radial-gradient(ellipse at center, black 30%, transparent 70%)",
+                }}
+              />
 
-          <div className="mb-8" />
+              {/* Center: brand card + logo */}
+              <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-4 sm:px-8">
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.9, delay: 0.4 }}
+                  className="rounded-2xl px-6 sm:px-10 py-3 sm:py-4 mb-4 sm:mb-6 backdrop-blur-md border border-foreground/15"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, hsl(var(--primary) / 0.22), hsl(var(--primary) / 0.08))",
+                    boxShadow: "0 10px 40px -10px hsl(var(--primary) / 0.4)",
+                  }}
+                >
+                  <p className="text-white text-lg sm:text-2xl font-bold text-center leading-tight">
+                    {content.card_title}
+                  </p>
+                  <p className="text-white/70 text-[11px] sm:text-sm text-center mt-0.5">
+                    {content.card_subtitle}
+                  </p>
+                </motion.div>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-foreground/60 text-sm">
-            <div className="flex items-center gap-2">
-              <span className="text-primary text-lg font-bold">+٥٠</span>
-              <span>مشروع منجز</span>
-            </div>
-            <div className="w-px h-4 bg-primary/20" />
-            <div className="flex items-center gap-2">
-              <span className="text-primary text-lg font-bold">٪١٠٠</span>
-              <span>التزام بالجودة</span>
-            </div>
-            <div className="w-px h-4 bg-primary/20" />
-            <div className="flex items-center gap-2">
-              <span className="text-primary text-lg font-bold">٢٤/٧</span>
-              <span>دعم متواصل</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="-mt-32 md:-mt-64">
-          <ContainerScroll titleComponent={null}>
-            {(() => {
-              const fitClass = media.media_fit === "contain" ? "object-contain" : "object-cover";
-              const mediaStyle = { opacity: (media.media_opacity ?? 100) / 100 };
-              const positionClass =
-                media.text_position === "center"
-                  ? "inset-0 flex items-center"
-                  : media.text_position === "bottom"
-                  ? "inset-x-0 bottom-0"
-                  : "inset-x-0 top-0";
-              const overlayBg =
-                media.overlay === "dark"
-                  ? `linear-gradient(to bottom, hsl(var(--background) / ${(media.overlay_opacity ?? 50) / 100}), transparent)`
-                  : media.overlay === "light"
-                  ? `linear-gradient(to bottom, hsl(0 0% 100% / ${(media.overlay_opacity ?? 50) / 100}), transparent)`
-                  : "transparent";
-              const hasMediaOverlay = media.media_type !== "logo" && media.overlay !== "none";
-              const showText1 = media.text1.enabled && media.text1.value;
-              const showText2 = media.text2.enabled && media.text2.value;
-
-              return (
-                <div className="relative w-full h-full flex items-center justify-center p-0 overflow-hidden">
-                  {media.media_url && (media.media_type === "image" || media.media_type === "video") && (
-                    media.media_type === "image" ? (
-                      <img src={media.media_url} alt="" style={mediaStyle} className={`absolute inset-0 w-full h-full ${fitClass} z-0`} />
-                    ) : (
-                      <video src={media.media_url} autoPlay muted loop playsInline style={mediaStyle} className={`absolute inset-0 w-full h-full ${fitClass} z-0`} />
-                    )
-                  )}
-
-                  {(media.media_type === "logo" || !media.media_url) && (
-                    <Logo3DCard className="relative z-10 w-full max-w-lg" />
-                  )}
-
-
-                  {/* CTA buttons inside the hero card (bottom corners) */}
-                  <div className="absolute inset-x-0 bottom-4 md:bottom-8 z-30 flex justify-between items-center px-4 md:px-8 pointer-events-none">
-                    <a
-                      href="/portfolio"
-                      className="pointer-events-auto rounded-full px-5 sm:px-7 py-2.5 sm:py-3 text-primary-foreground font-medium text-sm sm:text-base btn-liquid-glass"
-                    >
-                      أعمالنا
-                    </a>
-                    <a
-                      href="/contact"
-                      className="pointer-events-auto rounded-full px-5 sm:px-7 py-2.5 sm:py-3 text-primary-foreground font-bold text-sm sm:text-base btn-liquid-glass"
-                    >
-                      ابدأ مشروعك
-                    </a>
-                  </div>
-
-                  {(showText1 || showText2) && (
-                    <div
-                      className={`absolute ${positionClass} z-20 p-4 md:p-6 pointer-events-none`}
-                      style={hasMediaOverlay ? { backgroundImage: overlayBg } : undefined}
-                    >
-                      <div className="w-full flex flex-col items-stretch gap-2">
-                        {showText1 && (
-                          <p
-                            className={`${sizeClass[media.text1.size]} ${weightClass[media.text1.weight]} ${alignClass[media.text1.align]} leading-relaxed drop-shadow-md max-w-2xl mx-auto`}
-                            style={{ color: media.text1.color }}
-                          >
-                            {media.text1.value}
-                          </p>
-                        )}
-                        {showText2 && (
-                          <p
-                            className={`hidden md:block ${sizeClass[media.text2.size]} ${weightClass[media.text2.weight]} ${alignClass[media.text2.align]} leading-relaxed drop-shadow-md max-w-2xl mx-auto`}
-                            style={{ color: media.text2.color }}
-                          >
-                            {media.text2.value}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  )}
+                <div className="w-full max-w-xs sm:max-w-sm md:max-w-md">
+                  <Logo3DCard className="w-full" />
                 </div>
-              );
-            })()}
-          </ContainerScroll>
-        </div>
+              </div>
 
+              {/* Bottom-corner CTAs (same as before, kept) */}
+              <div className="absolute inset-x-0 bottom-3 sm:bottom-5 md:bottom-7 z-20 flex justify-between items-center px-3 sm:px-6 md:px-8 pointer-events-none">
+                <a
+                  href={content.cta_secondary_href}
+                  className="pointer-events-auto rounded-full px-4 sm:px-7 py-2 sm:py-3 text-primary-foreground font-medium text-xs sm:text-base btn-liquid-glass"
+                >
+                  {content.cta_secondary_label}
+                </a>
+                <a
+                  href={content.cta_primary_href}
+                  className="pointer-events-auto rounded-full px-4 sm:px-7 py-2 sm:py-3 text-primary-foreground font-bold text-xs sm:text-base btn-liquid-glass"
+                >
+                  {content.cta_primary_label}
+                </a>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
-
-
-
-        <div className="flex flex-col items-center text-center px-4 pb-20 -mt-24 md:-mt-48 relative z-20">
-          <h2 className="text-foreground text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light opacity-90 mb-10">
+        {/* Stats grid — kept */}
+        <div className="w-full mt-20 md:mt-28">
+          <h2 className="text-foreground text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light opacity-90 mb-8 md:mb-10 text-center">
             قصص نجاحنا تبدأ من هنا
           </h2>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 w-full max-w-6xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
             {[
               { value: 2000, label: "علامة تجارية" },
               { value: 7000, label: "عميل" },
@@ -373,35 +251,17 @@ export default function ArchitecturalHero() {
             ].map((s) => (
               <div
                 key={s.label}
-                className="rounded-2xl border border-primary/20 bg-card/30 backdrop-blur-sm px-2 py-5 sm:px-4 sm:py-12 flex flex-col items-center justify-center gap-2 sm:gap-3"
+                className="rounded-2xl border border-primary/20 bg-card/30 backdrop-blur-sm px-2 py-5 sm:px-4 sm:py-10 flex flex-col items-center justify-center gap-2 sm:gap-3"
               >
-                <span className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-light text-foreground whitespace-nowrap" dir="ltr">
+                <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-foreground whitespace-nowrap" dir="ltr">
                   <CountUp end={s.value} />
                 </span>
-                <span className="text-xs sm:text-base text-foreground/70 text-center">
-                  {s.label}
-                </span>
+                <span className="text-xs sm:text-base text-foreground/70 text-center">{s.label}</span>
               </div>
             ))}
           </div>
         </div>
-
-
       </div>
-
-      <style>{`
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        @keyframes shine-move {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
-        }
-        .shine-text {
-          animation: shine-move 3s linear infinite;
-        }
-      `}</style>
     </section>
   );
 }
