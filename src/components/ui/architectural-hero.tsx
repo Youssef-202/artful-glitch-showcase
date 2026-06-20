@@ -68,35 +68,27 @@ function normalize(raw: any): HeroContent {
   };
 }
 
-function RotatingHeadline({ phrases }: { phrases: string[] }) {
-  const [i, setI] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => setI((p) => (p + 1) % phrases.length), 3200);
-    return () => clearInterval(id);
-  }, [phrases.length]);
+function StaticHeadline({ text }: { text: string }) {
   return (
-    <div className="relative w-full flex items-center justify-center min-h-[1.2em]" style={{ perspective: 1200 }}>
-      <AnimatePresence mode="wait">
-        <motion.h1
-          key={i}
-          initial={{ opacity: 0, y: 40, filter: "blur(14px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          exit={{ opacity: 0, y: -30, filter: "blur(14px)" }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="text-foreground font-normal leading-[1] text-center tracking-tight"
-          style={{
-            fontFamily: '"Amiri", "Instrument Serif", serif',
-            fontSize: "clamp(2.6rem, 10vw, 8rem)",
-            fontWeight: 700,
-            textShadow: "0 0 60px hsl(var(--primary) / 0.25)",
-          }}
-        >
-          {phrases[i]}
-        </motion.h1>
-      </AnimatePresence>
+    <div className="relative w-full flex items-center justify-center">
+      <motion.h1
+        initial={{ opacity: 0, y: 30, filter: "blur(14px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        className="text-foreground leading-[1] text-center tracking-tight"
+        style={{
+          fontFamily: '"Amiri", "Instrument Serif", serif',
+          fontSize: "clamp(2.6rem, 10vw, 8rem)",
+          fontWeight: 700,
+          textShadow: "0 0 60px hsl(var(--primary) / 0.25)",
+        }}
+      >
+        {text}
+      </motion.h1>
     </div>
   );
 }
+
 
 export default function ArchitecturalHero() {
   const [content, setContent] = useState<HeroContent>(defaults);
