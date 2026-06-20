@@ -118,16 +118,6 @@ export default function ArchitecturalHero() {
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-8 flex flex-col items-center">
-        {/* Eyebrow */}
-        <motion.p
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="text-foreground/80 text-[10px] sm:text-xs md:text-sm font-medium tracking-[0.45em] uppercase mb-7 md:mb-10"
-        >
-          {content.eyebrow}
-        </motion.p>
-
         {/* Editorial static headline (replaces "Browse everything.") */}
         <StaticHeadline text={content.headlines[0]} />
 
