@@ -68,35 +68,27 @@ function normalize(raw: any): HeroContent {
   };
 }
 
-function RotatingHeadline({ phrases }: { phrases: string[] }) {
-  const [i, setI] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => setI((p) => (p + 1) % phrases.length), 3200);
-    return () => clearInterval(id);
-  }, [phrases.length]);
+function StaticHeadline({ text }: { text: string }) {
   return (
-    <div className="relative w-full flex items-center justify-center min-h-[1.2em]" style={{ perspective: 1200 }}>
-      <AnimatePresence mode="wait">
-        <motion.h1
-          key={i}
-          initial={{ opacity: 0, y: 40, filter: "blur(14px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          exit={{ opacity: 0, y: -30, filter: "blur(14px)" }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="text-foreground font-normal leading-[1] text-center tracking-tight"
-          style={{
-            fontFamily: '"Amiri", "Instrument Serif", serif',
-            fontSize: "clamp(2.6rem, 10vw, 8rem)",
-            fontWeight: 700,
-            textShadow: "0 0 60px hsl(var(--primary) / 0.25)",
-          }}
-        >
-          {phrases[i]}
-        </motion.h1>
-      </AnimatePresence>
+    <div className="relative w-full flex items-center justify-center">
+      <motion.h1
+        initial={{ opacity: 0, y: 30, filter: "blur(14px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        className="text-foreground leading-[1] text-center tracking-tight"
+        style={{
+          fontFamily: '"Amiri", "Instrument Serif", serif',
+          fontSize: "clamp(2.6rem, 10vw, 8rem)",
+          fontWeight: 700,
+          textShadow: "0 0 60px hsl(var(--primary) / 0.25)",
+        }}
+      >
+        {text}
+      </motion.h1>
     </div>
   );
 }
+
 
 export default function ArchitecturalHero() {
   const [content, setContent] = useState<HeroContent>(defaults);
@@ -136,20 +128,20 @@ export default function ArchitecturalHero() {
           {content.eyebrow}
         </motion.p>
 
-        {/* Editorial rotating headline (replaces "Browse everything.") */}
-        <RotatingHeadline phrases={content.headlines} />
+        {/* Editorial static headline (replaces "Browse everything.") */}
+        <StaticHeadline text={content.headlines[0]} />
 
-        {/* Device-style hero card — same background & buttons, just unified into one composition */}
+        {/* Device-style hero card — phone shape on mobile, wide tablet on desktop */}
         <motion.div
           initial={{ opacity: 0, y: 40, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-          className="relative w-full mt-10 md:mt-14"
+          className="relative w-full mt-10 md:mt-14 flex justify-center"
         >
-          {/* Soft sage backplate (like the reference's green rectangle) */}
+          {/* Soft sage backplate */}
           <div
             aria-hidden
-            className="absolute -inset-x-4 sm:-inset-x-8 md:-inset-x-16 top-12 md:top-20 bottom-[-2rem] md:bottom-[-3rem] rounded-[2.5rem] -z-10"
+            className="absolute top-10 md:top-20 bottom-[-2rem] md:bottom-[-3rem] inset-x-6 sm:inset-x-12 md:-inset-x-16 rounded-[2.5rem] -z-10"
             style={{
               background:
                 "linear-gradient(160deg, hsl(var(--primary) / 0.18), hsl(var(--accent) / 0.10) 60%, transparent)",
@@ -157,15 +149,16 @@ export default function ArchitecturalHero() {
             }}
           />
 
-          {/* The "device" frame */}
+          {/* The "device" frame — phone on mobile, tablet/landscape on desktop */}
           <div
-            className="relative mx-auto w-full max-w-5xl rounded-[2rem] md:rounded-[2.25rem] border border-foreground/10 bg-[#cfd3d8]/30 p-1.5 md:p-2 backdrop-blur-xl"
+            className="relative mx-auto w-[78%] xs:w-[72%] sm:w-full sm:max-w-5xl rounded-[2.5rem] sm:rounded-[2rem] md:rounded-[2.25rem] border border-foreground/10 bg-[#cfd3d8]/30 p-[6px] sm:p-1.5 md:p-2 backdrop-blur-xl"
             style={{
               boxShadow:
                 "0 30px 60px -30px hsl(var(--primary) / 0.4), 0 60px 120px -60px hsl(220 60% 5% / 0.6), inset 0 1px 0 hsl(0 0% 100% / 0.18)",
             }}
           >
-            <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-[1.4rem] md:rounded-[1.6rem] bg-[#0a1a18]">
+            <div className="relative aspect-[9/18] sm:aspect-[16/9] w-full overflow-hidden rounded-[2.1rem] sm:rounded-[1.4rem] md:rounded-[1.6rem] bg-[#0a1a18]">
+
               <img
                 src={cityBg}
                 alt=""
