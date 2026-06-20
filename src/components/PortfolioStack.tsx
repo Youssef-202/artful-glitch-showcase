@@ -29,9 +29,6 @@ export default function PortfolioStack() {
       <ContainerScroll className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-7xl mx-auto">
         {/* Sticky text column */}
         <div className="lg:sticky lg:top-24 lg:h-fit self-start text-start">
-          <p className="text-xs sm:text-sm text-primary tracking-[0.3em] mb-3 font-bold uppercase">
-            {t.common.ourWork}
-          </p>
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-normal leading-tight mb-6">
             <span className="text-gradient font-sans font-extrabold text-white">{heading}</span>
           </h2>
