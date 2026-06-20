@@ -46,7 +46,7 @@ type HeroContent = {
 const defaults: HeroContent = {
   eyebrow: "PRECISION · إتقان · MASTERY",
   headlines: [
-    "نصنع الـاحتراف.",
+    "نضع الإتقان في قلب كل تفصيل",
     "نصنع الـإبداع.",
     "نصنع الـتميّز.",
     "نصنع الـأثر.",
