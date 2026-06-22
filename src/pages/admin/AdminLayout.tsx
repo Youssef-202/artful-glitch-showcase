@@ -2,7 +2,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import AdminSidebar from "./AdminSidebar";
 import { supabaseExternal } from "@/integrations/supabase/external";
-import { ADMIN_EMAIL } from "./AdminLogin";
+import { checkCurrentUserIsAdmin } from "./AdminLogin";
 import { Loader2 } from "lucide-react";
 
 const titles: Record<string, { t: string; s: string }> = {
@@ -17,6 +17,7 @@ const titles: Record<string, { t: string; s: string }> = {
   "/admin-dashboard010/payments": { t: "المدفوعات", s: "تسجيل ومتابعة عمليات الدفع" },
   "/admin-dashboard010/users": { t: "المستخدمون", s: "إدارة حسابات وملفات المستخدمين" },
   "/admin-dashboard010/messages": { t: "الرسائل الواردة", s: "رسائل الزوار من نموذج التواصل" },
+  "/admin-dashboard010/access": { t: "صلاحيات الأدمن", s: "إدارة الحسابات التي تستطيع الدخول للوحة التحكم" },
   "/admin-dashboard010/guide": { t: "دليل الداشبورد", s: "مرجع كامل لبنية اللوحة وكل الأقسام" },
 };
 
@@ -28,18 +29,25 @@ export default function AdminLayout() {
 
   useEffect(() => {
     let mounted = true;
-    const check = async () => {
+    const verify = async () => {
       const { data } = await supabaseExternal.auth.getSession();
       if (!mounted) return;
-      if (data.session?.user?.email !== ADMIN_EMAIL) {
+      if (!data.session) {
+        navigate("/admin-login", { replace: true });
+        return;
+      }
+      const ok = await checkCurrentUserIsAdmin();
+      if (!mounted) return;
+      if (!ok) {
+        await supabaseExternal.auth.signOut();
         navigate("/admin-login", { replace: true });
       } else {
         setChecking(false);
       }
     };
-    check();
+    verify();
     const { data: sub } = supabaseExternal.auth.onAuthStateChange((_e, session) => {
-      if (session?.user?.email !== ADMIN_EMAIL) navigate("/admin-login", { replace: true });
+      if (!session) navigate("/admin-login", { replace: true });
     });
     return () => {
       mounted = false;
