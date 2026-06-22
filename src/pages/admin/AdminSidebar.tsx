@@ -83,7 +83,7 @@ export default function AdminSidebar() {
       <div className="p-3 border-t border-cyan-500/10">
         <a
           href="/"
-          className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-cyan-400 hover:bg-slate-900/40 transition-all duration-300"
+          className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-xs font-semibold text-white/80 hover:text-white hover:bg-slate-900/40 transition-all duration-300"
         >
           <ExternalLink className="w-4 h-4" />
           <span>العودة للموقع</span>
