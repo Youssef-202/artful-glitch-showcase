@@ -20,31 +20,27 @@ export default function AdminLogin() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    const normalizedEmail = email.trim().toLowerCase();
+
+    if (normalizedEmail !== ADMIN_EMAIL) {
+      toast.error("هذا الحساب غير مصرح له بالدخول");
+      return;
+    }
+
     setLoading(true);
-    const { data, error } = await supabaseExternal.auth.signInWithPassword({ email, password });
+
+    const { data, error } = await supabaseExternal.auth.signInWithPassword({
+      email: normalizedEmail,
+      password,
+    });
+
     if (error) {
-      // Try sign-up bootstrap if first time and using the admin email
-      if (email === ADMIN_EMAIL) {
-        const { error: suErr } = await supabaseExternal.auth.signUp({
-          email,
-          password,
-          options: { emailRedirectTo: `${window.location.origin}/admin-dashboard010` },
-        });
-        if (!suErr) {
-          const { data: d2, error: e2 } = await supabaseExternal.auth.signInWithPassword({ email, password });
-          if (!e2 && d2.session) {
-            toast.success("تم تسجيل الدخول");
-            navigate("/admin-dashboard010", { replace: true });
-            setLoading(false);
-            return;
-          }
-        }
-      }
-      toast.error(error.message || "فشل تسجيل الدخول");
+      toast.error("بيانات الدخول غير صحيحة، تأكد من كلمة المرور وحاول مرة أخرى");
       setLoading(false);
       return;
     }
-    if (data.user?.email !== ADMIN_EMAIL) {
+
+    if (data.user?.email?.toLowerCase() !== ADMIN_EMAIL) {
       await supabaseExternal.auth.signOut();
       toast.error("هذا الحساب غير مصرح له بالدخول");
       setLoading(false);
