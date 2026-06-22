@@ -68,8 +68,8 @@ export default function AdminSidebar() {
               className={({ isActive }) =>
                 `w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-xs font-semibold transition-all duration-300 ${
                   isActive
-                    ? "bg-gradient-to-r from-cyan-500/15 to-transparent border-r-2 border-cyan-400 text-cyan-400"
-                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/40"
+                    ? "bg-gradient-to-r from-cyan-500/15 to-transparent border-r-2 border-cyan-400 text-white"
+                    : "text-white/80 hover:text-white hover:bg-slate-900/40"
                 }`
               }
             >
