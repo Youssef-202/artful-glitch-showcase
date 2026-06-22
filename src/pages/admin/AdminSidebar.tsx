@@ -48,11 +48,11 @@ export default function AdminSidebar() {
 
       <div className="px-5 py-3 border-b border-cyan-500/10 bg-slate-900/30">
         <div className="flex items-center justify-between text-[11px]">
-          <span className="text-slate-400 flex items-center gap-1">
+          <span className="text-white/70 flex items-center gap-1">
             <Database className="w-3 h-3 text-cyan-400" /> الإدارة:
           </span>
-          <span className="flex items-center gap-1 text-emerald-400 font-medium">
-            <Radio className="w-3.5 h-3.5 animate-pulse" /> متصل
+          <span className="flex items-center gap-1 text-white font-medium">
+            <Radio className="w-3.5 h-3.5 animate-pulse text-emerald-400" /> متصل
           </span>
         </div>
       </div>
@@ -68,8 +68,8 @@ export default function AdminSidebar() {
               className={({ isActive }) =>
                 `w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-xs font-semibold transition-all duration-300 ${
                   isActive
-                    ? "bg-gradient-to-r from-cyan-500/15 to-transparent border-r-2 border-cyan-400 text-cyan-400"
-                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/40"
+                    ? "bg-gradient-to-r from-cyan-500/15 to-transparent border-r-2 border-cyan-400 text-white"
+                    : "text-white/80 hover:text-white hover:bg-slate-900/40"
                 }`
               }
             >
@@ -83,7 +83,7 @@ export default function AdminSidebar() {
       <div className="p-3 border-t border-cyan-500/10">
         <a
           href="/"
-          className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-cyan-400 hover:bg-slate-900/40 transition-all duration-300"
+          className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-xs font-semibold text-white/80 hover:text-white hover:bg-slate-900/40 transition-all duration-300"
         >
           <ExternalLink className="w-4 h-4" />
           <span>العودة للموقع</span>
