@@ -4,29 +4,35 @@ import { supabaseExternal } from "@/integrations/supabase/external";
 import { toast } from "sonner";
 import { Lock, Mail, Loader2, ShieldCheck } from "lucide-react";
 
+// Primary/root admin — cannot be removed from the admin list.
 export const ADMIN_EMAIL = "youssf582022@gmail.com";
+
+// Returns true if the currently signed-in user is in the admin_users table.
+export async function checkCurrentUserIsAdmin(): Promise<boolean> {
+  const { data, error } = await supabaseExternal.rpc("current_user_is_admin");
+  if (error) return false;
+  return !!data;
+}
 
 export default function AdminLogin() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState(ADMIN_EMAIL);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    supabaseExternal.auth.getSession().then(({ data }) => {
-      if (data.session?.user?.email === ADMIN_EMAIL) navigate("/admin-dashboard010", { replace: true });
-    });
+    (async () => {
+      const { data } = await supabaseExternal.auth.getSession();
+      if (data.session) {
+        const ok = await checkCurrentUserIsAdmin();
+        if (ok) navigate("/admin-dashboard010", { replace: true });
+      }
+    })();
   }, [navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const normalizedEmail = email.trim().toLowerCase();
-
-    if (normalizedEmail !== ADMIN_EMAIL) {
-      toast.error("هذا الحساب غير مصرح له بالدخول");
-      return;
-    }
-
     setLoading(true);
 
     const { data, error } = await supabaseExternal.auth.signInWithPassword({
@@ -35,14 +41,15 @@ export default function AdminLogin() {
     });
 
     if (error) {
-      toast.error("بيانات الدخول غير صحيحة، تأكد من كلمة المرور وحاول مرة أخرى");
+      toast.error("بيانات الدخول غير صحيحة، تأكد من البريد وكلمة المرور");
       setLoading(false);
       return;
     }
 
-    if (data.user?.email?.toLowerCase() !== ADMIN_EMAIL) {
+    const ok = await checkCurrentUserIsAdmin();
+    if (!ok) {
       await supabaseExternal.auth.signOut();
-      toast.error("هذا الحساب غير مصرح له بالدخول");
+      toast.error("هذا الحساب غير مصرح له بالدخول للوحة التحكم");
       setLoading(false);
       return;
     }
@@ -78,9 +85,9 @@ export default function AdminLogin() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                dir="ltr"
-                className="flex-1 bg-transparent py-2.5 text-sm outline-none placeholder:text-slate-600"
-                placeholder="admin@email.com"
+                autoComplete="email"
+                placeholder="name@example.com"
+                className="flex-1 bg-transparent py-2.5 text-sm text-white outline-none"
               />
             </div>
           </label>
@@ -94,26 +101,19 @@ export default function AdminLogin() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                dir="ltr"
-                className="flex-1 bg-transparent py-2.5 text-sm outline-none placeholder:text-slate-600"
-                placeholder="••••••••"
+                autoComplete="current-password"
+                className="flex-1 bg-transparent py-2.5 text-sm text-white outline-none"
               />
             </div>
           </label>
         </div>
 
         <button
-          type="submit"
           disabled={loading}
-          className="w-full rounded-lg bg-gradient-to-r from-cyan-500 to-pink-500 py-2.5 text-sm font-bold text-white hover:opacity-90 transition disabled:opacity-50 flex items-center justify-center gap-2"
+          className="w-full py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 hover:opacity-90 disabled:opacity-60"
         >
-          {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-          دخول
+          {loading && <Loader2 className="w-4 h-4 animate-spin" />} دخول
         </button>
-
-        <p className="text-[10px] text-slate-500 text-center">
-          جلسة الدخول محفوظة في المتصفح بشكل آمن
-        </p>
       </form>
     </div>
   );

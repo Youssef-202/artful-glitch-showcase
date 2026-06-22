@@ -15,6 +15,7 @@ import {
   BookOpen,
   Radio,
   Database,
+  ShieldCheck,
 } from "lucide-react";
 
 const items = [
@@ -29,6 +30,7 @@ const items = [
   { to: "/admin-dashboard010/payments", label: "المدفوعات", icon: CreditCard },
   { to: "/admin-dashboard010/users", label: "المستخدمون", icon: Users },
   { to: "/admin-dashboard010/messages", label: "الرسائل", icon: Mail },
+  { to: "/admin-dashboard010/access", label: "صلاحيات الأدمن", icon: ShieldCheck },
   { to: "/admin-dashboard010/guide", label: "دليل الداشبورد", icon: BookOpen },
 ];
 

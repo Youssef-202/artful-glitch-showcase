@@ -34,6 +34,7 @@ const AdminPartners = lazy(() => import("./pages/admin/AdminPartners"));
 const AdminOrders = lazy(() => import("./pages/admin/AdminOrders"));
 const AdminPayments = lazy(() => import("./pages/admin/AdminPayments"));
 const AdminUsers = lazy(() => import("./pages/admin/AdminUsers"));
+const AdminAccess = lazy(() => import("./pages/admin/AdminAccess"));
 
 const queryClient = new QueryClient();
 
@@ -61,6 +62,7 @@ const App = () => (
                   <Route path="payments" element={<AdminPayments />} />
                   <Route path="users" element={<AdminUsers />} />
                   <Route path="messages" element={<AdminMessages />} />
+                  <Route path="access" element={<AdminAccess />} />
                   <Route path="guide" element={<AdminGuide />} />
                 </Route>
                 <Route element={<Layout />}>
