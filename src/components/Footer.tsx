@@ -16,10 +16,10 @@ const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export default function Footer() {
   const socials = [
-    { Icon: Linkedin, href: "https://linkedin.com" },
-    { Icon: Tiktok, href: "https://tiktok.com" },
-    { Icon: XIcon, href: "https://x.com" },
-    { Icon: Instagram, href: "https://instagram.com" },
+    { Icon: Linkedin, href: "https://www.linkedin.com/company/etqanagency", label: "LinkedIn" },
+    { Icon: Tiktok, href: "https://www.tiktok.com/@etqanpagency?_r=1", label: "TikTok" },
+    { Icon: XIcon, href: "https://x.com/etqanagency", label: "X (Twitter)" },
+    { Icon: Instagram, href: "https://www.instagram.com/etqanagency", label: "Instagram" },
   ];
 
   const quickLinks = [
@@ -103,15 +103,18 @@ export default function Footer() {
               تابعنا على منصات التواصل الاجتماعي
             </p>
             <div className="flex gap-2.5">
-              {socials.map(({ Icon, href }, i) => (
+              {socials.map(({ Icon, href, label }, i) => (
                 <a
                   key={i}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg glass-strong flex items-center justify-center hover:bg-accent hover:scale-110 transition-all"
+                  aria-label={label}
+                  className="group relative w-9 h-9 rounded-lg glass-strong flex items-center justify-center overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:rotate-[-6deg] hover:shadow-[0_8px_24px_-6px_hsl(var(--accent)/0.6)]"
                 >
-                  <Icon className="w-3.5 h-3.5" />
+                  <span className="absolute inset-0 bg-gradient-to-tr from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="absolute inset-0 rounded-lg ring-1 ring-inset ring-white/0 group-hover:ring-white/30 transition-all duration-300" />
+                  <Icon className="relative w-3.5 h-3.5 transition-transform duration-300 group-hover:scale-125 group-hover:text-white" />
                 </a>
               ))}
             </div>
