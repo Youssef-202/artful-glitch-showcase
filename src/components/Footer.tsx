@@ -16,10 +16,10 @@ const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export default function Footer() {
   const socials = [
-    { Icon: Linkedin, href: "https://linkedin.com" },
-    { Icon: Tiktok, href: "https://tiktok.com" },
-    { Icon: XIcon, href: "https://x.com" },
-    { Icon: Instagram, href: "https://instagram.com" },
+    { Icon: Linkedin, href: "https://www.linkedin.com/company/etqanagency", label: "LinkedIn" },
+    { Icon: Tiktok, href: "https://www.tiktok.com/@etqanpagency?_r=1", label: "TikTok" },
+    { Icon: XIcon, href: "https://x.com/etqanagency", label: "X (Twitter)" },
+    { Icon: Instagram, href: "https://www.instagram.com/etqanagency", label: "Instagram" },
   ];
 
   const quickLinks = [
