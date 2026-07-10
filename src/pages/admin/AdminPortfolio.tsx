@@ -60,7 +60,7 @@ export default function AdminPortfolio() {
           rows.length === 0 ? <div className="p-12 text-center text-slate-500 text-sm">لا توجد مشاريع.</div> :
             <table className="w-full text-right text-xs md:text-sm">
               <thead><tr className="border-b border-slate-800 bg-slate-900/40 text-slate-400">
-                <th className="p-3">العنوان</th><th className="p-3">العميل</th><th className="p-3">التصنيف</th><th className="p-3">السنة</th><th className="p-3">منشور</th><th className="p-3 text-center w-24">إجراءات</th>
+                <th className="p-3 w-16 text-center">الترتيب</th><th className="p-3">العنوان</th><th className="p-3">العميل</th><th className="p-3">التصنيف</th><th className="p-3">السنة</th><th className="p-3">منشور</th><th className="p-3 text-center w-24">إجراءات</th>
               </tr></thead>
               <tbody className="divide-y divide-slate-800/60">
                 {rows.map((r) => (
