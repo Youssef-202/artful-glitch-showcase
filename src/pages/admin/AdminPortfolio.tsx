@@ -65,6 +65,7 @@ export default function AdminPortfolio() {
               <tbody className="divide-y divide-slate-800/60">
                 {rows.map((r) => (
                   <tr key={r.id}>
+                    <td className="p-3 text-center"><span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-mono font-bold text-xs">{r.sort_order ?? 0}</span></td>
                     <td className="p-3 font-bold text-white">{r.title_ar}</td>
                     <td className="p-3 text-slate-400">{r.client_ar || "—"}</td>
                     <td className="p-3 text-slate-400">{r.category || "—"}</td>
