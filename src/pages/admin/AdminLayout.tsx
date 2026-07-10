@@ -18,6 +18,7 @@ const titles: Record<string, { t: string; s: string }> = {
   "/admin-dashboard010/users": { t: "المستخدمون", s: "إدارة حسابات وملفات المستخدمين" },
   "/admin-dashboard010/messages": { t: "الرسائل الواردة", s: "رسائل الزوار من نموذج التواصل" },
   "/admin-dashboard010/access": { t: "صلاحيات الأدمن", s: "إدارة الحسابات التي تستطيع الدخول للوحة التحكم" },
+  "/admin-dashboard010/seo": { t: "السيو ومحركات البحث", s: "تحكم كامل في ظهور الموقع على Google وباقي المنصات" },
   "/admin-dashboard010/guide": { t: "دليل الداشبورد", s: "مرجع كامل لبنية اللوحة وكل الأقسام" },
 };
 
