@@ -16,6 +16,7 @@ import {
   Radio,
   Database,
   ShieldCheck,
+  Search,
 } from "lucide-react";
 
 const items = [
@@ -31,6 +32,7 @@ const items = [
   { to: "/admin-dashboard010/users", label: "المستخدمون", icon: Users },
   { to: "/admin-dashboard010/messages", label: "الرسائل", icon: Mail },
   { to: "/admin-dashboard010/access", label: "صلاحيات الأدمن", icon: ShieldCheck },
+  { to: "/admin-dashboard010/seo", label: "السيو ومحركات البحث", icon: Search },
   { to: "/admin-dashboard010/guide", label: "دليل الداشبورد", icon: BookOpen },
 ];
 
