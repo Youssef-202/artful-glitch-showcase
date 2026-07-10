@@ -6,7 +6,8 @@ import { ContainerScroll, CardSticky } from "@/components/ui/cards-stack";
 
 export default function PortfolioStack() {
   const { t, lang, dir } = useLang();
-  const { items } = usePortfolio();
+  const { items: allItems } = usePortfolio();
+  const items = allItems.slice(0, 10);
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
 
   if (!items.length) return null;
