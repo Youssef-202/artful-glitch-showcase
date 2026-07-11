@@ -17,6 +17,7 @@ import {
   Database,
   ShieldCheck,
   Search,
+  Sparkles,
 } from "lucide-react";
 
 const items = [
@@ -33,6 +34,7 @@ const items = [
   { to: "/admin-dashboard010/messages", label: "الرسائل", icon: Mail },
   { to: "/admin-dashboard010/access", label: "صلاحيات الأدمن", icon: ShieldCheck },
   { to: "/admin-dashboard010/seo", label: "السيو ومحركات البحث", icon: Search },
+  { to: "/admin-dashboard010/hero", label: "واجهة الهيرو", icon: Sparkles },
   { to: "/admin-dashboard010/guide", label: "دليل الداشبورد", icon: BookOpen },
 ];
 

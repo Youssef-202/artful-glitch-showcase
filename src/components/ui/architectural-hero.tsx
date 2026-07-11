@@ -110,6 +110,7 @@ type HeroContent = {
   cta_secondary_href: string;
   card_title: string;
   card_subtitle: string;
+  bg_image: string;
 };
 
 const defaults: HeroContent = {
@@ -126,6 +127,7 @@ const defaults: HeroContent = {
   cta_secondary_href: "/portfolio",
   card_title: "وكالة إتقان",
   card_subtitle: "للخدمات التسويقية",
+  bg_image: "",
 };
 
 function normalize(raw: any): HeroContent {
@@ -136,6 +138,7 @@ function normalize(raw: any): HeroContent {
     headlines: Array.isArray(raw.headlines) && raw.headlines.length > 0 ? raw.headlines : defaults.headlines,
   };
 }
+
 
 function StaticHeadline({ text }: { text: string }) {
   return (
@@ -228,7 +231,7 @@ export default function ArchitecturalHero() {
 
 
               <img
-                src={cityBg}
+                src={content.bg_image || cityBg}
                 alt=""
                 aria-hidden
                 className="absolute inset-0 w-full h-full object-cover"
