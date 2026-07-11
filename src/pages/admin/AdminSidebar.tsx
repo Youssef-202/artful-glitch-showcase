@@ -17,6 +17,7 @@ import {
   Database,
   ShieldCheck,
   Search,
+  Sparkles,
 } from "lucide-react";
 
 const items = [
