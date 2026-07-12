@@ -505,6 +505,22 @@
   color: hsl(172 60% 18%) !important;
 }
 
+/* ============================================================
+   Dark service cards on light backgrounds: keep text white
+   (these cards use deep teal gradients, so the global
+   light-mode readability override would make their text dark)
+   ============================================================ */
+:root:not(.dark) body:not(.admin-body) .service-card-content,
+:root:not(.dark) body:not(.admin-body) .service-card-title,
+:root:not(.dark) body:not(.admin-body) .service-card-body,
+:root:not(.dark) body:not(.admin-body) .service-card-link,
+:root:not(.dark) body:not(.admin-body) .service-card-link svg {
+  color: #ffffff !important;
+}
+:root:not(.dark) body:not(.admin-body) .service-card-body {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
 /* Remove all shadows from images (and their direct wrappers) site-wide */
 body:not(.admin-body) img,
 body:not(.admin-body) picture,
