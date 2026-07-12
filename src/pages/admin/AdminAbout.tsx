@@ -71,6 +71,7 @@ export default function AdminAbout() {
           ...defaults,
           ...row.content,
           reasons: Array.isArray(row.content.reasons) ? row.content.reasons : [],
+          custom_sections: Array.isArray(row.content.custom_sections) ? row.content.custom_sections : [],
         });
       }
       setLoading(false);
