@@ -7,6 +7,15 @@ import aboutVision from "@/assets/about-vision.png";
 import { supabase } from "@/integrations/supabase/external";
 
 type Reason = { title: string; body: string };
+type CustomSection = {
+  kicker: string;
+  title: string;
+  body: string;
+  image: string;
+  image_fit?: "cover" | "contain";
+  image_height?: number;
+  layout: "image-right" | "image-left" | "no-image";
+};
 type AboutContent = {
   header_kicker: string;
   header_title: string;
@@ -25,6 +34,7 @@ type AboutContent = {
   reasons_kicker: string;
   reasons_title: string;
   reasons: Reason[];
+  custom_sections: CustomSection[];
 };
 
 const fallback: AboutContent = {
@@ -45,6 +55,7 @@ const fallback: AboutContent = {
   reasons_kicker: "ما يميّزنا",
   reasons_title: "لماذا تختارنا ؟",
   reasons: [],
+  custom_sections: [],
 };
 
 export default function About() {
