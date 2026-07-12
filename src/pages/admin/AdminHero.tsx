@@ -152,6 +152,23 @@ export default function AdminHero() {
               onChange={(e) => setData({ ...data, card_subtitle: e.target.value })} />
           </Field>
         </div>
+
+        <div className="pt-4 border-t border-slate-800 space-y-3">
+          <div className="text-xs text-slate-300 font-bold">صورة الكارت (الشعار ثلاثي الأبعاد)</div>
+          <p className="text-[11px] text-slate-500">
+            ستحل هذه الصورة محل الشعار داخل الكارت المتحرك — مع الحفاظ على كل تأثيرات الحركة مع الماوس والعمق ثلاثي الأبعاد.
+          </p>
+          <CoverUploader
+            value={data.card_image}
+            onChange={(url) => setData({ ...data, card_image: url || "" })}
+            folder="hero"
+            label="ارفع صورة الكارت (يفضل مربعة بخلفية شفافة PNG)"
+          />
+          <Field label="أو ألصق رابط صورة مباشرة">
+            <input className={inputCls} placeholder="https://..." value={data.card_image}
+              onChange={(e) => setData({ ...data, card_image: e.target.value })} />
+          </Field>
+        </div>
       </div>
 
       <div className="cyber-panel rounded-xl p-6 space-y-4">
