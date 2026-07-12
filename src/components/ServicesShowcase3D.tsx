@@ -62,8 +62,9 @@ function ServiceCard3D({ s, i, dir }: { s: DisplayService; i: number; dir: "rtl"
             {/* Image */}
             <div className="relative aspect-square overflow-hidden" style={{ transform: "translateZ(30px)" }}>
               <motion.img
-                src={s.image}
-                alt={tr.title}
+                src={displayImage}
+                alt={displayTitle}
+
                 loading="lazy"
                 className="w-full h-full object-cover"
                 whileHover={{ scale: 1.12 }}
