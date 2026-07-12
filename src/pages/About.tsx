@@ -7,6 +7,15 @@ import aboutVision from "@/assets/about-vision.png";
 import { supabase } from "@/integrations/supabase/external";
 
 type Reason = { title: string; body: string };
+type CustomSection = {
+  kicker: string;
+  title: string;
+  body: string;
+  image: string;
+  image_fit?: "cover" | "contain";
+  image_height?: number;
+  layout: "image-right" | "image-left" | "no-image";
+};
 type AboutContent = {
   header_kicker: string;
   header_title: string;
@@ -25,6 +34,7 @@ type AboutContent = {
   reasons_kicker: string;
   reasons_title: string;
   reasons: Reason[];
+  custom_sections: CustomSection[];
 };
 
 const fallback: AboutContent = {
@@ -45,6 +55,7 @@ const fallback: AboutContent = {
   reasons_kicker: "ما يميّزنا",
   reasons_title: "لماذا تختارنا ؟",
   reasons: [],
+  custom_sections: [],
 };
 
 export default function About() {
@@ -52,7 +63,13 @@ export default function About() {
 
   useEffect(() => {
     (supabase.from as any)("site_pages").select("content").eq("page_key", "about").maybeSingle()
-      .then(({ data }: any) => { if (data?.content) setC({ ...fallback, ...(data.content as AboutContent) }); });
+      .then(({ data }: any) => {
+        if (data?.content) setC({
+          ...fallback,
+          ...(data.content as AboutContent),
+          custom_sections: Array.isArray((data.content as any).custom_sections) ? (data.content as any).custom_sections : [],
+        });
+      });
   }, []);
 
   return (
@@ -159,6 +176,62 @@ export default function About() {
           </div>
         </section>
       )}
+
+      {/* أقسام مخصصة إضافية */}
+      {c.custom_sections?.map((s, i) => {
+        const fit = s.image_fit ?? "cover";
+        const h = s.image_height ?? 420;
+        if (s.layout === "no-image") {
+          return (
+            <motion.div
+              key={`cs-${i}`}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7 }}
+              className="glass-strong rounded-3xl p-8 lg:p-14 text-right"
+            >
+              {s.kicker && <p className="text-sm text-primary tracking-widest mb-4">{s.kicker}</p>}
+              <h2 className="text-3xl sm:text-5xl font-black mb-6 leading-tight">
+                <span className="text-gradient">{s.title}</span>
+              </h2>
+              <p className="text-base sm:text-lg text-foreground/90 leading-relaxed whitespace-pre-line">{s.body}</p>
+            </motion.div>
+          );
+        }
+        const imageRight = s.layout === "image-right";
+        return (
+          <motion.div
+            key={`cs-${i}`}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7 }}
+            className="grid lg:grid-cols-2 gap-10 items-center glass-strong rounded-3xl p-8 lg:p-12"
+          >
+            <div className={`text-right ${imageRight ? "order-2 lg:order-1" : "order-2"}`}>
+              {s.kicker && <p className="text-sm text-primary tracking-widest mb-4">{s.kicker}</p>}
+              <h2 className="text-3xl sm:text-5xl font-black mb-4 leading-tight">
+                <span className="text-gradient">{s.title}</span>
+              </h2>
+              <p className="text-base sm:text-lg text-foreground/90 leading-relaxed whitespace-pre-line">{s.body}</p>
+            </div>
+            <div
+              className={`w-full rounded-2xl overflow-hidden bg-background/30 ${imageRight ? "order-1 lg:order-2" : "order-1"}`}
+              style={fit === "cover" ? { height: `${h}px` } : { maxHeight: `${h}px` }}
+            >
+              {s.image && (
+                <img
+                  src={s.image}
+                  alt={s.title}
+                  loading="lazy"
+                  className={fit === "cover" ? "w-full h-full object-cover" : "w-full h-auto max-h-full object-contain mx-auto"}
+                />
+              )}
+            </div>
+          </motion.div>
+        );
+      })}
     </div>
   );
 }
