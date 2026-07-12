@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Plus, Edit3, Trash2, X, AlertCircle, FileText, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { CoverUploader, GalleryUploader, Field, inputCls, textareaCls } from "./_shared/uploaders";
+import MarkdownEditor, { normalizeMarkdown } from "./_shared/MarkdownEditor";
 
 const empty: any = {
   title: "", title_en: "", excerpt: "", excerpt_en: "", content: "", content_en: "",
