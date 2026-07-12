@@ -74,11 +74,11 @@ export default function Home() {
                         <span className="text-4xl font-black text-gradient">{p.category?.[0] ?? "✦"}</span>
                       </div>
                     )}
-                    <div className="p-5">
-                      {p.category && <span className="inline-block text-xs text-primary tracking-widest mb-2">{p.category}</span>}
-                      <h3 className="text-lg font-bold mb-2 line-clamp-2 pb-0">{p.title}</h3>
-                      {p.excerpt && <p className="text-sm text-muted-foreground line-clamp-2">{p.excerpt}</p>}
-                      <div className="flex items-center gap-1 mt-3 text-xs text-muted-foreground">
+                    <div className="p-5 text-white">
+                      {p.category && <span className="inline-block text-xs text-teal-300 tracking-widest mb-2">{p.category}</span>}
+                      <h3 className="text-lg font-bold mb-2 line-clamp-2 pb-0 text-white">{p.title}</h3>
+                      {p.excerpt && <p className="text-sm text-white/80 line-clamp-2">{p.excerpt}</p>}
+                      <div className="flex items-center gap-1 mt-3 text-xs text-white/70">
                         {/* Date hidden as requested */}
                       </div>
                     </div>
