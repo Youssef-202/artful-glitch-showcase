@@ -15,6 +15,23 @@ const empty: any = {
 const toLines = (a: any) => (Array.isArray(a) ? a.join("\n") : "");
 const fromLines = (s: string) => s.split("\n").map((x) => x.trim()).filter(Boolean);
 
+const getNextSortOrder = (items: any[]) => {
+  const used = new Set(items.map((item) => Number(item.sort_order ?? 0)).filter((n) => n > 0));
+  let next = 1;
+  while (used.has(next)) next += 1;
+  return next;
+};
+
+const normalizePortfolioOrder = (items: any[]) => {
+  return [...items]
+    .sort((a, b) => {
+      const byOrder = Number(a.sort_order ?? 0) - Number(b.sort_order ?? 0);
+      if (byOrder !== 0) return byOrder;
+      return String(a.created_at ?? a.id ?? "").localeCompare(String(b.created_at ?? b.id ?? ""));
+    })
+    .map((item, index) => ({ ...item, sort_order: index + 1 }));
+};
+
 export default function AdminPortfolio() {
   const [rows, setRows] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -27,33 +44,37 @@ export default function AdminPortfolio() {
   const fetchRows = async () => {
     setLoading(true);
     const { data, error } = await (supabase as any).from("portfolio_items").select("*").order("sort_order");
-    if (error) setErr(error.message); else setRows(data || []);
+    if (error) setErr(error.message); else setRows(normalizePortfolioOrder(data || []));
     setLoading(false);
   };
   useEffect(() => { fetchRows(); }, []);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault(); setSaving(true); setErr(null);
-    const newOrder = Number(form.sort_order) || 0;
+    const cleanRows = normalizePortfolioOrder(rows);
+    const newOrder = Math.max(1, Number(form.sort_order) || 1);
     const payload = { ...form, sort_order: newOrder };
 
-    // Swap logic: if editing and changing sort_order to a value used by another row,
-    // give that other row the old sort_order (swap positions).
     if (editingId) {
-      const current = rows.find((r) => r.id === editingId);
+      const current = cleanRows.find((r) => r.id === editingId);
       const oldOrder = Number(current?.sort_order ?? 0);
-      if (oldOrder !== newOrder) {
-        const conflicts = rows.filter((r) => r.id !== editingId && Number(r.sort_order ?? 0) === newOrder);
-        if (conflicts.length > 0) {
-          // Move conflicting rows to a temp value first to avoid unique-constraint issues, then to oldOrder.
-          const TEMP = -1000000;
-          for (const c of conflicts) {
-            await (supabase as any).from("portfolio_items").update({ sort_order: TEMP }).eq("id", c.id);
-          }
-          for (const c of conflicts) {
-            await (supabase as any).from("portfolio_items").update({ sort_order: oldOrder }).eq("id", c.id);
-          }
-        }
+      const conflict = cleanRows.find((r) => r.id !== editingId && Number(r.sort_order ?? 0) === newOrder);
+
+      if (oldOrder > 0 && oldOrder !== newOrder && conflict) {
+        const { error: swapError } = await (supabase as any)
+          .from("portfolio_items")
+          .update({ sort_order: oldOrder })
+          .eq("id", conflict.id);
+        if (swapError) { setSaving(false); setErr(swapError.message); return; }
+      }
+    } else {
+      const shifted = cleanRows.filter((r) => Number(r.sort_order ?? 0) >= newOrder).sort((a, b) => Number(b.sort_order ?? 0) - Number(a.sort_order ?? 0));
+      for (const item of shifted) {
+        const { error: shiftError } = await (supabase as any)
+          .from("portfolio_items")
+          .update({ sort_order: Number(item.sort_order ?? 0) + 1 })
+          .eq("id", item.id);
+        if (shiftError) { setSaving(false); setErr(shiftError.message); return; }
       }
     }
 
@@ -75,7 +96,7 @@ export default function AdminPortfolio() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-bold text-white flex items-center gap-2"><ImageIcon className="w-5 h-5 text-cyan-400" /> الأعمال</h3>
-        <button onClick={() => { setForm(empty); setEditingId(null); setOpen(true); }} className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold rounded-lg text-sm flex items-center gap-2"><Plus className="w-4 h-4" /> مشروع جديد</button>
+        <button onClick={() => { setForm({ ...empty, sort_order: getNextSortOrder(rows) }); setEditingId(null); setOpen(true); }} className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold rounded-lg text-sm flex items-center gap-2"><Plus className="w-4 h-4" /> مشروع جديد</button>
       </div>
       {err && <div className="p-3 rounded-lg border border-rose-500/30 bg-rose-500/10 text-rose-400 text-xs"><AlertCircle className="w-4 h-4 inline ml-1" /> {err}</div>}
 
