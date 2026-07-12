@@ -14,6 +14,8 @@ type HeroContent = {
   card_subtitle: string;
   bg_image: string;
   card_image: string;
+  card_image_visible: boolean;
+
 };
 
 const defaults: HeroContent = {
