@@ -535,23 +535,23 @@ body:not(.admin-body) *:has(> video) {
 }
 
 /* ============================================================
-   Blog cards on home page: body text white, category/title green
+   Blog cards on home page: title/body/meta white, category green
    ============================================================ */
 .blog-card-content,
 .blog-card-body,
-.blog-card-meta {
+.blog-card-meta,
+h3.blog-card-title {
   color: #ffffff;
 }
-.blog-card-category,
-h3.blog-card-title {
+.blog-card-category {
   color: hsl(var(--primary));
 }
 :root:not(.dark) body:not(.admin-body) .blog-card-content,
 :root:not(.dark) body:not(.admin-body) .blog-card-body,
-:root:not(.dark) body:not(.admin-body) .blog-card-meta {
+:root:not(.dark) body:not(.admin-body) .blog-card-meta,
+:root:not(.dark) body:not(.admin-body) h3.blog-card-title {
   color: #ffffff !important;
 }
-:root:not(.dark) body:not(.admin-body) .blog-card-category,
-:root:not(.dark) body:not(.admin-body) h3.blog-card-title {
+:root:not(.dark) body:not(.admin-body) .blog-card-category {
   color: hsl(var(--primary)) !important;
 }
