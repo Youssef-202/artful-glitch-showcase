@@ -63,7 +63,13 @@ export default function About() {
 
   useEffect(() => {
     (supabase.from as any)("site_pages").select("content").eq("page_key", "about").maybeSingle()
-      .then(({ data }: any) => { if (data?.content) setC({ ...fallback, ...(data.content as AboutContent) }); });
+      .then(({ data }: any) => {
+        if (data?.content) setC({
+          ...fallback,
+          ...(data.content as AboutContent),
+          custom_sections: Array.isArray((data.content as any).custom_sections) ? (data.content as any).custom_sections : [],
+        });
+      });
   }, []);
 
   return (
