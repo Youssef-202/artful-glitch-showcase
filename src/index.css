@@ -504,3 +504,17 @@
 :root:not(.dark) body:not(.admin-body) .text-foreground\/90 {
   color: hsl(172 60% 18%) !important;
 }
+
+/* Remove all shadows from images (and their direct wrappers) site-wide */
+body:not(.admin-body) img,
+body:not(.admin-body) picture,
+body:not(.admin-body) video {
+  box-shadow: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+body:not(.admin-body) *:has(> img),
+body:not(.admin-body) *:has(> picture),
+body:not(.admin-body) *:has(> video) {
+  box-shadow: none !important;
+}
