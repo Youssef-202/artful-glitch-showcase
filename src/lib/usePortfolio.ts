@@ -37,6 +37,12 @@ export function usePortfolio() {
               projectUrl: d.project_url,
               duration: d.duration,
               year: d.year,
+              homeTitleAr: d.home_title_ar,
+              homeTitleEn: d.home_title_en,
+              homeClientAr: d.home_client_ar,
+              homeClientEn: d.home_client_en,
+              homeCoverUrl: d.home_cover_url,
+
             }))
           );
         } else {
