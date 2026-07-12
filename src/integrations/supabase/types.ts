@@ -308,6 +308,11 @@ export type Database = {
           description_en: string | null
           duration: string | null
           gallery_urls: string[] | null
+          home_client_ar: string | null
+          home_client_en: string | null
+          home_cover_url: string | null
+          home_title_ar: string | null
+          home_title_en: string | null
           id: string
           process_steps_ar: string[] | null
           process_steps_en: string[] | null
@@ -334,6 +339,11 @@ export type Database = {
           description_en?: string | null
           duration?: string | null
           gallery_urls?: string[] | null
+          home_client_ar?: string | null
+          home_client_en?: string | null
+          home_cover_url?: string | null
+          home_title_ar?: string | null
+          home_title_en?: string | null
           id?: string
           process_steps_ar?: string[] | null
           process_steps_en?: string[] | null
@@ -360,6 +370,11 @@ export type Database = {
           description_en?: string | null
           duration?: string | null
           gallery_urls?: string[] | null
+          home_client_ar?: string | null
+          home_client_en?: string | null
+          home_cover_url?: string | null
+          home_title_ar?: string | null
+          home_title_en?: string | null
           id?: string
           process_steps_ar?: string[] | null
           process_steps_en?: string[] | null
@@ -524,6 +539,10 @@ export type Database = {
           features_title: string | null
           gallery: Json
           hero_subtitle: string | null
+          home_image_url: string | null
+          home_number: string | null
+          home_tagline: string | null
+          home_title: string | null
           id: string
           image_alt: string | null
           image_caption: string | null
@@ -565,6 +584,10 @@ export type Database = {
           features_title?: string | null
           gallery?: Json
           hero_subtitle?: string | null
+          home_image_url?: string | null
+          home_number?: string | null
+          home_tagline?: string | null
+          home_title?: string | null
           id: string
           image_alt?: string | null
           image_caption?: string | null
@@ -606,6 +629,10 @@ export type Database = {
           features_title?: string | null
           gallery?: Json
           hero_subtitle?: string | null
+          home_image_url?: string | null
+          home_number?: string | null
+          home_tagline?: string | null
+          home_title?: string | null
           id?: string
           image_alt?: string | null
           image_caption?: string | null
