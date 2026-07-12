@@ -34,7 +34,29 @@ export default function AdminPortfolio() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault(); setSaving(true); setErr(null);
-    const payload = { ...form, sort_order: Number(form.sort_order) || 0 };
+    const newOrder = Number(form.sort_order) || 0;
+    const payload = { ...form, sort_order: newOrder };
+
+    // Swap logic: if editing and changing sort_order to a value used by another row,
+    // give that other row the old sort_order (swap positions).
+    if (editingId) {
+      const current = rows.find((r) => r.id === editingId);
+      const oldOrder = Number(current?.sort_order ?? 0);
+      if (oldOrder !== newOrder) {
+        const conflicts = rows.filter((r) => r.id !== editingId && Number(r.sort_order ?? 0) === newOrder);
+        if (conflicts.length > 0) {
+          // Move conflicting rows to a temp value first to avoid unique-constraint issues, then to oldOrder.
+          const TEMP = -1000000;
+          for (const c of conflicts) {
+            await (supabase as any).from("portfolio_items").update({ sort_order: TEMP }).eq("id", c.id);
+          }
+          for (const c of conflicts) {
+            await (supabase as any).from("portfolio_items").update({ sort_order: oldOrder }).eq("id", c.id);
+          }
+        }
+      }
+    }
+
     const q = editingId
       ? (supabase as any).from("portfolio_items").update(payload).eq("id", editingId)
       : (supabase as any).from("portfolio_items").insert([payload]);
