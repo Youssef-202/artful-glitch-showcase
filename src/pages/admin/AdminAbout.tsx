@@ -94,6 +94,25 @@ export default function AdminAbout() {
     set("reasons", data.reasons.map((r, x) => (x === i ? { ...r, ...patch } : r)));
   const rmReason = (i: number) => set("reasons", data.reasons.filter((_, x) => x !== i));
 
+  const addCustom = () => set("custom_sections", [...data.custom_sections, {
+    kicker: "", title: "قسم جديد", body: "", image: "",
+    image_fit: "cover", image_height: 420, layout: "image-right",
+  }]);
+  const updCustom = (i: number, patch: Partial<CustomSection>) =>
+    set("custom_sections", data.custom_sections.map((s, x) => (x === i ? { ...s, ...patch } : s)));
+  const rmCustom = (i: number) => set("custom_sections", data.custom_sections.filter((_, x) => x !== i));
+  const moveCustom = (i: number, dir: -1 | 1) => {
+    const arr = [...data.custom_sections];
+    const j = i + dir;
+    if (j < 0 || j >= arr.length) return;
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+    set("custom_sections", arr);
+  };
+  const addReason = () => set("reasons", [...data.reasons, { title: "", body: "" }]);
+  const updReason = (i: number, patch: Partial<Reason>) =>
+    set("reasons", data.reasons.map((r, x) => (x === i ? { ...r, ...patch } : r)));
+  const rmReason = (i: number) => set("reasons", data.reasons.filter((_, x) => x !== i));
+
   if (loading) return <div className="p-12 text-center text-slate-500 text-sm">جاري التحميل...</div>;
 
   return (
