@@ -302,13 +302,13 @@ export default function ArchitecturalHero() {
               <div className="absolute inset-x-0 bottom-3 sm:bottom-5 md:bottom-7 z-20 flex justify-between items-center px-3 sm:px-6 md:px-8 pointer-events-none">
                 <a
                   href={content.cta_secondary_href}
-                  className="pointer-events-auto rounded-full px-4 sm:px-7 py-2 sm:py-3 text-primary-foreground font-medium text-xs sm:text-base btn-liquid-glass"
+                  className="pointer-events-auto rounded-full px-4 sm:px-7 py-2 sm:py-3 !text-white font-medium text-xs sm:text-base btn-liquid-glass"
                 >
                   {content.cta_secondary_label}
                 </a>
                 <a
                   href={content.cta_primary_href}
-                  className="pointer-events-auto rounded-full px-4 sm:px-7 py-2 sm:py-3 text-primary-foreground font-bold text-xs sm:text-base btn-liquid-glass"
+                  className="pointer-events-auto rounded-full px-4 sm:px-7 py-2 sm:py-3 !text-white font-bold text-xs sm:text-base btn-liquid-glass"
                 >
                   {content.cta_primary_label}
                 </a>
