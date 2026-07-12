@@ -54,7 +54,7 @@ export default function AdminSidebar() {
 
       <div className="px-5 py-3 border-b border-cyan-500/10 bg-slate-900/30">
         <div className="flex items-center justify-between text-[11px]">
-          <span className="text-white/70 flex items-center gap-1">
+          <span className="text-white flex items-center gap-1">
             <Database className="w-3 h-3 text-cyan-400" /> الإدارة:
           </span>
           <span className="flex items-center gap-1 text-white font-medium">
