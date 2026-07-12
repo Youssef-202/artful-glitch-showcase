@@ -87,13 +87,13 @@ function ServiceCard3D({ s, i, dir }: { s: typeof services[number]; i: number; d
               className="relative p-5 pt-4"
               style={{ transform: "translateZ(40px)" }}
             >
-              <h3 className="text-lg font-black mb-1 text-white">
+              <h3 className="text-lg font-black mb-1 !text-white">
                 {tr.title}
               </h3>
-              <p className="text-sm text-teal-100/80 line-clamp-2 mb-3">{tr.tagline}</p>
-              <span className="inline-flex items-center gap-1.5 text-teal-300 text-sm font-bold transition-all duration-300 group-hover:gap-3">
+              <p className="text-sm !text-white/80 line-clamp-2 mb-3">{tr.tagline}</p>
+              <span className="inline-flex items-center gap-1.5 !text-teal-300 text-sm font-bold transition-all duration-300 group-hover:gap-3">
                 {t.common.learnMore}
-                <Arrow className="w-3.5 h-3.5" />
+                <Arrow className="w-3.5 h-3.5 !text-teal-300" />
               </span>
               {/* underline accent */}
               <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-teal-400 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
