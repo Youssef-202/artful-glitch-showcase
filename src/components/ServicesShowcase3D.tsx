@@ -8,7 +8,12 @@ import { useServices, type DisplayService } from "@/lib/useServices";
 function ServiceCard3D({ s, i, dir }: { s: DisplayService; i: number; dir: "rtl" | "ltr" }) {
   const { t } = useLang();
   const tr = (t.services as any)[s.id] ?? { title: s.title, tagline: s.tagline, description: s.description };
+  const displayTitle = s.homeTitle || tr.title;
+  const displayTagline = s.homeTagline || tr.tagline;
+  const displayNumber = s.homeNumber || s.number;
+  const displayImage = s.homeImage || s.image;
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
+
   const ref = useRef<HTMLAnchorElement>(null);
 
   const mx = useMotionValue(0.5);
