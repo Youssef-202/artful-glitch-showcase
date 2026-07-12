@@ -9,7 +9,9 @@ const empty: any = {
   cover_url: "", gallery_urls: [], process_steps_ar: [], process_steps_en: [],
   project_url: "", duration: "", year: "", color: "#06b6d4", accent: "#ec4899",
   sort_order: 0, published: true,
+  home_title_ar: "", home_title_en: "", home_client_ar: "", home_client_en: "", home_cover_url: "",
 };
+
 const toLines = (a: any) => (Array.isArray(a) ? a.join("\n") : "");
 const fromLines = (s: string) => s.split("\n").map((x) => x.trim()).filter(Boolean);
 
@@ -108,6 +110,31 @@ export default function AdminPortfolio() {
 
               <CoverUploader value={form.cover_url} onChange={(u) => setForm({ ...form, cover_url: u || "" })} folder="portfolio" />
               <GalleryUploader value={form.gallery_urls} onChange={(u) => setForm({ ...form, gallery_urls: u })} folder="portfolio-gallery" label="معرض صور المشروع (10+ صور)" />
+
+              <div className="border border-cyan-500/30 bg-cyan-500/5 rounded-xl p-4 space-y-4">
+                <div className="border-r-2 border-cyan-400/60 pr-3">
+                  <h5 className="font-bold text-white text-sm">كرت المشروع داخل الصفحة الرئيسية</h5>
+                  <p className="text-[11px] text-slate-400 mt-0.5">
+                    هذه الحقول تتحكم في الكرت الظاهر داخل شرائح الأعمال في الصفحة الرئيسية فقط — منفصلة عن صفحة تفاصيل المشروع. اترك أي حقل فارغاً لاستخدام قيم صفحة التفاصيل.
+                  </p>
+                </div>
+                <CoverUploader
+                  value={form.home_cover_url}
+                  onChange={(u) => setForm({ ...form, home_cover_url: u || "" })}
+                  folder="portfolio-home"
+                  label="غلاف الكرت في الصفحة الرئيسية"
+                />
+                <Field label="أو ألصق رابط صورة مباشرة">
+                  <input className={inputCls} placeholder="https://..." value={form.home_cover_url || ""} onChange={(e) => setForm({ ...form, home_cover_url: e.target.value })} />
+                </Field>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Field label="عنوان الكرت (عربي)"><input className={inputCls} value={form.home_title_ar || ""} onChange={(e) => setForm({ ...form, home_title_ar: e.target.value })} /></Field>
+                  <Field label="Home Title (English)"><input className={inputCls} value={form.home_title_en || ""} onChange={(e) => setForm({ ...form, home_title_en: e.target.value })} /></Field>
+                  <Field label="اسم العميل في الكرت (عربي)"><input className={inputCls} value={form.home_client_ar || ""} onChange={(e) => setForm({ ...form, home_client_ar: e.target.value })} /></Field>
+                  <Field label="Home Client (English)"><input className={inputCls} value={form.home_client_en || ""} onChange={(e) => setForm({ ...form, home_client_en: e.target.value })} /></Field>
+                </div>
+              </div>
+
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Field label="خطوات العمل (عربي)" hint="سطر لكل خطوة"><textarea className={textareaCls + " h-24"} value={toLines(form.process_steps_ar)} onChange={(e) => setForm({ ...form, process_steps_ar: fromLines(e.target.value) })} /></Field>

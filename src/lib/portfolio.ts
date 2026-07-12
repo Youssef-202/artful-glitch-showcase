@@ -20,7 +20,13 @@ export type PortfolioItem = {
   projectUrl?: string | null;
   duration?: string | null;
   year?: string | null;
+  homeTitleAr?: string | null;
+  homeTitleEn?: string | null;
+  homeClientAr?: string | null;
+  homeClientEn?: string | null;
+  homeCoverUrl?: string | null;
 };
+
 
 // Fallback used only if DB fetch fails / is empty
 export const portfolioItemsFallback: PortfolioItem[] = [

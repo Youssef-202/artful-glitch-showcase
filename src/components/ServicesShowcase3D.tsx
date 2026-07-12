@@ -8,7 +8,12 @@ import { useServices, type DisplayService } from "@/lib/useServices";
 function ServiceCard3D({ s, i, dir }: { s: DisplayService; i: number; dir: "rtl" | "ltr" }) {
   const { t } = useLang();
   const tr = (t.services as any)[s.id] ?? { title: s.title, tagline: s.tagline, description: s.description };
+  const displayTitle = s.homeTitle || tr.title;
+  const displayTagline = s.homeTagline || tr.tagline;
+  const displayNumber = s.homeNumber || s.number;
+  const displayImage = s.homeImage || s.image;
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
+
   const ref = useRef<HTMLAnchorElement>(null);
 
   const mx = useMotionValue(0.5);
@@ -57,8 +62,9 @@ function ServiceCard3D({ s, i, dir }: { s: DisplayService; i: number; dir: "rtl"
             {/* Image */}
             <div className="relative aspect-square overflow-hidden" style={{ transform: "translateZ(30px)" }}>
               <motion.img
-                src={s.image}
-                alt={tr.title}
+                src={displayImage}
+                alt={displayTitle}
+
                 loading="lazy"
                 className="w-full h-full object-cover"
                 whileHover={{ scale: 1.12 }}
@@ -71,7 +77,7 @@ function ServiceCard3D({ s, i, dir }: { s: DisplayService; i: number; dir: "rtl"
                 style={{ transform: "translateZ(60px)" }}
               >
                 <span className="relative inline-flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-br from-teal-400 to-teal-700 text-white font-black text-base shadow-[0_0_20px_rgba(3,108,95,0.6)]">
-                  {s.number}
+                  {displayNumber}
                   <span className="absolute inset-0 rounded-2xl ring-2 ring-teal-400/50 animate-pulse-ring" />
                 </span>
               </div>
@@ -88,9 +94,10 @@ function ServiceCard3D({ s, i, dir }: { s: DisplayService; i: number; dir: "rtl"
               style={{ transform: "translateZ(40px)" }}
             >
               <h3 className="text-lg font-black mb-1 !text-white">
-                {tr.title}
+                {displayTitle}
               </h3>
-              <p className="text-sm !text-white/80 line-clamp-2 mb-3">{tr.tagline}</p>
+              <p className="text-sm !text-white/80 line-clamp-2 mb-3">{displayTagline}</p>
+
               <span className="inline-flex items-center gap-1.5 !text-teal-300 text-sm font-bold transition-all duration-300 group-hover:gap-3">
                 {t.common.learnMore}
                 <Arrow className="w-3.5 h-3.5 !text-teal-300" />
