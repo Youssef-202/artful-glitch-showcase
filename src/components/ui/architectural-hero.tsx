@@ -112,6 +112,8 @@ type HeroContent = {
   card_subtitle: string;
   bg_image: string;
   card_image: string;
+  card_image_visible?: boolean;
+
 };
 
 const defaults: HeroContent = {
@@ -130,6 +132,8 @@ const defaults: HeroContent = {
   card_subtitle: "للخدمات التسويقية",
   bg_image: "",
   card_image: "",
+  card_image_visible: true,
+
 };
 
 function normalize(raw: any): HeroContent {
@@ -279,9 +283,12 @@ export default function ArchitecturalHero() {
                   </p>
                 </motion.div>
 
-                <div className="w-full max-w-xs sm:max-w-sm md:max-w-md">
-                  <Logo3DCard className="w-full" imageUrl={content.card_image || undefined} />
-                </div>
+                {content.card_image_visible !== false && (
+                  <div className="w-full max-w-xs sm:max-w-sm md:max-w-md">
+                    <Logo3DCard className="w-full" imageUrl={content.card_image || undefined} />
+                  </div>
+                )}
+
               </div>
 
               {/* Bottom-corner CTAs (same as before, kept) */}
