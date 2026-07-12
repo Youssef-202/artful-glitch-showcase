@@ -28,7 +28,17 @@ export default function AdminBlog() {
   useEffect(() => { fetchRows(); }, []);
 
   const openAdd = () => { setForm(empty); setEditingId(null); setOpen(true); };
-  const openEdit = (r: any) => { setForm({ ...empty, ...r, gallery_urls: r.gallery_urls || [] }); setEditingId(r.id); setOpen(true); };
+  const openEdit = (r: any) => {
+    setForm({
+      ...empty,
+      ...r,
+      gallery_urls: r.gallery_urls || [],
+      content: normalizeMarkdown(r.content || ""),
+      content_en: normalizeMarkdown(r.content_en || ""),
+    });
+    setEditingId(r.id);
+    setOpen(true);
+  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault(); setSaving(true); setErr(null);
