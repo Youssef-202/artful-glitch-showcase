@@ -108,12 +108,9 @@ export default function AdminAbout() {
     [arr[i], arr[j]] = [arr[j], arr[i]];
     set("custom_sections", arr);
   };
-  const addReason = () => set("reasons", [...data.reasons, { title: "", body: "" }]);
-  const updReason = (i: number, patch: Partial<Reason>) =>
-    set("reasons", data.reasons.map((r, x) => (x === i ? { ...r, ...patch } : r)));
-  const rmReason = (i: number) => set("reasons", data.reasons.filter((_, x) => x !== i));
 
   if (loading) return <div className="p-12 text-center text-slate-500 text-sm">جاري التحميل...</div>;
+
 
   return (
     <div dir="rtl" className="space-y-6">
