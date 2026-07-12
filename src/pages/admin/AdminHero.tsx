@@ -13,6 +13,7 @@ type HeroContent = {
   card_title: string;
   card_subtitle: string;
   bg_image: string;
+  card_image: string;
 };
 
 const defaults: HeroContent = {
@@ -25,6 +26,7 @@ const defaults: HeroContent = {
   card_title: "وكالة إتقان",
   card_subtitle: "للخدمات التسويقية",
   bg_image: "",
+  card_image: "",
 };
 
 export default function AdminHero() {
@@ -148,6 +150,23 @@ export default function AdminHero() {
           <Field label="العنوان الفرعي">
             <input className={inputCls} value={data.card_subtitle}
               onChange={(e) => setData({ ...data, card_subtitle: e.target.value })} />
+          </Field>
+        </div>
+
+        <div className="pt-4 border-t border-slate-800 space-y-3">
+          <div className="text-xs text-slate-300 font-bold">صورة الكارت (الشعار ثلاثي الأبعاد)</div>
+          <p className="text-[11px] text-slate-500">
+            ستحل هذه الصورة محل الشعار داخل الكارت المتحرك — مع الحفاظ على كل تأثيرات الحركة مع الماوس والعمق ثلاثي الأبعاد.
+          </p>
+          <CoverUploader
+            value={data.card_image}
+            onChange={(url) => setData({ ...data, card_image: url || "" })}
+            folder="hero"
+            label="ارفع صورة الكارت (يفضل مربعة بخلفية شفافة PNG)"
+          />
+          <Field label="أو ألصق رابط صورة مباشرة">
+            <input className={inputCls} placeholder="https://..." value={data.card_image}
+              onChange={(e) => setData({ ...data, card_image: e.target.value })} />
           </Field>
         </div>
       </div>

@@ -3,9 +3,10 @@ import logoWhite from "@/assets/logo-white.png";
 
 interface Logo3DCardProps {
   className?: string;
+  imageUrl?: string;
 }
 
-export default function Logo3DCard({ className = "" }: Logo3DCardProps) {
+export default function Logo3DCard({ className = "", imageUrl }: Logo3DCardProps) {
   const logoRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
@@ -44,7 +45,7 @@ export default function Logo3DCard({ className = "" }: Logo3DCardProps) {
             style={{ transform: "translateZ(40px)" }}
           >
             <img
-              src={logoWhite}
+              src={imageUrl || logoWhite}
               alt="إتقان"
               draggable={false}
               className="w-full h-full object-contain drop-shadow-[0_0_25px_rgba(45,212,191,0.6)] transition-transform duration-300 hover:scale-105"

@@ -111,6 +111,7 @@ type HeroContent = {
   card_title: string;
   card_subtitle: string;
   bg_image: string;
+  card_image: string;
 };
 
 const defaults: HeroContent = {
@@ -128,6 +129,7 @@ const defaults: HeroContent = {
   card_title: "وكالة إتقان",
   card_subtitle: "للخدمات التسويقية",
   bg_image: "",
+  card_image: "",
 };
 
 function normalize(raw: any): HeroContent {
@@ -278,7 +280,7 @@ export default function ArchitecturalHero() {
                 </motion.div>
 
                 <div className="w-full max-w-xs sm:max-w-sm md:max-w-md">
-                  <Logo3DCard className="w-full" />
+                  <Logo3DCard className="w-full" imageUrl={content.card_image || undefined} />
                 </div>
               </div>
 
