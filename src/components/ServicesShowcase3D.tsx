@@ -90,17 +90,17 @@ function ServiceCard3D({ s, i, dir }: { s: DisplayService; i: number; dir: "rtl"
 
             {/* Content */}
             <div
-              className="relative p-5 pt-4"
+              className="service-card-content relative p-5 pt-4"
               style={{ transform: "translateZ(40px)" }}
             >
-              <h3 className="text-lg font-black mb-1 !text-white">
+              <h3 className="service-card-title text-lg font-black mb-1">
                 {displayTitle}
               </h3>
-              <p className="text-sm !text-white/80 line-clamp-2 mb-3">{displayTagline}</p>
+              <p className="service-card-body text-sm line-clamp-2 mb-3">{displayTagline}</p>
 
-              <span className="inline-flex items-center gap-1.5 !text-teal-300 text-sm font-bold transition-all duration-300 group-hover:gap-3">
+              <span className="service-card-link inline-flex items-center gap-1.5 text-sm font-bold transition-all duration-300 group-hover:gap-3">
                 {t.common.learnMore}
-                <Arrow className="w-3.5 h-3.5 !text-teal-300" />
+                <Arrow className="w-3.5 h-3.5" />
               </span>
               {/* underline accent */}
               <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-teal-400 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
