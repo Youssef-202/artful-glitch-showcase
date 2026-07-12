@@ -512,7 +512,6 @@
    ============================================================ */
 :root:not(.dark) body:not(.admin-body) .service-card-content,
 :root:not(.dark) body:not(.admin-body) .service-card-title,
-:root:not(.dark) body:not(.admin-body) .service-card-body,
 :root:not(.dark) body:not(.admin-body) .service-card-link,
 :root:not(.dark) body:not(.admin-body) .service-card-link svg {
   color: #ffffff !important;
