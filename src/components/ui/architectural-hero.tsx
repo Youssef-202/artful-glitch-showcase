@@ -268,7 +268,10 @@ export default function ArchitecturalHero() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.9, delay: 0.4 }}
-                  className="rounded-2xl px-6 sm:px-10 py-3 sm:py-4 mb-4 sm:mb-6 backdrop-blur-md border border-foreground/15"
+                  className={`rounded-2xl px-6 sm:px-10 py-3 sm:py-4 mb-4 sm:mb-6 backdrop-blur-md border border-foreground/15 ${
+                    content.card_text_visible === false ? "invisible" : ""
+                  }`}
+                  aria-hidden={content.card_text_visible === false}
                   style={{
                     background:
                       "linear-gradient(180deg, hsl(var(--primary) / 0.22), hsl(var(--primary) / 0.08))",
@@ -283,11 +286,15 @@ export default function ArchitecturalHero() {
                   </p>
                 </motion.div>
 
-                {content.card_image_visible !== false && (
-                  <div className="w-full max-w-xs sm:max-w-sm md:max-w-md">
-                    <Logo3DCard className="w-full" imageUrl={content.card_image || undefined} />
-                  </div>
-                )}
+                <div
+                  className={`w-full max-w-xs sm:max-w-sm md:max-w-md ${
+                    content.card_image_visible === false ? "invisible" : ""
+                  }`}
+                  aria-hidden={content.card_image_visible === false}
+                >
+                  <Logo3DCard className="w-full" imageUrl={content.card_image || undefined} />
+                </div>
+
 
               </div>
 
