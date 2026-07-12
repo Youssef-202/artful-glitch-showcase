@@ -24,9 +24,10 @@ export function useServices() {
     let active = true;
     (supabase as any)
       .from("services")
-      .select("id,number,title,tagline,description,image_url,sort_order,published")
+      .select("id,number,title,tagline,description,image_url,home_number,home_title,home_tagline,home_image_url,sort_order,published")
       .eq("published", true)
       .order("sort_order", { ascending: true })
+
       .then(({ data }: any) => {
         if (!active) return;
         if (data && data.length) {
