@@ -9,7 +9,12 @@ export type DisplayService = {
   tagline: string;
   description: string;
   image: string;
+  homeNumber?: string;
+  homeTitle?: string;
+  homeTagline?: string;
+  homeImage?: string;
 };
+
 
 export function useServices() {
   const [items, setItems] = useState<DisplayService[]>([]);
