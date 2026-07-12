@@ -152,6 +152,7 @@ export default function AdminServices() {
 
 type TabKey =
   | "basics"
+  | "home_card"
   | "content"
   | "details"
   | "faqs"
@@ -162,6 +163,7 @@ type TabKey =
 
 const TABS: { key: TabKey; label: string; hint: string }[] = [
   { key: "basics", label: "الأساسيات", hint: "المعرّف، العنوان، الحالة" },
+  { key: "home_card", label: "كرت الصفحة الرئيسية", hint: "التحكم في مظهر الكرت داخل الصفحة الرئيسية فقط" },
   { key: "content", label: "المحتوى", hint: "الأوصاف والعناوين الرئيسية" },
   { key: "details", label: "النقاط والتفاصيل", hint: "المميزات، الخطوات، المخرجات" },
   { key: "faqs", label: "الأسئلة الشائعة", hint: "أسئلة وأجوبة منسّقة" },
@@ -170,6 +172,7 @@ const TABS: { key: TabKey; label: string; hint: string }[] = [
   { key: "sections", label: "عناوين الأقسام", hint: "تخصيص عناوين كل قسم بالصفحة" },
   { key: "seo", label: "تحسين محركات البحث", hint: "Meta title و description" },
 ];
+
 
 function ServiceEditor({
   form,
