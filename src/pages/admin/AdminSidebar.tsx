@@ -32,12 +32,8 @@ const items = [
   { to: "/admin-dashboard010/testimonials", label: "آراء العملاء", icon: MessageSquare },
   { to: "/admin-dashboard010/access", label: "صلاحيات الأدمن", icon: ShieldCheck },
   { to: "/admin-dashboard010/seo", label: "السيو ومحركات البحث", icon: Search },
-  { to: "/admin-dashboard010/pages", label: "صفحات الموقع", icon: Globe },
   { to: "/admin-dashboard010/orders", label: "الطلبات", icon: ShoppingBag },
-  { to: "/admin-dashboard010/payments", label: "المدفوعات", icon: CreditCard },
-  { to: "/admin-dashboard010/users", label: "المستخدمون", icon: Users },
   { to: "/admin-dashboard010/messages", label: "الرسائل", icon: Mail },
-  { to: "/admin-dashboard010/guide", label: "دليل الداشبورد", icon: BookOpen },
 ];
 
 export default function AdminSidebar() {
