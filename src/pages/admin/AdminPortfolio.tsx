@@ -9,7 +9,9 @@ const empty: any = {
   cover_url: "", gallery_urls: [], process_steps_ar: [], process_steps_en: [],
   project_url: "", duration: "", year: "", color: "#06b6d4", accent: "#ec4899",
   sort_order: 0, published: true,
+  home_title_ar: "", home_title_en: "", home_client_ar: "", home_client_en: "", home_cover_url: "",
 };
+
 const toLines = (a: any) => (Array.isArray(a) ? a.join("\n") : "");
 const fromLines = (s: string) => s.split("\n").map((x) => x.trim()).filter(Boolean);
 
