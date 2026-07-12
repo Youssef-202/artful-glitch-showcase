@@ -42,7 +42,13 @@ export default function AdminBlog() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault(); setSaving(true); setErr(null);
-    const payload = { ...form, reading_time: Number(form.reading_time) || 0, sort_order: Number(form.sort_order) || 0 };
+    const payload = {
+      ...form,
+      content: normalizeMarkdown(form.content || ""),
+      content_en: normalizeMarkdown(form.content_en || ""),
+      reading_time: Number(form.reading_time) || 0,
+      sort_order: Number(form.sort_order) || 0,
+    };
     const q = editingId
       ? (supabase as any).from("blog_posts").update(payload).eq("id", editingId)
       : (supabase as any).from("blog_posts").insert([payload]);
