@@ -29,6 +29,8 @@ const defaults: HeroContent = {
   card_subtitle: "للخدمات التسويقية",
   bg_image: "",
   card_image: "",
+  card_image_visible: true,
+
 };
 
 export default function AdminHero() {
