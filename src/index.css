@@ -555,3 +555,23 @@ h3.blog-card-title {
 :root:not(.dark) body:not(.admin-body) .blog-card-category {
   color: hsl(var(--primary)) !important;
 }
+
+/* ============================================================
+   Admin sidebar navigation: force all text/icons white
+   ============================================================ */
+.admin-sidebar-nav a,
+.admin-sidebar-nav a span,
+.admin-sidebar-nav a svg,
+.admin-sidebar-nav a.active,
+.admin-sidebar-nav a[aria-current="page"] span,
+.admin-sidebar-nav a[aria-current="page"] svg,
+aside .p-3.border-t a,
+aside .p-3.border-t a span,
+aside .p-3.border-t a svg {
+  color: #ffffff !important;
+}
+.admin-sidebar-nav a:hover,
+.admin-sidebar-nav a:hover span,
+.admin-sidebar-nav a:hover svg {
+  color: #ffffff !important;
+}
