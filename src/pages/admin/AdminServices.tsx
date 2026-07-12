@@ -262,6 +262,42 @@ function ServiceEditor({
             </Section>
           )}
 
+          {/* ============ Home Card ============ */}
+          {tab === "home_card" && (
+            <Section
+              title="كرت الخدمة داخل الصفحة الرئيسية"
+              desc="هذه الحقول تتحكم فقط في الكرت الظاهر داخل الصفحة الرئيسية (Home Page) — منفصلة تماماً عن صفحة تفاصيل الخدمة. اترك أي حقل فارغاً لاستخدام القيمة الأساسية من تبويب «الأساسيات»."
+            >
+              <CoverUploader
+                value={form.home_image_url}
+                onChange={(u) => set("home_image_url", u || "")}
+                folder="services-home"
+                label="صورة الكرت في الصفحة الرئيسية"
+              />
+              <Field label="أو ألصق رابط صورة مباشرة">
+                <input
+                  className={inputCls}
+                  placeholder="https://..."
+                  value={form.home_image_url || ""}
+                  onChange={(e) => set("home_image_url", e.target.value)}
+                />
+              </Field>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Field label="رقم الكرت في الهوم" hint="مثال: 01 — اتركه فارغاً لاستخدام الرقم الأساسي">
+                  <input className={inputCls} value={form.home_number || ""} onChange={(e) => set("home_number", e.target.value)} />
+                </Field>
+                <Field label="عنوان الكرت في الهوم" hint="اتركه فارغاً لاستخدام العنوان الأساسي">
+                  <input className={inputCls} value={form.home_title || ""} onChange={(e) => set("home_title", e.target.value)} />
+                </Field>
+                <Field label="العنوان الفرعي في الهوم" hint="اتركه فارغاً لاستخدام Tagline الأساسي">
+                  <input className={inputCls} value={form.home_tagline || ""} onChange={(e) => set("home_tagline", e.target.value)} />
+                </Field>
+              </div>
+            </Section>
+          )}
+
+
+
           {/* ============ Content ============ */}
           {tab === "content" && (
             <Section title="نصوص الخدمة" desc="الأوصاف التي تظهر في صفحة الخدمة بكل مستوياتها.">
