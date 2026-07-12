@@ -32,7 +32,12 @@ const empty: Service = {
   seo_description: "",
   sort_order: 0,
   published: true,
+  home_title: "",
+  home_tagline: "",
+  home_number: "",
+  home_image_url: "",
 };
+
 
 const toLines = (a: any) => (Array.isArray(a) ? a.join("\n") : "");
 const fromLines = (s: string) => s.split("\n").map((x) => x.trim()).filter(Boolean);
