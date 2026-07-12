@@ -98,25 +98,25 @@ export default function Blog() {
                           <span className="text-4xl font-black text-gradient">{category?.[0] ?? "✦"}</span>
                         </div>
                       )}
-                      <div className="p-6">
+                      <div className="p-6 text-white">
                         <div className="flex items-center gap-2 mb-2">
                           {category && (
-                            <span className="inline-block text-xs text-primary tracking-widest">{category}</span>
+                            <span className="inline-block text-xs text-teal-300 tracking-widest">{category}</span>
                           )}
                           {p.featured && (
-                            <span className="inline-flex items-center gap-1 text-[10px] font-bold bg-primary/15 text-primary px-2 py-0.5 rounded-full">
-                              <Star className="w-3 h-3 fill-primary" /> مميز
+                            <span className="inline-flex items-center gap-1 text-[10px] font-bold bg-white/15 text-white px-2 py-0.5 rounded-full">
+                              <Star className="w-3 h-3 fill-white" /> مميز
                             </span>
                           )}
                         </div>
-                        <h2 className="text-xl font-bold mb-2 line-clamp-2 pb-0">{title}</h2>
-                        {excerpt && <p className="text-sm text-muted-foreground line-clamp-3 mb-4">{excerpt}</p>}
-                        <div className="flex items-center gap-4 text-xs text-muted-foreground flex-wrap">
+                        <h2 className="text-xl font-bold mb-2 line-clamp-2 pb-0 text-white">{title}</h2>
+                        {excerpt && <p className="text-sm text-white/80 line-clamp-3 mb-4">{excerpt}</p>}
+                        <div className="flex items-center gap-4 text-xs text-white/70 flex-wrap">
                           {author && <span className="flex items-center gap-1"><User className="w-3 h-3" />{author}</span>}
                           {/* Date hidden as requested */}
                           {p.reading_time ? <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{p.reading_time} د</span> : null}
                         </div>
-                        <span className="inline-flex items-center gap-1 mt-4 text-primary text-sm font-bold opacity-0 group-hover:opacity-100 transition">
+                        <span className="inline-flex items-center gap-1 mt-4 text-teal-300 text-sm font-bold opacity-0 group-hover:opacity-100 transition">
                           {t.blog.readMore} <Arrow className="w-3 h-3" />
                         </span>
                       </div>
