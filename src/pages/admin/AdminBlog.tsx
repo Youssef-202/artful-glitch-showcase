@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Plus, Edit3, Trash2, X, AlertCircle, FileText, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { CoverUploader, GalleryUploader, Field, inputCls, textareaCls } from "./_shared/uploaders";
+import MarkdownEditor, { normalizeMarkdown } from "./_shared/MarkdownEditor";
 
 const empty: any = {
   title: "", title_en: "", excerpt: "", excerpt_en: "", content: "", content_en: "",
@@ -27,11 +28,27 @@ export default function AdminBlog() {
   useEffect(() => { fetchRows(); }, []);
 
   const openAdd = () => { setForm(empty); setEditingId(null); setOpen(true); };
-  const openEdit = (r: any) => { setForm({ ...empty, ...r, gallery_urls: r.gallery_urls || [] }); setEditingId(r.id); setOpen(true); };
+  const openEdit = (r: any) => {
+    setForm({
+      ...empty,
+      ...r,
+      gallery_urls: r.gallery_urls || [],
+      content: normalizeMarkdown(r.content || ""),
+      content_en: normalizeMarkdown(r.content_en || ""),
+    });
+    setEditingId(r.id);
+    setOpen(true);
+  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault(); setSaving(true); setErr(null);
-    const payload = { ...form, reading_time: Number(form.reading_time) || 0, sort_order: Number(form.sort_order) || 0 };
+    const payload = {
+      ...form,
+      content: normalizeMarkdown(form.content || ""),
+      content_en: normalizeMarkdown(form.content_en || ""),
+      reading_time: Number(form.reading_time) || 0,
+      sort_order: Number(form.sort_order) || 0,
+    };
     const q = editingId
       ? (supabase as any).from("blog_posts").update(payload).eq("id", editingId)
       : (supabase as any).from("blog_posts").insert([payload]);
@@ -96,8 +113,12 @@ export default function AdminBlog() {
               </div>
               <Field label="مقتطف (عربي)"><textarea className={textareaCls + " h-20"} value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} /></Field>
               <Field label="Excerpt (English)"><textarea className={textareaCls + " h-20"} value={form.excerpt_en} onChange={(e) => setForm({ ...form, excerpt_en: e.target.value })} /></Field>
-              <Field label="المحتوى (عربي) — يدعم Markdown"><textarea className={textareaCls + " h-48"} value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} /></Field>
-              <Field label="Content (English)"><textarea className={textareaCls + " h-40"} value={form.content_en} onChange={(e) => setForm({ ...form, content_en: e.target.value })} /></Field>
+              <Field label="المحتوى (عربي) — محرّر احترافي بمعاينة مباشرة">
+                <MarkdownEditor dir="rtl" value={form.content || ""} onChange={(v) => setForm({ ...form, content: v })} minHeight={360} />
+              </Field>
+              <Field label="Content (English) — Professional editor with live preview">
+                <MarkdownEditor dir="ltr" value={form.content_en || ""} onChange={(v) => setForm({ ...form, content_en: v })} minHeight={300} />
+              </Field>
 
               <CoverUploader value={form.cover_url} onChange={(u) => setForm({ ...form, cover_url: u || "" })} folder="blog" />
               <GalleryUploader value={form.gallery_urls} onChange={(u) => setForm({ ...form, gallery_urls: u })} folder="blog-gallery" label="معرض صور المقال (10+ صور)" />
