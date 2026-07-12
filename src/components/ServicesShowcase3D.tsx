@@ -3,11 +3,11 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
 import { useRef, MouseEvent } from "react";
 import { useLang } from "@/i18n/LanguageProvider";
-import { services } from "@/lib/services";
+import { useServices, type DisplayService } from "@/lib/useServices";
 
-function ServiceCard3D({ s, i, dir }: { s: typeof services[number]; i: number; dir: "rtl" | "ltr" }) {
+function ServiceCard3D({ s, i, dir }: { s: DisplayService; i: number; dir: "rtl" | "ltr" }) {
   const { t } = useLang();
-  const tr = t.services[s.id as keyof typeof t.services];
+  const tr = (t.services as any)[s.id] ?? { title: s.title, tagline: s.tagline, description: s.description };
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
   const ref = useRef<HTMLAnchorElement>(null);
 
@@ -118,6 +118,7 @@ function ServiceCard3D({ s, i, dir }: { s: typeof services[number]; i: number; d
 
 export default function ServicesShowcase3D() {
   const { t, dir } = useLang();
+  const { items: services } = useServices();
   return (
     <section className="relative px-6 py-24 max-w-7xl mx-auto">
       {/* ambient backdrop */}

@@ -2,11 +2,13 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
-import { services } from "@/lib/services";
+import { useServices } from "@/lib/useServices";
 
 export default function ServicesIndex() {
   const { t, dir } = useLang();
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
+  const { items: services } = useServices();
+
 
   return (
     <div className="px-6 py-12 max-w-7xl mx-auto">
@@ -19,7 +21,7 @@ export default function ServicesIndex() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {services.map((s, i) => {
-          const tr = t.services[s.id as keyof typeof t.services];
+          const tr = (t.services as any)[s.id] ?? { title: s.title, tagline: s.tagline, description: s.description };
           return (
             <motion.div
               key={s.id}
