@@ -398,6 +398,52 @@
   --tw-drop-shadow: none !important;
 }
 
+/* ============ Light-mode ambient green aurora (subtle + 3D drift) ============ */
+:root:not(.dark) body {
+  background:
+    radial-gradient(60% 40% at 15% 10%, hsl(172 70% 92%) 0%, transparent 60%),
+    radial-gradient(50% 35% at 90% 20%, hsl(160 65% 90%) 0%, transparent 65%),
+    radial-gradient(70% 45% at 50% 100%, hsl(172 60% 94%) 0%, transparent 70%),
+    hsl(172 45% 98%);
+}
+:root:not(.dark) body::before,
+:root:not(.dark) body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(70px);
+  opacity: 0.55;
+  will-change: transform;
+}
+:root:not(.dark) body::before {
+  background:
+    radial-gradient(35% 35% at 20% 30%, hsl(172 85% 65% / 0.35), transparent 70%),
+    radial-gradient(30% 30% at 80% 70%, hsl(160 80% 55% / 0.28), transparent 70%);
+  animation: auroraDriftA 22s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+:root:not(.dark) body::after {
+  background:
+    radial-gradient(25% 25% at 70% 20%, hsl(172 90% 60% / 0.28), transparent 70%),
+    radial-gradient(30% 30% at 30% 80%, hsl(165 85% 55% / 0.25), transparent 70%);
+  animation: auroraDriftB 28s ease-in-out infinite;
+}
+@keyframes auroraDriftA {
+  0%, 100% { transform: perspective(900px) translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1); }
+  50%      { transform: perspective(900px) translate3d(4%, -3%, 40px) rotateX(6deg) rotateY(-6deg) scale(1.08); }
+}
+@keyframes auroraDriftB {
+  0%, 100% { transform: perspective(900px) translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1.05); }
+  50%      { transform: perspective(900px) translate3d(-5%, 4%, 60px) rotateX(-5deg) rotateY(7deg) scale(0.95); }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:not(.dark) body::before,
+  :root:not(.dark) body::after { animation: none; }
+}
+
+
 /* ============ Cyberpunk Admin Dashboard ============ */
 .cyber-grid {
   background-image:
