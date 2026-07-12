@@ -13,6 +13,7 @@ type HeroContent = {
   card_title: string;
   card_subtitle: string;
   bg_image: string;
+  card_image: string;
 };
 
 const defaults: HeroContent = {
@@ -25,6 +26,7 @@ const defaults: HeroContent = {
   card_title: "وكالة إتقان",
   card_subtitle: "للخدمات التسويقية",
   bg_image: "",
+  card_image: "",
 };
 
 export default function AdminHero() {
