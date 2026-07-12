@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
-import { Loader2, Save, AlertCircle, Info, Plus, Trash2, Image as ImageIcon, Type, Sparkles } from "lucide-react";
+import { Loader2, Save, AlertCircle, Info, Plus, Trash2, Image as ImageIcon, Type, Sparkles, Layers, ChevronUp, ChevronDown } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { CoverUploader, Field, inputCls, textareaCls } from "./_shared/uploaders";
 
 type Reason = { title: string; body: string };
+export type CustomSection = {
+  kicker: string;
+  title: string;
+  body: string;
+  image: string;
+  image_fit: "cover" | "contain";
+  image_height: number;
+  layout: "image-right" | "image-left" | "no-image";
+};
 type AboutContent = {
   header_kicker: string;
   header_title: string;
@@ -22,6 +31,7 @@ type AboutContent = {
   reasons_kicker: string;
   reasons_title: string;
   reasons: Reason[];
+  custom_sections: CustomSection[];
 };
 
 const defaults: AboutContent = {
@@ -42,6 +52,7 @@ const defaults: AboutContent = {
   reasons_kicker: "ما يميّزنا",
   reasons_title: "لماذا تختارنا ؟",
   reasons: [],
+  custom_sections: [],
 };
 
 export default function AdminAbout() {
