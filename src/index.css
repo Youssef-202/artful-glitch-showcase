@@ -461,3 +461,46 @@
 .text-glow-cyan { text-shadow: 0 0 8px rgba(0, 242, 254, 0.5); }
 .text-glow-pink { text-shadow: 0 0 8px rgba(255, 0, 127, 0.5); }
 .text-glow-purple { text-shadow: 0 0 8px rgba(157, 78, 221, 0.5); }
+
+
+/* ============================================================
+   Light mode readability — dark body text, green headings
+   (Admin dashboard keeps its cyber theme; service/portfolio cards
+    that use Tailwind's `!text-white` are NOT overridden because
+    the selector below does not match `.\!text-white`.)
+   ============================================================ */
+:root:not(.dark) body:not(.admin-body) h1,
+:root:not(.dark) body:not(.admin-body) h2,
+:root:not(.dark) body:not(.admin-body) h3,
+:root:not(.dark) body:not(.admin-body) h4,
+:root:not(.dark) body:not(.admin-body) h5,
+:root:not(.dark) body:not(.admin-body) h6 {
+  color: hsl(var(--primary)) !important;
+}
+/* Keep text-gradient headings using the gradient, not a flat color */
+:root:not(.dark) body:not(.admin-body) h1 .text-gradient,
+:root:not(.dark) body:not(.admin-body) h2 .text-gradient,
+:root:not(.dark) body:not(.admin-body) h3 .text-gradient,
+:root:not(.dark) body:not(.admin-body) h4 .text-gradient,
+:root:not(.dark) body:not(.admin-body) .text-gradient {
+  color: transparent !important;
+}
+
+/* Force any plain white utility text to become dark & readable in light mode */
+:root:not(.dark) body:not(.admin-body) .text-white,
+:root:not(.dark) body:not(.admin-body) [class*="text-white\\/"],
+:root:not(.dark) body:not(.admin-body) .text-white\/50,
+:root:not(.dark) body:not(.admin-body) .text-white\/60,
+:root:not(.dark) body:not(.admin-body) .text-white\/70,
+:root:not(.dark) body:not(.admin-body) .text-white\/80,
+:root:not(.dark) body:not(.admin-body) .text-white\/90 {
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Muted / secondary text remains clearly readable */
+:root:not(.dark) body:not(.admin-body) .text-muted-foreground,
+:root:not(.dark) body:not(.admin-body) .text-foreground\/70,
+:root:not(.dark) body:not(.admin-body) .text-foreground\/80,
+:root:not(.dark) body:not(.admin-body) .text-foreground\/90 {
+  color: hsl(172 60% 18%) !important;
+}

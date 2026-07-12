@@ -48,11 +48,13 @@ export default function AdminLayout() {
       }
     };
     verify();
+    document.body.classList.add("admin-body");
     const { data: sub } = supabaseExternal.auth.onAuthStateChange((_e, session) => {
       if (!session) navigate("/admin-login", { replace: true });
     });
     return () => {
       mounted = false;
+      document.body.classList.remove("admin-body");
       sub.subscription.unsubscribe();
     };
   }, [navigate]);
