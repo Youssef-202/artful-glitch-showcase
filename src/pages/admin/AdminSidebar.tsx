@@ -63,7 +63,7 @@ export default function AdminSidebar() {
         </div>
       </div>
 
-      <nav className="flex-1 px-3 py-3 space-y-0.5 overflow-y-auto">
+      <nav className="flex-1 px-3 py-3 space-y-0.5 overflow-y-auto admin-sidebar-nav">
         {items.map((it) => {
           const Icon = it.icon;
           return (
@@ -75,12 +75,12 @@ export default function AdminSidebar() {
                 `w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-xs font-semibold transition-all duration-300 ${
                   isActive
                     ? "bg-gradient-to-r from-cyan-500/15 to-transparent border-r-2 border-cyan-400 text-white"
-                    : "text-white/80 hover:text-white hover:bg-slate-900/40"
+                    : "text-white hover:text-white hover:bg-slate-900/40"
                 }`
               }
             >
-              <Icon className="w-4 h-4" />
-              <span>{it.label}</span>
+              <Icon className="w-4 h-4 text-white" />
+              <span className="text-white">{it.label}</span>
             </NavLink>
           );
         })}
