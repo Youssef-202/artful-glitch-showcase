@@ -46,7 +46,15 @@ export default function PortfolioStack() {
 
         {/* Stacked cards column */}
         <div className="flex flex-col gap-6">
-          {items.map((item, index) => (
+          {items.map((item, index) => {
+            const cover = item.homeCoverUrl || item.coverUrl;
+            const title = lang === "ar"
+              ? (item.homeTitleAr || item.titleAr)
+              : (item.homeTitleEn || item.titleEn);
+            const client = lang === "ar"
+              ? (item.homeClientAr || item.clientAr)
+              : (item.homeClientEn || item.clientEn);
+            return (
             <CardSticky
               key={item.id}
               index={index}
@@ -61,10 +69,10 @@ export default function PortfolioStack() {
                 }}
               >
                 <div className="relative aspect-[4/5] sm:aspect-[5/4] w-full overflow-hidden">
-                  {item.coverUrl && (
+                  {cover && (
                     <img
-                      src={item.coverUrl}
-                      alt={lang === "ar" ? item.titleAr : item.titleEn}
+                      src={cover}
+                      alt={title}
                       loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
@@ -80,16 +88,18 @@ export default function PortfolioStack() {
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-start">
                     <h3 className="text-xl sm:text-3xl font-black mb-1 leading-tight text-white">
-                      {lang === "ar" ? item.titleAr : item.titleEn}
+                      {title}
                     </h3>
                     <p className="text-xs sm:text-sm text-white/70">
-                      {lang === "ar" ? item.clientAr : item.clientEn}
+                      {client}
                     </p>
                   </div>
                 </div>
               </Link>
             </CardSticky>
-          ))}
+            );
+          })}
+
         </div>
       </ContainerScroll>
     </section>
