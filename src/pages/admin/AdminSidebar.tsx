@@ -18,6 +18,7 @@ import {
   ShieldCheck,
   Search,
   Sparkles,
+  Info,
 } from "lucide-react";
 
 const items = [
@@ -27,6 +28,7 @@ const items = [
   { to: "/admin-dashboard010/services", label: "الخدمات", icon: Wrench },
   { to: "/admin-dashboard010/portfolio", label: "الأعمال", icon: ImageIcon },
   { to: "/admin-dashboard010/blog", label: "المدونة", icon: FileText },
+  { to: "/admin-dashboard010/about", label: "من نحن", icon: Info },
   { to: "/admin-dashboard010/testimonials", label: "آراء العملاء", icon: MessageSquare },
   { to: "/admin-dashboard010/access", label: "صلاحيات الأدمن", icon: ShieldCheck },
   { to: "/admin-dashboard010/seo", label: "السيو ومحركات البحث", icon: Search },
