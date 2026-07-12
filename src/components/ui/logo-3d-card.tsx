@@ -3,9 +3,10 @@ import logoWhite from "@/assets/logo-white.png";
 
 interface Logo3DCardProps {
   className?: string;
+  imageUrl?: string;
 }
 
-export default function Logo3DCard({ className = "" }: Logo3DCardProps) {
+export default function Logo3DCard({ className = "", imageUrl }: Logo3DCardProps) {
   const logoRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
