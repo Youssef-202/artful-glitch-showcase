@@ -15,7 +15,7 @@ type HeroContent = {
   bg_image: string;
   card_image: string;
   card_image_visible: boolean;
-
+  card_text_visible: boolean;
 };
 
 const defaults: HeroContent = {
@@ -30,7 +30,7 @@ const defaults: HeroContent = {
   bg_image: "",
   card_image: "",
   card_image_visible: true,
-
+  card_text_visible: true,
 };
 
 export default function AdminHero() {
