@@ -77,7 +77,7 @@ function ServiceCard3D({ s, i, dir }: { s: DisplayService; i: number; dir: "rtl"
                 style={{ transform: "translateZ(60px)" }}
               >
                 <span className="relative inline-flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-br from-teal-400 to-teal-700 text-white font-black text-base shadow-[0_0_20px_rgba(3,108,95,0.6)]">
-                  {s.number}
+                  {displayNumber}
                   <span className="absolute inset-0 rounded-2xl ring-2 ring-teal-400/50 animate-pulse-ring" />
                 </span>
               </div>
