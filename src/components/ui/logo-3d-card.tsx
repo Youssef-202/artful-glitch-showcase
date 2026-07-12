@@ -45,7 +45,7 @@ export default function Logo3DCard({ className = "", imageUrl }: Logo3DCardProps
             style={{ transform: "translateZ(40px)" }}
           >
             <img
-              src={logoWhite}
+              src={imageUrl || logoWhite}
               alt="إتقان"
               draggable={false}
               className="w-full h-full object-contain drop-shadow-[0_0_25px_rgba(45,212,191,0.6)] transition-transform duration-300 hover:scale-105"
