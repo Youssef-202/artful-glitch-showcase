@@ -113,8 +113,12 @@ export default function AdminBlog() {
               </div>
               <Field label="مقتطف (عربي)"><textarea className={textareaCls + " h-20"} value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} /></Field>
               <Field label="Excerpt (English)"><textarea className={textareaCls + " h-20"} value={form.excerpt_en} onChange={(e) => setForm({ ...form, excerpt_en: e.target.value })} /></Field>
-              <Field label="المحتوى (عربي) — يدعم Markdown"><textarea className={textareaCls + " h-48"} value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} /></Field>
-              <Field label="Content (English)"><textarea className={textareaCls + " h-40"} value={form.content_en} onChange={(e) => setForm({ ...form, content_en: e.target.value })} /></Field>
+              <Field label="المحتوى (عربي) — محرّر احترافي بمعاينة مباشرة">
+                <MarkdownEditor dir="rtl" value={form.content || ""} onChange={(v) => setForm({ ...form, content: v })} minHeight={360} />
+              </Field>
+              <Field label="Content (English) — Professional editor with live preview">
+                <MarkdownEditor dir="ltr" value={form.content_en || ""} onChange={(v) => setForm({ ...form, content_en: v })} minHeight={300} />
+              </Field>
 
               <CoverUploader value={form.cover_url} onChange={(u) => setForm({ ...form, cover_url: u || "" })} folder="blog" />
               <GalleryUploader value={form.gallery_urls} onChange={(u) => setForm({ ...form, gallery_urls: u })} folder="blog-gallery" label="معرض صور المقال (10+ صور)" />
