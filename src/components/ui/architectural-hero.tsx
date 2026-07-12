@@ -280,7 +280,7 @@ export default function ArchitecturalHero() {
                 </motion.div>
 
                 <div className="w-full max-w-xs sm:max-w-sm md:max-w-md">
-                  <Logo3DCard className="w-full" />
+                  <Logo3DCard className="w-full" imageUrl={content.card_image || undefined} />
                 </div>
               </div>
 
