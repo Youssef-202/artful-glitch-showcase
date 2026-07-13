@@ -7,7 +7,8 @@ import MarkdownEditor, { normalizeMarkdown } from "./_shared/MarkdownEditor";
 const empty: any = {
   title: "", title_en: "", excerpt: "", excerpt_en: "", content: "", content_en: "",
   category: "", category_en: "", author_name: "", author_name_en: "",
-  cover_url: "", gallery_urls: [], reading_time: 5, sort_order: 0, featured: false, published: true,
+  cover_url: "", cover_url_light: "", title_color_light: "",
+  gallery_urls: [], reading_time: 5, sort_order: 0, featured: false, published: true,
 };
 
 export default function AdminBlog() {
