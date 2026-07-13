@@ -13,6 +13,9 @@ const empty: any = {
   home_title_color: "#ffffff", home_client_color: "#ffffffb3",
   portfolio_cover_url: "", portfolio_title_color: "#ffffff", portfolio_client_color: "#ffffffcc",
   detail_cover_url: "",
+  home_cover_url_light: "", portfolio_cover_url_light: "", detail_cover_url_light: "",
+  home_title_color_light: "", home_client_color_light: "",
+  portfolio_title_color_light: "", portfolio_client_color_light: "",
 };
 
 const toLines = (a: any) => (Array.isArray(a) ? a.join("\n") : "");
