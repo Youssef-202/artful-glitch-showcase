@@ -188,6 +188,14 @@ export default function AdminPortfolio() {
                     <input type="color" className={inputCls + " h-10"} value={form.home_client_color || "#ffffff"} onChange={(e) => setForm({ ...form, home_client_color: e.target.value })} />
                   </Field>
                 </div>
+                <div className="mt-2 p-3 rounded-lg border border-amber-500/30 bg-amber-500/5 space-y-3">
+                  <div className="text-xs font-bold text-amber-300">إعدادات الوضع الفاتح للكرت في الهوم</div>
+                  <CoverUploader value={form.home_cover_url_light} onChange={(u) => setForm({ ...form, home_cover_url_light: u || "" })} folder="portfolio-home" label="غلاف الكرت (وضع فاتح)" />
+                  <div className="grid grid-cols-2 gap-3">
+                    <Field label="لون العنوان (فاتح)"><input type="color" className={inputCls + " h-10"} value={form.home_title_color_light || "#0f172a"} onChange={(e) => setForm({ ...form, home_title_color_light: e.target.value })} /></Field>
+                    <Field label="لون اسم العميل (فاتح)"><input type="color" className={inputCls + " h-10"} value={form.home_client_color_light || "#334155"} onChange={(e) => setForm({ ...form, home_client_color_light: e.target.value })} /></Field>
+                  </div>
+                </div>
               </div>
 
               {/* Portfolio listing page card */}
