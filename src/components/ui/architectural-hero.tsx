@@ -187,14 +187,6 @@ export default function ArchitecturalHero() {
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary rounded-full blur-[120px] animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-accent rounded-full blur-[100px]" />
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 2px 2px, hsl(var(--primary) / 0.1) 1px, transparent 0)",
-            backgroundSize: "40px 40px",
-          }}
-        />
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-8 flex flex-col items-center">
