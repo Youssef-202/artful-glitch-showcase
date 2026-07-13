@@ -48,6 +48,13 @@ export function usePortfolio() {
               portfolioTitleColor: d.portfolio_title_color,
               portfolioClientColor: d.portfolio_client_color,
               detailCoverUrl: d.detail_cover_url,
+              homeCoverUrlLight: d.home_cover_url_light,
+              portfolioCoverUrlLight: d.portfolio_cover_url_light,
+              detailCoverUrlLight: d.detail_cover_url_light,
+              homeTitleColorLight: d.home_title_color_light,
+              homeClientColorLight: d.home_client_color_light,
+              portfolioTitleColorLight: d.portfolio_title_color_light,
+              portfolioClientColorLight: d.portfolio_client_color_light,
 
             }))
           );
