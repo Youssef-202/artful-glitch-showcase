@@ -42,6 +42,12 @@ export function usePortfolio() {
               homeClientAr: d.home_client_ar,
               homeClientEn: d.home_client_en,
               homeCoverUrl: d.home_cover_url,
+              homeTitleColor: d.home_title_color,
+              homeClientColor: d.home_client_color,
+              portfolioCoverUrl: d.portfolio_cover_url,
+              portfolioTitleColor: d.portfolio_title_color,
+              portfolioClientColor: d.portfolio_client_color,
+              detailCoverUrl: d.detail_cover_url,
 
             }))
           );

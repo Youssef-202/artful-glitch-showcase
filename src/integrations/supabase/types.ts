@@ -306,14 +306,20 @@ export type Database = {
           created_by: string | null
           description_ar: string | null
           description_en: string | null
+          detail_cover_url: string | null
           duration: string | null
           gallery_urls: string[] | null
           home_client_ar: string | null
+          home_client_color: string | null
           home_client_en: string | null
           home_cover_url: string | null
           home_title_ar: string | null
+          home_title_color: string | null
           home_title_en: string | null
           id: string
+          portfolio_client_color: string | null
+          portfolio_cover_url: string | null
+          portfolio_title_color: string | null
           process_steps_ar: string[] | null
           process_steps_en: string[] | null
           project_url: string | null
@@ -337,14 +343,20 @@ export type Database = {
           created_by?: string | null
           description_ar?: string | null
           description_en?: string | null
+          detail_cover_url?: string | null
           duration?: string | null
           gallery_urls?: string[] | null
           home_client_ar?: string | null
+          home_client_color?: string | null
           home_client_en?: string | null
           home_cover_url?: string | null
           home_title_ar?: string | null
+          home_title_color?: string | null
           home_title_en?: string | null
           id?: string
+          portfolio_client_color?: string | null
+          portfolio_cover_url?: string | null
+          portfolio_title_color?: string | null
           process_steps_ar?: string[] | null
           process_steps_en?: string[] | null
           project_url?: string | null
@@ -368,14 +380,20 @@ export type Database = {
           created_by?: string | null
           description_ar?: string | null
           description_en?: string | null
+          detail_cover_url?: string | null
           duration?: string | null
           gallery_urls?: string[] | null
           home_client_ar?: string | null
+          home_client_color?: string | null
           home_client_en?: string | null
           home_cover_url?: string | null
           home_title_ar?: string | null
+          home_title_color?: string | null
           home_title_en?: string | null
           id?: string
+          portfolio_client_color?: string | null
+          portfolio_cover_url?: string | null
+          portfolio_title_color?: string | null
           process_steps_ar?: string[] | null
           process_steps_en?: string[] | null
           project_url?: string | null
@@ -560,6 +578,7 @@ export type Database = {
           reasons_title: string | null
           seo_description: string | null
           seo_title: string | null
+          services_page_image_url: string | null
           sort_order: number
           summary_title: string | null
           tagline: string | null
@@ -605,6 +624,7 @@ export type Database = {
           reasons_title?: string | null
           seo_description?: string | null
           seo_title?: string | null
+          services_page_image_url?: string | null
           sort_order?: number
           summary_title?: string | null
           tagline?: string | null
@@ -650,6 +670,7 @@ export type Database = {
           reasons_title?: string | null
           seo_description?: string | null
           seo_title?: string | null
+          services_page_image_url?: string | null
           sort_order?: number
           summary_title?: string | null
           tagline?: string | null

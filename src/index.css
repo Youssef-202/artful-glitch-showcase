@@ -407,11 +407,14 @@
 
 /* ============ Light-mode ambient green aurora (subtle + 3D drift) ============ */
 :root:not(.dark) body {
-  background:
+  background-color: hsl(172 45% 98%);
+  background-image:
     radial-gradient(60% 40% at 15% 10%, hsl(172 70% 92%) 0%, transparent 60%),
     radial-gradient(50% 35% at 90% 20%, hsl(160 65% 90%) 0%, transparent 65%),
     radial-gradient(70% 45% at 50% 100%, hsl(172 60% 94%) 0%, transparent 70%),
-    hsl(172 45% 98%);
+    linear-gradient(rgba(10, 178, 146, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 178, 146, 0.08) 1px, transparent 1px);
+  background-size: auto, auto, auto, 42px 42px, 42px 42px;
 }
 :root:not(.dark) body::before,
 :root:not(.dark) body::after {
