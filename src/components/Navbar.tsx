@@ -72,15 +72,15 @@ export default function Navbar() {
           <motion.img
             src={logoMark.url}
             alt="وكالة إتقان"
+            data-keep-filter
             className="transition-all duration-300"
             style={{
               height: scrolled ? 28 : 36,
               filter:
                 theme === "dark"
                   ? undefined
-                  : "brightness(0) saturate(100%) invert(38%) sepia(85%) saturate(1200%) hue-rotate(140deg) brightness(85%) contrast(101%)",
+                  : "brightness(0) saturate(100%) invert(15%) sepia(60%) saturate(2500%) hue-rotate(150deg) brightness(60%) contrast(110%)",
             }}
-            
           />
           {!scrolled && (
             <motion.span
