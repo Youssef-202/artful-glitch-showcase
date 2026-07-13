@@ -40,6 +40,7 @@ export function useServices() {
               tagline: d.tagline ?? "",
               description: d.description ?? "",
               image: d.image_url || fallbackServices.find((f) => f.id === d.id)?.image || "",
+              servicesPageImage: d.services_page_image_url ?? "",
               homeNumber: d.home_number ?? "",
               homeTitle: d.home_title ?? "",
               homeTagline: d.home_tagline ?? "",
