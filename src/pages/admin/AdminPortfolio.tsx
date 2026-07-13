@@ -250,6 +250,10 @@ export default function AdminPortfolio() {
                 <Field label="أو ألصق رابط صورة مباشرة">
                   <input className={inputCls} placeholder="https://..." value={form.detail_cover_url || ""} onChange={(e) => setForm({ ...form, detail_cover_url: e.target.value })} />
                 </Field>
+                <div className="mt-2 p-3 rounded-lg border border-amber-500/30 bg-amber-500/5 space-y-3">
+                  <div className="text-xs font-bold text-amber-300">صورة صفحة التفاصيل (وضع فاتح)</div>
+                  <CoverUploader value={form.detail_cover_url_light} onChange={(u) => setForm({ ...form, detail_cover_url_light: u || "" })} folder="portfolio-detail" label="صورة الهيرو (وضع فاتح)" />
+                </div>
               </div>
 
 
