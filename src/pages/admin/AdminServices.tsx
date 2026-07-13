@@ -37,6 +37,13 @@ const empty: Service = {
   home_number: "",
   home_image_url: "",
   services_page_image_url: "",
+  image_url_light: "",
+  home_image_url_light: "",
+  services_page_image_url_light: "",
+  title_color_light: "",
+  tagline_color_light: "",
+  home_title_color_light: "",
+  home_tagline_color_light: "",
 };
 
 
