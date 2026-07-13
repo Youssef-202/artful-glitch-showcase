@@ -105,10 +105,16 @@ function TiltCard({
             style={{ transform: "translateZ(70px)" }}
             className="absolute bottom-0 inset-x-0 p-5 translate-y-2 group-hover:translate-y-0 transition-transform duration-500"
           >
-            <h3 className="text-lg font-black text-white line-clamp-1">
+            <h3
+              className="text-lg font-black line-clamp-1"
+              style={{ color: item.portfolioTitleColor || "#ffffff" }}
+            >
               {lang === "ar" ? item.titleAr : item.titleEn}
             </h3>
-            <p className="text-xs text-white/80 line-clamp-1 mt-0.5">
+            <p
+              className="text-xs line-clamp-1 mt-0.5"
+              style={{ color: item.portfolioClientColor || "rgba(255,255,255,0.8)" }}
+            >
               {lang === "ar" ? item.clientAr : item.clientEn}
             </p>
           </motion.div>
