@@ -178,7 +178,59 @@ export default function AdminPortfolio() {
                   <Field label="Home Title (English)"><input className={inputCls} value={form.home_title_en || ""} onChange={(e) => setForm({ ...form, home_title_en: e.target.value })} /></Field>
                   <Field label="اسم العميل في الكرت (عربي)"><input className={inputCls} value={form.home_client_ar || ""} onChange={(e) => setForm({ ...form, home_client_ar: e.target.value })} /></Field>
                   <Field label="Home Client (English)"><input className={inputCls} value={form.home_client_en || ""} onChange={(e) => setForm({ ...form, home_client_en: e.target.value })} /></Field>
+                  <Field label="لون نص العنوان في الهوم" hint="اللون الظاهر فوق صورة الكرت">
+                    <input type="color" className={inputCls + " h-10"} value={form.home_title_color || "#ffffff"} onChange={(e) => setForm({ ...form, home_title_color: e.target.value })} />
+                  </Field>
+                  <Field label="لون نص اسم العميل في الهوم">
+                    <input type="color" className={inputCls + " h-10"} value={form.home_client_color || "#ffffff"} onChange={(e) => setForm({ ...form, home_client_color: e.target.value })} />
+                  </Field>
                 </div>
+              </div>
+
+              {/* Portfolio listing page card */}
+              <div className="border border-fuchsia-500/30 bg-fuchsia-500/5 rounded-xl p-4 space-y-4">
+                <div className="border-r-2 border-fuchsia-400/60 pr-3">
+                  <h5 className="font-bold text-white text-sm">كرت المشروع داخل صفحة معرض الأعمال (/portfolio)</h5>
+                  <p className="text-[11px] text-slate-400 mt-0.5">
+                    صورة ونصوص خاصة بصفحة معرض الأعمال — بمقاسات مختلفة عن الصفحة الرئيسية وصفحة تفاصيل المشروع. اترك الصورة فارغة لاستخدام صورة الغلاف الأساسية.
+                  </p>
+                </div>
+                <CoverUploader
+                  value={form.portfolio_cover_url}
+                  onChange={(u) => setForm({ ...form, portfolio_cover_url: u || "" })}
+                  folder="portfolio-list"
+                  label="صورة الكرت في صفحة معرض الأعمال"
+                />
+                <Field label="أو ألصق رابط صورة مباشرة">
+                  <input className={inputCls} placeholder="https://..." value={form.portfolio_cover_url || ""} onChange={(e) => setForm({ ...form, portfolio_cover_url: e.target.value })} />
+                </Field>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Field label="لون نص العنوان في المعرض">
+                    <input type="color" className={inputCls + " h-10"} value={form.portfolio_title_color || "#ffffff"} onChange={(e) => setForm({ ...form, portfolio_title_color: e.target.value })} />
+                  </Field>
+                  <Field label="لون نص اسم العميل في المعرض">
+                    <input type="color" className={inputCls + " h-10"} value={form.portfolio_client_color || "#ffffff"} onChange={(e) => setForm({ ...form, portfolio_client_color: e.target.value })} />
+                  </Field>
+                </div>
+              </div>
+
+              {/* Detail page cover */}
+              <div className="border border-emerald-500/30 bg-emerald-500/5 rounded-xl p-4 space-y-4">
+                <div className="border-r-2 border-emerald-400/60 pr-3">
+                  <h5 className="font-bold text-white text-sm">صورة صفحة تفاصيل المشروع (/portfolio/:id)</h5>
+                  <p className="text-[11px] text-slate-400 mt-0.5">
+                    صورة الهيرو الظاهرة داخل صفحة المشروع نفسه — منفصلة عن صورة الهوم وصورة صفحة المعرض. اتركها فارغة لاستخدام صورة الغلاف الأساسية.
+                  </p>
+                </div>
+                <CoverUploader
+                  value={form.detail_cover_url}
+                  onChange={(u) => setForm({ ...form, detail_cover_url: u || "" })}
+                  folder="portfolio-detail"
+                  label="صورة صفحة تفاصيل المشروع"
+                />
+                <Field label="أو ألصق رابط صورة مباشرة">
+                  <input className={inputCls} placeholder="https://..." value={form.detail_cover_url || ""} onChange={(e) => setForm({ ...form, detail_cover_url: e.target.value })} />
+                </Field>
               </div>
 
 
