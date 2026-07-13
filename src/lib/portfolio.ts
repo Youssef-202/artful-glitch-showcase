@@ -31,6 +31,14 @@ export type PortfolioItem = {
   portfolioTitleColor?: string | null;
   portfolioClientColor?: string | null;
   detailCoverUrl?: string | null;
+  // Light-mode overrides
+  homeCoverUrlLight?: string | null;
+  portfolioCoverUrlLight?: string | null;
+  detailCoverUrlLight?: string | null;
+  homeTitleColorLight?: string | null;
+  homeClientColorLight?: string | null;
+  portfolioTitleColorLight?: string | null;
+  portfolioClientColorLight?: string | null;
 };
 
 
