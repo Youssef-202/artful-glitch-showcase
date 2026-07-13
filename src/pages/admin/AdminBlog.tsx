@@ -122,6 +122,11 @@ export default function AdminBlog() {
               </Field>
 
               <CoverUploader value={form.cover_url} onChange={(u) => setForm({ ...form, cover_url: u || "" })} folder="blog" />
+              <div className="p-4 rounded-xl border border-amber-500/30 bg-amber-500/5 space-y-4">
+                <div className="text-sm font-bold text-amber-300">إعدادات الوضع الفاتح (اختياري)</div>
+                <CoverUploader value={form.cover_url_light} onChange={(u) => setForm({ ...form, cover_url_light: u || "" })} folder="blog" />
+                <Field label="لون العنوان (وضع فاتح)"><input type="color" className={inputCls + " h-10"} value={form.title_color_light || "#0f172a"} onChange={(e) => setForm({ ...form, title_color_light: e.target.value })} /></Field>
+              </div>
               <GalleryUploader value={form.gallery_urls} onChange={(u) => setForm({ ...form, gallery_urls: u })} folder="blog-gallery" label="معرض صور المقال (10+ صور)" />
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
