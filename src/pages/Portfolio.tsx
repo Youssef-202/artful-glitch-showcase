@@ -5,6 +5,7 @@ import { ArrowUpRight, Sparkles } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { usePortfolio } from "@/lib/usePortfolio";
 import type { PortfolioItem } from "@/lib/portfolio";
+import { useTheme } from "@/theme/ThemeProvider";
 
 function TiltCard({
   item,
