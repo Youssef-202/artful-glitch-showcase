@@ -61,9 +61,9 @@ function TiltCard({
           className="relative aspect-[4/5] overflow-hidden"
           style={{ background: `linear-gradient(135deg, ${item.color}, ${item.accent})` }}
         >
-          {item.coverUrl && (
+          {(item.portfolioCoverUrl || item.coverUrl) && (
             <motion.img
-              src={item.coverUrl}
+              src={item.portfolioCoverUrl || item.coverUrl}
               alt={lang === "ar" ? item.titleAr : item.titleEn}
               loading="lazy"
               style={{ transform: "translateZ(40px)" }}
