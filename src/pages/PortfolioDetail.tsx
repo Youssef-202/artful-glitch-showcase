@@ -85,7 +85,7 @@ export default function PortfolioDetail() {
       </motion.header>
 
       {/* Cover */}
-      {(item.detailCoverUrl || item.coverUrl) && (
+      {((isLight && item.detailCoverUrlLight) || item.detailCoverUrl || item.coverUrl) && (
         <motion.div
           initial={{ opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -93,7 +93,7 @@ export default function PortfolioDetail() {
           className="rounded-3xl overflow-hidden glass mb-10 aspect-[16/9]"
           style={{ background: `linear-gradient(135deg, ${item.color}, ${item.accent})` }}
         >
-          <img src={item.detailCoverUrl || item.coverUrl!} alt={title} className="w-full h-full object-cover" />
+          <img src={((isLight && item.detailCoverUrlLight) || item.detailCoverUrl || item.coverUrl)!} alt={title} className="w-full h-full object-cover" />
         </motion.div>
       )}
 
