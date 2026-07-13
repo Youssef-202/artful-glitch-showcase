@@ -35,7 +35,7 @@ export default function ServicesIndex() {
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-background/40">
                   <img
-                    src={s.image}
+                    src={s.servicesPageImage || s.image}
                     alt={tr.title}
                     loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
