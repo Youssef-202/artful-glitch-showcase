@@ -94,9 +94,9 @@ export default function Blog() {
                   const author = pick(p.author_name, p.author_name_en);
                   return (
                     <>
-                      {p.cover_url ? (
+                      {((isLight && p.cover_url_light) || p.cover_url) ? (
                         <div className="aspect-video overflow-hidden bg-background/40">
-                          <img src={p.cover_url} alt={title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+                          <img src={((isLight && p.cover_url_light) || p.cover_url)!} alt={title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
                         </div>
                       ) : (
                         <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
@@ -114,7 +114,7 @@ export default function Blog() {
                             </span>
                           )}
                         </div>
-                        <h2 className="text-xl font-bold mb-2 line-clamp-2 pb-0 text-white">{title}</h2>
+                        <h2 className="text-xl font-bold mb-2 line-clamp-2 pb-0 text-white" style={isLight && p.title_color_light ? { color: p.title_color_light } : undefined}>{title}</h2>
                         {excerpt && <p className="text-sm text-white/80 line-clamp-3 mb-4">{excerpt}</p>}
                         <div className="flex items-center gap-4 text-xs text-white/70 flex-wrap">
                           {author && <span className="flex items-center gap-1"><User className="w-3 h-3" />{author}</span>}
