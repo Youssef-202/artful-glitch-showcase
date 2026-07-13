@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Calendar, Clock, Star, User } from "lucide-react";
 import { supabase } from "@/integrations/supabase/external";
 import { useLang } from "@/i18n/LanguageProvider";
+import { useTheme } from "@/theme/ThemeProvider";
 
 type Post = {
   id: string;
