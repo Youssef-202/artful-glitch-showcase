@@ -95,13 +95,13 @@ export default function PortfolioStack() {
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-start">
                     <h3
                       className="text-xl sm:text-3xl font-black mb-1 leading-tight"
-                      style={{ color: item.homeTitleColor || "#ffffff" }}
+                      style={{ color: titleColor }}
                     >
                       {title}
                     </h3>
                     <p
                       className="text-xs sm:text-sm"
-                      style={{ color: item.homeClientColor || "rgba(255,255,255,0.7)" }}
+                      style={{ color: clientColor }}
                     >
                       {client}
                     </p>
