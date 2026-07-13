@@ -98,10 +98,10 @@ function ServiceCard3D({ s, i, dir }: { s: DisplayService; i: number; dir: "rtl"
               className="service-card-content relative p-5 pt-4"
               style={{ transform: "translateZ(40px)" }}
             >
-              <h3 className="service-card-title text-lg font-black mb-1">
+              <h3 className="service-card-title text-lg font-black mb-1" style={titleColor ? { color: titleColor } : undefined}>
                 {displayTitle}
               </h3>
-              <p className="service-card-body text-sm line-clamp-2 mb-3">{displayTagline}</p>
+              <p className="service-card-body text-sm line-clamp-2 mb-3" style={taglineColor ? { color: taglineColor } : undefined}>{displayTagline}</p>
 
               <span className="service-card-link inline-flex items-center gap-1.5 text-sm font-bold transition-all duration-300 group-hover:gap-3">
                 {t.common.learnMore}
