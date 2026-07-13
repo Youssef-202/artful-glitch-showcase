@@ -102,8 +102,6 @@ function ServiceCard3D({ s, i, dir }: { s: DisplayService; i: number; dir: "rtl"
                 {t.common.learnMore}
                 <Arrow className="w-3.5 h-3.5" />
               </span>
-              {/* underline accent */}
-              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-teal-400 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
             </div>
 
             {/* Glare */}
