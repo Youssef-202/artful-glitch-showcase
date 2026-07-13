@@ -531,9 +531,9 @@
 }
 
 /* Remove all shadows from images (and their direct wrappers) site-wide */
-body:not(.admin-body) img,
-body:not(.admin-body) picture,
-body:not(.admin-body) video {
+body:not(.admin-body) img:not([data-keep-filter]),
+body:not(.admin-body) picture:not([data-keep-filter]),
+body:not(.admin-body) video:not([data-keep-filter]) {
   box-shadow: none !important;
   filter: none !important;
   -webkit-filter: none !important;
