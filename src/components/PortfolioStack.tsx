@@ -3,10 +3,13 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { usePortfolio } from "@/lib/usePortfolio";
 import { ContainerScroll, CardSticky } from "@/components/ui/cards-stack";
+import { useTheme } from "@/theme/ThemeProvider";
 
 export default function PortfolioStack() {
   const { t, lang, dir } = useLang();
   const { items: allItems } = usePortfolio();
+  const { theme } = useTheme();
+  const isLight = theme === "light";
   const items = allItems.slice(0, 10);
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
 
