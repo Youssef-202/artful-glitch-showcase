@@ -29,6 +29,8 @@ type PageContent = { kicker?: string; title?: string; subtitle?: string; cover_u
 export default function Blog() {
   const { t, dir, lang } = useLang();
   const isEn = lang === "en";
+  const { theme } = useTheme();
+  const isLight = theme === "light";
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
   const [posts, setPosts] = useState<Post[]>([]);
   const [page, setPage] = useState<PageContent>({});
@@ -36,7 +38,7 @@ export default function Blog() {
 
   useEffect(() => {
     (supabase.from("blog_posts") as any)
-      .select("id,title,title_en,excerpt,excerpt_en,cover_url,author_name,author_name_en,category,category_en,reading_time,featured,created_at")
+      .select("id,title,title_en,excerpt,excerpt_en,cover_url,cover_url_light,title_color_light,author_name,author_name_en,category,category_en,reading_time,featured,created_at")
       .eq("published", true)
       .order("sort_order", { ascending: true })
       .order("created_at", { ascending: false })
