@@ -51,7 +51,9 @@ export default function PortfolioStack() {
         {/* Stacked cards column */}
         <div className="flex flex-col gap-6">
           {items.map((item, index) => {
-            const cover = item.homeCoverUrl || item.coverUrl;
+            const cover = (isLight && item.homeCoverUrlLight) || item.homeCoverUrl || item.coverUrl;
+            const titleColor = (isLight && item.homeTitleColorLight) || item.homeTitleColor || "#ffffff";
+            const clientColor = (isLight && item.homeClientColorLight) || item.homeClientColor || "rgba(255,255,255,0.7)";
             const title = lang === "ar"
               ? (item.homeTitleAr || item.titleAr)
               : (item.homeTitleEn || item.titleEn);
