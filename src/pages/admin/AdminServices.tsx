@@ -431,6 +431,10 @@ function ServiceEditor({
                 <Field label="أو ألصق رابط صورة مباشرة">
                   <input className={inputCls} placeholder="https://..." value={form.services_page_image_url || ""} onChange={(e) => set("services_page_image_url", e.target.value)} />
                 </Field>
+                <div className="mt-2 p-3 rounded-lg border border-amber-500/30 bg-amber-500/5 space-y-3">
+                  <div className="text-xs font-bold text-amber-300">إعدادات الوضع الفاتح (كرت الخدمات)</div>
+                  <CoverUploader value={form.services_page_image_url_light} onChange={(u) => set("services_page_image_url_light", u || "")} folder="services-list" label="صورة الكرت (وضع فاتح)" />
+                </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Field label="ارتفاع الصورة (px)" hint="اختياري — لتخصيص العرض">
