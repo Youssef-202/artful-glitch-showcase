@@ -110,13 +110,13 @@ function TiltCard({
           >
             <h3
               className="text-lg font-black line-clamp-1"
-              style={{ color: item.portfolioTitleColor || "#ffffff" }}
+              style={{ color: (isLight && item.portfolioTitleColorLight) || item.portfolioTitleColor || "#ffffff" }}
             >
               {lang === "ar" ? item.titleAr : item.titleEn}
             </h3>
             <p
               className="text-xs line-clamp-1 mt-0.5"
-              style={{ color: item.portfolioClientColor || "rgba(255,255,255,0.8)" }}
+              style={{ color: (isLight && item.portfolioClientColorLight) || item.portfolioClientColor || "rgba(255,255,255,0.8)" }}
             >
               {lang === "ar" ? item.clientAr : item.clientEn}
             </p>
