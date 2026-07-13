@@ -80,7 +80,7 @@ export default function Navbar() {
                   ? undefined
                   : "brightness(0) saturate(100%) invert(38%) sepia(85%) saturate(1200%) hue-rotate(140deg) brightness(85%) contrast(101%)",
             }}
-            style={{ height: scrolled ? 28 : 36 }}
+            
           />
           {!scrolled && (
             <motion.span
