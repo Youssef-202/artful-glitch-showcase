@@ -131,6 +131,8 @@ function TiltCard({
 export default function Portfolio() {
   const { t, lang } = useLang();
   const { items: portfolioItems } = usePortfolio();
+  const { theme } = useTheme();
+  const isLight = theme === "light";
   const [filter, setFilter] = useState<string>("all");
 
   const filtered = useMemo(
