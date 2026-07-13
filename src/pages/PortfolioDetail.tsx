@@ -4,11 +4,14 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, ExternalLink, Calendar, Clock, Tag, CheckCircle2 } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { usePortfolio } from "@/lib/usePortfolio";
+import { useTheme } from "@/theme/ThemeProvider";
 
 export default function PortfolioDetail() {
   const { id } = useParams();
   const { lang, t } = useLang();
   const { items, loading } = usePortfolio();
+  const { theme } = useTheme();
+  const isLight = theme === "light";
   const isAr = lang === "ar";
 
   const item = useMemo(() => items.find((p) => p.id === id), [items, id]);
