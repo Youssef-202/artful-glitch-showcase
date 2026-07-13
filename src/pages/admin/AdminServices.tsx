@@ -377,9 +377,9 @@ function ServiceEditor({
 
           {/* ============ Media ============ */}
           {tab === "media" && (
-            <Section title="الوسائط" desc="صورة الغلاف الرئيسية وبيانات SEO الخاصة بها + معرض صور كامل (10 صور أو أكثر).">
+            <Section title="الوسائط" desc="صورة الغلاف الرئيسية (تظهر في صفحة تفاصيل الخدمة) وصورة قائمة الخدمات (تظهر في /services) وبيانات SEO الخاصة بها + معرض صور كامل.">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <CoverUploader value={form.image_url} onChange={(u) => set("image_url", u || "")} folder="services" label="صورة الغلاف الرئيسية" />
+                <CoverUploader value={form.image_url} onChange={(u) => set("image_url", u || "")} folder="services" label="صورة الغلاف الرئيسية (صفحة التفاصيل)" />
                 <div className="space-y-3">
                   <Field label="نص بديل للصورة (Alt)" hint="مهم لـ SEO وإمكانية الوصول">
                     <input className={inputCls} value={form.image_alt} onChange={(e) => set("image_alt", e.target.value)} />
@@ -388,6 +388,24 @@ function ServiceEditor({
                     <input className={inputCls} value={form.image_caption} onChange={(e) => set("image_caption", e.target.value)} />
                   </Field>
                 </div>
+              </div>
+
+              <div className="border border-fuchsia-500/30 bg-fuchsia-500/5 rounded-xl p-4 space-y-3">
+                <div className="border-r-2 border-fuchsia-400/60 pr-3">
+                  <h5 className="font-bold text-white text-sm">صورة الكرت في صفحة الخدمات (/services)</h5>
+                  <p className="text-[11px] text-slate-400 mt-0.5">
+                    صورة مستقلة بمقاسات مختلفة عن صورة الصفحة الرئيسية وصفحة تفاصيل الخدمة. اتركها فارغة لاستخدام صورة الغلاف الرئيسية.
+                  </p>
+                </div>
+                <CoverUploader
+                  value={form.services_page_image_url}
+                  onChange={(u) => set("services_page_image_url", u || "")}
+                  folder="services-list"
+                  label="صورة الكرت في صفحة الخدمات"
+                />
+                <Field label="أو ألصق رابط صورة مباشرة">
+                  <input className={inputCls} placeholder="https://..." value={form.services_page_image_url || ""} onChange={(e) => set("services_page_image_url", e.target.value)} />
+                </Field>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Field label="ارتفاع الصورة (px)" hint="اختياري — لتخصيص العرض">
