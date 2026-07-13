@@ -187,14 +187,6 @@ export default function ArchitecturalHero() {
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary rounded-full blur-[120px] animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-accent rounded-full blur-[100px]" />
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 2px 2px, hsl(var(--primary) / 0.1) 1px, transparent 0)",
-            backgroundSize: "40px 40px",
-          }}
-        />
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-8 flex flex-col items-center">
@@ -252,16 +244,6 @@ export default function ArchitecturalHero() {
                     "radial-gradient(60% 60% at 50% 30%, hsl(var(--primary) / 0.35), transparent 70%)",
                 }}
               />
-              <div
-                className="absolute inset-0 pointer-events-none opacity-[0.06]"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(hsl(0 0% 100%) 1px, transparent 1px), linear-gradient(90deg, hsl(0 0% 100%) 1px, transparent 1px)",
-                  backgroundSize: "44px 44px",
-                  maskImage: "radial-gradient(ellipse at center, black 30%, transparent 70%)",
-                }}
-              />
-
               {/* Center: brand card + logo */}
               <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-4 sm:px-8">
                 <motion.div
