@@ -78,7 +78,7 @@ export default function Navbar() {
               filter:
                 theme === "dark"
                   ? undefined
-                  : "brightness(0) saturate(100%) invert(38%) sepia(85%) saturate(1200%) hue-rotate(140deg) brightness(85%) contrast(101%)",
+                  : "brightness(0) saturate(100%) invert(15%) sepia(60%) saturate(2500%) hue-rotate(150deg) brightness(60%) contrast(110%)",
             }}
             
           />
