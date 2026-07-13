@@ -12,11 +12,13 @@ function TiltCard({
   index,
   lang,
   categoryLabel,
+  isLight,
 }: {
   item: PortfolioItem;
   index: number;
   lang: "ar" | "en";
   categoryLabel: string;
+  isLight: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
