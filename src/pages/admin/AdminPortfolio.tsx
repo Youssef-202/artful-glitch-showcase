@@ -10,6 +10,9 @@ const empty: any = {
   project_url: "", duration: "", year: "", color: "#06b6d4", accent: "#ec4899",
   sort_order: 0, published: true,
   home_title_ar: "", home_title_en: "", home_client_ar: "", home_client_en: "", home_cover_url: "",
+  home_title_color: "#ffffff", home_client_color: "#ffffffb3",
+  portfolio_cover_url: "", portfolio_title_color: "#ffffff", portfolio_client_color: "#ffffffcc",
+  detail_cover_url: "",
 };
 
 const toLines = (a: any) => (Array.isArray(a) ? a.join("\n") : "");
