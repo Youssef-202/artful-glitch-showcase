@@ -9,6 +9,7 @@ export type DisplayService = {
   tagline: string;
   description: string;
   image: string;
+  servicesPageImage?: string;
   homeNumber?: string;
   homeTitle?: string;
   homeTagline?: string;
@@ -24,7 +25,7 @@ export function useServices() {
     let active = true;
     (supabase as any)
       .from("services")
-      .select("id,number,title,tagline,description,image_url,home_number,home_title,home_tagline,home_image_url,sort_order,published")
+      .select("id,number,title,tagline,description,image_url,services_page_image_url,home_number,home_title,home_tagline,home_image_url,sort_order,published")
       .eq("published", true)
       .order("sort_order", { ascending: true })
 
