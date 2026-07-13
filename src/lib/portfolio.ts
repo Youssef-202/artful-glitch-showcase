@@ -25,6 +25,12 @@ export type PortfolioItem = {
   homeClientAr?: string | null;
   homeClientEn?: string | null;
   homeCoverUrl?: string | null;
+  homeTitleColor?: string | null;
+  homeClientColor?: string | null;
+  portfolioCoverUrl?: string | null;
+  portfolioTitleColor?: string | null;
+  portfolioClientColor?: string | null;
+  detailCoverUrl?: string | null;
 };
 
 
