@@ -14,6 +14,14 @@ export type DisplayService = {
   homeTitle?: string;
   homeTagline?: string;
   homeImage?: string;
+  // Light-mode overrides
+  imageLight?: string;
+  servicesPageImageLight?: string;
+  homeImageLight?: string;
+  titleColorLight?: string;
+  taglineColorLight?: string;
+  homeTitleColorLight?: string;
+  homeTaglineColorLight?: string;
 };
 
 
