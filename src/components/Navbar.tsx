@@ -74,8 +74,14 @@ export default function Navbar() {
             alt="وكالة إتقان"
             className={cn(
               "transition-all duration-300",
-              theme === "dark" ? "" : "invert"
+              theme === "dark" ? "" : "brightness-0 saturate-100"
             )}
+            style={{
+              height: scrolled ? 28 : 36,
+              ...(theme === "light"
+                ? { filter: "brightness(0) saturate(100%) invert(28%) sepia(88%) saturate(1652%) hue-rotate(140deg) brightness(94%) contrast(101%)" }
+                : {}),
+            }}
             style={{ height: scrolled ? 28 : 36 }}
           />
           {!scrolled && (
