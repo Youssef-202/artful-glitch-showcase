@@ -298,7 +298,7 @@ function ServiceEditor({
                   <Field label="لون الوصف (فاتح)"><input type="color" className={inputCls + " h-10"} value={form.home_tagline_color_light || "#334155"} onChange={(e) => set("home_tagline_color_light", e.target.value)} /></Field>
                 </div>
               </div>
-              <Field label="_hidden" hint="">
+              
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <Field label="رقم الكرت في الهوم" hint="مثال: 01 — اتركه فارغاً لاستخدام الرقم الأساسي">
                   <input className={inputCls} value={form.home_number || ""} onChange={(e) => set("home_number", e.target.value)} />
