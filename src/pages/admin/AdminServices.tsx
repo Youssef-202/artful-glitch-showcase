@@ -406,6 +406,15 @@ function ServiceEditor({
                 </div>
               </div>
 
+              <div className="p-3 rounded-lg border border-amber-500/30 bg-amber-500/5 space-y-3">
+                <div className="text-xs font-bold text-amber-300">إعدادات الوضع الفاتح (صفحة التفاصيل)</div>
+                <CoverUploader value={form.image_url_light} onChange={(u) => set("image_url_light", u || "")} folder="services" label="صورة الغلاف (وضع فاتح)" />
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label="لون العنوان (فاتح)"><input type="color" className={inputCls + " h-10"} value={form.title_color_light || "#0f172a"} onChange={(e) => set("title_color_light", e.target.value)} /></Field>
+                  <Field label="لون الوصف (فاتح)"><input type="color" className={inputCls + " h-10"} value={form.tagline_color_light || "#334155"} onChange={(e) => set("tagline_color_light", e.target.value)} /></Field>
+                </div>
+              </div>
+
               <div className="border border-fuchsia-500/30 bg-fuchsia-500/5 rounded-xl p-4 space-y-3">
                 <div className="border-r-2 border-fuchsia-400/60 pr-3">
                   <h5 className="font-bold text-white text-sm">صورة الكرت في صفحة الخدمات (/services)</h5>
