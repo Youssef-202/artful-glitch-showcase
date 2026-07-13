@@ -3,11 +3,14 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { useServices } from "@/lib/useServices";
+import { useTheme } from "@/theme/ThemeProvider";
 
 export default function ServicesIndex() {
   const { t, dir } = useLang();
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
   const { items: services } = useServices();
+  const { theme } = useTheme();
+  const isLight = theme === "light";
 
 
   return (
