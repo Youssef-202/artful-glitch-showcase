@@ -184,6 +184,7 @@ export default function Portfolio() {
             index={i}
             lang={lang}
             categoryLabel={t.portfolio.categories[item.category]}
+            isLight={isLight}
           />
         ))}
         {filtered.length === 0 && (
