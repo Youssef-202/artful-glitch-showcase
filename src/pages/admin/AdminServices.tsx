@@ -36,6 +36,7 @@ const empty: Service = {
   home_tagline: "",
   home_number: "",
   home_image_url: "",
+  services_page_image_url: "",
 };
 
 
