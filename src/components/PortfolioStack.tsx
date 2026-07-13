@@ -38,7 +38,8 @@ export default function PortfolioStack() {
           </p>
           <Link
             to="/portfolio"
-            className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-bold bg-gradient-to-tr from-primary to-accent text-white shadow-glow hover:scale-105 transition text-sm"
+            className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-bold bg-gradient-to-tr from-primary to-accent !text-white shadow-glow hover:scale-105 transition text-sm"
+            style={{ color: "#ffffff" }}
           >
             {t.common.viewAll} <Arrow className="w-4 h-4" />
           </Link>
