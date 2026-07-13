@@ -252,16 +252,6 @@ export default function ArchitecturalHero() {
                     "radial-gradient(60% 60% at 50% 30%, hsl(var(--primary) / 0.35), transparent 70%)",
                 }}
               />
-              <div
-                className="absolute inset-0 pointer-events-none opacity-[0.06]"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(hsl(0 0% 100%) 1px, transparent 1px), linear-gradient(90deg, hsl(0 0% 100%) 1px, transparent 1px)",
-                  backgroundSize: "44px 44px",
-                  maskImage: "radial-gradient(ellipse at center, black 30%, transparent 70%)",
-                }}
-              />
-
               {/* Center: brand card + logo */}
               <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-4 sm:px-8">
                 <motion.div
