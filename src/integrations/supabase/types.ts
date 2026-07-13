@@ -47,6 +47,7 @@ export type Database = {
           content: string
           content_en: string | null
           cover_url: string | null
+          cover_url_light: string | null
           created_at: string
           created_by: string | null
           excerpt: string | null
@@ -58,6 +59,7 @@ export type Database = {
           reading_time: number | null
           sort_order: number
           title: string
+          title_color_light: string | null
           title_en: string | null
           updated_at: string
         }
@@ -69,6 +71,7 @@ export type Database = {
           content: string
           content_en?: string | null
           cover_url?: string | null
+          cover_url_light?: string | null
           created_at?: string
           created_by?: string | null
           excerpt?: string | null
@@ -80,6 +83,7 @@ export type Database = {
           reading_time?: number | null
           sort_order?: number
           title: string
+          title_color_light?: string | null
           title_en?: string | null
           updated_at?: string
         }
@@ -91,6 +95,7 @@ export type Database = {
           content?: string
           content_en?: string | null
           cover_url?: string | null
+          cover_url_light?: string | null
           created_at?: string
           created_by?: string | null
           excerpt?: string | null
@@ -102,6 +107,7 @@ export type Database = {
           reading_time?: number | null
           sort_order?: number
           title?: string
+          title_color_light?: string | null
           title_en?: string | null
           updated_at?: string
         }
@@ -307,19 +313,26 @@ export type Database = {
           description_ar: string | null
           description_en: string | null
           detail_cover_url: string | null
+          detail_cover_url_light: string | null
           duration: string | null
           gallery_urls: string[] | null
           home_client_ar: string | null
           home_client_color: string | null
+          home_client_color_light: string | null
           home_client_en: string | null
           home_cover_url: string | null
+          home_cover_url_light: string | null
           home_title_ar: string | null
           home_title_color: string | null
+          home_title_color_light: string | null
           home_title_en: string | null
           id: string
           portfolio_client_color: string | null
+          portfolio_client_color_light: string | null
           portfolio_cover_url: string | null
+          portfolio_cover_url_light: string | null
           portfolio_title_color: string | null
+          portfolio_title_color_light: string | null
           process_steps_ar: string[] | null
           process_steps_en: string[] | null
           project_url: string | null
@@ -344,19 +357,26 @@ export type Database = {
           description_ar?: string | null
           description_en?: string | null
           detail_cover_url?: string | null
+          detail_cover_url_light?: string | null
           duration?: string | null
           gallery_urls?: string[] | null
           home_client_ar?: string | null
           home_client_color?: string | null
+          home_client_color_light?: string | null
           home_client_en?: string | null
           home_cover_url?: string | null
+          home_cover_url_light?: string | null
           home_title_ar?: string | null
           home_title_color?: string | null
+          home_title_color_light?: string | null
           home_title_en?: string | null
           id?: string
           portfolio_client_color?: string | null
+          portfolio_client_color_light?: string | null
           portfolio_cover_url?: string | null
+          portfolio_cover_url_light?: string | null
           portfolio_title_color?: string | null
+          portfolio_title_color_light?: string | null
           process_steps_ar?: string[] | null
           process_steps_en?: string[] | null
           project_url?: string | null
@@ -381,19 +401,26 @@ export type Database = {
           description_ar?: string | null
           description_en?: string | null
           detail_cover_url?: string | null
+          detail_cover_url_light?: string | null
           duration?: string | null
           gallery_urls?: string[] | null
           home_client_ar?: string | null
           home_client_color?: string | null
+          home_client_color_light?: string | null
           home_client_en?: string | null
           home_cover_url?: string | null
+          home_cover_url_light?: string | null
           home_title_ar?: string | null
           home_title_color?: string | null
+          home_title_color_light?: string | null
           home_title_en?: string | null
           id?: string
           portfolio_client_color?: string | null
+          portfolio_client_color_light?: string | null
           portfolio_cover_url?: string | null
+          portfolio_cover_url_light?: string | null
           portfolio_title_color?: string | null
+          portfolio_title_color_light?: string | null
           process_steps_ar?: string[] | null
           process_steps_en?: string[] | null
           project_url?: string | null
@@ -558,15 +585,19 @@ export type Database = {
           gallery: Json
           hero_subtitle: string | null
           home_image_url: string | null
+          home_image_url_light: string | null
           home_number: string | null
           home_tagline: string | null
+          home_tagline_color_light: string | null
           home_title: string | null
+          home_title_color_light: string | null
           id: string
           image_alt: string | null
           image_caption: string | null
           image_fit: string
           image_height: number
           image_url: string | null
+          image_url_light: string | null
           long_description: string | null
           number: string
           overview_title: string | null
@@ -579,10 +610,13 @@ export type Database = {
           seo_description: string | null
           seo_title: string | null
           services_page_image_url: string | null
+          services_page_image_url_light: string | null
           sort_order: number
           summary_title: string | null
           tagline: string | null
+          tagline_color_light: string | null
           title: string
+          title_color_light: string | null
           updated_at: string
         }
         Insert: {
@@ -604,15 +638,19 @@ export type Database = {
           gallery?: Json
           hero_subtitle?: string | null
           home_image_url?: string | null
+          home_image_url_light?: string | null
           home_number?: string | null
           home_tagline?: string | null
+          home_tagline_color_light?: string | null
           home_title?: string | null
+          home_title_color_light?: string | null
           id: string
           image_alt?: string | null
           image_caption?: string | null
           image_fit?: string
           image_height?: number
           image_url?: string | null
+          image_url_light?: string | null
           long_description?: string | null
           number?: string
           overview_title?: string | null
@@ -625,10 +663,13 @@ export type Database = {
           seo_description?: string | null
           seo_title?: string | null
           services_page_image_url?: string | null
+          services_page_image_url_light?: string | null
           sort_order?: number
           summary_title?: string | null
           tagline?: string | null
+          tagline_color_light?: string | null
           title: string
+          title_color_light?: string | null
           updated_at?: string
         }
         Update: {
@@ -650,15 +691,19 @@ export type Database = {
           gallery?: Json
           hero_subtitle?: string | null
           home_image_url?: string | null
+          home_image_url_light?: string | null
           home_number?: string | null
           home_tagline?: string | null
+          home_tagline_color_light?: string | null
           home_title?: string | null
+          home_title_color_light?: string | null
           id?: string
           image_alt?: string | null
           image_caption?: string | null
           image_fit?: string
           image_height?: number
           image_url?: string | null
+          image_url_light?: string | null
           long_description?: string | null
           number?: string
           overview_title?: string | null
@@ -671,10 +716,13 @@ export type Database = {
           seo_description?: string | null
           seo_title?: string | null
           services_page_image_url?: string | null
+          services_page_image_url_light?: string | null
           sort_order?: number
           summary_title?: string | null
           tagline?: string | null
+          tagline_color_light?: string | null
           title?: string
+          title_color_light?: string | null
           updated_at?: string
         }
         Relationships: []

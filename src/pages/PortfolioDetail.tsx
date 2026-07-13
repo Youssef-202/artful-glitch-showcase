@@ -4,11 +4,14 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, ExternalLink, Calendar, Clock, Tag, CheckCircle2 } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { usePortfolio } from "@/lib/usePortfolio";
+import { useTheme } from "@/theme/ThemeProvider";
 
 export default function PortfolioDetail() {
   const { id } = useParams();
   const { lang, t } = useLang();
   const { items, loading } = usePortfolio();
+  const { theme } = useTheme();
+  const isLight = theme === "light";
   const isAr = lang === "ar";
 
   const item = useMemo(() => items.find((p) => p.id === id), [items, id]);
@@ -82,7 +85,7 @@ export default function PortfolioDetail() {
       </motion.header>
 
       {/* Cover */}
-      {(item.detailCoverUrl || item.coverUrl) && (
+      {((isLight && item.detailCoverUrlLight) || item.detailCoverUrl || item.coverUrl) && (
         <motion.div
           initial={{ opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -90,7 +93,7 @@ export default function PortfolioDetail() {
           className="rounded-3xl overflow-hidden glass mb-10 aspect-[16/9]"
           style={{ background: `linear-gradient(135deg, ${item.color}, ${item.accent})` }}
         >
-          <img src={item.detailCoverUrl || item.coverUrl!} alt={title} className="w-full h-full object-cover" />
+          <img src={((isLight && item.detailCoverUrlLight) || item.detailCoverUrl || item.coverUrl)!} alt={title} className="w-full h-full object-cover" />
         </motion.div>
       )}
 

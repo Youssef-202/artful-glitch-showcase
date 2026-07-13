@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Calendar, Clock, Star, User } from "lucide-react";
 import { supabase } from "@/integrations/supabase/external";
 import { useLang } from "@/i18n/LanguageProvider";
+import { useTheme } from "@/theme/ThemeProvider";
 
 type Post = {
   id: string;
@@ -12,6 +13,8 @@ type Post = {
   excerpt: string | null;
   excerpt_en: string | null;
   cover_url: string | null;
+  cover_url_light?: string | null;
+  title_color_light?: string | null;
   author_name: string | null;
   author_name_en: string | null;
   category: string | null;
@@ -26,6 +29,8 @@ type PageContent = { kicker?: string; title?: string; subtitle?: string; cover_u
 export default function Blog() {
   const { t, dir, lang } = useLang();
   const isEn = lang === "en";
+  const { theme } = useTheme();
+  const isLight = theme === "light";
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
   const [posts, setPosts] = useState<Post[]>([]);
   const [page, setPage] = useState<PageContent>({});
@@ -33,7 +38,7 @@ export default function Blog() {
 
   useEffect(() => {
     (supabase.from("blog_posts") as any)
-      .select("id,title,title_en,excerpt,excerpt_en,cover_url,author_name,author_name_en,category,category_en,reading_time,featured,created_at")
+      .select("id,title,title_en,excerpt,excerpt_en,cover_url,cover_url_light,title_color_light,author_name,author_name_en,category,category_en,reading_time,featured,created_at")
       .eq("published", true)
       .order("sort_order", { ascending: true })
       .order("created_at", { ascending: false })
@@ -89,9 +94,9 @@ export default function Blog() {
                   const author = pick(p.author_name, p.author_name_en);
                   return (
                     <>
-                      {p.cover_url ? (
+                      {((isLight && p.cover_url_light) || p.cover_url) ? (
                         <div className="aspect-video overflow-hidden bg-background/40">
-                          <img src={p.cover_url} alt={title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+                          <img src={((isLight && p.cover_url_light) || p.cover_url)!} alt={title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
                         </div>
                       ) : (
                         <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
@@ -109,7 +114,7 @@ export default function Blog() {
                             </span>
                           )}
                         </div>
-                        <h2 className="text-xl font-bold mb-2 line-clamp-2 pb-0 text-white">{title}</h2>
+                        <h2 className="text-xl font-bold mb-2 line-clamp-2 pb-0 text-white" style={isLight && p.title_color_light ? { color: p.title_color_light } : undefined}>{title}</h2>
                         {excerpt && <p className="text-sm text-white/80 line-clamp-3 mb-4">{excerpt}</p>}
                         <div className="flex items-center gap-4 text-xs text-white/70 flex-wrap">
                           {author && <span className="flex items-center gap-1"><User className="w-3 h-3" />{author}</span>}

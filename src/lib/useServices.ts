@@ -14,6 +14,14 @@ export type DisplayService = {
   homeTitle?: string;
   homeTagline?: string;
   homeImage?: string;
+  // Light-mode overrides
+  imageLight?: string;
+  servicesPageImageLight?: string;
+  homeImageLight?: string;
+  titleColorLight?: string;
+  taglineColorLight?: string;
+  homeTitleColorLight?: string;
+  homeTaglineColorLight?: string;
 };
 
 
@@ -25,7 +33,7 @@ export function useServices() {
     let active = true;
     (supabase as any)
       .from("services")
-      .select("id,number,title,tagline,description,image_url,services_page_image_url,home_number,home_title,home_tagline,home_image_url,sort_order,published")
+      .select("id,number,title,tagline,description,image_url,services_page_image_url,home_number,home_title,home_tagline,home_image_url,sort_order,published,image_url_light,services_page_image_url_light,home_image_url_light,title_color_light,tagline_color_light,home_title_color_light,home_tagline_color_light")
       .eq("published", true)
       .order("sort_order", { ascending: true })
 
@@ -45,6 +53,13 @@ export function useServices() {
               homeTitle: d.home_title ?? "",
               homeTagline: d.home_tagline ?? "",
               homeImage: d.home_image_url ?? "",
+              imageLight: d.image_url_light ?? "",
+              servicesPageImageLight: d.services_page_image_url_light ?? "",
+              homeImageLight: d.home_image_url_light ?? "",
+              titleColorLight: d.title_color_light ?? "",
+              taglineColorLight: d.tagline_color_light ?? "",
+              homeTitleColorLight: d.home_title_color_light ?? "",
+              homeTaglineColorLight: d.home_tagline_color_light ?? "",
             }))
 
           );

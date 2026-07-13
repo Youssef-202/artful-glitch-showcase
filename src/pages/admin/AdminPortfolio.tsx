@@ -13,6 +13,9 @@ const empty: any = {
   home_title_color: "#ffffff", home_client_color: "#ffffffb3",
   portfolio_cover_url: "", portfolio_title_color: "#ffffff", portfolio_client_color: "#ffffffcc",
   detail_cover_url: "",
+  home_cover_url_light: "", portfolio_cover_url_light: "", detail_cover_url_light: "",
+  home_title_color_light: "", home_client_color_light: "",
+  portfolio_title_color_light: "", portfolio_client_color_light: "",
 };
 
 const toLines = (a: any) => (Array.isArray(a) ? a.join("\n") : "");
@@ -185,6 +188,14 @@ export default function AdminPortfolio() {
                     <input type="color" className={inputCls + " h-10"} value={form.home_client_color || "#ffffff"} onChange={(e) => setForm({ ...form, home_client_color: e.target.value })} />
                   </Field>
                 </div>
+                <div className="mt-2 p-3 rounded-lg border border-amber-500/30 bg-amber-500/5 space-y-3">
+                  <div className="text-xs font-bold text-amber-300">إعدادات الوضع الفاتح للكرت في الهوم</div>
+                  <CoverUploader value={form.home_cover_url_light} onChange={(u) => setForm({ ...form, home_cover_url_light: u || "" })} folder="portfolio-home" label="غلاف الكرت (وضع فاتح)" />
+                  <div className="grid grid-cols-2 gap-3">
+                    <Field label="لون العنوان (فاتح)"><input type="color" className={inputCls + " h-10"} value={form.home_title_color_light || "#0f172a"} onChange={(e) => setForm({ ...form, home_title_color_light: e.target.value })} /></Field>
+                    <Field label="لون اسم العميل (فاتح)"><input type="color" className={inputCls + " h-10"} value={form.home_client_color_light || "#334155"} onChange={(e) => setForm({ ...form, home_client_color_light: e.target.value })} /></Field>
+                  </div>
+                </div>
               </div>
 
               {/* Portfolio listing page card */}
@@ -212,6 +223,14 @@ export default function AdminPortfolio() {
                     <input type="color" className={inputCls + " h-10"} value={form.portfolio_client_color || "#ffffff"} onChange={(e) => setForm({ ...form, portfolio_client_color: e.target.value })} />
                   </Field>
                 </div>
+                <div className="mt-2 p-3 rounded-lg border border-amber-500/30 bg-amber-500/5 space-y-3">
+                  <div className="text-xs font-bold text-amber-300">إعدادات الوضع الفاتح لصفحة المعرض</div>
+                  <CoverUploader value={form.portfolio_cover_url_light} onChange={(u) => setForm({ ...form, portfolio_cover_url_light: u || "" })} folder="portfolio-list" label="صورة الكرت (وضع فاتح)" />
+                  <div className="grid grid-cols-2 gap-3">
+                    <Field label="لون العنوان (فاتح)"><input type="color" className={inputCls + " h-10"} value={form.portfolio_title_color_light || "#0f172a"} onChange={(e) => setForm({ ...form, portfolio_title_color_light: e.target.value })} /></Field>
+                    <Field label="لون اسم العميل (فاتح)"><input type="color" className={inputCls + " h-10"} value={form.portfolio_client_color_light || "#334155"} onChange={(e) => setForm({ ...form, portfolio_client_color_light: e.target.value })} /></Field>
+                  </div>
+                </div>
               </div>
 
               {/* Detail page cover */}
@@ -231,6 +250,10 @@ export default function AdminPortfolio() {
                 <Field label="أو ألصق رابط صورة مباشرة">
                   <input className={inputCls} placeholder="https://..." value={form.detail_cover_url || ""} onChange={(e) => setForm({ ...form, detail_cover_url: e.target.value })} />
                 </Field>
+                <div className="mt-2 p-3 rounded-lg border border-amber-500/30 bg-amber-500/5 space-y-3">
+                  <div className="text-xs font-bold text-amber-300">صورة صفحة التفاصيل (وضع فاتح)</div>
+                  <CoverUploader value={form.detail_cover_url_light} onChange={(u) => setForm({ ...form, detail_cover_url_light: u || "" })} folder="portfolio-detail" label="صورة الهيرو (وضع فاتح)" />
+                </div>
               </div>
 
 

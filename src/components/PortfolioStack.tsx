@@ -3,10 +3,13 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { usePortfolio } from "@/lib/usePortfolio";
 import { ContainerScroll, CardSticky } from "@/components/ui/cards-stack";
+import { useTheme } from "@/theme/ThemeProvider";
 
 export default function PortfolioStack() {
   const { t, lang, dir } = useLang();
   const { items: allItems } = usePortfolio();
+  const { theme } = useTheme();
+  const isLight = theme === "light";
   const items = allItems.slice(0, 10);
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
 
@@ -48,7 +51,9 @@ export default function PortfolioStack() {
         {/* Stacked cards column */}
         <div className="flex flex-col gap-6">
           {items.map((item, index) => {
-            const cover = item.homeCoverUrl || item.coverUrl;
+            const cover = (isLight && item.homeCoverUrlLight) || item.homeCoverUrl || item.coverUrl;
+            const titleColor = (isLight && item.homeTitleColorLight) || item.homeTitleColor || "#ffffff";
+            const clientColor = (isLight && item.homeClientColorLight) || item.homeClientColor || "rgba(255,255,255,0.7)";
             const title = lang === "ar"
               ? (item.homeTitleAr || item.titleAr)
               : (item.homeTitleEn || item.titleEn);
@@ -90,13 +95,13 @@ export default function PortfolioStack() {
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-start">
                     <h3
                       className="text-xl sm:text-3xl font-black mb-1 leading-tight"
-                      style={{ color: item.homeTitleColor || "#ffffff" }}
+                      style={{ color: titleColor }}
                     >
                       {title}
                     </h3>
                     <p
                       className="text-xs sm:text-sm"
-                      style={{ color: item.homeClientColor || "rgba(255,255,255,0.7)" }}
+                      style={{ color: clientColor }}
                     >
                       {client}
                     </p>

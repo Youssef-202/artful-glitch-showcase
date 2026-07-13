@@ -37,6 +37,13 @@ const empty: Service = {
   home_number: "",
   home_image_url: "",
   services_page_image_url: "",
+  image_url_light: "",
+  home_image_url_light: "",
+  services_page_image_url_light: "",
+  title_color_light: "",
+  tagline_color_light: "",
+  home_title_color_light: "",
+  home_tagline_color_light: "",
 };
 
 
@@ -283,6 +290,15 @@ function ServiceEditor({
                   onChange={(e) => set("home_image_url", e.target.value)}
                 />
               </Field>
+              <div className="mt-2 p-3 rounded-lg border border-amber-500/30 bg-amber-500/5 space-y-3">
+                <div className="text-xs font-bold text-amber-300">إعدادات الوضع الفاتح (كرت الهوم)</div>
+                <CoverUploader value={form.home_image_url_light} onChange={(u) => set("home_image_url_light", u || "")} folder="services-home" label="صورة الكرت (وضع فاتح)" />
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label="لون العنوان (فاتح)"><input type="color" className={inputCls + " h-10"} value={form.home_title_color_light || "#0f172a"} onChange={(e) => set("home_title_color_light", e.target.value)} /></Field>
+                  <Field label="لون الوصف (فاتح)"><input type="color" className={inputCls + " h-10"} value={form.home_tagline_color_light || "#334155"} onChange={(e) => set("home_tagline_color_light", e.target.value)} /></Field>
+                </div>
+              </div>
+              
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <Field label="رقم الكرت في الهوم" hint="مثال: 01 — اتركه فارغاً لاستخدام الرقم الأساسي">
                   <input className={inputCls} value={form.home_number || ""} onChange={(e) => set("home_number", e.target.value)} />
@@ -390,6 +406,15 @@ function ServiceEditor({
                 </div>
               </div>
 
+              <div className="p-3 rounded-lg border border-amber-500/30 bg-amber-500/5 space-y-3">
+                <div className="text-xs font-bold text-amber-300">إعدادات الوضع الفاتح (صفحة التفاصيل)</div>
+                <CoverUploader value={form.image_url_light} onChange={(u) => set("image_url_light", u || "")} folder="services" label="صورة الغلاف (وضع فاتح)" />
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label="لون العنوان (فاتح)"><input type="color" className={inputCls + " h-10"} value={form.title_color_light || "#0f172a"} onChange={(e) => set("title_color_light", e.target.value)} /></Field>
+                  <Field label="لون الوصف (فاتح)"><input type="color" className={inputCls + " h-10"} value={form.tagline_color_light || "#334155"} onChange={(e) => set("tagline_color_light", e.target.value)} /></Field>
+                </div>
+              </div>
+
               <div className="border border-fuchsia-500/30 bg-fuchsia-500/5 rounded-xl p-4 space-y-3">
                 <div className="border-r-2 border-fuchsia-400/60 pr-3">
                   <h5 className="font-bold text-white text-sm">صورة الكرت في صفحة الخدمات (/services)</h5>
@@ -406,6 +431,10 @@ function ServiceEditor({
                 <Field label="أو ألصق رابط صورة مباشرة">
                   <input className={inputCls} placeholder="https://..." value={form.services_page_image_url || ""} onChange={(e) => set("services_page_image_url", e.target.value)} />
                 </Field>
+                <div className="mt-2 p-3 rounded-lg border border-amber-500/30 bg-amber-500/5 space-y-3">
+                  <div className="text-xs font-bold text-amber-300">إعدادات الوضع الفاتح (كرت الخدمات)</div>
+                  <CoverUploader value={form.services_page_image_url_light} onChange={(u) => set("services_page_image_url_light", u || "")} folder="services-list" label="صورة الكرت (وضع فاتح)" />
+                </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Field label="ارتفاع الصورة (px)" hint="اختياري — لتخصيص العرض">

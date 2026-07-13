@@ -3,11 +3,14 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { useServices } from "@/lib/useServices";
+import { useTheme } from "@/theme/ThemeProvider";
 
 export default function ServicesIndex() {
   const { t, dir } = useLang();
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
   const { items: services } = useServices();
+  const { theme } = useTheme();
+  const isLight = theme === "light";
 
 
   return (
@@ -22,6 +25,9 @@ export default function ServicesIndex() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {services.map((s, i) => {
           const tr = (t.services as any)[s.id] ?? { title: s.title, tagline: s.tagline, description: s.description };
+          const img = (isLight && s.servicesPageImageLight) || s.servicesPageImage || (isLight && s.imageLight) || s.image;
+          const titleColor = (isLight && s.titleColorLight) || undefined;
+          const taglineColor = (isLight && s.taglineColorLight) || undefined;
           return (
             <motion.div
               key={s.id}
@@ -35,7 +41,7 @@ export default function ServicesIndex() {
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-background/40">
                   <img
-                    src={s.servicesPageImage || s.image}
+                    src={img}
                     alt={tr.title}
                     loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -45,10 +51,10 @@ export default function ServicesIndex() {
                 </div>
                 <div className="p-6">
                   <div className="flex items-baseline justify-between mb-2">
-                    <h2 className="text-xl font-black">{tr.title}</h2>
+                    <h2 className="text-xl font-black" style={titleColor ? { color: titleColor } : undefined}>{tr.title}</h2>
                     <Arrow className="w-5 h-5 text-primary opacity-0 group-hover:opacity-100 transition" />
                   </div>
-                  <p className="text-sm text-primary mb-2">{tr.tagline}</p>
+                  <p className="text-sm text-primary mb-2" style={taglineColor ? { color: taglineColor } : undefined}>{tr.tagline}</p>
                   <p className="text-sm text-muted-foreground line-clamp-2">{tr.description}</p>
                 </div>
               </Link>

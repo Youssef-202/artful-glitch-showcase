@@ -5,17 +5,20 @@ import { ArrowUpRight, Sparkles } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { usePortfolio } from "@/lib/usePortfolio";
 import type { PortfolioItem } from "@/lib/portfolio";
+import { useTheme } from "@/theme/ThemeProvider";
 
 function TiltCard({
   item,
   index,
   lang,
   categoryLabel,
+  isLight,
 }: {
   item: PortfolioItem;
   index: number;
   lang: "ar" | "en";
   categoryLabel: string;
+  isLight: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
@@ -61,9 +64,9 @@ function TiltCard({
           className="relative aspect-[4/5] overflow-hidden"
           style={{ background: `linear-gradient(135deg, ${item.color}, ${item.accent})` }}
         >
-          {(item.portfolioCoverUrl || item.coverUrl) && (
+          {((isLight && item.portfolioCoverUrlLight) || item.portfolioCoverUrl || item.coverUrl) && (
             <motion.img
-              src={item.portfolioCoverUrl || item.coverUrl}
+              src={(isLight && item.portfolioCoverUrlLight) || item.portfolioCoverUrl || item.coverUrl!}
               alt={lang === "ar" ? item.titleAr : item.titleEn}
               loading="lazy"
               style={{ transform: "translateZ(40px)" }}
@@ -107,13 +110,13 @@ function TiltCard({
           >
             <h3
               className="text-lg font-black line-clamp-1"
-              style={{ color: item.portfolioTitleColor || "#ffffff" }}
+              style={{ color: (isLight && item.portfolioTitleColorLight) || item.portfolioTitleColor || "#ffffff" }}
             >
               {lang === "ar" ? item.titleAr : item.titleEn}
             </h3>
             <p
               className="text-xs line-clamp-1 mt-0.5"
-              style={{ color: item.portfolioClientColor || "rgba(255,255,255,0.8)" }}
+              style={{ color: (isLight && item.portfolioClientColorLight) || item.portfolioClientColor || "rgba(255,255,255,0.8)" }}
             >
               {lang === "ar" ? item.clientAr : item.clientEn}
             </p>
@@ -128,6 +131,8 @@ function TiltCard({
 export default function Portfolio() {
   const { t, lang } = useLang();
   const { items: portfolioItems } = usePortfolio();
+  const { theme } = useTheme();
+  const isLight = theme === "light";
   const [filter, setFilter] = useState<string>("all");
 
   const filtered = useMemo(
@@ -179,6 +184,7 @@ export default function Portfolio() {
             index={i}
             lang={lang}
             categoryLabel={t.portfolio.categories[item.category]}
+            isLight={isLight}
           />
         ))}
         {filtered.length === 0 && (

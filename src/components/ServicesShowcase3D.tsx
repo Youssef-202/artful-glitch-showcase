@@ -4,14 +4,19 @@ import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
 import { useRef, MouseEvent } from "react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { useServices, type DisplayService } from "@/lib/useServices";
+import { useTheme } from "@/theme/ThemeProvider";
 
 function ServiceCard3D({ s, i, dir }: { s: DisplayService; i: number; dir: "rtl" | "ltr" }) {
   const { t } = useLang();
+  const { theme } = useTheme();
+  const isLight = theme === "light";
   const tr = (t.services as any)[s.id] ?? { title: s.title, tagline: s.tagline, description: s.description };
   const displayTitle = s.homeTitle || tr.title;
   const displayTagline = s.homeTagline || tr.tagline;
   const displayNumber = s.homeNumber || s.number;
-  const displayImage = s.homeImage || s.image;
+  const displayImage = (isLight && s.homeImageLight) || s.homeImage || (isLight && s.imageLight) || s.image;
+  const titleColor = (isLight && s.homeTitleColorLight) || undefined;
+  const taglineColor = (isLight && s.homeTaglineColorLight) || undefined;
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
 
   const ref = useRef<HTMLAnchorElement>(null);
@@ -93,10 +98,10 @@ function ServiceCard3D({ s, i, dir }: { s: DisplayService; i: number; dir: "rtl"
               className="service-card-content relative p-5 pt-4"
               style={{ transform: "translateZ(40px)" }}
             >
-              <h3 className="service-card-title text-lg font-black mb-1">
+              <h3 className="service-card-title text-lg font-black mb-1" style={titleColor ? { color: titleColor } : undefined}>
                 {displayTitle}
               </h3>
-              <p className="service-card-body text-sm line-clamp-2 mb-3">{displayTagline}</p>
+              <p className="service-card-body text-sm line-clamp-2 mb-3" style={taglineColor ? { color: taglineColor } : undefined}>{displayTagline}</p>
 
               <span className="service-card-link inline-flex items-center gap-1.5 text-sm font-bold transition-all duration-300 group-hover:gap-3">
                 {t.common.learnMore}
