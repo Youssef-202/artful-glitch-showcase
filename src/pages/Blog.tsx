@@ -13,6 +13,8 @@ type Post = {
   excerpt: string | null;
   excerpt_en: string | null;
   cover_url: string | null;
+  cover_url_light?: string | null;
+  title_color_light?: string | null;
   author_name: string | null;
   author_name_en: string | null;
   category: string | null;
