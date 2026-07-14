@@ -36,7 +36,7 @@ export default function PartnersLogoCloud() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-center mb-4">
           <h2 className="inline-block text-center text-gradient font-sans font-extrabold leading-tight font-mono bg-slate-800 sm:text-5xl text-2xl px-8 pt-2 pb-[11px] rounded-xl">
-            شـــــــركـــــــاء الـــــــنـــــجـــــاح
+            &nbsp;شـــركـــــاؤنــــــا
           </h2>
         </div>
         <p className="text-center text-muted-foreground mb-12 sm:text-lg text-2xl font-sans font-bold">
