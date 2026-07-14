@@ -16,7 +16,7 @@ export default function ServicesIndex() {
   return (
     <div className="px-6 py-12 max-w-7xl mx-auto">
       <header className="text-center mb-12">
-        <p className="text-sm text-primary tracking-widest mb-3">{t.common.ourServices}</p>
+        {t.common.ourServices && <p className="text-sm text-primary tracking-widest mb-3">{t.common.ourServices}</p>}
         <h1 className="text-4xl sm:text-6xl font-black">
           <span className="text-gradient">{t.nav.services}</span>
         </h1>
