@@ -209,9 +209,9 @@ export default function ServiceDetail() {
 
           {/* CTA */}
           <div className="rounded-2xl border border-primary/40 bg-card/30 p-6 space-y-3">
-            <h3 className="font-black text-lg">{service.cta_section_title || "جاهز نبدأ معاك؟"}</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {service.cta_section_description || "اطلب الخدمة دلوقتي وفريقنا هيتواصل معاك في خلال 24 ساعة."}
+            <h3 className="font-black text-lg">{service.cta_section_title || sd?.needHelp || "تحتاج مساعدة؟"}</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
+              {service.cta_section_description || sd?.needHelpDesc || "\n\nالدعم الصحيح يصنع الفرق، فريقنا جاهز لمرافقتك في اتخاذ القرار المناسب."}
             </p>
             <RequestServiceButton
               serviceKey={service.id}
