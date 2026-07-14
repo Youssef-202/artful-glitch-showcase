@@ -108,9 +108,9 @@ export const translations = {
       formSend: "إرسال",
     },
     portfolio: {
-      title: "معرض أعمالنا",
-      subtitle: "تنقّل بين مشاريعنا في عالم ثلاثي الأبعاد.",
-      kicker: "أعمال مختارة",
+      title: " أعمالنا",
+      subtitle: "نجاحات خرجت للنور مشاريع بدأت بفكرة وانتهت بإنجاز",
+      kicker: "",
       hint: "اسحب أو حرّك الفأرة للدوران",
       categories: {
         all: "الكل",
