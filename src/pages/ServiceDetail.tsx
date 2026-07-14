@@ -140,7 +140,7 @@ export default function ServiceDetail() {
           <div className="absolute inset-0 bg-gradient-to-tr from-background/95 via-background/70 to-transparent pointer-events-none" />
           <div className="absolute inset-0 flex items-center justify-end p-6 sm:p-12">
             <div className="text-right max-w-2xl space-y-4">
-              <p className="text-accent font-black text-lg">{service.number}</p>
+              
               <h1 className="text-4xl sm:text-6xl font-black text-foreground leading-tight">
                 {service.title}
               </h1>
@@ -446,14 +446,14 @@ export default function ServiceDetail() {
             to={`/services/${prev.id}`}
             className="rounded-2xl border border-primary/30 bg-card/30 p-5 hover:border-accent transition group"
           >
-            <p className="text-xs text-muted-foreground mb-1">← {prev.number}</p>
+            <p className="text-xs text-muted-foreground mb-1">←</p>
             <p className="font-bold group-hover:text-accent transition">{prev.title}</p>
           </Link>
           <Link
             to={`/services/${next.id}`}
             className="rounded-2xl border border-primary/30 bg-card/30 p-5 hover:border-accent transition group text-right"
           >
-            <p className="text-xs text-muted-foreground mb-1">{next.number} →</p>
+            <p className="text-xs text-muted-foreground mb-1">→</p>
             <p className="font-bold group-hover:text-accent transition">{next.title}</p>
           </Link>
         </div>
