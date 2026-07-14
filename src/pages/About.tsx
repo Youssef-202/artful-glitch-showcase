@@ -75,7 +75,7 @@ export default function About() {
   return (
     <div className="px-6 max-w-7xl mx-auto space-y-16" dir="rtl">
       <header className="text-center mb-4">
-        <p className="text-sm text-primary tracking-widest mb-3">{c.header_kicker}</p>
+        {c.header_kicker && <p className="text-sm text-primary tracking-widest mb-3">{c.header_kicker}</p>}
         <h1 className="text-4xl sm:text-6xl font-black mb-6">
           <span className="text-gradient">{c.header_title}</span>
         </h1>
