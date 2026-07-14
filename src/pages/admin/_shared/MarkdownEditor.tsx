@@ -34,7 +34,7 @@ export function normalizeMarkdown(raw: string): string {
 }
 
 /** معاينة Markdown بسيطة بدون مكتبات خارجية */
-function renderPreview(md: string): string {
+export function renderPreview(md: string): string {
   const esc = (s: string) =>
     s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const inline = (s: string) =>
