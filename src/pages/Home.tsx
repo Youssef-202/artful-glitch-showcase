@@ -42,7 +42,7 @@ export default function Home() {
       <Reveal><ServicesShowcase3D /></Reveal>
 
       {/* Portfolio showcase */}
-      <Reveal><PortfolioStack /></Reveal>
+      <PortfolioStack />
 
 
 
