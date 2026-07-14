@@ -129,13 +129,20 @@ export default function BlogPost() {
   );
 }
 
-// Split rich-text HTML into sections by separator lines (long sequences of ـ tatweel or dashes)
-function splitContentBySeparator(html: string): string[] {
-  if (!html) return [];
-  // Match any block (p/div/h*) whose text content is mostly tatweel/dash/underscore characters
-  const separatorBlock = /<(p|div|h[1-6])[^>]*>\s*(?:<[^>]+>\s*)*[ـ\-_–—\s]{8,}(?:\s*<[^>]+>)*\s*<\/\1>/gi;
-  const parts = html.split(separatorBlock).filter((s) => s && !/^(p|div|h[1-6])$/i.test(s));
-  const cleaned = parts.map((p) => p.trim()).filter((p) => p && p.replace(/<[^>]+>/g, "").trim().length > 0);
-  return cleaned.length ? cleaned : [html];
+// Split markdown/HTML into sections by separator lines, then render markdown to HTML
+function splitContentBySeparator(content: string): string[] {
+  if (!content) return [];
+  const isHtml = /<(p|div|h[1-6]|ul|ol|blockquote)[\s>]/i.test(content);
+  if (isHtml) {
+    const separatorBlock = /<(p|div|h[1-6])[^>]*>\s*(?:<[^>]+>\s*)*[ـ\-_–—\s]{8,}(?:\s*<[^>]+>)*\s*<\/\1>/gi;
+    const parts = content.split(separatorBlock).filter((s) => s && !/^(p|div|h[1-6])$/i.test(s));
+    const cleaned = parts.map((p) => p.trim()).filter((p) => p && p.replace(/<[^>]+>/g, "").trim().length > 0);
+    return cleaned.length ? cleaned : [content];
+  }
+  // Markdown path: normalize, split by --- separators, render each to HTML
+  const md = normalizeMarkdown(content);
+  const parts = md.split(/\n\s*-{3,}\s*\n/g).map((p) => p.trim()).filter(Boolean);
+  const sections = parts.length ? parts : [md];
+  return sections.map((s) => renderPreview(s));
 }
 
