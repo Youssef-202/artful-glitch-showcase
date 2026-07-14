@@ -44,7 +44,7 @@ export default function Contact() {
           >
             <c.icon className="w-7 h-7 text-primary mx-auto mb-3" />
             <p className="font-bold mb-1">{c.label}</p>
-            <p className="text-sm text-muted-foreground">{c.value}</p>
+            <p className="text-sm text-muted-foreground" dir="ltr">{c.value}</p>
           </motion.a>
         ))}
       </div>
