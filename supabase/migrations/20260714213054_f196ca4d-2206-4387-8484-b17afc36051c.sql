@@ -1,0 +1,1 @@
+UPDATE services SET tagline = '' WHERE id = 'photo';
