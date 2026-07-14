@@ -87,13 +87,8 @@ function TiltCard({
           />
 
 
-          {/* Floating chip */}
-          <motion.span
-            style={{ transform: "translateZ(60px)" }}
-            className="absolute top-4 left-4 inline-flex items-center gap-1 text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full bg-background/70 backdrop-blur text-primary font-bold border border-primary/20"
-          >
-            <Sparkles className="w-3 h-3" /> {categoryLabel}
-          </motion.span>
+
+
 
           {/* Floating arrow on hover */}
           <motion.div
