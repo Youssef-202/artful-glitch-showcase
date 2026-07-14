@@ -147,6 +147,7 @@ function normalize(raw: any): HeroContent {
 
 
 function StaticHeadline({ text }: { text: string }) {
+  if (!text || text.trim() === "") return null;
   return (
     <div className="relative w-full flex items-center justify-center">
       <motion.h1
