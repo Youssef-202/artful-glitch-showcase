@@ -12,7 +12,7 @@ export const translations = {
     },
     blog: {
       title: "المدونة",
-      kicker: "مقالات وآراء",
+      kicker: "",
       subtitle: "نشاركك أفكارنا وخبراتنا في عالم العلامات والتسويق الرقمي.",
       readMore: "اقرأ المزيد",
       backToBlog: "العودة للمدونة",
