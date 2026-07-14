@@ -88,9 +88,6 @@ export default function PortfolioStack() {
                     <span className="text-[10px] sm:text-xs px-3 py-1 rounded-full bg-background/70 backdrop-blur-md text-primary font-bold tracking-[0.2em] uppercase">
                       {t.portfolio.categories[item.category]}
                     </span>
-                    <span className="text-xs font-black text-white/80 tabular-nums">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-start">
                     <h3
