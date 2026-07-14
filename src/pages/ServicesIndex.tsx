@@ -47,7 +47,7 @@ export default function ServicesIndex() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent" />
-                  <span className="absolute top-4 left-4 text-gradient font-black text-2xl">{s.number}</span>
+                  
                 </div>
                 <div className="p-6">
                   <div className="flex items-baseline justify-between mb-2">
