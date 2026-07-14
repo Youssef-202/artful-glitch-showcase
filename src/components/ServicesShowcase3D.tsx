@@ -76,16 +76,8 @@ function ServiceCard3D({ s, i, dir }: { s: DisplayService; i: number; dir: "rtl"
                 transition={{ duration: 0.6, ease: "easeOut" }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-teal-950 via-teal-950/40 to-transparent" />
-              {/* Number badge */}
-              <div
-                className="absolute top-4 left-4 flex items-center gap-2"
-                style={{ transform: "translateZ(60px)" }}
-              >
-                <span className="relative inline-flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-br from-teal-400 to-teal-700 text-white font-black text-base shadow-[0_0_20px_rgba(3,108,95,0.6)]">
-                  {displayNumber}
-                  <span className="absolute inset-0 rounded-2xl ring-2 ring-teal-400/50 animate-pulse-ring" />
-                </span>
-              </div>
+              {/* Number badge removed */}
+
               {/* Sparkle */}
               <Sparkles
                 className="absolute top-4 right-4 w-4 h-4 text-teal-300 opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:rotate-180"
