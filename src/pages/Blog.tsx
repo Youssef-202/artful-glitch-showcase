@@ -58,7 +58,9 @@ export default function Blog() {
         <img src={page.cover_url} alt="" className="w-full max-h-72 object-cover rounded-3xl mb-8 shadow-elegant" />
       )}
       <header className="text-center mb-12">
-        <p className="text-sm text-primary tracking-widest mb-3">{page.kicker || t.blog.kicker}</p>
+        {(page.kicker || t.blog.kicker) && (
+          <p className="text-sm text-primary tracking-widest mb-3">{page.kicker || t.blog.kicker}</p>
+        )}
         <h1 className="text-4xl sm:text-6xl font-black mb-4">
           <span className="text-gradient">{page.title || t.blog.title}</span>
         </h1>
