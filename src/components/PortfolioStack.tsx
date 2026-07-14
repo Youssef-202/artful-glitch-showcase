@@ -84,11 +84,8 @@ export default function PortfolioStack() {
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#01211d] via-[#022e29]/40 to-transparent" />
-                  <div className="absolute top-5 left-5 right-5 flex items-center justify-between">
-                    <span className="text-[10px] sm:text-xs px-3 py-1 rounded-full bg-background/70 backdrop-blur-md text-primary font-bold tracking-[0.2em] uppercase">
-                      {t.portfolio.categories[item.category]}
-                    </span>
-                  </div>
+                  <div className="absolute top-5 left-5 right-5 flex items-center justify-between" />
+
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-start">
                     <h3
                       className="text-xl sm:text-3xl font-black mb-1 leading-tight"
