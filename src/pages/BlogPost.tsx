@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/external";
 import { useLang } from "@/i18n/LanguageProvider";
 import "@/components/rich-text-editor.css";
+import { renderPreview, normalizeMarkdown } from "@/pages/admin/_shared/MarkdownEditor";
 
 type Post = {
   id: string; title: string; excerpt: string | null; content: string;
