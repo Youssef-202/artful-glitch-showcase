@@ -123,12 +123,6 @@ export default function ServicesShowcase3D() {
   const { items: services } = useServices();
   return (
     <section className="relative px-6 py-24 max-w-7xl mx-auto">
-      {/* ambient backdrop */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-1/4 -left-20 w-96 h-96 rounded-full bg-primary/10 blur-3xl animate-float-slow" />
-        <div className="absolute bottom-1/4 -right-20 w-96 h-96 rounded-full bg-accent/10 blur-3xl animate-float-slow" style={{ animationDelay: "2s" }} />
-      </div>
-
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

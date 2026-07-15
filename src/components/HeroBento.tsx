@@ -17,12 +17,7 @@ export default function HeroBento() {
       dir={dir}
       className="relative w-full overflow-hidden min-h-[88vh] flex items-center justify-center px-4 sm:px-8 pt-16 pb-24"
     >
-      {/* Ambient gradient stage */}
-      <div className="absolute inset-0 -z-10 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] rounded-full bg-primary/15 blur-[160px]" />
-        <div className="absolute top-[20%] right-[10%] w-[400px] h-[400px] rounded-full bg-accent/20 blur-[120px]" />
-        <div className="absolute bottom-[10%] left-[10%] w-[380px] h-[380px] rounded-full bg-primary-glow/15 blur-[120px]" />
-        {/* grid texture */}
+      {/* grid texture */}
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
