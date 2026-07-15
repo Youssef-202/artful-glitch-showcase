@@ -40,7 +40,7 @@ export default function PartnersLogoCloud() {
           </h2>
         </div>
         <p className="text-center text-muted-foreground mb-12 sm:text-lg text-2xl font-sans font-bold">
-          نفخر بشراكتنا مع نخبة من العلامات التجارية الرائدة
+          <br />
         </p>
 
         <div className="group" dir="rtl">
