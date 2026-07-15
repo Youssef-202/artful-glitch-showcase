@@ -18,17 +18,16 @@ export default function HeroBento() {
       className="relative w-full overflow-hidden min-h-[88vh] flex items-center justify-center px-4 sm:px-8 pt-16 pb-24"
     >
       {/* grid texture */}
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
-            backgroundSize: "64px 64px",
-            maskImage:
-              "radial-gradient(ellipse at center, black 30%, transparent 70%)",
-          }}
-        />
-      </div>
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
+          backgroundSize: "64px 64px",
+          maskImage:
+            "radial-gradient(ellipse at center, black 30%, transparent 70%)",
+        }}
+      />
 
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center text-center">
         {/* Eyebrow */}
