@@ -214,13 +214,13 @@ export default function ArchitecturalHero() {
 
           {/* The "device" frame — phone on mobile, wide tablet/laptop on desktop */}
           <div
-            className="relative mx-auto w-[78%] xs:w-[72%] sm:w-full sm:max-w-6xl rounded-[2.5rem] sm:rounded-[1.75rem] md:rounded-[2rem] border border-foreground/10 bg-[#cfd3d8]/40 p-[6px] sm:p-2 md:p-2.5 backdrop-blur-xl"
+            className="relative mx-auto w-[78%] xs:w-[72%] sm:w-full sm:max-w-6xl rounded-[1.5rem] sm:rounded-[1.75rem] md:rounded-[2rem] border border-foreground/10 bg-[#cfd3d8]/40 p-[6px] sm:p-2 md:p-2.5 backdrop-blur-xl"
             style={{
               boxShadow:
                 "0 30px 60px -30px hsl(var(--primary) / 0.4), 0 60px 120px -60px hsl(220 60% 5% / 0.6), inset 0 1px 0 hsl(0 0% 100% / 0.22)",
             }}
           >
-            <div className="relative aspect-[9/18] sm:aspect-[16/10] w-full overflow-hidden rounded-[2.1rem] sm:rounded-[1.25rem] md:rounded-[1.5rem] bg-[#0a1a18]">
+            <div className="relative aspect-[9/18] sm:aspect-[16/10] w-full overflow-hidden rounded-[1.2rem] sm:rounded-[1.25rem] md:rounded-[1.5rem] bg-[#0a1a18]">
               {/* iPhone-style Dynamic Island + status bar (mobile only) */}
               <PhoneStatusBar />
 
