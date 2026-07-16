@@ -71,17 +71,18 @@ export default function Navbar() {
       >
         <Link to="/" className="flex items-center gap-2" aria-label={t.common.brand}>
           <motion.img
-            src={logoMark.url}
+            src={logoDark}
             alt="وكالة إتقان"
             data-keep-filter
-            className="transition-all duration-300"
-            style={{
-              height: scrolled ? 28 : 36,
-              filter:
-                theme === "dark"
-                  ? undefined
-                  : "brightness(0) saturate(100%) invert(15%) sepia(60%) saturate(2500%) hue-rotate(150deg) brightness(60%) contrast(110%)",
-            }}
+            className="block dark:hidden transition-all duration-300"
+            style={{ height: scrolled ? 28 : 36 }}
+          />
+          <motion.img
+            src={logo3d}
+            alt="وكالة إتقان"
+            data-keep-filter
+            className="hidden dark:block transition-all duration-300"
+            style={{ height: scrolled ? 28 : 36 }}
           />
           {!scrolled && (
             <motion.span
