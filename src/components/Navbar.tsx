@@ -7,7 +7,8 @@ import { useLang } from "@/i18n/LanguageProvider";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { supabaseExternal } from "@/integrations/supabase/external";
-import logoMark from "@/assets/etqan-mark.png.asset.json";
+import logoDark from "@/assets/logo.png";
+import logo3d from "@/assets/etqan-logo-3d.png";
 
 const ADMIN_EMAIL = "youssf582022@gmail.com";
 
