@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Logo3DCard from "./logo-3d-card";
 import { supabase } from "@/integrations/supabase/external";
-import cityBg from "@/assets/futuristic-city-bg.jpg";
+
 
 function CountUp({ end, duration = 2000 }: { end: number; duration?: number }) {
   const [value, setValue] = useState(0);
@@ -172,12 +172,14 @@ function StaticHeadline({ text }: { text: string }) {
 
 
 export default function ArchitecturalHero() {
-  const [content, setContent] = useState<HeroContent>(defaults);
+  const [content, setContent] = useState<HeroContent | null>(null);
 
   useEffect(() => {
     (supabase.from as any)("site_pages").select("content").eq("page_key", "hero").maybeSingle()
       .then(({ data }: any) => setContent(normalize(data?.content)));
   }, []);
+
+  if (!content) return <section className="w-full min-h-[60vh]" aria-hidden />;
 
   return (
     <section
@@ -224,13 +226,15 @@ export default function ArchitecturalHero() {
 
 
 
-              <img
-                src={content.bg_image || cityBg}
-                alt=""
-                aria-hidden
-                className="absolute inset-0 w-full h-full object-cover"
-                draggable={false}
-              />
+              {content.bg_image && (
+                <img
+                  src={content.bg_image}
+                  alt=""
+                  aria-hidden
+                  className="absolute inset-0 w-full h-full object-cover"
+                  draggable={false}
+                />
+              )}
               {/* Cinematic overlays */}
               <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/70" />
               <div
