@@ -125,7 +125,8 @@ export default function ServiceDetail() {
         <div
           className="relative w-full aspect-[4/3] sm:aspect-auto"
           style={{
-            ["--desktop-h" as any]: `${service.image_height ?? 420}px`,
+            // On mobile, aspect ratio controls height so the image scales in both dimensions.
+            // On sm+ we use the configured pixel height.
           }}
         >
           {service.image_url && (
