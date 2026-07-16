@@ -123,7 +123,7 @@ export default function ServiceDetail() {
         className="relative rounded-3xl overflow-hidden border border-primary/40 shadow-elegant"
       >
         <div
-          className="relative w-full h-[var(--svc-h)] min-h-[260px]"
+          className="relative w-full aspect-[16/7] min-h-[180px] md:h-[var(--svc-h)] md:aspect-auto md:min-h-[260px]"
           style={{ ["--svc-h" as any]: `${service.image_height ?? 420}px` }}
         >
           {service.image_url && (
@@ -138,7 +138,7 @@ export default function ServiceDetail() {
           <div className="absolute inset-0 flex items-center justify-end p-6 sm:p-12">
             <div className="text-right max-w-2xl space-y-4">
               
-              <h1 className="text-4xl sm:text-6xl font-black text-foreground leading-tight">
+              <h1 className="text-2xl sm:text-4xl md:text-6xl font-black text-foreground leading-tight">
                 {service.title}
               </h1>
               {service.tagline && (
