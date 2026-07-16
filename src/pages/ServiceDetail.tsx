@@ -123,11 +123,8 @@ export default function ServiceDetail() {
         className="relative rounded-3xl overflow-hidden border border-primary/40 shadow-elegant"
       >
         <div
-          className="relative w-full"
-          style={{
-            height: `${service.image_height ?? 420}px`,
-            minHeight: 260,
-          }}
+          className="relative w-full aspect-[4/3] sm:aspect-auto sm:h-[var(--svc-h)] sm:min-h-[260px]"
+          style={{ ["--svc-h" as any]: `${service.image_height ?? 420}px` }}
         >
           {service.image_url && (
             <img
