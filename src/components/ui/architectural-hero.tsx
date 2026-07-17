@@ -198,11 +198,12 @@ export default function ArchitecturalHero() {
           transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
           className="relative w-full mt-10 md:mt-14 flex justify-center"
         >
-          {/* Soft sage backplate — sits behind lower half of device, visible from phone sides on mobile */}
+          {/* Soft sage backplate — mobile widened past phone sides; desktop/tablet keep original wider spill */}
           <div
             aria-hidden
-            className="absolute top-[55%] sm:top-[60%] md:top-[62%] bottom-[-2rem] sm:bottom-[-2.5rem] md:bottom-[-3rem] left-1/2 -translate-x-1/2 -z-10 w-[92%] xs:w-[88%] sm:w-full sm:max-w-6xl rounded-[2.5rem] sm:rounded-[1.75rem] md:rounded-[2rem]"
+            className="absolute top-[55%] sm:top-[60%] md:top-[62%] bottom-[-2rem] sm:bottom-[-2.5rem] md:bottom-[-3rem] left-1/2 -translate-x-1/2 -z-10 w-[92%] xs:w-[88%] sm:w-[108%] rounded-[2.5rem] sm:rounded-[2rem] md:rounded-[2.5rem]"
             style={{
+              maxWidth: "min(108%, 1180px)",
               background:
                 "linear-gradient(160deg, hsl(var(--primary) / 0.75), hsl(var(--accent) / 0.55) 60%, hsl(var(--primary) / 0.35))",
               boxShadow: "0 60px 100px -40px hsl(var(--primary) / 0.55)",
