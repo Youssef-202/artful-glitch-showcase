@@ -479,12 +479,12 @@
     that use Tailwind's `!text-white` are NOT overridden because
     the selector below does not match `.\!text-white`.)
    ============================================================ */
-:root:not(.dark) body:not(.admin-body) h1,
-:root:not(.dark) body:not(.admin-body) h2,
-:root:not(.dark) body:not(.admin-body) h3,
-:root:not(.dark) body:not(.admin-body) h4,
-:root:not(.dark) body:not(.admin-body) h5,
-:root:not(.dark) body:not(.admin-body) h6 {
+:root:not(.dark) body:not(.admin-body) h1:not([style*="color"]),
+:root:not(.dark) body:not(.admin-body) h2:not([style*="color"]),
+:root:not(.dark) body:not(.admin-body) h3:not([style*="color"]),
+:root:not(.dark) body:not(.admin-body) h4:not([style*="color"]),
+:root:not(.dark) body:not(.admin-body) h5:not([style*="color"]),
+:root:not(.dark) body:not(.admin-body) h6:not([style*="color"]) {
   color: hsl(var(--primary)) !important;
 }
 /* Keep text-gradient headings using the gradient, not a flat color */
@@ -496,14 +496,15 @@
   color: transparent !important;
 }
 
-/* Force any plain white utility text to become dark & readable in light mode */
-:root:not(.dark) body:not(.admin-body) .text-white,
-:root:not(.dark) body:not(.admin-body) [class*="text-white\\/"],
-:root:not(.dark) body:not(.admin-body) .text-white\/50,
-:root:not(.dark) body:not(.admin-body) .text-white\/60,
-:root:not(.dark) body:not(.admin-body) .text-white\/70,
-:root:not(.dark) body:not(.admin-body) .text-white\/80,
-:root:not(.dark) body:not(.admin-body) .text-white\/90 {
+/* Force any plain white utility text to become dark & readable in light mode
+   — but respect inline color overrides coming from the dashboard. */
+:root:not(.dark) body:not(.admin-body) .text-white:not([style*="color"]),
+:root:not(.dark) body:not(.admin-body) [class*="text-white\\/"]:not([style*="color"]),
+:root:not(.dark) body:not(.admin-body) .text-white\/50:not([style*="color"]),
+:root:not(.dark) body:not(.admin-body) .text-white\/60:not([style*="color"]),
+:root:not(.dark) body:not(.admin-body) .text-white\/70:not([style*="color"]),
+:root:not(.dark) body:not(.admin-body) .text-white\/80:not([style*="color"]),
+:root:not(.dark) body:not(.admin-body) .text-white\/90:not([style*="color"]) {
   color: hsl(var(--foreground)) !important;
 }
 
