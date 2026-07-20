@@ -100,7 +100,12 @@ export default function AdminBlog() {
         <div className="fixed inset-0 z-50 flex items-start justify-center p-4 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
           <div className="cyber-panel max-w-4xl w-full rounded-2xl my-4">
             <div className="p-5 border-b border-slate-800 flex items-center justify-between sticky top-0 bg-slate-950/90 z-10">
-              <h4 className="font-bold text-base text-white">{editingId ? "تعديل مقال" : "مقال جديد"}</h4>
+              <h4 className="font-bold text-base text-white">
+                {editingId ? "تعديل مقال" : "مقال جديد"}
+                {editingId && (form.title || form.title_en) && (
+                  <span className="text-cyan-400 font-normal mr-2">— {form.title || form.title_en}</span>
+                )}
+              </h4>
               <button onClick={() => setOpen(false)}><X className="w-5 h-5 text-slate-400" /></button>
             </div>
             <form onSubmit={submit} className="p-6 space-y-5">

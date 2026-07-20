@@ -203,9 +203,12 @@ function ServiceEditor({
         {/* Header */}
         <div className="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/95">
           <div>
-            <h4 className="font-bold text-base text-white flex items-center gap-2">
+            <h4 className="font-bold text-base text-white flex items-center gap-2 flex-wrap">
               <Wrench className="w-4 h-4 text-cyan-400" />
               {editingId ? "تعديل خدمة" : "إضافة خدمة جديدة"}
+              {editingId && (form.title || form.title_en) && (
+                <span className="text-cyan-400 font-normal">— {form.title || form.title_en}</span>
+              )}
             </h4>
             <p className="text-[11px] text-slate-500 mt-0.5">
               {TABS.find((t) => t.key === tab)?.hint}
