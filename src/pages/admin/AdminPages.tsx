@@ -78,7 +78,10 @@ export default function AdminPages() {
         <div className="fixed inset-0 z-50 flex items-start justify-center p-4 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
           <div className="cyber-panel max-w-3xl w-full rounded-2xl my-4">
             <div className="p-5 border-b border-slate-800 flex items-center justify-between sticky top-0 bg-slate-950/90 z-10">
-              <h4 className="font-bold text-base text-white">تعديل الصفحة</h4>
+              <h4 className="font-bold text-base text-white">
+                تعديل الصفحة
+                {pageKey && <span className="text-cyan-400 font-normal mr-2">— {pageKey}</span>}
+              </h4>
               <button onClick={() => setEditing(null)}><X className="w-5 h-5 text-slate-400" /></button>
             </div>
             <div className="p-6 space-y-4">
