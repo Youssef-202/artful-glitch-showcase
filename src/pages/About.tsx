@@ -105,12 +105,13 @@ export default function About() {
           className="order-1 lg:order-2 w-full rounded-2xl overflow-hidden bg-background/30"
           style={(c.who_image_fit ?? "cover") === "cover" ? { height: `${c.who_image_height ?? 420}px` } : { maxHeight: `${c.who_image_height ?? 420}px` }}
         >
-          <img
-            src={c.who_image || aboutWho}
-            alt={c.who_title}
-            loading="lazy"
-            className={(c.who_image_fit ?? "cover") === "cover" ? "w-full h-full object-cover" : "w-full h-auto max-h-full object-contain mx-auto"}
-          />
+          {c.who_image && (
+            <img
+              src={c.who_image}
+              alt={c.who_title}
+              className={(c.who_image_fit ?? "cover") === "cover" ? "w-full h-full object-cover" : "w-full h-auto max-h-full object-contain mx-auto"}
+            />
+          )}
         </div>
       </motion.div>
 
