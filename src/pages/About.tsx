@@ -127,12 +127,13 @@ export default function About() {
           className="w-full rounded-2xl overflow-hidden bg-background/30"
           style={(c.vision_image_fit ?? "cover") === "cover" ? { height: `${c.vision_image_height ?? 420}px` } : { maxHeight: `${c.vision_image_height ?? 420}px` }}
         >
-          <img
-            src={c.vision_image || aboutVision}
-            alt={c.vision_title}
-            loading="lazy"
-            className={(c.vision_image_fit ?? "cover") === "cover" ? "w-full h-full object-cover" : "w-full h-auto max-h-full object-contain mx-auto"}
-          />
+          {c.vision_image && (
+            <img
+              src={c.vision_image}
+              alt={c.vision_title}
+              className={(c.vision_image_fit ?? "cover") === "cover" ? "w-full h-full object-cover" : "w-full h-auto max-h-full object-contain mx-auto"}
+            />
+          )}
         </div>
         <div className="text-right">
           <p className="text-sm text-primary tracking-widest mb-4">{c.vision_kicker}</p>
