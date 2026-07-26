@@ -38,11 +38,11 @@ export default function Home() {
       {/* Partners logo cloud */}
       <Reveal><PartnersLogoCloud /></Reveal>
 
-      {/* Services grid */}
-      <Reveal><ServicesShowcase3D /></Reveal>
-
       {/* Portfolio showcase */}
       <PortfolioStack />
+
+      {/* Services grid */}
+      <Reveal><ServicesShowcase3D /></Reveal>
 
 
 
