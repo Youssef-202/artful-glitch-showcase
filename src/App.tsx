@@ -7,6 +7,7 @@ import { lazy, Suspense } from "react";
 import { LanguageProvider } from "@/i18n/LanguageProvider";
 import { ThemeProvider } from "@/theme/ThemeProvider";
 import Layout from "@/components/Layout";
+import SeoHead from "@/components/SeoHead";
 
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
@@ -50,6 +51,7 @@ const App = () => (
           <Sonner />
 
           <BrowserRouter>
+            <SeoHead />
             <Suspense fallback={<div className="min-h-screen" />}>
               <Routes>
                 <Route path="/admin-login" element={<AdminLogin />} />
