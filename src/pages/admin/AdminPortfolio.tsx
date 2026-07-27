@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { Plus, Edit3, Trash2, X, AlertCircle, Image as ImageIcon, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { CoverUploader, GalleryUploader, Field, inputCls, textareaCls } from "./_shared/uploaders";
+import { usePortfolioFields } from "@/lib/usePortfolioFields";
 
 const empty: any = {
   title_ar: "", title_en: "", client_ar: "", client_en: "", category: "",
   description_ar: "", description_en: "", content_ar: "", content_en: "",
   cover_url: "", gallery_urls: [], process_steps_ar: [], process_steps_en: [],
-  project_url: "", duration: "", year: "", color: "#06b6d4", accent: "#ec4899",
+  project_url: "", duration: "", year: "", field: "", color: "#06b6d4", accent: "#ec4899",
   sort_order: 0, published: true,
   home_title_ar: "", home_title_en: "", home_client_ar: "", home_client_en: "", home_cover_url: "",
   home_title_color: "#ffffff", home_client_color: "#ffffffb3",
@@ -46,6 +47,15 @@ export default function AdminPortfolio() {
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState<any>(empty);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const { fields, saveFields } = usePortfolioFields();
+
+  const addField = async () => {
+    const name = window.prompt("اسم المجال الجديد")?.trim();
+    if (!name) return;
+    const error = await saveFields([...fields, name]);
+    if (error) { setErr(error.message); return; }
+    setForm((f: any) => ({ ...f, field: name }));
+  };
 
   const fetchRows = async () => {
     setLoading(true);
@@ -111,7 +121,7 @@ export default function AdminPortfolio() {
           rows.length === 0 ? <div className="p-12 text-center text-slate-500 text-sm">لا توجد مشاريع.</div> :
             <table className="w-full text-right text-xs md:text-sm">
               <thead><tr className="border-b border-slate-800 bg-slate-900/40 text-slate-400">
-                <th className="p-3 w-16 text-center">الترتيب</th><th className="p-3">العنوان</th><th className="p-3">العميل</th><th className="p-3">التصنيف</th><th className="p-3">السنة</th><th className="p-3">منشور</th><th className="p-3 text-center w-24">إجراءات</th>
+                <th className="p-3 w-16 text-center">الترتيب</th><th className="p-3">العنوان</th><th className="p-3">العميل</th><th className="p-3">التصنيف</th><th className="p-3">المجال</th><th className="p-3">منشور</th><th className="p-3 text-center w-24">إجراءات</th>
               </tr></thead>
               <tbody className="divide-y divide-slate-800/60">
                 {rows.map((r) => (
@@ -120,7 +130,7 @@ export default function AdminPortfolio() {
                     <td className="p-3 font-bold text-white">{r.title_ar}</td>
                     <td className="p-3 text-slate-400">{r.client_ar || "—"}</td>
                     <td className="p-3 text-slate-400">{r.category || "—"}</td>
-                    <td className="p-3 text-slate-400">{r.year || "—"}</td>
+                    <td className="p-3 text-slate-400">{r.field || "—"}</td>
                     <td className="p-3"><span className={`px-2 py-0.5 rounded-full text-[10px] ${r.published ? "bg-emerald-500/15 text-emerald-300" : "bg-slate-700/40 text-slate-400"}`}>{r.published ? "نعم" : "لا"}</span></td>
                     <td className="p-3"><div className="flex items-center justify-center gap-2">
                       <button onClick={() => { setForm({ ...empty, ...r, gallery_urls: r.gallery_urls || [], process_steps_ar: r.process_steps_ar || [], process_steps_en: r.process_steps_en || [] }); setEditingId(r.id); setOpen(true); }} className="p-1.5 rounded bg-slate-800 hover:bg-cyan-500/20 text-slate-400 hover:text-cyan-400"><Edit3 className="w-4 h-4" /></button>
@@ -153,7 +163,15 @@ export default function AdminPortfolio() {
                 <Field label="التصنيف"><input className={inputCls} value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} /></Field>
                 <Field label="رابط المشروع"><input className={inputCls} value={form.project_url} onChange={(e) => setForm({ ...form, project_url: e.target.value })} /></Field>
                 <Field label="المدة"><input className={inputCls} value={form.duration} onChange={(e) => setForm({ ...form, duration: e.target.value })} /></Field>
-                <Field label="السنة"><input className={inputCls} value={form.year} onChange={(e) => setForm({ ...form, year: e.target.value })} /></Field>
+                <Field label="المجال" hint="اختر مجال المشروع أو أضف مجالاً جديداً">
+                  <div className="flex gap-2">
+                    <select className={inputCls + " flex-1"} value={form.field || ""} onChange={(e) => setForm({ ...form, field: e.target.value })}>
+                      <option value="">— بدون مجال —</option>
+                      {fields.map((f) => (<option key={f} value={f}>{f}</option>))}
+                    </select>
+                    <button type="button" onClick={addField} title="إضافة مجال جديد" className="px-3 rounded-lg bg-cyan-500/15 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/25"><Plus className="w-4 h-4" /></button>
+                  </div>
+                </Field>
                 <Field label="اللون الأساسي"><input type="color" className={inputCls + " h-10"} value={form.color} onChange={(e) => setForm({ ...form, color: e.target.value })} /></Field>
                 <Field label="اللون المميز"><input type="color" className={inputCls + " h-10"} value={form.accent} onChange={(e) => setForm({ ...form, accent: e.target.value })} /></Field>
               </div>

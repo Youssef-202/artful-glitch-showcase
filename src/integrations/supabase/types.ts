@@ -315,6 +315,7 @@ export type Database = {
           detail_cover_url: string | null
           detail_cover_url_light: string | null
           duration: string | null
+          field: string | null
           gallery_urls: string[] | null
           home_client_ar: string | null
           home_client_color: string | null
@@ -359,6 +360,7 @@ export type Database = {
           detail_cover_url?: string | null
           detail_cover_url_light?: string | null
           duration?: string | null
+          field?: string | null
           gallery_urls?: string[] | null
           home_client_ar?: string | null
           home_client_color?: string | null
@@ -403,6 +405,7 @@ export type Database = {
           detail_cover_url?: string | null
           detail_cover_url_light?: string | null
           duration?: string | null
+          field?: string | null
           gallery_urls?: string[] | null
           home_client_ar?: string | null
           home_client_color?: string | null
