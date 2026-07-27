@@ -37,6 +37,7 @@ export function usePortfolio() {
               projectUrl: d.project_url,
               duration: d.duration,
               year: d.year,
+              field: d.field,
               homeTitleAr: d.home_title_ar,
               homeTitleEn: d.home_title_en,
               homeClientAr: d.home_client_ar,

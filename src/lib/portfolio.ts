@@ -20,6 +20,7 @@ export type PortfolioItem = {
   projectUrl?: string | null;
   duration?: string | null;
   year?: string | null;
+  field?: string | null;
   homeTitleAr?: string | null;
   homeTitleEn?: string | null;
   homeClientAr?: string | null;
