@@ -175,7 +175,15 @@ export default function AdminPortfolio() {
                 <Field label="Title (English)"><input className={inputCls} value={form.title_en} onChange={(e) => setForm({ ...form, title_en: e.target.value })} /></Field>
                 <Field label="اسم العميل"><input className={inputCls} value={form.client_ar} onChange={(e) => setForm({ ...form, client_ar: e.target.value })} /></Field>
                 <Field label="Client (English)"><input className={inputCls} value={form.client_en} onChange={(e) => setForm({ ...form, client_en: e.target.value })} /></Field>
-                <Field label="التصنيف"><input className={inputCls} value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} /></Field>
+                <Field label="التصنيف" hint="اختر تصنيفاً موجوداً أو أضف تصنيفاً جديداً">
+                  <div className="flex gap-2">
+                    <select className={inputCls + " flex-1"} value={form.category || ""} onChange={(e) => setForm({ ...form, category: e.target.value })}>
+                      <option value="">— بدون تصنيف —</option>
+                      {categoryOptions.map((c) => (<option key={c} value={c}>{c}</option>))}
+                    </select>
+                    <button type="button" onClick={addCategory} title="إضافة تصنيف جديد" className="px-3 rounded-lg bg-cyan-500/15 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/25"><Plus className="w-4 h-4" /></button>
+                  </div>
+                </Field>
                 <Field label="رابط المشروع"><input className={inputCls} value={form.project_url} onChange={(e) => setForm({ ...form, project_url: e.target.value })} /></Field>
                 <Field label="المدة"><input className={inputCls} value={form.duration} onChange={(e) => setForm({ ...form, duration: e.target.value })} /></Field>
                 <Field label="المجال" hint="اختر مجال المشروع أو أضف مجالاً جديداً">
