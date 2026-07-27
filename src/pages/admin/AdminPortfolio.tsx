@@ -49,6 +49,11 @@ export default function AdminPortfolio() {
   const [form, setForm] = useState<any>(empty);
   const [editingId, setEditingId] = useState<string | null>(null);
   const { fields, saveFields } = usePortfolioFields();
+  const { categories, saveCategories } = usePortfolioCategories();
+
+  const categoryOptions = Array.from(
+    new Set([...categories, ...rows.map((r) => r.category).filter(Boolean)])
+  );
 
   const addField = async () => {
     const name = window.prompt("اسم المجال الجديد")?.trim();
@@ -57,6 +62,15 @@ export default function AdminPortfolio() {
     if (error) { setErr(error.message); return; }
     setForm((f: any) => ({ ...f, field: name }));
   };
+
+  const addCategory = async () => {
+    const name = window.prompt("اسم التصنيف الجديد")?.trim();
+    if (!name) return;
+    const error = await saveCategories([...categoryOptions, name]);
+    if (error) { setErr(error.message); return; }
+    setForm((f: any) => ({ ...f, category: name }));
+  };
+
 
   const fetchRows = async () => {
     setLoading(true);
