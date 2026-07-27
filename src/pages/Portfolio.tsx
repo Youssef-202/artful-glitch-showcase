@@ -1,9 +1,10 @@
 import { useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ArrowUpRight, Sparkles } from "lucide-react";
+import { ArrowUpRight, Sparkles, Menu, ChevronDown } from "lucide-react";
 import { useLang } from "@/i18n/LanguageProvider";
 import { usePortfolio } from "@/lib/usePortfolio";
+import { usePortfolioFields } from "@/lib/usePortfolioFields";
 import type { PortfolioItem } from "@/lib/portfolio";
 import { useTheme } from "@/theme/ThemeProvider";
 
