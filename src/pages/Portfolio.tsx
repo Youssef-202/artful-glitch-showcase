@@ -126,13 +126,19 @@ function TiltCard({
 export default function Portfolio() {
   const { t, lang } = useLang();
   const { items: portfolioItems } = usePortfolio();
+  const { fields } = usePortfolioFields();
   const { theme } = useTheme();
   const isLight = theme === "light";
   const [filter, setFilter] = useState<string>("all");
+  const [field, setField] = useState<string>("all");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const filtered = useMemo(
-    () => (filter === "all" ? portfolioItems : portfolioItems.filter((p) => p.category === filter)),
-    [filter, portfolioItems]
+    () =>
+      portfolioItems
+        .filter((p) => (filter === "all" ? true : p.category === filter))
+        .filter((p) => (field === "all" ? true : (p.field ?? "") === field)),
+    [filter, field, portfolioItems]
   );
 
   const cats = [
@@ -168,7 +174,58 @@ export default function Portfolio() {
             {c.label}
           </button>
         ))}
+
+        {/* Fields hamburger menu */}
+        <div className="relative">
+          <button
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={lang === "ar" ? "المجالات" : "Fields"}
+            aria-expanded={menuOpen}
+            className={`px-4 py-2 rounded-full text-sm font-bold transition flex items-center gap-2 ${
+              field !== "all"
+                ? "bg-gradient-to-tr from-primary to-accent text-primary-foreground"
+                : "bg-card/60 backdrop-blur-xl border border-border/20 hover:bg-foreground/5"
+            }`}
+          >
+            <Menu className="w-4 h-4" />
+            <span>{field === "all" ? (lang === "ar" ? "المجالات" : "Fields") : field}</span>
+            <ChevronDown className={`w-4 h-4 transition-transform ${menuOpen ? "rotate-180" : ""}`} />
+          </button>
+
+          {menuOpen && (
+            <>
+              <div className="fixed inset-0 z-30" onClick={() => setMenuOpen(false)} />
+              <div className="absolute z-40 mt-2 min-w-[190px] max-h-72 overflow-y-auto rounded-2xl border border-border/30 bg-card/95 backdrop-blur-xl p-2 start-0">
+                <button
+                  onClick={() => { setField("all"); setMenuOpen(false); }}
+                  className={`w-full text-start px-3 py-2 rounded-xl text-sm font-bold transition ${
+                    field === "all" ? "bg-primary/15 text-primary" : "hover:bg-foreground/5"
+                  }`}
+                >
+                  {lang === "ar" ? "كل المجالات" : "All fields"}
+                </button>
+                {fields.map((f) => (
+                  <button
+                    key={f}
+                    onClick={() => { setField(f); setMenuOpen(false); }}
+                    className={`w-full text-start px-3 py-2 rounded-xl text-sm font-bold transition ${
+                      field === f ? "bg-primary/15 text-primary" : "hover:bg-foreground/5"
+                    }`}
+                  >
+                    {f}
+                  </button>
+                ))}
+                {fields.length === 0 && (
+                  <p className="px-3 py-2 text-xs text-muted-foreground">
+                    {lang === "ar" ? "لا توجد مجالات بعد" : "No fields yet"}
+                  </p>
+                )}
+              </div>
+            </>
+          )}
+        </div>
       </div>
+
 
       {/* 3D tilt grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
