@@ -3,6 +3,7 @@ import { Plus, Edit3, Trash2, X, AlertCircle, Image as ImageIcon, Loader2 } from
 import { supabase } from "@/integrations/supabase/client";
 import { CoverUploader, GalleryUploader, Field, inputCls, textareaCls } from "./_shared/uploaders";
 import { usePortfolioFields } from "@/lib/usePortfolioFields";
+import { usePortfolioCategories } from "@/lib/usePortfolioCategories";
 
 const empty: any = {
   title_ar: "", title_en: "", client_ar: "", client_en: "", category: "",
