@@ -125,7 +125,7 @@ export default function AdminAccess() {
           return (
             <div key={r} className={`p-3 rounded-xl border ${M.classes}`}>
               <div className="flex items-center gap-2 font-bold mb-1"><Icon className="w-4 h-4" /> {M.label}</div>
-              <p className="text-[10px] opacity-80 leading-relaxed">{desc}</p>
+              <p className="text-[10px] text-white opacity-90 leading-relaxed">{desc}</p>
             </div>
           );
         })}
