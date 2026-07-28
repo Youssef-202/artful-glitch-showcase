@@ -7,10 +7,10 @@ type Role = "owner" | "deputy" | "leader" | "editor";
 const ROLE_RANK: Record<Role, number> = { owner: 4, deputy: 3, leader: 2, editor: 1 };
 
 const ROLE_META: Record<Role, { label: string; icon: any; classes: string }> = {
-  owner:  { label: "القائد",  icon: Crown,  classes: "bg-amber-500/10 border-amber-500/40 text-amber-300" },
-  deputy: { label: "النائب",  icon: Shield, classes: "bg-cyan-500/10 border-cyan-500/40 text-cyan-300" },
-  leader: { label: "ليدر",    icon: Star,   classes: "bg-violet-500/10 border-violet-500/40 text-violet-300" },
-  editor: { label: "محرر",    icon: Pencil, classes: "bg-slate-500/10 border-slate-500/40 text-slate-300" },
+  owner:  { label: "القائد",  icon: Crown,  classes: "bg-amber-500/10 border-amber-500/40 text-white" },
+  deputy: { label: "النائب",  icon: Shield, classes: "bg-cyan-500/10 border-cyan-500/40 text-white" },
+  leader: { label: "ليدر",    icon: Star,   classes: "bg-violet-500/10 border-violet-500/40 text-white" },
+  editor: { label: "محرر",    icon: Pencil, classes: "bg-slate-500/10 border-slate-500/40 text-white" },
 };
 
 export default function AdminAccess() {
