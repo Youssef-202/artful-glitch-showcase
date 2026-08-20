@@ -109,6 +109,22 @@
   }
   ::selection { background: hsl(var(--primary) / 0.4); color: hsl(var(--foreground)); }
 
+  /* Force white text on browser-autofilled inputs (dark surfaces) */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-text-fill-color: #ffffff !important;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    transition: background-color 9999s ease-in-out 0s;
+    caret-color: #ffffff;
+  }
+
   /* Arabic / RTL: ensure diacritics (hamza, dots) and descenders are never clipped */
   html[lang="ar"] h1,
   html[lang="ar"] h2,
